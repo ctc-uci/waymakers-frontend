@@ -1,0 +1,32 @@
+.eventContainer div {
+    background-color: #999999;
+    /* border-radius: 10%; */
+    min-height: 10px;
+    width: 50%;
+}
+
+.actionButton div {
+    width: 30%;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+}
+
+.eventName p {
+    text-emphasis: bold;
+    font-size: 15px;
+}
+
+.condensedEventDetails div {
+    width: 60%;
+    border: 1px black;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.arrowContainer div {
+    width: 15%;
+    border-radius: 7.5%;
+    border: 1px black;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+}
