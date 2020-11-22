@@ -9,15 +9,14 @@ import EventPopup from '../event-popup/eventPopup';
 import './eventsView.css';
 
 const EventsView = ({ myEvents, currentEvents }) => {
-  // something to handle eventClick event?? (later)
   // make sure to be able to set timezone?
   const [cal, setCal] = useState('EventCal');
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
 
   const onEventClick = (event) => {
-    setShowPopup(!showPopup);
     setSelectedEvent(event.event);
+    setShowPopup(!showPopup);
   };
 
   const addEvent = (event) => event;

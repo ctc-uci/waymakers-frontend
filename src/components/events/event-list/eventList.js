@@ -10,7 +10,7 @@ import Event from '../event/event';
   date: date
   time: time
   location: location
-  description: descrip
+  description: description
 }
 */
 const EventList = ({ events, title }) => {

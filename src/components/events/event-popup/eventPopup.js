@@ -17,6 +17,7 @@ const EventPopup = ({ event, onClose, addEvent }) => {
   const startDate = formatDate(event.start, formatConfig);
   const endDate = formatDate(event.end, formatConfig);
 
+  // Renders add button if addEvent was passed in (so MyEvents will have no add button)
   const getAddButton = () => {
     if (addEvent != null) {
       return (
@@ -25,22 +26,20 @@ const EventPopup = ({ event, onClose, addEvent }) => {
     }
     return null;
   };
+
   return (
     <div id="popup">
       <h3>{event.title}</h3>
       <p>{`Start: ${startDate}`}</p>
       <p>{`End: ${endDate}`}</p>
-      <p>{`Location: ${event.location}`}</p>
-      <p>{`Details: ${event.description}`}</p>
+      <p>{`Location: ${event.extendedProps.location}`}</p>
+      <p>{`Details: ${event.extendedProps.description}`}</p>
       {getAddButton()}
       <button type="button" aria-label="close popup" onClick={onClose}>Close</button>
     </div>
   );
 };
 
-// Need to fix this after we finalize what info in each event object!
-// we pass in FullCalendar's Event Object, but not sure how to specify that for
-// type checking in react
 EventPopup.propTypes = {
   event: PropTypes.objectOf(PropTypes.string).isRequired,
   onClose: PropTypes.func.isRequired,
