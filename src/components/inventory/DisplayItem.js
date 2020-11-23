@@ -29,14 +29,13 @@ const DisplayItem = () => {
 
   const Menu = (list) => list.map((el) => {
     const { label } = el;
-
-    return <MenuItem label={label} key={label} />;
+    return MenuItem(label);
   });
 
   const Arrow = (text, className) => <div className={className}>{text}</div>;
+  const ArrowLeft = Arrow('<', 'arrow-prev');
+  const ArrowRight = Arrow('>', 'arrow-next');
 
-  const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
-  const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
   /** ******************** END SCROLL MENU ITEMS HERE******************* */
 
   /** ******************** DISPLAY ITEMS HERE************************* */
