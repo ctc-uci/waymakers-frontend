@@ -1,48 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Converts table rows into forms when in Edit mode
 const EditableItem = (props) => {
-  const [name, setName] = useState(props.item.name);
-  const [quantity, setQuantity] = useState(props.item.quantity);
-  const [needed, setNeeded] = useState(props.item.needed);
-  const [category, setCategory] = useState(props.item.category);
+  // State variable for all editable fields
+  const [fieldState, setFieldState] = useState({
+    name: props.item.name,
+    quantity: props.item.quantity,
+    needed: props.item.needed,
+    category: props.item.category,
+  });
 
-  // Used to track edits, and get item ID
-  const [itemState, setItemState] = useState(props);
+  // Tracks edits made, used in Table.js to send
+  // updates to server
+  const [edits] = useState(props.edits);
 
-  // Used to update css class of items that
-  // have been modified, but not saved
+  // Used to update css class of unsaved edits
   const [modified, setModified] = useState(props.modified);
 
-  useEffect(() => {
-    setItemState(props);
-  }, [props]);
+  // Appends to edits object at every change
+  // This could probably be changed to only update once
+  const updateEdits = () => {
+    edits.updated[props.item.id] = {
+      name: fieldState.name,
+      quantity: fieldState.quantity,
+      needed: fieldState.needed,
+      category: fieldState.category,
+    };
+  };
 
   // Adds item id to list of items to be deleted
   const deleteItem = () => {
     console.log('Deleting Item');
-    itemState.edits.deleted.push(props.item.id);
-    console.log(itemState.edits);
+    props.edits.deleted.push(props.item.id);
+    console.log(props.edits);
   };
 
-  const updateEdits = () => {
+  // Updates text fields when editing
+  const handleChange = (e) => {
     setModified(true);
-    itemState.edits.updated[props.item.id] = {
-      name,
-      quantity,
-      needed,
-      category,
-    };
-    console.log('Updates: ', itemState.edits);
+    const { name, value } = e.target;
+
+    setFieldState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
+
+  const mounted = useRef();
+
+  useEffect(() => {
+    if (!mounted.current) {
+      setFieldState(fieldState);
+      mounted.current = true;
+    } else {
+      setFieldState(fieldState);
+      updateEdits();
+    }
+  }, [fieldState]);
 
   // Row to display when not in Edit mode
   const staticItem = (
     <tr>
-      <td>{name}</td>
-      <td>{quantity}</td>
-      <td>{needed}</td>
-      <td>{category}</td>
+      <td>{fieldState.name}</td>
+      <td>{fieldState.quantity}</td>
+      <td>{fieldState.needed}</td>
+      <td>{fieldState.category}</td>
     </tr>
   );
 
@@ -53,48 +75,40 @@ const EditableItem = (props) => {
     // TODO: Add a separate css class for deleted items
     <tr className={modified ? 'modified' : null}>
       <td>
-        <form id={itemState.item.id} />
+        <form id={props.item.id} />
         <input
-          form={itemState.item.id}
+          name="name"
           type="text"
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-            updateEdits();
-          }}
+          value={fieldState.name}
+          form={props.item.id}
+          onChange={handleChange}
         />
       </td>
       <td>
         <input
-          form={itemState.item.id}
+          name="quantity"
           type="number"
-          value={quantity}
-          onChange={(e) => {
-            setQuantity(e.target.value);
-            updateEdits();
-          }}
+          value={fieldState.quantity}
+          form={props.item.id}
+          onChange={handleChange}
         />
       </td>
       <td>
         <input
-          form={itemState.item.id}
+          name="needed"
           type="number"
-          value={needed}
-          onChange={(e) => {
-            setNeeded(e.target.value);
-            updateEdits();
-          }}
+          value={fieldState.needed}
+          form={props.item.id}
+          onChange={handleChange}
         />
       </td>
       <td>
         <input
-          form={itemState.item.id}
+          name="category"
           type="text"
-          value={category}
-          onChange={(e) => {
-            setCategory(e.target.value);
-            updateEdits();
-          }}
+          value={fieldState.category}
+          form={props.item.id}
+          onChange={handleChange}
         />
       </td>
       <td>
@@ -103,7 +117,7 @@ const EditableItem = (props) => {
     </tr>
   );
 
-  // Decides which table row to show, dependant on Edit mode
+  // Decides which table row to show, dependant on edit mode
   return props.editable ? formItem : staticItem;
 };
 
