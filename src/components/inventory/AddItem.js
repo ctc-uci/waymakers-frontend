@@ -82,6 +82,7 @@ const AddItem = () => {
       <form className="d-flex flex-column" onSubmit={onSubmitAddCategory}>
         <input
           type="text"
+          placeholder="Category Label"
           className="form-control"
           value={label}
           onChange={(e) => setLabel(e.target.value)}

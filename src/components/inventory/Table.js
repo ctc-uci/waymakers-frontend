@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import EditableItem from './EditableItem';
 
+// TODO:
+// - Make handleClick async:
+//    - Server might be getting the changes before the user is finished typing
+//    - Something like "await saveEdits().then();"
+// - Fix issue with cancel not reverting
+// - Improve CSS styling:
+//    - Better positioning for buttons
+//    - Mark unsaved edits with orange outline
+//    - Add strike-through for unsaved deleted
+
 const Table = (prop) => {
   const [items, setItems] = useState(prop.items);
   const [editing, setEditing] = useState(false);
@@ -16,7 +26,7 @@ const Table = (prop) => {
   // Sends edits once saved
   const saveEdits = async () => {
     // Updating edited values
-    edits.updated.forEach(async (id) => {
+    Object.keys(edits.updated).forEach(async (id) => {
       console.log(id, edits.updated[id]);
       try {
         await fetch(`http://localhost:3000/inventory/${id}`, {
