@@ -5,6 +5,7 @@ import EditableItem from './EditableItem';
 // X Make handleClick async:
 //    X Server might be getting the changes before the user is finished typing
 // - Fix issue with cancel not reverting
+// - Make "Save" button re-request items from server, so deleted items are removed
 // - Add ascending and descending sort to table (currently sorted by id)
 // - Improve CSS styling:
 //    - Better positioning for buttons

@@ -46,13 +46,16 @@ const EditableItem = (props) => {
     }));
   };
 
+  // Used to implement componentDidMount/componentDidUpdate logic
   const mounted = useRef();
 
   useEffect(() => {
     if (!mounted.current) {
+      // componentDidMount
       setFieldState(fieldState);
       mounted.current = true;
     } else {
+      // componentDidUpdate
       setFieldState(fieldState);
       updateEdits();
     }
