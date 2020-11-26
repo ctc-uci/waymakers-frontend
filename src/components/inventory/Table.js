@@ -5,11 +5,11 @@ import EditableItem from './EditableItem';
 // X Make handleClick async:
 //    X Server might be getting the changes before the user is finished typing
 // - Fix issue with cancel not reverting
-// - Make "Save" button re-request items from server, so deleted items are removed
+// X Fix issue with deleted items still appearing until refresh
 // - Add ascending and descending sort to table (currently sorted by id)
 // - Improve CSS styling:
 //    - Better positioning for buttons
-//    - Mark unsaved edits with orange outline
+//    - Mark unsaved edits with orange outline and icon
 //    - Add strike-through for unsaved deleted
 
 const Table = (prop) => {
@@ -52,7 +52,8 @@ const Table = (prop) => {
       }
     });
 
-    console.log('Edits saved');
+    // Removing deleted items from item state variable
+    setItems(items.filter((item) => !edits.deleted.includes(item.id)));
   };
 
   // Handles button presses
@@ -69,7 +70,8 @@ const Table = (prop) => {
 
   // TODO REMOVE
   const testFunc = () => {
-    console.log('Printing props.items: ', edits);
+    console.log('Printing prop.items: ', prop.items);
+    console.log('Printing items: ', items);
   };
 
   // Splits "Edit" button into "Cancel" and "Save" buttons
