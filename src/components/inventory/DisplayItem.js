@@ -68,7 +68,7 @@ const DisplayItem = () => {
   };
 
   useEffect(() => {
-    getItems(selectedCategory);
+    getItems();
     getCategories();
   }, [selectedCategory]);
 
