@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import EditableItem from './EditableItem';
 
 // TODO:
-// - Make handleClick async:
-//    - Server might be getting the changes before the user is finished typing
-//    - Something like "await saveEdits().then();"
+// X Make handleClick async:
+//    X Server might be getting the changes before the user is finished typing
 // - Fix issue with cancel not reverting
+// - Add ascending and descending sort to table (currently sorted by id)
 // - Improve CSS styling:
 //    - Better positioning for buttons
 //    - Mark unsaved edits with orange outline
@@ -104,15 +104,17 @@ const Table = (prop) => {
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => (
-            <EditableItem
-              key={item.id}
-              item={item}
-              edits={edits}
-              editable={editing}
-              modified={false}
-            />
-          ))}
+          {items
+            .sort((a, b) => (a.id > b.id ? 1 : -1))
+            .map((item) => (
+              <EditableItem
+                key={item.id}
+                item={item}
+                edits={edits}
+                editable={editing}
+                modified={false}
+              />
+            ))}
         </tbody>
       </table>
       <button type="button" id="testButton" onClick={testFunc}>
