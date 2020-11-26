@@ -14,7 +14,7 @@ const AddItem = () => {
   // name of category to add
   const [label, setLabel] = useState('');
 
-  const onSubmitAddItem = async (/* e */) => {
+  const onSubmitAddItem = async () => {
     // e.preventDefault();
     try {
       const body = {
@@ -31,9 +31,10 @@ const AddItem = () => {
     }
   };
 
-  const onSubmitAddCategory = async (/* e */) => {
+  const onSubmitAddCategory = async () => {
     // e.preventDefault();
     try {
+      console.log(label);
       const body = { label };
       const response = await fetch('http://localhost:3000/category', {
         method: 'POST',
@@ -76,7 +77,7 @@ const AddItem = () => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         />
-        <button type="button" className="btn btn-success">Add</button>
+        <button type="submit" className="btn btn-success">Add</button>
       </form>
       {/** ADD CATEGORY BUTTON */}
       <form className="d-flex flex-column" onSubmit={onSubmitAddCategory}>
@@ -87,7 +88,7 @@ const AddItem = () => {
           value={label}
           onChange={(e) => setLabel(e.target.value)}
         />
-        <button type="button" className="btn btn-success">Add Category</button>
+        <button type="submit" className="btn btn-success">Add Category</button>
       </form>
     </>
   );
