@@ -4,7 +4,8 @@ import EditableItem from './EditableItem';
 // TODO:
 // X Make handleClick async:
 //    X Server might be getting the changes before the user is finished typing
-// - Fix issue with cancel not reverting
+// X Fix issue with cancel not reverting
+//    X Need to make sure item prop in Table is updated after a save
 // X Fix issue with deleted items still appearing until refresh
 // - Add ascending and descending sort to table (currently sorted by id)
 // - Improve CSS styling:
@@ -14,7 +15,10 @@ import EditableItem from './EditableItem';
 
 const Table = (prop) => {
   const [items, setItems] = useState(prop.items);
+  // Used to set Table to editable
   const [editing, setEditing] = useState(false);
+  // Used to cancel edits made
+  const [canceled, setCanceled] = useState(false);
 
   // Object to store edits made to table
   // Passed to each row, and appended to when a change is made
@@ -54,6 +58,9 @@ const Table = (prop) => {
 
     // Removing deleted items from item state variable
     setItems(items.filter((item) => !edits.deleted.includes(item.id)));
+
+    // Ensuring updated values are retrieved from the server
+    prop.getItems();
   };
 
   // Handles button presses
@@ -64,6 +71,7 @@ const Table = (prop) => {
       saveEdits();
     } else if (e.target.id === 'cancel-edit') {
       console.log('Canceling edit');
+      setCanceled(!canceled);
     }
     setEditing(!editing);
   };
@@ -116,6 +124,7 @@ const Table = (prop) => {
                 edits={edits}
                 editable={editing}
                 modified={false}
+                canceled={canceled}
               />
             ))}
         </tbody>

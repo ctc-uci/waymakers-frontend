@@ -61,6 +61,15 @@ const EditableItem = (props) => {
     }
   }, [fieldState]);
 
+  useEffect(() => {
+    setFieldState({
+      name: props.item.name,
+      quantity: props.item.quantity,
+      needed: props.item.needed,
+      category: props.item.category,
+    });
+  }, [props.canceled]);
+
   // Row to display when not in Edit mode
   const staticItem = (
     <tr>

@@ -40,6 +40,7 @@ const DisplayItem = () => {
 
   /** ******************** DISPLAY ITEMS HERE************************* */
   const getItems = async () => {
+    console.log('Getting items');
     try {
       if (selectedCategory === 'Show All Categories') setSelectedCategory('');
       const response = await fetch(
@@ -83,7 +84,7 @@ const DisplayItem = () => {
           selected={0}
         />
       </div>
-      <Table items={items} />
+      <Table items={items} getItems={getItems} />
     </>
   );
 };
