@@ -59,7 +59,7 @@ const Table = (prop) => {
     // Removing deleted items from item state variable
     setItems(items.filter((item) => !edits.deleted.includes(item.id)));
 
-    // Ensuring updated values are retrieved from the server
+    // Retrieving updated values from server
     prop.getItems();
   };
 
@@ -76,26 +76,20 @@ const Table = (prop) => {
     setEditing(!editing);
   };
 
-  // TODO REMOVE
-  const testFunc = () => {
-    console.log('Printing prop.items: ', prop.items);
-    console.log('Printing items: ', items);
-  };
-
   // Splits "Edit" button into "Cancel" and "Save" buttons
   const EditButton = () => {
     const editButtonPair = (
       <div>
-        <button type="button" id="cancel-edit" onClick={handleClick}>
-          Cancel
-        </button>
-        <button type="button" id="save-edit" onClick={handleClick}>
+        <button type="button" id="save-edit" className="btn btn-outline-success" onClick={handleClick}>
           Save
+        </button>
+        <button type="button" id="cancel-edit" className="btn btn-outline-danger" onClick={handleClick}>
+          Cancel
         </button>
       </div>
     );
     const editButton = (
-      <button type="button" id="start-edit" onClick={handleClick}>
+      <button type="button" id="start-edit" className="btn btn-outline-primary" onClick={handleClick}>
         Edit
       </button>
     );
@@ -104,8 +98,10 @@ const Table = (prop) => {
 
   return (
     <div className="table">
-      <EditButton />
-      <table className="table mt-5 text-center">
+      <div className="mt-3">
+        <EditButton />
+      </div>
+      <table className="table mt-3 text-center">
         <thead>
           <tr>
             <th>Name</th>
@@ -129,9 +125,6 @@ const Table = (prop) => {
             ))}
         </tbody>
       </table>
-      <button type="button" id="testButton" onClick={testFunc}>
-        Testing Button
-      </button>
     </div>
   );
 };

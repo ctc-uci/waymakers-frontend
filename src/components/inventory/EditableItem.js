@@ -49,6 +49,7 @@ const EditableItem = (props) => {
   // Used to implement componentDidMount/componentDidUpdate logic
   const mounted = useRef();
 
+  // Updating values when editing
   useEffect(() => {
     if (!mounted.current) {
       // componentDidMount
@@ -61,6 +62,7 @@ const EditableItem = (props) => {
     }
   }, [fieldState]);
 
+  // Reset field values once edit canceled
   useEffect(() => {
     setFieldState({
       name: props.item.name,
@@ -70,7 +72,7 @@ const EditableItem = (props) => {
     });
   }, [props.canceled]);
 
-  // Row to display when not in Edit mode
+  // Static row to display when not in Edit mode
   const staticItem = (
     <tr>
       <td>{fieldState.name}</td>
@@ -124,7 +126,7 @@ const EditableItem = (props) => {
         />
       </td>
       <td>
-        <button type="button" onClick={deleteItem}>Delete</button>
+        <button type="button" className="btn btn-outline-danger" onClick={deleteItem}>Delete</button>
       </td>
     </tr>
   );
