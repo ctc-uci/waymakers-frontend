@@ -15,6 +15,7 @@ const AddItem = () => {
   const [label, setLabel] = useState('');
 
   const onSubmitAddItem = async () => {
+    if (name === '') return;
     // e.preventDefault();
     try {
       const body = {
@@ -32,6 +33,7 @@ const AddItem = () => {
   };
 
   const onSubmitAddCategory = async () => {
+    if (label === '') return;
     // e.preventDefault();
     try {
       console.log(label);

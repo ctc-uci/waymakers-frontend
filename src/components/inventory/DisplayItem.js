@@ -10,9 +10,7 @@ const DisplayItem = () => {
   // Current selected category of items to display
   const [selectedCategory, setSelectedCategory] = useState('');
   // Current list of categories (in scroll menu)
-  const [categoryList, setCategoryList] = useState([
-    { label: 'Show All Categories' },
-  ]);
+  const [categoryList, setCategoryList] = useState([]);
 
   /** ******************** ALL SCROLL MENU ITEMS HERE******************* */
   const MenuItem = (label) => {
@@ -71,6 +69,8 @@ const DisplayItem = () => {
     getItems();
     getCategories();
   }, [selectedCategory]);
+
+  getCategories();
 
   return (
     <>
