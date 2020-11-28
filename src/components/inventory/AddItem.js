@@ -15,7 +15,7 @@ const AddItem = () => {
   const [label, setLabel] = useState('');
 
   const onSubmitAddItem = async () => {
-    if (name === '') return;
+    if (name === '' || quantity < 0 || needed < 0) return;
     // e.preventDefault();
     try {
       const body = {
