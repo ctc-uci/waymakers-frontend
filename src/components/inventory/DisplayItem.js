@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import AddItem from './AddItem';
 import Table from './Table';
@@ -59,19 +59,25 @@ const DisplayItem = () => {
       const response = await fetch('http://localhost:3000/category/');
       const jsonData = await response.json();
       setCategoryList(jsonData);
-      setMenu(Menu(categoryList, 0));
       console.log(categoryList);
     } catch (err) {
       console.error(err.message);
     }
   };
 
+  // Sets categoriesList once component mounts, is not called again
+  useEffect(() => {
+    getCategories();
+  }, []);
+  // Sets menu as soon as categoryList is loaded, or changes
+  useEffect(() => {
+    setMenu(Menu(categoryList, 0));
+  }, [categoryList]);
+
+  // Updates items list when selectedCategory changes
   useEffect(() => {
     getItems();
-    getCategories();
   }, [selectedCategory]);
-
-  getCategories();
 
   return (
     <>

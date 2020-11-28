@@ -47,6 +47,8 @@ const EditableItem = (props) => {
   };
 
   // Used to implement componentDidMount/componentDidUpdate logic
+  // TODO: This can be replaced with an useEffect with an empty array
+  // as the second parameter:  https://medium.com/@felippenardi/how-to-do-componentdidmount-with-react-hooks-553ba39d1571
   const mounted = useRef();
 
   // Updating values when editing

@@ -6,7 +6,7 @@ import EditableItem from './EditableItem';
 //    X Server might be getting the changes before the user is finished typing
 // X Fix issue with cancel not reverting
 //    X Need to make sure item prop in Table is updated after a save
-// X Fix issue with deleted items still appearing until refresh
+// - Fix issue with deleted items still appearing until refresh
 // - Add ascending and descending sort to table (currently sorted by id)
 // - Improve CSS styling:
 //    - Better positioning for buttons
