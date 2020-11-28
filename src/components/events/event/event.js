@@ -1,34 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { formatDate } from '@fullcalendar/core';
 import './event.css';
+import '../edit-events/editEvents.css';
 
 const Event = ({ event }) => {
-  // TODO: Pass in function as prop for + button
-  // TODO: Need toggle functionality for the v button
-  const dateAndTime = `${event.date}__${event.time}`;
+  const formatConfig = {
+    month: 'long',
+    year: 'numeric',
+    day: 'numeric',
+    timeZoneName: 'short',
+    timeZone: 'UTC',
+    locale: 'en',
+  };
+
+  const startDate = formatDate(event.startDate, formatConfig);
+  const endDate = formatDate(event.endDate, formatConfig);
 
   return (
     <div className="eventContainer">
-      <div className="buttonContainer">
-        <table>
-          <tr>
-            <td className="actionButton">
-              <button className="actionButton" type="submit">+</button>
-            </td>
-            <td className="condensedEventDetails">
-              <p className="eventName">{event.name}</p>
-              <p className="eventShortDetails">
-                {dateAndTime}
-              </p>
-            </td>
-            <td className="arrowContainer">
-              <p>v</p>
-            </td>
-          </tr>
-        </table>
-        <div>{event.location}</div>
-        <div>{event.description}</div>
-      </div>
+      <h3>{event.title}</h3>
+      <p>{`Start: ${startDate}`}</p>
+      <p>{`End: ${endDate}`}</p>
+      <p>{`Location: ${event.location}`}</p>
+      <p>{`Details: ${event.description}`}</p>
+      <button className="all-events edit-event-button" type="button">Edit Event</button>
     </div>
   );
 };
