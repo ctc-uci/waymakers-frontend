@@ -10,7 +10,7 @@ const DisplayItem = () => {
   // Current selected category of items to display
   const [selectedCategory, setSelectedCategory] = useState('');
   // Current list of categories (in scroll menu)
-  const [categoryList, setCategoryList] = useState([{ label: 'Show All Categories' }]);
+  const [categoryList, setCategoryList] = useState([]);
 
   /** ******************** ALL SCROLL MENU ITEMS HERE******************* */
   const MenuItem = (label) => {
@@ -36,39 +36,50 @@ const DisplayItem = () => {
 
   /** ******************** END SCROLL MENU ITEMS HERE******************* */
 
-  /** ******************** SEARCH ITEMS HERE*******************
-
+  /** ******************** SEARCH ITEMS HERE****************** */
   const [searchSubstring, setSearchSubstring] = useState('');
 
-  const SearchItem = async () => {
-    const onSubmitSearchItem = async () => {
-
-    };
+  const SearchItem = () => {
+    console.log('searching');
     return (
       <>
-        <form>
-          <input
-            type="text"
-            className="form-control"
-            value={searchSubstring}
-            onChange={(e) => setSearchSubstring(e.target.value)}
-          />
-        </form>
+        <input
+          type="text"
+          value={searchSubstring}
+          onChange={(e) => setSearchSubstring(e.target.value)}
+        />
       </>
     );
   };
 
   /** ******************** END SEARCH ITEMS HERE******************* */
+
   /** ******************** DISPLAY ITEMS HERE************************* */
   const getItems = async () => {
     console.log('Getting items');
     try {
-      if (selectedCategory === 'Show All Categories') setSelectedCategory('');
-      const response = await fetch(
-        `http://localhost:3000/inventory/${selectedCategory}`,
-      );
-      const jsonData = await response.json();
-      setItems(jsonData);
+      // NOT SEARCHING
+      if (searchSubstring === '') {
+        const response = await fetch(
+          `http://localhost:3000/inventory/${selectedCategory}`,
+        );
+        const jsonData = await response.json();
+        setItems(jsonData);
+      // SEARCH for item with ONLY SUBSTRING
+      } else if (selectedCategory === '') {
+        const response = await fetch(
+          `http://localhost:3000/inventory/search/${searchSubstring}/`,
+        );
+        const jsonData = await response.json();
+        setItems(jsonData);
+      // SEARCH for item with SUBSTRING and CATEGORY
+      } else {
+        const response = await fetch(
+          `http://localhost:3000/inventory/search/${searchSubstring}/${selectedCategory}`,
+        );
+        const jsonData = await response.json();
+        setItems(jsonData);
+      }
       console.log(items);
     } catch (err) {
       console.error(err.message);
@@ -97,10 +108,10 @@ const DisplayItem = () => {
     setMenu(Menu(categoryList, 0));
   }, [categoryList]);
 
-  // Updates items list when selectedCategory changes
+  // Updates items list when selectedCategory changes or searchSubstring changes
   useEffect(() => {
     getItems();
-  }, [selectedCategory]);
+  }, [selectedCategory, searchSubstring]);
 
   return (
     <>
@@ -113,6 +124,7 @@ const DisplayItem = () => {
           selected={0}
         />
       </div>
+      <SearchItem />
       <Table items={items} getItems={getItems} />
     </>
   );
