@@ -10,7 +10,7 @@ const DisplayItem = () => {
   // Current selected category of items to display
   const [selectedCategory, setSelectedCategory] = useState('');
   // Current list of categories (in scroll menu)
-  const [categoryList, setCategoryList] = useState([]);
+  const [categoryList, setCategoryList] = useState([{ label: 'Show All Categories' }]);
 
   /** ******************** ALL SCROLL MENU ITEMS HERE******************* */
   const MenuItem = (label) => {
@@ -36,6 +36,29 @@ const DisplayItem = () => {
 
   /** ******************** END SCROLL MENU ITEMS HERE******************* */
 
+  /** ******************** SEARCH ITEMS HERE*******************
+
+  const [searchSubstring, setSearchSubstring] = useState('');
+
+  const SearchItem = async () => {
+    const onSubmitSearchItem = async () => {
+
+    };
+    return (
+      <>
+        <form>
+          <input
+            type="text"
+            className="form-control"
+            value={searchSubstring}
+            onChange={(e) => setSearchSubstring(e.target.value)}
+          />
+        </form>
+      </>
+    );
+  };
+
+  /** ******************** END SEARCH ITEMS HERE******************* */
   /** ******************** DISPLAY ITEMS HERE************************* */
   const getItems = async () => {
     console.log('Getting items');
