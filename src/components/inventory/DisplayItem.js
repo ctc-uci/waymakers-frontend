@@ -12,10 +12,14 @@ const DisplayItem = () => {
   // Current list of categories (in scroll menu)
   const [categoryList, setCategoryList] = useState([]);
 
-  /** ******************** ALL SCROLL MENU ITEMS HERE******************* */
+  /** ******************** ALL SCROLL MENU ITEMS ( CATEGORICAL DISPLAY ) HERE******************* */
   const MenuItem = (label) => {
     const onClickMenuItem = () => {
-      setSelectedCategory(label);
+      if (label === 'Show All Categories') {
+        setSelectedCategory('');
+      } else {
+        setSelectedCategory(label);
+      }
     };
     return (
       <button type="button" className="btn btn-warning" onClick={onClickMenuItem}>
