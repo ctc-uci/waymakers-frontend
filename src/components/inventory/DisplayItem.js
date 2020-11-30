@@ -48,6 +48,8 @@ const DisplayItem = () => {
       <>
         <input
           type="text"
+          className="form-control"
+          placeholder="Search for an item..."
           value={searchSubstring}
           onChange={(e) => setSearchSubstring(e.target.value)}
         />
@@ -56,6 +58,17 @@ const DisplayItem = () => {
   };
 
   /** ******************** END SEARCH ITEMS HERE******************* */
+
+  /** ******************** CATEGORY TITLE HERE****************** */
+  const CurrentCategoryLabel = () => {
+    const currentCategory = selectedCategory === '' ? ' All Categories' : ` ${selectedCategory}`;
+    return (
+      <h1>
+        Showing Category:
+        {currentCategory}
+      </h1>
+    );
+  };
 
   /** ******************** DISPLAY ITEMS HERE************************* */
   const getItems = async () => {
@@ -126,6 +139,7 @@ const DisplayItem = () => {
         selected={0}
       />
       <SearchItem />
+      <CurrentCategoryLabel />
       <Table items={items} getItems={getItems} />
     </>
   );
