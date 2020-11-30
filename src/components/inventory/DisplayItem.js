@@ -16,7 +16,6 @@ const DisplayItem = () => {
   const MenuItem = (label) => {
     const onClickMenuItem = () => {
       setSelectedCategory(label);
-      console.log(label);
     };
     return (
       <button type="button" className="btn btn-warning" onClick={onClickMenuItem}>
@@ -92,7 +91,7 @@ const DisplayItem = () => {
     try {
       const response = await fetch('http://localhost:3000/category/');
       const jsonData = await response.json();
-      setCategoryList(jsonData);
+      setCategoryList([{ label: 'Show All Categories' }].concat(jsonData));
       console.log(categoryList);
     } catch (err) {
       console.error(err.message);
@@ -116,14 +115,12 @@ const DisplayItem = () => {
   return (
     <>
       <AddItem />
-      <div className="App">
-        <ScrollMenu
-          data={menu}
-          arrowLeft={ArrowLeft}
-          arrowRight={ArrowRight}
-          selected={0}
-        />
-      </div>
+      <ScrollMenu
+        data={menu}
+        arrowLeft={ArrowLeft}
+        arrowRight={ArrowRight}
+        selected={0}
+      />
       <SearchItem />
       <Table items={items} getItems={getItems} />
     </>
