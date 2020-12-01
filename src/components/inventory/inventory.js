@@ -5,44 +5,37 @@ import SearchItem from './SearchItem/SearchItem';
 import Table from './Table/Table';
 import './inventory.css';
 
+const axios = require('axios');
+
 const Inventory = () => {
   // Current list of items to display
   const [items, setItems] = useState([]);
-  // Category selected by user in CategoryMenu
-  const [selectedCategory, setSelectedCategory] = useState('');
   // Current list of categories (in scroll menu)
   const [categoryList, setCategoryList] = useState([]);
+  // Category selected by user in CategoryMenu
+  const [selectedCategory, setSelectedCategory] = useState('');
   // Search substring
   const [searchSubstring, setSearchSubstring] = useState('');
 
   // Request items from server
   const getItems = async () => {
     console.log('Getting items');
-    try {
+    let url = '';
+    if (searchSubstring === '') {
       // NOT SEARCHING
-      if (searchSubstring === '') {
-        const response = await fetch(
-          `http://localhost:3000/inventory/${selectedCategory}`,
-        );
-        const jsonData = await response.json();
-        setItems(jsonData);
+      url = `http://localhost:3000/inventory/${selectedCategory}`;
+    } else if (selectedCategory === '') {
       // SEARCH for item with ONLY SUBSTRING
-      } else if (selectedCategory === '') {
-        const response = await fetch(
-          `http://localhost:3000/inventory/search/${searchSubstring}/`,
-        );
-        const jsonData = await response.json();
-        setItems(jsonData);
+      url = `http://localhost:3000/inventory/search/${searchSubstring}`;
+    } else {
       // SEARCH for item with SUBSTRING and CATEGORY
-      } else {
-        const response = await fetch(
-          `http://localhost:3000/inventory/search/${searchSubstring}/${selectedCategory}`,
-        );
-        const jsonData = await response.json();
-        setItems(jsonData);
-      }
+      url = `http://localhost:3000/inventory/search/${searchSubstring}/${selectedCategory}`;
+    }
+    try {
+      const response = await axios.get(url);
+      setItems(response.data);
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
     }
   };
 
@@ -50,10 +43,9 @@ const Inventory = () => {
   const getCategories = async () => {
     console.log('Getting categories');
     try {
-      const response = await fetch('http://localhost:3000/category/');
-      const jsonData = await response.json();
+      const response = await axios.get('http://localhost:3000/category/');
       // Adding All Categories" to categoryList
-      setCategoryList([{ label: 'Show All Categories' }].concat(jsonData));
+      setCategoryList([{ label: 'Show All Categories' }].concat(response.data));
     } catch (err) {
       console.error(err.message);
     }
