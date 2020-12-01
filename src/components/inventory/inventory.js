@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-// import { json } from 'express';
 import './inventory.css';
-// import DisplayItem from './DisplayItem';
 import CategoryMenu from './CategoryMenu';
 import AddItem from './AddItem';
+import SearchItem from './SearchItem';
 import Table from './Table';
 
 const Inventory = () => {
@@ -13,8 +12,8 @@ const Inventory = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   // Current list of categories (in scroll menu)
   const [categoryList, setCategoryList] = useState([]);
-
-  const searchSubstring = '';
+  // Search substring
+  const [searchSubstring, setSearchSubstring] = useState('');
 
   // Request items from server
   const getItems = async () => {
@@ -60,6 +59,17 @@ const Inventory = () => {
     }
   };
 
+  // Displays selected category
+  const CurrentCategoryLabel = () => {
+    const currentCategory = selectedCategory === '' ? ' All Categories' : ` ${selectedCategory}`;
+    return (
+      <h3>
+        Showing Category:
+        {currentCategory}
+      </h3>
+    );
+  };
+
   // Once component mounts, call getCategories
   useEffect(() => {
     getCategories();
@@ -68,7 +78,7 @@ const Inventory = () => {
   // Updates items list when selectedCategory changes or searchSubstring changes
   useEffect(() => {
     getItems();
-  }, [selectedCategory]);
+  }, [selectedCategory, searchSubstring]);
 
   return (
     <div className="inventory">
@@ -80,17 +90,12 @@ const Inventory = () => {
         categoryList={categoryList}
         setSelectedCategory={setSelectedCategory}
       />
-      <Table items={items} getItems={getItems} />
-      {/* <AddItem />
-      <ScrollMenu
-        data={menu}
-        arrowLeft={ArrowLeft}
-        arrowRight={ArrowRight}
-        selected={0}
+      <SearchItem
+        searchSubstring={searchSubstring}
+        setSearchSubstring={setSearchSubstring}
       />
-      <SearchItem />
       <CurrentCategoryLabel />
-      <Table items={items} getItems={getItems} /> */}
+      <Table items={items} getItems={getItems} />
     </div>
   );
 };
