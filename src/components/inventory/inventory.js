@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import CategoryMenu from './CategoryMenu/CategoryMenu';
+import AddItem from './AddItem/AddItem';
+import SearchItem from './SearchItem/SearchItem';
+import Table from './Table/Table';
 import './inventory.css';
-import CategoryMenu from './CategoryMenu';
-import AddItem from './AddItem';
-import SearchItem from './SearchItem';
-import Table from './Table';
 
 const Inventory = () => {
   // Current list of items to display

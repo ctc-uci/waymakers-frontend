@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import EditableItem from './EditableItem';
+import EditableItem from '../EditableItem/EditableItem';
 
 // TODO:
 // X Make handleClick async:
