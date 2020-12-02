@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from 'react';
 
+const axios = require('axios');
+
 // Add item menu here
 const AddItem = () => {
   // name of item
@@ -18,17 +20,12 @@ const AddItem = () => {
     if (name === '' || quantity < 0 || needed < 0) return;
     // e.preventDefault();
     try {
-      const body = {
+      const response = await axios.post('http://localhost:3000/inventory', {
         name, quantity, needed, category,
-      };
-      const response = await fetch('http://localhost:3000/inventory', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
       });
       console.log(response);
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
     }
   };
 
@@ -37,15 +34,12 @@ const AddItem = () => {
     // e.preventDefault();
     try {
       console.log(label);
-      const body = { label };
-      const response = await fetch('http://localhost:3000/category', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+      const response = await axios.post('http://localhost:3000/category', {
+        label,
       });
       console.log(response);
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Converts table rows into forms when in Edit mode
 const EditableItem = (props) => {
@@ -46,22 +46,16 @@ const EditableItem = (props) => {
     }));
   };
 
-  // Used to implement componentDidMount/componentDidUpdate logic
-  // TODO: This can be replaced with an useEffect with an empty array
-  // as the second parameter:  https://medium.com/@felippenardi/how-to-do-componentdidmount-with-react-hooks-553ba39d1571
-  const mounted = useRef();
+  // Sets field state on component mount
+  useEffect(() => {
+    setFieldState(fieldState);
+  }, []);
 
   // Updating values when editing
   useEffect(() => {
-    if (!mounted.current) {
-      // componentDidMount
-      setFieldState(fieldState);
-      mounted.current = true;
-    } else {
-      // componentDidUpdate
-      setFieldState(fieldState);
-      updateEdits();
-    }
+    setFieldState(fieldState);
+    updateEdits();
+    console.log('useEffect for fieldState called');
   }, [fieldState]);
 
   // Reset field values once edit canceled
