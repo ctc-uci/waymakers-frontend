@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
-import AddItem from './AddItem';
-import Table from './Table';
+import AddItem from './AddItem/AddItem';
+import Table from './Table/Table';
+
+// NOTE: KEEPING THIS FILE FOR REFERENCE
+// This file is not used anywhere
 
 const DisplayItem = () => {
   /** STATE VARIABLES */

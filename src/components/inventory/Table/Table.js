@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import EditableItem from './EditableItem';
+import EditableItem from '../EditableItem/EditableItem';
+
+const axios = require('axios');
 
 // TODO:
 // X Make handleClick async:
 //    X Server might be getting the changes before the user is finished typing
 // X Fix issue with cancel not reverting
 //    X Need to make sure item prop in Table is updated after a save
-// - Fix issue with deleted items still appearing until refresh
+// X Fix issue with deleted items still appearing until refresh
+// - Fix issue caused by:
+//    - making and saving an edit,
+//    - then going into edit again, then canceling
+//    - table shows the original value
 // - Add ascending and descending sort to table (currently sorted by id)
 // - Improve CSS styling:
 //    - Better positioning for buttons
@@ -30,35 +36,31 @@ const Table = (prop) => {
 
   // Sends edits once saved
   const saveEdits = async () => {
-    // Updating edited values
-    Object.keys(edits.updated).forEach(async (id) => {
-      console.log(id, edits.updated[id]);
-      try {
-        await fetch(`http://localhost:3000/inventory/${id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(edits.updated[id]),
-        });
-      } catch (err) {
-        console.log(err.message);
-      }
-    });
-
-    // Deleting items
+    // Deleting items first
+    const deletePromises = [];
+    // Populating list of DELETE requests
     edits.deleted.forEach(async (id) => {
-      try {
-        await fetch(`http://localhost:3000/inventory/${id}`, {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-        });
-      } catch (err) {
-        console.log(err.message);
-      }
+      deletePromises.push(
+        axios.delete(`http://localhost:3000/inventory/${id}`),
+      );
     });
+    // Perform all DELETE requests concurrently
+    Promise.all(deletePromises).catch((error) => { console.error(error); });
+
+    // Updating edited values
+    const editPromises = [];
+    // Populating list of PUT requests
+    console.log('edits.updated():', edits.updated);
+    Object.keys(edits.updated).forEach(async (id) => {
+      editPromises.push(
+        axios.put(`http://localhost:3000/inventory/${id}`, edits.updated[id]),
+      );
+    });
+    // Perform all PUT requests concurrently
+    Promise.all(editPromises).catch((error) => { console.error(error); });
 
     // Removing deleted items from item state variable
     setItems(items.filter((item) => !edits.deleted.includes(item.id)));
-
     // Retrieving updated values from server
     prop.getItems();
   };
