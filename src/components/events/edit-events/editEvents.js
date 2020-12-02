@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import './editEvents.css';
 
 import Event from '../event/event';
+import EditEventPopup from './editEventPopup';
+import AddEventPopup from './addEventPopup';
 
 const EditEvents = ({ events }) => {
 //   const dateAndTime = `${event.date}__${event.time}`;
@@ -11,6 +13,20 @@ const EditEvents = ({ events }) => {
 // + button
 // All events button
   const [filter, setFilter] = useState('week');
+  const [editPopup, setEditPopup] = useState(false);
+  const [addPopup, setAddPopup] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  // passed into Event component for the Edit button => shows the popup
+  const onEditEventClick = (event) => {
+    setSelectedEvent(event);
+    setEditPopup(true);
+  };
+
+  const onAddEventClick = () => {
+    // setSelectedEvent(event.event);
+    setAddPopup(!addPopup);
+  };
 
   const renderEvents = () => {
     // use the first two events based on filter (implement filter later)
@@ -18,12 +34,31 @@ const EditEvents = ({ events }) => {
     // filter
     // return event component for each
     console.log(events);
-    return events.map((event) => <Event event={event} />);
+    return events.map((event) => <Event event={event} onEditEventClick={onEditEventClick} />);
   };
 
-  //   const addEvent = () => {
-  //     // create pop up for adding new event and store in backend
-  //   };
+  function renderEditPopup() {
+    if (editPopup) {
+      return (
+        <EditEventPopup
+          event={selectedEvent}
+          onClose={() => setEditPopup(false)}
+        />
+      );
+    }
+    return null;
+  }
+
+  function renderAddPopup() {
+    if (addPopup) {
+      return (
+        <AddEventPopup
+          onClose={() => setAddPopup(false)}
+        />
+      );
+    }
+    return null;
+  }
 
   return (
     <div className="editEventsContainer">
@@ -32,9 +67,11 @@ const EditEvents = ({ events }) => {
         <button className={filter === 'month' ? 'active' : 'disabled'} type="button" onClick={() => { setFilter('month'); }} aria-label="Change filter to month">This Month</button>
       </div>
       <div id="middle-section">
+        { renderEditPopup() }
+        { renderAddPopup() }
         { renderEvents() }
         <div className="add-event">
-          <button type="button" className="add-event-button" onClick="addEvent">+</button>
+          <button type="button" className="add-event-button" onClick={onAddEventClick}>+</button>
           <p>Add Event</p>
         </div>
       </div>

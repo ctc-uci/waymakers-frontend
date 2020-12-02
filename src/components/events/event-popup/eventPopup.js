@@ -28,7 +28,7 @@ const EventPopup = ({ event, onClose, addEvent }) => {
   };
 
   return (
-    <div id="popup">
+    <div className="popup">
       <h3>{event.title}</h3>
       <p>{`Start: ${startDate}`}</p>
       <p>{`End: ${endDate}`}</p>
