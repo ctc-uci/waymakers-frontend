@@ -64,12 +64,12 @@ const Inventory = () => {
     }
   };
 
-  // Request categories from server
+  // Request warehouses from server
   const getWarehouses = async () => {
     console.log('Getting Warehouse');
     try {
       const response = await axios.get('http://localhost:3000/warehouse/');
-      // Adding All Categories" to categoryList
+      // Adding All Warehouse" to warehouseList
       setWarehouseList([{ label: 'Show All Warehouses' }].concat(response.data));
     } catch (err) {
       console.error(err.message);

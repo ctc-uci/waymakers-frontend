@@ -5,25 +5,25 @@ const WarehouseMenu = (prop) => {
   const [warehouseList, setWarehouseList] = useState(prop.warehouseList);
 
   // Returns a button for a single warehouse
-  const MenuItem = (label) => {
-    // Updates selectedwarehouse in inventory.js, using function passed in
-    const onClickWarehouseItem = () => {
-      const selectedWarehouse = (label === 'Show All Warehouses') ? '' : label;
-      prop.setSelectedWarehouse(selectedWarehouse);
-    };
-    return (
+  const MenuItem = (label) => (
+    <label htmlFor={label}>
       <input
+        id={label}
         type="radio"
+        name="warehouse"
         value={label}
-        onChange={onClickWarehouseItem}
+        onChange={(e) => {
+          prop.setSelectedWarehouse(e.target.value);
+        }}
       />
-
-    );
-  };
+      {label}
+    </label>
+  );
 
   // Creating list of buttons for warehouse menu
   const Menu = (list) => list.map((el) => {
     const { label } = el;
+    console.log({ label }, { list });
     return MenuItem(label);
   });
 
@@ -38,6 +38,7 @@ const WarehouseMenu = (prop) => {
   useEffect(() => {
     setMenu(Menu(warehouseList, 0));
   }, [warehouseList]);
+  console.log('here', { warehouseList });
 
   return (
     <form>
