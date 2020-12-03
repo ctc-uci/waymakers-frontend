@@ -4,6 +4,7 @@ import AddItem from './AddItem/AddItem';
 import SearchItem from './SearchItem/SearchItem';
 import Table from './Table/Table';
 import './inventory.css';
+import WarehouseMenu from './WarehouseMenu/WarehouseMenu';
 
 const axios = require('axios');
 
@@ -16,21 +17,33 @@ const Inventory = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   // Search substring
   const [searchSubstring, setSearchSubstring] = useState('');
+  // Warehouse list
+  const [warehouseList, setWarehouseList] = useState([]);
+  // Warehouse selected by user
+  const [selectedWarehouse, setSelectedWarehouse] = useState('');
 
   // Request items from server
   const getItems = async () => {
     console.log('Getting items');
     let url = '';
-    if (searchSubstring === '') {
-      // NOT SEARCHING
-      url = `http://localhost:3000/inventory/${selectedCategory}`;
-    } else if (selectedCategory === '') {
-      // SEARCH for item with ONLY SUBSTRING
+    if (searchSubstring === '' && selectedCategory === '' && selectedWarehouse === '') {
+      url = 'http://localhost:3000/inventory/';
+    } else if (selectedWarehouse === '' && selectedCategory === '') {
       url = `http://localhost:3000/inventory/search/${searchSubstring}`;
+    } else if (selectedCategory === '' && searchSubstring === '') {
+      url = `http://localhost:3000/inventory/search/${selectedWarehouse}`;
+    } else if (selectedWarehouse === '' && searchSubstring === '') {
+      url = `http://localhost:3000/inventory/search/${selectedCategory}`;
+    } else if (selectedWarehouse === '') {
+      url = `http://localhost:3000/inventory/search/${selectedCategory}/${searchSubstring}`;
+    } else if (selectedCategory === '') {
+      url = `http://localhost:3000/inventory/search/${selectedWarehouse}/${searchSubstring}`;
+    } else if (searchSubstring === '') {
+      url = `http://localhost:3000/inventory/search/${selectedWarehouse}/${selectedCategory}`;
     } else {
-      // SEARCH for item with SUBSTRING and CATEGORY
-      url = `http://localhost:3000/inventory/search/${searchSubstring}/${selectedCategory}`;
+      url = `http://localhost:3000/inventory/search/${selectedWarehouse}/${selectedCategory}/${searchSubstring}`;
     }
+
     try {
       const response = await axios.get(url);
       setItems(response.data);
@@ -51,6 +64,18 @@ const Inventory = () => {
     }
   };
 
+  // Request categories from server
+  const getWarehouses = async () => {
+    console.log('Getting Warehouse');
+    try {
+      const response = await axios.get('http://localhost:3000/warehouse/');
+      // Adding All Categories" to categoryList
+      setWarehouseList([{ label: 'Show All Warehouses' }].concat(response.data));
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   // Displays selected category
   const CurrentCategoryLabel = () => {
     const currentCategory = selectedCategory === '' ? ' All Categories' : ` ${selectedCategory}`;
@@ -62,20 +87,41 @@ const Inventory = () => {
     );
   };
 
+  // Displays selected warehouse
+  const CurrentWarehouseLabel = () => {
+    const currentWarehouse = selectedWarehouse === '' ? ' All Warehouse' : ` ${selectedWarehouse}`;
+    return (
+      <h3>
+        Showing Warehouse:
+        {currentWarehouse}
+      </h3>
+    );
+  };
+
   // Once component mounts, call getCategories
   useEffect(() => {
     getCategories();
   }, []);
 
+  //  Once component mounts, call getWarehouses
+  useEffect(() => {
+    getWarehouses();
+  }, []);
+
   // Updates items list when selectedCategory changes or searchSubstring changes
   useEffect(() => {
     getItems();
-  }, [selectedCategory, searchSubstring]);
+  }, [selectedCategory, searchSubstring, selectedWarehouse]);
 
   return (
     <div className="inventory">
       <h1>Inventory</h1>
-      <h1 className="text-center mt-5">Warehouse #1</h1>
+      <CurrentWarehouseLabel />
+      <WarehouseMenu
+        selectedWarehouse={selectedWarehouse}
+        warehouseList={warehouseList}
+        setSelectedWarehouse={setSelectedWarehouse}
+      />
       <AddItem />
       <CategoryMenu
         selectedCategory={selectedCategory}
