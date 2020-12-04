@@ -19,20 +19,23 @@ const Inventory = () => {
 
   // Request items from server
   const getItems = async () => {
-    console.log('Getting items');
-    let url = '';
-    if (searchSubstring === '') {
+    let url;
+    if (searchSubstring === '' && selectedCategory === '') { // **TODO** ADD WAREHOUSE!!!
       // NOT SEARCHING
-      url = `http://localhost:3000/inventory/${selectedCategory}`;
-    } else if (selectedCategory === '') {
-      // SEARCH for item with ONLY SUBSTRING
-      url = `http://localhost:3000/inventory/search/${searchSubstring}`;
+      url = 'http://localhost:3000/inventory/';
     } else {
-      // SEARCH for item with SUBSTRING and CATEGORY
-      url = `http://localhost:3000/inventory/search/${searchSubstring}/${selectedCategory}`;
+      // Searching for WAREHOUSE or CATEGORY or SUBSTRING
+      url = 'http://localhost:3000/inventory/get/';
     }
+    const paramsQuery = {
+      params: {
+        warehouse: '', // **TODO** <======CHANGE THIS!!!
+        category: selectedCategory,
+        search: searchSubstring,
+      },
+    };
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, paramsQuery);
       setItems(response.data);
     } catch (err) {
       console.error(err);
