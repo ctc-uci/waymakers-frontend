@@ -14,14 +14,14 @@ const Event = ({ event, onEditEventClick }) => {
     locale: 'en',
   };
 
-  const startDate = formatDate(event.startDate, formatConfig);
-  const endDate = formatDate(event.endDate, formatConfig);
+  const startTime = formatDate(event.startTime, formatConfig);
+  const endTime = formatDate(event.endTime, formatConfig);
 
   return (
     <div className="eventContainer">
       <h3>{event.title}</h3>
-      <p>{`Start: ${startDate}`}</p>
-      <p>{`End: ${endDate}`}</p>
+      <p>{`Start: ${startTime}`}</p>
+      <p>{`End: ${endTime}`}</p>
       <p>{`Location: ${event.location}`}</p>
       <p>{`Details: ${event.description}`}</p>
       <button className="all-events edit-event-button" type="button" onClick={() => onEditEventClick(event)}>Edit Event</button>

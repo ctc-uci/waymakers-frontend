@@ -33,8 +33,15 @@ const EditEvents = ({ events }) => {
     // sort events
     // filter
     // return event component for each
+    // eslint-disable-next-line
     console.log(events);
-    return events.map((event) => <Event event={event} onEditEventClick={onEditEventClick} />);
+    return events.map((event) => (
+      <Event
+        key={event.id}
+        event={event}
+        onEditEventClick={onEditEventClick}
+      />
+    ));
   };
 
   function renderEditPopup() {
@@ -76,7 +83,7 @@ const EditEvents = ({ events }) => {
         </div>
       </div>
       <div>
-        <button className="all-events" type="button" onClick="window.location.href='/events';">All Events</button>
+        <button className="all-events" type="button">All Events</button>
       </div>
     </div>
   );

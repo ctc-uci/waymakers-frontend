@@ -14,6 +14,7 @@ const Events = () => {
         currentEvents = currentEvents.data;
         const eventList = currentEvents.map((event) => ({
           title: event.event_name,
+          type: event.event_type,
           start: event.start_time,
           end: event.end_time,
           location: event.event_location,
