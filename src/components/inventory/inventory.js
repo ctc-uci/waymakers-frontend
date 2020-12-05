@@ -77,7 +77,7 @@ const Inventory = () => {
     try {
       const response = await axios.get('http://localhost:3000/warehouse/');
       // Adding All Warehouse" to warehouseList
-      setWarehouseList([{ label: 'Show All Warehouses' }].concat(response.data));
+      setWarehouseList([{ warehouseLabel: 'Show All Warehouses' }].concat(response.data));
     } catch (err) {
       console.error(err.message);
     }

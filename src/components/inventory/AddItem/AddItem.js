@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 const axios = require('axios');
 
@@ -19,26 +19,26 @@ const AddItem = () => {
   // name of warehouse to add
   const [warehouseLabel, setWarehouseLabel] = useState('');
 
-  const getItems = async () => {
-    let url;
-    if (warehouseLabel === '' && label === '') {
-      url = 'http://localhost:3000/inventory/';
-    } else {
-      url = 'http://localhost:3000/inventory/get/';
-    }
-    try {
-      const response = await axios.get(url, {
-        warehouseLabel, label,
-      });
-      console.log(response);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const getItems = async () => {
+  //   let url;
+  //   if (warehouseLabel === '' && label === '') {
+  //     url = 'http://localhost:3000/inventory/';
+  //   } else {
+  //     url = 'http://localhost:3000/inventory/get/';
+  //   }
+  //   try {
+  //     const response = await axios.get(url, {
+  //       warehouseLabel, label,
+  //     });
+  //     console.log(response);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
-  useEffect(() => {
-    getItems();
-  }, []);
+  // useEffect(() => {
+  //   getItems();
+  // }, []);
 
   const onSubmitAddItem = async () => {
     if (name === '' || quantity < 0 || needed < 0) return;
@@ -53,9 +53,9 @@ const AddItem = () => {
     }
   };
 
-  const onSubmitAddCategory = async () => {
+  const onSubmitAddCategory = async (e) => {
     if (label === '') return;
-    // e.preventDefault();
+    e.preventDefault();
     try {
       console.log(label);
       const response = await axios.post('http://localhost:3000/category', {
@@ -66,9 +66,9 @@ const AddItem = () => {
       console.error(err);
     }
   };
-  const onSubmitAddWarehouse = async () => {
+  const onSubmitAddWarehouse = async (e) => {
     if (warehouseLabel === '') return;
-    // e.preventDefault();
+    e.preventDefault();
     try {
       console.log('warehouse label', warehouseLabel);
       const response = await axios.post('http://localhost:3000/warehouse', {
