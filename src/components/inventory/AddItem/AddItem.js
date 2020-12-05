@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const axios = require('axios');
 
@@ -59,6 +59,28 @@ const AddItem = () => {
       console.error(err);
     }
   };
+
+  const getItems = async () => {
+    let url;
+    if (warehouse === '' && category === '') {
+      url = 'http://localhost:3000/inventory/';
+    } else {
+      url = 'http://localhost:3000/inventory/get/';
+    }
+    try {
+      const response = await axios.get(url, {
+        warehouseLabel, label,
+      });
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getItems();
+  }, [warehouse, category]);
+
   return (
     <>
       {/** ADD ITEM BUTTON */}
