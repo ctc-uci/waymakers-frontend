@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import EditableItem from '../EditableItem/EditableItem';
+import AddItemModal from '../AddItem/AddItemModal';
 
 const axios = require('axios');
 
@@ -81,7 +82,8 @@ const Table = (prop) => {
   // Splits "Edit" button into "Cancel" and "Save" buttons
   const EditButton = () => {
     const editButtonPair = (
-      <div>
+      <div className="editview">
+        <AddItemModal />
         <button type="button" id="save-edit" className="btn btn-outline-success" onClick={handleClick}>
           Save
         </button>

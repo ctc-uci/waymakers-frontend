@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 const axios = require('axios');
 
+// note: this is only used in AddItemModal.js
+
 // Add item menu here
 const AddItem = () => {
   // name of item
