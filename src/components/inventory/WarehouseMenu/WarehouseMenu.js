@@ -15,7 +15,6 @@ const WarehouseMenu = (prop) => {
         onChange={() => {
           const selectedCategory = (label === 'Show All Warehouses') ? '' : label;
           prop.setSelectedWarehouse(selectedCategory);
-          // prop.setSelectedWarehouse(e.target.value);
         }}
       />
       {label}
