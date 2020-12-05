@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import EventsView from './events-view/eventsView';
+import axios from 'axios';
 
-const axios = require('axios');
+import EventsView from './events-view/eventsView';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -21,7 +21,7 @@ const Events = () => {
           description: event.event_description,
         }));
 
-        // Will have to filter accordingly for each myEvents, curEvents later
+        // TODO: Will have to filter accordingly for each myEvents, curEvents later
         setEvents(eventList);
       }
     } catch (e) {

@@ -1,26 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
 import EditEvents from '../events/edit-events/editEvents';
 
 const Dashboard = () => {
-  // const [events, setEvents] = useState([]);
-  const events = [];
-
+  const [events, setEvents] = useState([]);
   useEffect(async () => {
     try {
       // GET events from the backend
       let allEvents = await axios.get('http://localhost:3000/events/');
       if (allEvents.status === 200) {
         allEvents = allEvents.data;
-        // const eventList = allEvents.map((event) => ({
-        //   title: event.event_name,
-        //   startTime: event.start_time,
-        //   endTime: event.end_time,
-        //   eventType: event.event_type,
-        //   location: event.event_location,
-        //   description: event.event_description,
-        //   id: event.event_id,
-        // }));
+        const eventList = allEvents.map((event) => ({
+          title: event.event_name,
+          startTime: event.start_time,
+          endTime: event.end_time,
+          eventType: event.event_type,
+          location: event.event_location,
+          description: event.event_description,
+          id: event.event_id,
+        }));
+
+        setEvents(eventList);
 
         // Sorting event list to only render the upcoming events
         // eventList.sort((a, b) => {

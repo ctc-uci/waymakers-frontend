@@ -7,11 +7,6 @@ import EditEventPopup from './editEventPopup';
 import AddEventPopup from './addEventPopup';
 
 const EditEvents = ({ events }) => {
-//   const dateAndTime = `${event.date}__${event.time}`;
-// Buttons to toggle this week and this month
-// separate Event component for each event square
-// + button
-// All events button
   const [filter, setFilter] = useState('week');
   const [editPopup, setEditPopup] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
@@ -35,6 +30,8 @@ const EditEvents = ({ events }) => {
     // return event component for each
     // eslint-disable-next-line
     console.log(events);
+    console.log(setSelectedEvent);
+    // return <div>Events Yay</div>;
     return events.map((event) => (
       <Event
         key={event.id}
