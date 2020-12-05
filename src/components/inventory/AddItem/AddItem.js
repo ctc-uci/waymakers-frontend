@@ -12,13 +12,33 @@ const AddItem = () => {
   const [needed, setNeeded] = useState(0);
   // category of item
   const [category, setCategory] = useState('');
+  // name of category to add
+  const [label, setLabel] = useState('');
   // warehouse of item
   const [warehouse, setWarehouse] = useState('');
   // name of warehouse to add
   const [warehouseLabel, setWarehouseLabel] = useState('');
 
-  // name of category to add
-  const [label, setLabel] = useState('');
+  const getItems = async () => {
+    let url;
+    if (warehouseLabel === '' && label === '') {
+      url = 'http://localhost:3000/inventory/';
+    } else {
+      url = 'http://localhost:3000/inventory/get/';
+    }
+    try {
+      const response = await axios.get(url, {
+        warehouseLabel, label,
+      });
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getItems();
+  }, []);
 
   const onSubmitAddItem = async () => {
     if (name === '' || quantity < 0 || needed < 0) return;
@@ -59,27 +79,6 @@ const AddItem = () => {
       console.error(err);
     }
   };
-
-  const getItems = async () => {
-    let url;
-    if (warehouse === '' && category === '') {
-      url = 'http://localhost:3000/inventory/';
-    } else {
-      url = 'http://localhost:3000/inventory/get/';
-    }
-    try {
-      const response = await axios.get(url, {
-        warehouseLabel, label,
-      });
-      console.log(response);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    getItems();
-  }, [warehouse, category]);
 
   return (
     <>

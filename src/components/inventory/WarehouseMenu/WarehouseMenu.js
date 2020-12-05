@@ -12,8 +12,10 @@ const WarehouseMenu = (prop) => {
         type="radio"
         name="warehouse"
         value={label}
-        onChange={(e) => {
-          prop.setSelectedWarehouse(e.target.value);
+        onChange={() => {
+          const selectedCategory = (label === 'Show All Warehouses') ? '' : label;
+          prop.setSelectedWarehouse(selectedCategory);
+          // prop.setSelectedWarehouse(e.target.value);
         }}
       />
       {label}

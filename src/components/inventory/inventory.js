@@ -26,7 +26,7 @@ const Inventory = () => {
   // Request items from server
   const getItems = async () => {
     let url;
-    if (searchSubstring === '' && selectedCategory === '' && selectedWarehouse) { // **TODO** ADD WAREHOUSE!!!
+    if (searchSubstring === '' && selectedCategory === '' && selectedWarehouse === '') {
       // NOT SEARCHING
       url = 'http://localhost:3000/inventory/';
     } else {
@@ -35,7 +35,7 @@ const Inventory = () => {
     }
     const paramsQuery = {
       params: {
-        warehouse: selectedWarehouse, // **TODO** <======CHANGE THIS!!!
+        warehouse: selectedWarehouse,
         category: selectedCategory,
         search: searchSubstring,
       },
