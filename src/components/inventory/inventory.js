@@ -4,6 +4,7 @@ import AddItem from './AddItem/AddItem';
 import SearchItem from './SearchItem/SearchItem';
 import Table from './Table/Table';
 import './inventory.css';
+
 import WarehouseMenu from './WarehouseMenu/WarehouseMenu';
 
 const axios = require('axios');
@@ -24,28 +25,23 @@ const Inventory = () => {
 
   // Request items from server
   const getItems = async () => {
-    console.log('Getting items');
-    let url = '';
-    if (searchSubstring === '' && selectedCategory === '' && selectedWarehouse === '') {
+    let url;
+    if (searchSubstring === '' && selectedCategory === '' && selectedWarehouse) { // **TODO** ADD WAREHOUSE!!!
+      // NOT SEARCHING
       url = 'http://localhost:3000/inventory/';
-    } else if (selectedWarehouse === '' && selectedCategory === '') {
-      url = `http://localhost:3000/inventory/search/${searchSubstring}`;
-    } else if (selectedCategory === '' && searchSubstring === '') {
-      url = `http://localhost:3000/inventory/search/${selectedWarehouse}`;
-    } else if (selectedWarehouse === '' && searchSubstring === '') {
-      url = `http://localhost:3000/inventory/search/${selectedCategory}`;
-    } else if (selectedWarehouse === '') {
-      url = `http://localhost:3000/inventory/search/${selectedCategory}/${searchSubstring}`;
-    } else if (selectedCategory === '') {
-      url = `http://localhost:3000/inventory/search/${selectedWarehouse}/${searchSubstring}`;
-    } else if (searchSubstring === '') {
-      url = `http://localhost:3000/inventory/search/${selectedWarehouse}/${selectedCategory}`;
     } else {
-      url = `http://localhost:3000/inventory/search/${selectedWarehouse}/${selectedCategory}/${searchSubstring}`;
+      // Searching for WAREHOUSE or CATEGORY or SUBSTRING
+      url = 'http://localhost:3000/inventory/get/';
     }
-
+    const paramsQuery = {
+      params: {
+        warehouse: selectedWarehouse, // **TODO** <======CHANGE THIS!!!
+        category: selectedCategory,
+        search: searchSubstring,
+      },
+    };
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, paramsQuery);
       setItems(response.data);
     } catch (err) {
       console.error(err);
@@ -64,6 +60,17 @@ const Inventory = () => {
     }
   };
 
+  // Displays selected category
+  const CurrentCategoryLabel = () => {
+    const currentCategory = selectedCategory === '' ? ' All Categories' : ` ${selectedCategory}`;
+    return (
+      <h3>
+        Showing Category:
+        {currentCategory}
+      </h3>
+    );
+  };
+
   // Request warehouses from server
   const getWarehouses = async () => {
     console.log('Getting Warehouse');
@@ -76,17 +83,6 @@ const Inventory = () => {
     }
   };
 
-  // Displays selected category
-  const CurrentCategoryLabel = () => {
-    const currentCategory = selectedCategory === '' ? ' All Categories' : ` ${selectedCategory}`;
-    return (
-      <h3>
-        Showing Category:
-        {currentCategory}
-      </h3>
-    );
-  };
-
   // Displays selected warehouse
   const CurrentWarehouseLabel = () => {
     const currentWarehouse = selectedWarehouse === '' ? ' All Warehouse' : ` ${selectedWarehouse}`;
@@ -97,7 +93,6 @@ const Inventory = () => {
       </h3>
     );
   };
-
   // Once component mounts, call getCategories
   useEffect(() => {
     getCategories();
@@ -107,7 +102,6 @@ const Inventory = () => {
   useEffect(() => {
     getWarehouses();
   }, []);
-
   // Updates items list when selectedCategory changes or searchSubstring changes
   useEffect(() => {
     getItems();
