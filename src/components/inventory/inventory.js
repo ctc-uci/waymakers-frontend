@@ -5,11 +5,8 @@ import SearchItem from './SearchItem/SearchItem';
 import Table from './Table/Table';
 import './inventory.css';
 
-<<<<<<< HEAD
-=======
 import WarehouseMenu from './WarehouseMenu/WarehouseMenu';
 
->>>>>>> bd-warehouse-frontend
 const axios = require('axios');
 
 const Inventory = () => {
@@ -21,22 +18,15 @@ const Inventory = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   // Search substring
   const [searchSubstring, setSearchSubstring] = useState('');
-<<<<<<< HEAD
-=======
   // Warehouse list
   const [warehouseList, setWarehouseList] = useState([]);
   // Warehouse selected by user
   const [selectedWarehouse, setSelectedWarehouse] = useState('');
->>>>>>> bd-warehouse-frontend
 
   // Request items from server
   const getItems = async () => {
     let url;
-<<<<<<< HEAD
-    if (searchSubstring === '' && selectedCategory === '') { // **TODO** ADD WAREHOUSE!!!
-=======
     if (searchSubstring === '' && selectedCategory === '' && selectedWarehouse === '') {
->>>>>>> bd-warehouse-frontend
       // NOT SEARCHING
       url = 'http://localhost:3000/inventory/';
     } else {
@@ -45,11 +35,7 @@ const Inventory = () => {
     }
     const paramsQuery = {
       params: {
-<<<<<<< HEAD
-        warehouse: '', // **TODO** <======CHANGE THIS!!!
-=======
         warehouse: selectedWarehouse,
->>>>>>> bd-warehouse-frontend
         category: selectedCategory,
         search: searchSubstring,
       },
