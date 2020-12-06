@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './WarehouseMenu.css';
 
 const WarehouseMenu = (prop) => {
   // Gets warehouse list from inventory.js
