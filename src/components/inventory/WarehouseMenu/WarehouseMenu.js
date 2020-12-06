@@ -23,9 +23,10 @@ const WarehouseMenu = (prop) => {
 
   // Creating list of buttons for warehouse menu
   const Menu = (list) => list.map((el) => {
+    const { warehouselabel } = el;
     const { warehouseLabel } = el;
-    console.log({ warehouseLabel }, { list });
-    return MenuItem(warehouseLabel);
+    console.log({ warehouselabel }, { el });
+    return MenuItem((warehouselabel === undefined) ? warehouseLabel : warehouselabel);
   });
 
   const [menu, setMenu] = useState(Menu(warehouseList, 0));

@@ -19,30 +19,8 @@ const AddItem = () => {
   // name of warehouse to add
   const [warehouseLabel, setWarehouseLabel] = useState('');
 
-  // const getItems = async () => {
-  //   let url;
-  //   if (warehouseLabel === '' && label === '') {
-  //     url = 'http://localhost:3000/inventory/';
-  //   } else {
-  //     url = 'http://localhost:3000/inventory/get/';
-  //   }
-  //   try {
-  //     const response = await axios.get(url, {
-  //       warehouseLabel, label,
-  //     });
-  //     console.log(response);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getItems();
-  // }, []);
-
   const onSubmitAddItem = async () => {
     if (name === '' || quantity < 0 || needed < 0) return;
-    // e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/inventory', {
         name, quantity, needed, category, warehouse,
@@ -53,9 +31,8 @@ const AddItem = () => {
     }
   };
 
-  const onSubmitAddCategory = async (e) => {
+  const onSubmitAddCategory = async () => {
     if (label === '') return;
-    e.preventDefault();
     try {
       console.log(label);
       const response = await axios.post('http://localhost:3000/category', {
@@ -66,9 +43,8 @@ const AddItem = () => {
       console.error(err);
     }
   };
-  const onSubmitAddWarehouse = async (e) => {
+  const onSubmitAddWarehouse = async () => {
     if (warehouseLabel === '') return;
-    e.preventDefault();
     try {
       console.log('warehouse label', warehouseLabel);
       const response = await axios.post('http://localhost:3000/warehouse', {
