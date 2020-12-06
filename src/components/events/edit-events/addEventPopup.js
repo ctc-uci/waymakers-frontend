@@ -18,16 +18,17 @@ const AddEventPopup = ({ onClose }) => {
     e.preventDefault();
     // Create new event object with react state
     const newEvent = {
-      event_name: title,
-      event_type: eventType,
-      event_location: location,
-      event_description: description,
-      start_time: new Date(startTime),
-      end_time: new Date(endTime),
-      all_day: false, // default to false right now
+      eventName: title,
+      eventType,
+      eventLocation: location,
+      eventDescription: description,
+      startTime: new Date(startTime),
+      endTime: new Date(endTime),
+      isAllDay: false, // default to false right now
     };
 
-    console.log(newEvent.start_time);
+    // eslint-disable-next-line
+    console.log(newEvent.startTime);
 
     try {
       // POST new event

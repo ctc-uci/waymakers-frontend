@@ -9,7 +9,7 @@ const Events = () => {
   useEffect(async () => {
     try {
       // GET events from the backend
-      let currentEvents = await axios.get('http://localhost:2999/events/');
+      let currentEvents = await axios.get('http://localhost:3000/events/');
       if (currentEvents.status === 200) {
         currentEvents = currentEvents.data;
         const eventList = currentEvents.map((event) => ({

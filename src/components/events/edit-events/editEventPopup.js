@@ -1,21 +1,51 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import '../event-popup/eventPopup.css';
 
 const EditEventPopup = ({ event, onClose }) => {
+  // yyyy-MM-ddThh:mm
+  // eslint-disable-next-line
+  console.log(event.startTime);
   const [title, setTitle] = useState(event.title);
-  const [startDate, setStartDate] = useState(event.startDate);
-  const [endDate, setEndDate] = useState(event.endDate);
+  const [startTime, setStartDate] = useState(event.startTime.substring(0, 16).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+  const [endTime, setEndDate] = useState(event.endTime.substring(0, 16).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
   const [location, setLocation] = useState(event.location);
   const [description, setDescription] = useState(event.description);
   const [eventType, setEventType] = useState(event.eventType);
 
-  const onSubmit = (e) => {
-    // the axios call to the backend will go here!!
-    // make sure that the event object passed through has an id property
-    // close the popup
+  const onSubmit = async (e) => {
     e.preventDefault();
+    // // the axios call to the backend will go here!!
+    // // make sure that the event object passed through has an id property
+    // // close the popup
+    const editedEvent = {
+      eventName: title,
+      eventType,
+      eventLocation: location,
+      eventDescription: description,
+      startTime: new Date(startTime),
+      endTime: new Date(endTime),
+      isAllDay: false, // default to false right now
+    };
+
+    try {
+      const updatedEvent = await axios.put(`http://localhost:3000/events/${event.id}`, editedEvent);
+      // eslint-disable-next-line
+      console.log(updatedEvent.status);
+      if (updatedEvent.status === 200 && updatedEvent.data) {
+        // eslint-disable-next-line
+        console.log('Event added successfully');
+      } else {
+        // eslint-disable-next-line
+        console.log('Failed to create event');
+      }
+    } catch (error) {
+      // eslint-disable-next-line
+      console.log('Error while trying to add event ' + error);
+    }
+
     onClose();
   };
 
@@ -37,13 +67,13 @@ const EditEventPopup = ({ event, onClose }) => {
         </label>
         <br />
         <label htmlFor="start-date">
-          Start Date:
-          <input id="start-date" type="datetime-local" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
+          Start Time:
+          <input id="start-date" type="datetime-local" value={startTime} onChange={(e) => setStartDate(e.target.value)} required />
         </label>
         <br />
         <label htmlFor="end-date">
-          End Date:
-          <input id="end-date" type="datetime-local" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
+          End Time:
+          <input id="end-date" type="datetime-local" value={endTime} onChange={(e) => setEndDate(e.target.value)} required />
         </label>
         <br />
         <label htmlFor="location">

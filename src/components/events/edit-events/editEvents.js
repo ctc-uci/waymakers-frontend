@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './editEvents.css';
+import { Link } from 'react-router-dom';
 
 import Event from '../event/event';
 import EditEventPopup from './editEventPopup';
@@ -27,12 +28,13 @@ const EditEvents = ({ events }) => {
     // use the first two events based on filter (implement filter later)
     // sort events
     // filter
-    // return event component for each
+    // return event component for eac
     // eslint-disable-next-line
     console.log(events);
+    // eslint-disable-next-line
     console.log(setSelectedEvent);
-    // return <div>Events Yay</div>;
-    return events.map((event) => (
+    // Render first two events for now
+    return events.slice(0, 2).map((event) => (
       <Event
         key={event.id}
         event={event}
@@ -79,9 +81,9 @@ const EditEvents = ({ events }) => {
           <p>Add Event</p>
         </div>
       </div>
-      <div>
+      <Link to="/events">
         <button className="all-events" type="button">All Events</button>
-      </div>
+      </Link>
     </div>
   );
 };
