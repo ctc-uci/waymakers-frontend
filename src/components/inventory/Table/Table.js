@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import EditableItem from '../EditableItem/EditableItem';
+<<<<<<< HEAD:src/components/inventory/Table/Table.js
 import AddItemModal from '../AddItem/AddItemModal';
+=======
+>>>>>>> bd-warehouse-frontend:src/components/inventory/Table.js
 
 const axios = require('axios');
 

@@ -14,16 +14,18 @@ const AddItem = () => {
   const [needed, setNeeded] = useState(0);
   // category of item
   const [category, setCategory] = useState('');
-
   // name of category to add
   const [label, setLabel] = useState('');
+  // warehouse of item
+  const [warehouse, setWarehouse] = useState('');
+  // name of warehouse to add
+  const [warehouselabel, setWarehouseLabel] = useState('');
 
   const onSubmitAddItem = async () => {
     if (name === '' || quantity < 0 || needed < 0) return;
-    // e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/inventory', {
-        name, quantity, needed, category,
+        name, quantity, needed, category, warehouse,
       });
       console.log(response);
     } catch (err) {
@@ -33,11 +35,22 @@ const AddItem = () => {
 
   const onSubmitAddCategory = async () => {
     if (label === '') return;
-    // e.preventDefault();
     try {
       console.log(label);
       const response = await axios.post('http://localhost:3000/category', {
         label,
+      });
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const onSubmitAddWarehouse = async () => {
+    if (warehouselabel === '') return;
+    try {
+      console.log('warehouse label', warehouselabel);
+      const response = await axios.post('http://localhost:3000/warehouse', {
+        warehouselabel,
       });
       console.log(response);
     } catch (err) {
@@ -75,6 +88,13 @@ const AddItem = () => {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Item Warehouse"
+          value={warehouse}
+          onChange={(e) => setWarehouse(e.target.value)}
+        />
         <button type="submit" className="btn btn-success">Add</button>
       </form>
       {/** ADD CATEGORY BUTTON */}
@@ -87,6 +107,17 @@ const AddItem = () => {
           onChange={(e) => setLabel(e.target.value)}
         />
         <button type="submit" className="btn btn-success">Add Category</button>
+      </form>
+      {/** ADD WAREHOUSE BUTTON */}
+      <form className="d-flex flex-column" onSubmit={onSubmitAddWarehouse}>
+        <input
+          type="text"
+          placeholder="Warehouse Label"
+          className="form-control"
+          value={warehouselabel}
+          onChange={(e) => setWarehouseLabel(e.target.value)}
+        />
+        <button type="submit" className="btn btn-success">Add Warehouse</button>
       </form>
     </>
   );

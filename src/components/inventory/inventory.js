@@ -5,6 +5,11 @@ import SearchItem from './SearchItem/SearchItem';
 import Table from './Table/Table';
 import './inventory.css';
 
+<<<<<<< HEAD
+=======
+import WarehouseMenu from './WarehouseMenu/WarehouseMenu';
+
+>>>>>>> bd-warehouse-frontend
 const axios = require('axios');
 
 const Inventory = () => {
@@ -16,11 +21,22 @@ const Inventory = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   // Search substring
   const [searchSubstring, setSearchSubstring] = useState('');
+<<<<<<< HEAD
+=======
+  // Warehouse list
+  const [warehouseList, setWarehouseList] = useState([]);
+  // Warehouse selected by user
+  const [selectedWarehouse, setSelectedWarehouse] = useState('');
+>>>>>>> bd-warehouse-frontend
 
   // Request items from server
   const getItems = async () => {
     let url;
+<<<<<<< HEAD
     if (searchSubstring === '' && selectedCategory === '') { // **TODO** ADD WAREHOUSE!!!
+=======
+    if (searchSubstring === '' && selectedCategory === '' && selectedWarehouse === '') {
+>>>>>>> bd-warehouse-frontend
       // NOT SEARCHING
       url = 'http://localhost:3000/inventory/';
     } else {
@@ -29,7 +45,11 @@ const Inventory = () => {
     }
     const paramsQuery = {
       params: {
+<<<<<<< HEAD
         warehouse: '', // **TODO** <======CHANGE THIS!!!
+=======
+        warehouse: selectedWarehouse,
+>>>>>>> bd-warehouse-frontend
         category: selectedCategory,
         search: searchSubstring,
       },
@@ -65,20 +85,51 @@ const Inventory = () => {
     );
   };
 
+  // Request warehouses from server
+  const getWarehouses = async () => {
+    console.log('Getting Warehouse');
+    try {
+      const response = await axios.get('http://localhost:3000/warehouse/');
+      // Adding All Warehouse" to warehouseList
+      setWarehouseList([{ warehouselabel: 'Show All Warehouses' }].concat(response.data));
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  // Displays selected warehouse
+  const CurrentWarehouseLabel = () => {
+    const currentWarehouse = selectedWarehouse === '' ? ' All Warehouse' : ` ${selectedWarehouse}`;
+    return (
+      <h3>
+        Showing Warehouse:
+        {currentWarehouse}
+      </h3>
+    );
+  };
   // Once component mounts, call getCategories
   useEffect(() => {
     getCategories();
   }, []);
 
+  //  Once component mounts, call getWarehouses
+  useEffect(() => {
+    getWarehouses();
+  }, []);
   // Updates items list when selectedCategory changes or searchSubstring changes
   useEffect(() => {
     getItems();
-  }, [selectedCategory, searchSubstring]);
+  }, [selectedCategory, searchSubstring, selectedWarehouse]);
 
   return (
     <div className="inventory">
       <h1>Inventory</h1>
-      <h1 className="text-center mt-5">Warehouse #1</h1>
+      <CurrentWarehouseLabel />
+      <WarehouseMenu
+        selectedWarehouse={selectedWarehouse}
+        warehouseList={warehouseList}
+        setSelectedWarehouse={setSelectedWarehouse}
+      />
       <AddItem />
       <CategoryMenu
         selectedCategory={selectedCategory}
