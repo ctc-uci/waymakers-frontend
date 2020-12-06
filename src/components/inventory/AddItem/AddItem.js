@@ -17,7 +17,7 @@ const AddItem = () => {
   // warehouse of item
   const [warehouse, setWarehouse] = useState('');
   // name of warehouse to add
-  const [warehouseLabel, setWarehouseLabel] = useState('');
+  const [warehouselabel, setWarehouseLabel] = useState('');
 
   const onSubmitAddItem = async () => {
     if (name === '' || quantity < 0 || needed < 0) return;
@@ -44,11 +44,11 @@ const AddItem = () => {
     }
   };
   const onSubmitAddWarehouse = async () => {
-    if (warehouseLabel === '') return;
+    if (warehouselabel === '') return;
     try {
-      console.log('warehouse label', warehouseLabel);
+      console.log('warehouse label', warehouselabel);
       const response = await axios.post('http://localhost:3000/warehouse', {
-        warehouseLabel,
+        warehouselabel,
       });
       console.log(response);
     } catch (err) {
@@ -112,7 +112,7 @@ const AddItem = () => {
           type="text"
           placeholder="Warehouse Label"
           className="form-control"
-          value={warehouseLabel}
+          value={warehouselabel}
           onChange={(e) => setWarehouseLabel(e.target.value)}
         />
         <button type="submit" className="btn btn-success">Add Warehouse</button>

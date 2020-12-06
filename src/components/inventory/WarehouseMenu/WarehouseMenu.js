@@ -5,28 +5,27 @@ const WarehouseMenu = (prop) => {
   const [warehouseList, setWarehouseList] = useState(prop.warehouseList);
 
   // Returns a button for a single warehouse
-  const MenuItem = (warehouseLabel) => (
-    <label htmlFor={warehouseLabel}>
+  const MenuItem = (warehouselabel) => (
+    <label htmlFor={warehouselabel}>
       <input
-        id={warehouseLabel}
+        id={warehouselabel}
         type="radio"
         name="warehouse"
-        value={warehouseLabel}
+        value={warehouselabel}
         onChange={() => {
-          const selectedCategory = (warehouseLabel === 'Show All Warehouses') ? '' : warehouseLabel;
+          const selectedCategory = (warehouselabel === 'Show All Warehouses') ? '' : warehouselabel;
           prop.setSelectedWarehouse(selectedCategory);
         }}
       />
-      {warehouseLabel}
+      {warehouselabel}
     </label>
   );
 
   // Creating list of buttons for warehouse menu
   const Menu = (list) => list.map((el) => {
     const { warehouselabel } = el;
-    const { warehouseLabel } = el;
     console.log({ warehouselabel }, { el });
-    return MenuItem((warehouselabel === undefined) ? warehouseLabel : warehouselabel);
+    return MenuItem(warehouselabel);
   });
 
   const [menu, setMenu] = useState(Menu(warehouseList, 0));
