@@ -4,10 +4,10 @@ import './event.css';
 import '../edit-events/editEvents.css';
 
 const Event = ({ event, onEditEventClick }) => {
-  // eslint-disable-next-line
-  console.log(event);
+  // Date formatting
   const startTime = new Date(event.startTime).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
   const endTime = new Date(event.endTime).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
+
   return (
     <div className="eventContainer">
       <h3>{event.title}</h3>

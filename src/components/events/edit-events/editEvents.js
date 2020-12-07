@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import './editEvents.css';
 import { Link } from 'react-router-dom';
 
@@ -7,11 +8,38 @@ import Event from '../event/event';
 import EditEventPopup from './editEventPopup';
 import AddEventPopup from './addEventPopup';
 
-const EditEvents = ({ events }) => {
+const EditEvents = () => {
+  const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState('week');
   const [editPopup, setEditPopup] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+
+  async function getEvents() {
+    try {
+      let allEvents = await axios.get('http://localhost:3000/events/');
+      if (allEvents.status === 200) {
+        allEvents = allEvents.data.map((event) => ({
+          title: event.event_name,
+          startTime: event.start_time,
+          endTime: event.end_time,
+          eventType: event.event_type,
+          location: event.event_location,
+          description: event.event_description,
+          id: event.event_id,
+        }));
+      }
+      setEvents(allEvents);
+    } catch (e) {
+      // eslint-disable-next-line
+      console.log('Error while getting events from the backend!');
+    }
+  }
+
+  // Load / Refresh events
+  useEffect(() => {
+    getEvents();
+  }, []);
 
   // passed into Event component for the Edit button => shows the popup
   const onEditEventClick = (event) => {
@@ -19,22 +47,13 @@ const EditEvents = ({ events }) => {
     setEditPopup(true);
   };
 
-  const onAddEventClick = () => {
-    // setSelectedEvent(event.event);
-    setAddPopup(!addPopup);
-  };
-
   const renderEvents = () => {
-    // use the first two events based on filter (implement filter later)
-    // sort events
-    // filter
-    // return event component for eac
+    // TODO: Filter week and month events!
+
     // eslint-disable-next-line
-    console.log(events);
-    // eslint-disable-next-line
-    console.log(setSelectedEvent);
+    console.log('implement filtering here');
     // Render first two events for now
-    return events.slice(0, 2).map((event) => (
+    return events.map((event) => (
       <Event
         key={event.id}
         event={event}
@@ -48,7 +67,10 @@ const EditEvents = ({ events }) => {
       return (
         <EditEventPopup
           event={selectedEvent}
-          onClose={() => setEditPopup(false)}
+          onClose={() => {
+            setEditPopup(false);
+            getEvents();
+          }}
         />
       );
     }
@@ -73,11 +95,11 @@ const EditEvents = ({ events }) => {
         <button className={filter === 'month' ? 'active' : 'disabled'} type="button" onClick={() => { setFilter('month'); }} aria-label="Change filter to month">This Month</button>
       </div>
       <div id="middle-section">
-        { renderEditPopup() }
-        { renderAddPopup() }
-        { renderEvents() }
+        {renderEditPopup()}
+        {renderAddPopup()}
+        {renderEvents()}
         <div className="add-event">
-          <button type="button" className="add-event-button" onClick={onAddEventClick}>+</button>
+          <button type="button" className="add-event-button" onClick={() => setAddPopup(!addPopup)}>+</button>
           <p>Add Event</p>
         </div>
       </div>
@@ -88,7 +110,4 @@ const EditEvents = ({ events }) => {
   );
 };
 
-EditEvents.propTypes = {
-  events: PropTypes.arrayOf(Object).isRequired,
-};
 export default EditEvents;

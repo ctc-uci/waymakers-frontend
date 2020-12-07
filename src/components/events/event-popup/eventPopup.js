@@ -18,7 +18,7 @@ const EventPopup = ({ event, onClose, addEvent }) => {
   const endDate = formatDate(event.end, formatConfig);
 
   // Renders add button if addEvent was passed in (so MyEvents will have no add button)
-  const getAddButton = () => {
+  const renderAddButton = () => {
     if (addEvent != null) {
       return (
         <button type="button" aria-label="add event to my cal" onClick={addEvent}>Add</button>
@@ -34,7 +34,7 @@ const EventPopup = ({ event, onClose, addEvent }) => {
       <p>{`End: ${endDate}`}</p>
       <p>{`Location: ${event.extendedProps.location}`}</p>
       <p>{`Details: ${event.extendedProps.description}`}</p>
-      {getAddButton()}
+      {renderAddButton()}
       <button type="button" aria-label="close popup" onClick={onClose}>Close</button>
     </div>
   );

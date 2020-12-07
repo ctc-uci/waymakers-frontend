@@ -14,9 +14,8 @@ const AddEventPopup = ({ onClose }) => {
 
   // adds event to the database
   const onSubmit = async (e) => {
-    // make sure that the event object passed through has an id property
     e.preventDefault();
-    // Create new event object with react state
+
     const newEvent = {
       eventName: title,
       eventType,
@@ -27,14 +26,8 @@ const AddEventPopup = ({ onClose }) => {
       isAllDay: false, // default to false right now
     };
 
-    // eslint-disable-next-line
-    console.log(newEvent.startTime);
-
     try {
-      // POST new event
       const addedEvent = await axios.post('http://localhost:3000/events/add', newEvent);
-      // eslint-disable-next-line
-      console.log(addedEvent.status);
       if (addedEvent.status === 200 && addedEvent.data) {
         // eslint-disable-next-line
         console.log('Event added successfully');

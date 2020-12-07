@@ -5,9 +5,6 @@ import axios from 'axios';
 import '../event-popup/eventPopup.css';
 
 const EditEventPopup = ({ event, onClose }) => {
-  // yyyy-MM-ddThh:mm
-  // eslint-disable-next-line
-  console.log(event.startTime);
   const [title, setTitle] = useState(event.title);
   const [startTime, setStartDate] = useState(event.startTime.substring(0, 16).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
   const [endTime, setEndDate] = useState(event.endTime.substring(0, 16).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
@@ -17,9 +14,7 @@ const EditEventPopup = ({ event, onClose }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // // the axios call to the backend will go here!!
-    // // make sure that the event object passed through has an id property
-    // // close the popup
+
     const editedEvent = {
       eventName: title,
       eventType,
@@ -32,8 +27,7 @@ const EditEventPopup = ({ event, onClose }) => {
 
     try {
       const updatedEvent = await axios.put(`http://localhost:3000/events/${event.id}`, editedEvent);
-      // eslint-disable-next-line
-      console.log(updatedEvent.status);
+
       if (updatedEvent.status === 200 && updatedEvent.data) {
         // eslint-disable-next-line
         console.log('Event added successfully');
