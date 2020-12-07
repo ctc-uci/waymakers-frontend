@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import EditableItem from '../EditableItem/EditableItem';
 import AddItemModal from '../AddItem/AddItemModal';
 
-const axios = require('axios');
-
 // TODO:
 // X Make handleClick async:
 //    X Server might be getting the changes before the user is finished typing
@@ -19,6 +17,8 @@ const axios = require('axios');
 //    - Better positioning for buttons
 //    - Mark unsaved edits with orange outline and icon
 //    - Add strike-through for unsaved deleted
+
+const axios = require('axios');
 
 const Table = (prop) => {
   const [items, setItems] = useState(prop.items);
@@ -79,17 +79,19 @@ const Table = (prop) => {
     setEditing(!editing);
   };
 
-  // Splits "Edit" button into "Cancel" and "Save" buttons
+  // Splits "Edit" button into "Cancel" and "Save" buttons and makes adding an item available
   const EditButton = () => {
     const editButtonPair = (
       <div className="editview">
+        <div>
+          <button type="button" id="save-edit" className="btn btn-outline-success" onClick={handleClick}>
+            Save
+          </button>
+          <button type="button" id="cancel-edit" className="btn btn-outline-danger" onClick={handleClick}>
+            Cancel
+          </button>
+        </div>
         <AddItemModal />
-        <button type="button" id="save-edit" className="btn btn-outline-success" onClick={handleClick}>
-          Save
-        </button>
-        <button type="button" id="cancel-edit" className="btn btn-outline-danger" onClick={handleClick}>
-          Cancel
-        </button>
       </div>
     );
     const editButton = (

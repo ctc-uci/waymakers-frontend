@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import CategoryMenu from './CategoryMenu/CategoryMenu';
-import AddItem from './AddItem/AddItem';
 import SearchItem from './SearchItem/SearchItem';
 import Table from './Table/Table';
 import './inventory.css';
@@ -116,7 +115,6 @@ const Inventory = () => {
         warehouseList={warehouseList}
         setSelectedWarehouse={setSelectedWarehouse}
       />
-      <AddItem />
       <CategoryMenu
         selectedCategory={selectedCategory}
         categoryList={categoryList}
