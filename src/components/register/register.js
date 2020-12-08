@@ -28,6 +28,7 @@ const Register = () => {
   async function register() {
     try {
       const user = await auth.createUserWithEmailAndPassword(email, password);
+      // eslint-disable-next-line
       console.log(user);
       history.push('/');
       // Signed in
