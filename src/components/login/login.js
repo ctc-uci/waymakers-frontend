@@ -24,6 +24,7 @@ const LogIn = () => {
   async function login() {
     try {
       const user = await auth.signInWithEmailAndPassword(email, password);
+      // eslint-disable-next-line
       console.log(user);
       history.push('/');
       // Signed in
@@ -43,6 +44,7 @@ const LogIn = () => {
       }
       // The signed-in user info.
       const { user } = result;
+      // eslint-disable-next-line
       console.log(user);
       history.push('/');
     } catch (err) {

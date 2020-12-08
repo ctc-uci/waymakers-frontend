@@ -1,0 +1,36 @@
+.eventContainer {
+    /* background-color: #999999;
+    /* border-radius: 10%; */
+    /* min-height: 10px; */ 
+    background-color: lightgrey;
+    width: 300px;
+    border: none;
+    padding: 50px;
+    margin: 20px;
+}
+
+.actionButton {
+    width: 30%;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+}
+
+.eventName {
+    text-emphasis: bold;
+    font-size: 15px;
+}
+
+.condensedEventDetails {
+    width: 60%;
+    border: 1px black;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.arrowContainer {
+    width: 15%;
+    border-radius: 7.5%;
+    border: 1px black;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+}
