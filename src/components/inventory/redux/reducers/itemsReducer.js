@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
       return action.payload;
     }
     case 'items/itemAdded': {
-      console.log(`[ACTION: items/itemAdded] Adding item with id=${id} and content ${content}`);
+      console.log(`[ACTION: items/itemAdded] Adding item with content ${action.payload}`);
       // Appending the new item
       return [...state, action.payload];
     }

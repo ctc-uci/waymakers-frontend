@@ -27,7 +27,7 @@ const AddItem = () => {
     // TODO: Handle empty/invalid items better
     if (name === '' || quantity < 0 || needed < 0) return;
     store.dispatch(addItem({
-      name, quantity, needed, category, division,
+      name, quantity, needed, division, category,
     }));
   };
 
