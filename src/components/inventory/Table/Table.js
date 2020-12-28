@@ -22,10 +22,6 @@ const axios = require('axios');
 
 const Table = (prop) => {
   const [items, setItems] = useState(prop.items);
-  // Used to set Table to editable
-  const [editing, setEditing] = useState(false);
-  // Used to cancel edits made
-  const [canceled, setCanceled] = useState(false);
 
   // Object to store edits made to table
   // Passed to each row, and appended to when a change is made
@@ -33,7 +29,7 @@ const Table = (prop) => {
 
   useEffect(() => {
     setItems(prop.items);
-  }, [prop]);
+  }, [prop.items]);
 
   // Sends edits once saved
   const saveEdits = async () => {
@@ -66,46 +62,15 @@ const Table = (prop) => {
     prop.getItems();
   };
 
-  // Handles button presses
-  const handleClick = (e) => {
-    console.log('Button Clicked: ', e.target.id);
-    if (e.target.id === 'save-edit') {
-      console.log('Saving edit');
-      saveEdits();
-    } else if (e.target.id === 'cancel-edit') {
-      console.log('Canceling edit');
-      setCanceled(!canceled);
-    }
-    setEditing(!editing);
-  };
-
-  // Splits "Edit" button into "Cancel" and "Save" buttons and makes adding an item available
-  const EditButton = () => {
-    const editButtonPair = (
-      <div className="editview">
-        <div>
-          <button type="button" id="save-edit" className="btn btn-outline-success" onClick={handleClick}>
-            Save
-          </button>
-          <button type="button" id="cancel-edit" className="btn btn-outline-danger" onClick={handleClick}>
-            Cancel
-          </button>
-        </div>
-        <AddItemModal />
-      </div>
-    );
-    const editButton = (
-      <button type="button" id="start-edit" className="btn btn-outline-primary" onClick={handleClick}>
-        Edit
-      </button>
-    );
-    return editing ? editButtonPair : editButton;
-  };
+  useEffect(() => {
+    console.log('Edit State changed');
+    saveEdits();
+  }, [prop.editState]);
 
   return (
     <div className="table">
       <div className="mt-3">
-        <EditButton />
+        {prop.editState === 'editing' && <AddItemModal />}
       </div>
       <table className="table mt-3 text-center">
         <thead>
@@ -124,9 +89,8 @@ const Table = (prop) => {
                 key={item.id}
                 item={item}
                 edits={edits}
-                editable={editing}
+                editState={prop.editState}
                 modified={false}
-                canceled={canceled}
               />
             ))}
         </tbody>

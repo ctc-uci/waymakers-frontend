@@ -40,7 +40,6 @@ const DivisionMenu = (prop) => {
   useEffect(() => {
     setMenu(Menu(divisionList, 0));
   }, [divisionList]);
-  console.log('here', { divisionList });
 
   return (
     <form>

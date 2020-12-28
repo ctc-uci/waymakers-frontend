@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import EditButton from './EditButton/EditButton';
+import DivisionMenu from './DivisionMenu/DivisionMenu';
 import CategoryMenu from './CategoryMenu/CategoryMenu';
 import SearchItem from './SearchItem/SearchItem';
 import Table from './Table/Table';
 import './inventory.css';
-
-import DivisionMenu from './DivisionMenu/DivisionMenu';
 
 const axios = require('axios');
 
@@ -21,6 +21,8 @@ const Inventory = () => {
   const [divisionList, setDivisionList] = useState([]);
   // Division selected by user
   const [selectedDivision, setSelectedDivision] = useState('');
+  // Edit state
+  const [editState, setEditState] = useState('');
 
   // Request items from server
   const getItems = async () => {
@@ -92,13 +94,9 @@ const Inventory = () => {
       </h3>
     );
   };
-  // Once component mounts, call getCategories
+  // Once component mounts, call getCategories and getDivisions
   useEffect(() => {
     getCategories();
-  }, []);
-
-  //  Once component mounts, call getDivisions
-  useEffect(() => {
     getDivisions();
   }, []);
   // Updates items list when selectedCategory changes or searchSubstring changes
@@ -110,6 +108,10 @@ const Inventory = () => {
     <div className="inventory">
       <h1>Inventory</h1>
       <CurrentdivisionLabel />
+      <EditButton
+        editState={editState}
+        setEditState={setEditState}
+      />
       <DivisionMenu
         selectedDivision={selectedDivision}
         divisionList={divisionList}
@@ -119,13 +121,18 @@ const Inventory = () => {
         selectedCategory={selectedCategory}
         categoryList={categoryList}
         setSelectedCategory={setSelectedCategory}
+        editState={editState}
       />
       <SearchItem
         searchSubstring={searchSubstring}
         setSearchSubstring={setSearchSubstring}
       />
       <CurrentCategoryLabel />
-      <Table items={items} getItems={getItems} />
+      <Table
+        items={items}
+        getItems={getItems}
+        editState={editState}
+      />
     </div>
   );
 };

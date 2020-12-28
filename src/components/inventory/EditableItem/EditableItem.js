@@ -60,13 +60,15 @@ const EditableItem = (props) => {
 
   // Reset field values once edit canceled
   useEffect(() => {
-    setFieldState({
-      name: props.item.name,
-      quantity: props.item.quantity,
-      needed: props.item.needed,
-      category: props.item.category,
-    });
-  }, [props.canceled]);
+    if (props.editState === 'canceled') {
+      setFieldState({
+        name: props.item.name,
+        quantity: props.item.quantity,
+        needed: props.item.needed,
+        category: props.item.category,
+      });
+    }
+  }, [props.editState]);
 
   // Static row to display when not in Edit mode
   const staticItem = (
@@ -128,7 +130,7 @@ const EditableItem = (props) => {
   );
 
   // Decides which table row to show, dependant on edit mode
-  return props.editable ? formItem : staticItem;
+  return props.editState === 'editing' ? formItem : staticItem;
 };
 
 export default EditableItem;
