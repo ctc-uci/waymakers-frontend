@@ -1,13 +1,19 @@
-// Functions defined here create action
+// Functions defined here create and dispatch action
 // objects that are used to modify the state
-
 const axios = require('axios');
 
 // Creates an items/itemAdded action
-export const addItem = (id, content) => ({
-  type: 'items/itemAdded',
-  payload: { id, content },
-});
+export const addItem = (newItem) => async (dispatch) => {
+  console.log('[IN ADDITEM]');
+  console.log(newItem);
+  try {
+    const response = await axios.post('http://localhost:3000/inventory', newItem);
+    console.log(response);
+    dispatch({ type: 'items/itemAdded', payload: response.data });
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // Creates a items/itemDeleted action
 export const deleteItem = (id) => ({

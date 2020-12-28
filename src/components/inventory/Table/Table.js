@@ -24,6 +24,7 @@ import { getItems } from '../redux/selectors';
 const axios = require('axios');
 
 const Table = (prop) => {
+  // Using selector to get items from store
   const items = useSelector(getItems);
 
   // Object to store edits made to table

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import store from '../redux/store';
+import { addItem } from '../redux/actions';
 
 const axios = require('axios');
 
@@ -17,20 +19,16 @@ const AddItem = () => {
   // name of category to add
   const [label, setLabel] = useState('');
   // warehouse of item
-  const [warehouse, setWarehouse] = useState('');
+  const [division, setDivision] = useState('');
   // name of warehouse to add
   const [warehouselabel, setWarehouseLabel] = useState('');
 
-  const onSubmitAddItem = async () => {
+  const onSubmitAddItem = () => {
+    // TODO: Handle empty/invalid items better
     if (name === '' || quantity < 0 || needed < 0) return;
-    try {
-      const response = await axios.post('http://localhost:3000/inventory', {
-        name, quantity, needed, category, warehouse,
-      });
-      console.log(response);
-    } catch (err) {
-      console.error(err);
-    }
+    store.dispatch(addItem({
+      name, quantity, needed, category, division,
+    }));
   };
 
   const onSubmitAddCategory = async () => {
@@ -91,9 +89,9 @@ const AddItem = () => {
         <input
           type="text"
           className="form-control"
-          placeholder="Item Warehouse"
-          value={warehouse}
-          onChange={(e) => setWarehouse(e.target.value)}
+          placeholder="Item Division"
+          value={division}
+          onChange={(e) => setDivision(e.target.value)}
         />
         <button type="submit" className="btn btn-success">Add</button>
       </form>

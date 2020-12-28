@@ -10,19 +10,6 @@
 // }];
 const initialState = [];
 
-/* Sample items/itemAdded action
-{
-  type: 'items/itemAdded',
-  payload: {
-    id: 10,
-    content: {name: 'newItem', quantity: 6, needed: 9, div_num: 0, category_id: 0}
-  }
-}
-*/
-
-// TODO:
-// - Implement Thunk middleware
-
 // Handles the logic of updating the state
 // depending on which action was dispatched
 export default (state = initialState, action) => {
@@ -33,15 +20,9 @@ export default (state = initialState, action) => {
       return action.payload;
     }
     case 'items/itemAdded': {
-      const { id, content } = action.payload;
       console.log(`[ACTION: items/itemAdded] Adding item with id=${id} and content ${content}`);
-      return [
-        ...state,
-        {
-          id,
-          ...content,
-        },
-      ];
+      // Appending the new item
+      return [...state, action.payload];
     }
     case 'items/itemDeleted': { // TODO
       const { id } = action.payload;
