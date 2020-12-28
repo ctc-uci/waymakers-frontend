@@ -1,14 +1,22 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from './reducers';
+
+// Required to debug store with Redux DevTools
+/* eslint-disable no-underscore-dangle */
+const composeEnhancers = typeof window === 'object'
+  && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+  }) : compose;
+/* eslint-enable */
+
+// Apply middleware here
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+);
 
 // Creates a store using the "rootReducer"
 // defined in ./reducers/index.js
 // export default createStore(rootReducer);
-
-// Required to debug store with Redux DevTools
-/* eslint-disable no-underscore-dangle */
-export default createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
-/* eslint-enable */
+export default createStore(rootReducer, enhancer);

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import EditableItem from '../EditableItem/EditableItem';
 import AddItemModal from '../AddItem/AddItemModal';
+
+import { getItems } from '../redux/selectors';
 
 // TODO:
 // X Make handleClick async:
@@ -21,15 +24,11 @@ import AddItemModal from '../AddItem/AddItemModal';
 const axios = require('axios');
 
 const Table = (prop) => {
-  const [items, setItems] = useState(prop.items);
+  const items = useSelector(getItems);
 
   // Object to store edits made to table
   // Passed to each row, and appended to when a change is made
   const [edits] = useState({ updated: {}, deleted: [] });
-
-  useEffect(() => {
-    setItems(prop.items);
-  }, [prop.items]);
 
   // Sends edits once saved
   const saveEdits = async () => {
@@ -57,9 +56,9 @@ const Table = (prop) => {
     Promise.all(editPromises).catch((error) => { console.error(error); });
 
     // Removing deleted items from item state variable
-    setItems(items.filter((item) => !edits.deleted.includes(item.id)));
+    // setItems(items.filter((item) => !edits.deleted.includes(item.id)));
     // Retrieving updated values from server
-    prop.getItems();
+    // prop.getItems();
   };
 
   useEffect(() => {

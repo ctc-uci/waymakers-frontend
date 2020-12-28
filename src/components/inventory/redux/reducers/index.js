@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux';
-import items from './items';
+import itemsReducer from './itemsReducer';
 
 // Combines all reducers into a single "rootReducer"
 // used to create the store
-export default combineReducers({ items });
+// Define a top-level state field named `items`, handled by `items`
+const rootReducer = combineReducers({ items: itemsReducer });
+
+export default rootReducer;
