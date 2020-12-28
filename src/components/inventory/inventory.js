@@ -4,7 +4,7 @@ import SearchItem from './SearchItem/SearchItem';
 import Table from './Table/Table';
 import './inventory.css';
 
-import WarehouseMenu from './WarehouseMenu/WarehouseMenu';
+import DivisionMenu from './DivisionMenu/DivisionMenu';
 
 const axios = require('axios');
 
@@ -17,24 +17,24 @@ const Inventory = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   // Search substring
   const [searchSubstring, setSearchSubstring] = useState('');
-  // Warehouse list
-  const [warehouseList, setWarehouseList] = useState([]);
-  // Warehouse selected by user
-  const [selectedWarehouse, setSelectedWarehouse] = useState('');
+  // Division list
+  const [divisionList, setDivisionList] = useState([]);
+  // Division selected by user
+  const [selectedDivision, setSelectedDivision] = useState('');
 
   // Request items from server
   const getItems = async () => {
     let url;
-    if (searchSubstring === '' && selectedCategory === '' && selectedWarehouse === '') {
+    if (searchSubstring === '' && selectedCategory === '' && selectedDivision === '') {
       // NOT SEARCHING
       url = 'http://localhost:3000/inventory/';
     } else {
-      // Searching for WAREHOUSE or CATEGORY or SUBSTRING
+      // Searching for Division or CATEGORY or SUBSTRING
       url = 'http://localhost:3000/inventory/get/';
     }
     const paramsQuery = {
       params: {
-        warehouse: selectedWarehouse,
+        Division: selectedDivision,
         category: selectedCategory,
         search: searchSubstring,
       },
@@ -70,25 +70,25 @@ const Inventory = () => {
     );
   };
 
-  // Request warehouses from server
-  const getWarehouses = async () => {
-    console.log('Getting Warehouse');
+  // Request Divisions from server
+  const getDivisions = async () => {
+    console.log('Getting Division');
     try {
-      const response = await axios.get('http://localhost:3000/warehouse/');
-      // Adding All Warehouse" to warehouseList
-      setWarehouseList([{ warehouselabel: 'Show All Warehouses' }].concat(response.data));
+      const response = await axios.get('http://localhost:3000/Division/');
+      // Adding All Division" to divisionList
+      setDivisionList([{ divisionLabel: 'Show All Divisions' }].concat(response.data));
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  // Displays selected warehouse
-  const CurrentWarehouseLabel = () => {
-    const currentWarehouse = selectedWarehouse === '' ? ' All Warehouse' : ` ${selectedWarehouse}`;
+  // Displays selected Division
+  const CurrentdivisionLabel = () => {
+    const currentDivision = selectedDivision === '' ? ' All Division' : ` ${selectedDivision}`;
     return (
       <h3>
-        Showing Warehouse:
-        {currentWarehouse}
+        Showing Division:
+        {currentDivision}
       </h3>
     );
   };
@@ -97,23 +97,23 @@ const Inventory = () => {
     getCategories();
   }, []);
 
-  //  Once component mounts, call getWarehouses
+  //  Once component mounts, call getDivisions
   useEffect(() => {
-    getWarehouses();
+    getDivisions();
   }, []);
   // Updates items list when selectedCategory changes or searchSubstring changes
   useEffect(() => {
     getItems();
-  }, [selectedCategory, searchSubstring, selectedWarehouse]);
+  }, [selectedCategory, searchSubstring, selectedDivision]);
 
   return (
     <div className="inventory">
       <h1>Inventory</h1>
-      <CurrentWarehouseLabel />
-      <WarehouseMenu
-        selectedWarehouse={selectedWarehouse}
-        warehouseList={warehouseList}
-        setSelectedWarehouse={setSelectedWarehouse}
+      <CurrentdivisionLabel />
+      <DivisionMenu
+        selectedDivision={selectedDivision}
+        divisionList={divisionList}
+        setSelectedDivision={setSelectedDivision}
       />
       <CategoryMenu
         selectedCategory={selectedCategory}
