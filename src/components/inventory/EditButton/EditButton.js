@@ -1,17 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { startEdits, saveEdits, cancelEdits } from '../redux/actions';
+import { getEditing } from '../redux/selectors';
+import store from '../redux/store';
 
-const EditButton = (prop) => {
+const EditButton = () => {
   const handleClick = (e) => {
     console.log('Button Clicked: ', e.target.id);
     if (e.target.id === 'start-edit') {
-      console.log('Starting edit');
-      prop.setEditState('editing');
+      store.dispatch(startEdits());
     } else if (e.target.id === 'save-edit') {
-      console.log('Saving edit');
-      prop.setEditState('saved');
+      store.dispatch(saveEdits());
     } else if (e.target.id === 'cancel-edit') {
-      console.log('Canceling edit');
-      prop.setEditState('canceled');
+      store.dispatch(cancelEdits());
     }
   };
 
@@ -32,7 +33,7 @@ const EditButton = (prop) => {
     </button>
   );
 
-  return prop.editState === 'editing' ? editButtonPair : editButton;
+  return useSelector(getEditing) ? editButtonPair : editButton;
 };
 
 export default EditButton;

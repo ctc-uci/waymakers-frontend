@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import EditButton from './EditButton/EditButton';
 import DivisionMenu from './DivisionMenu/DivisionMenu';
 import CategoryMenu from './CategoryMenu/CategoryMenu';
@@ -8,7 +8,7 @@ import Table from './Table/Table';
 import './inventory.css';
 
 import { getItems } from './redux/selectors';
-import { addItem, fetchItems } from './redux/actions';
+import { fetchItems } from './redux/actions';
 import store from './redux/store';
 
 const axios = require('axios');
@@ -97,28 +97,9 @@ const InventoryApp = () => {
     );
   };
 
-  const DispatchStoreButton = () => {
-    const dispatch = useDispatch();
-    const randID = Math.floor(10 + Math.random() * (100 - 10));
-    const newItem = {
-      name: 'newItem',
-      quantity: 6,
-      needed: 9,
-      div_num: 0,
-      category_id: 0,
-    };
-    const handleClick = () => { dispatch(addItem(randID, newItem)); };
-    return (
-      <button type="button" onClick={handleClick}>
-        Add random item
-      </button>
-    );
-  };
-
   return (
     <div className="inventory">
       <StoreDisplay />
-      <DispatchStoreButton />
       <h1>Inventory</h1>
       <CurrentdivisionLabel />
       <EditButton
