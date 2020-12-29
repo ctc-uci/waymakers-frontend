@@ -7,15 +7,13 @@ import SearchItem from './SearchItem/SearchItem';
 import Table from './Table/Table';
 import './inventory.css';
 
-import { getItems } from './redux/selectors';
-import { addItem, fetchItems } from './redux/actions';
+import { getItems, getCategories } from './redux/selectors';
+import { addItem, fetchItems, fetchCategories } from './redux/actions';
 import store from './redux/store';
 
 const axios = require('axios');
 
 const InventoryApp = () => {
-  // Current list of categories (in scroll menu)
-  const [categoryList, setCategoryList] = useState([]);
   // Category selected by user in CategoryMenu
   const [selectedCategory, setSelectedCategory] = useState('');
   // Search substring
@@ -27,7 +25,7 @@ const InventoryApp = () => {
   // Edit state
   const [editState, setEditState] = useState('');
 
-  // Request categories from server
+  /**
   const getCategories = async () => {
     console.log('Getting categories');
     try {
@@ -38,7 +36,7 @@ const InventoryApp = () => {
       console.error(err.message);
     }
   };
-
+  */
   // Displays selected category
   const CurrentCategoryLabel = () => {
     const currentCategory = selectedCategory === '' ? ' All Categories' : ` ${selectedCategory}`;
@@ -49,7 +47,6 @@ const InventoryApp = () => {
       </h3>
     );
   };
-
   // Request Divisions from server
   const getDivisions = async () => {
     console.log('Getting Division');
@@ -74,15 +71,16 @@ const InventoryApp = () => {
   };
   // Once component mounts, call getCategories and getDivisions
   useEffect(() => {
-    getCategories();
     getDivisions();
     // Fetching items from server, and updating store
     store.dispatch(fetchItems());
+    // Fetching categories from server, and updating store
+    store.dispatch(fetchCategories());
   }, []);
   // Updates items list when selectedCategory changes or searchSubstring changes
   useEffect(() => {
     store.dispatch(fetchItems());
-  }, [selectedCategory, searchSubstring, selectedDivision]);
+  }, [searchSubstring, selectedDivision]);
 
   const StoreDisplay = () => {
     const storeItems = useSelector(getItems);
@@ -93,6 +91,19 @@ const InventoryApp = () => {
       <div style={divStyle}>
         <h4>Redux Store: getItems</h4>
         <pre>{JSON.stringify(storeItems, null, 2) }</pre>
+      </div>
+    );
+  };
+
+  const CategoryStoreDisplay = () => {
+    const storeCategories = useSelector(getCategories);
+    const divStyle = {
+      border: '1px solid black',
+    };
+    return (
+      <div style={divStyle}>
+        <h4>Redux Store: getCategories</h4>
+        <pre>{JSON.stringify(storeCategories, null, 2)}</pre>
       </div>
     );
   };
@@ -119,6 +130,7 @@ const InventoryApp = () => {
     <div className="inventory">
       <StoreDisplay />
       <DispatchStoreButton />
+      <CategoryStoreDisplay />
       <h1>Inventory</h1>
       <CurrentdivisionLabel />
       <EditButton
@@ -132,7 +144,7 @@ const InventoryApp = () => {
       />
       <CategoryMenu
         selectedCategory={selectedCategory}
-        categoryList={categoryList}
+        categoryList={useSelector(getCategories)}
         setSelectedCategory={setSelectedCategory}
         editState={editState}
       />

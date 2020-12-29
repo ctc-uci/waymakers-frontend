@@ -40,3 +40,35 @@ export const fetchItems = () => async (dispatch) => {
     console.error(err);
   }
 };
+
+// Creates a category/categoryAdded action
+export const addCategory = (newCategory) => async (dispatch) => {
+  console.log('[IN ADDCATEGORY]');
+  console.log(newCategory);
+  try {
+    const response = await axios.post('http://localhost:3000/category', newCategory);
+    console.log(response);
+    dispatch({ type: 'categories/categoryAdded', payload: response.data });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// Creates a category/categoryDeleted action
+export const deleteCategory = (id) => ({
+  type: 'categories/categoryDeleted',
+  payload: { id },
+});
+
+// Fetching categories from server
+export const fetchCategories = () => async (dispatch) => {
+  const url = 'http://localhost:3000/category/';
+  try {
+    const response = await axios.get(url);
+    dispatch({ type: 'categories/categoriesLoaded', payload: response.data });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+//
