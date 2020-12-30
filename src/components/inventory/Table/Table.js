@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import EditableItem from '../EditableItem/EditableItem';
 
@@ -20,51 +20,42 @@ import { getItems } from '../redux/selectors';
 //    - Mark unsaved edits with orange outline and icon
 //    - Add strike-through for unsaved deleted
 
-const axios = require('axios');
+// const axios = require('axios');
 
-const Table = (prop) => {
+const Table = () => {
   // Using selector to get items from store
   const items = useSelector(getItems);
 
-  // Object to store edits made to table
-  // Passed to each row, and appended to when a change is made
-  const [edits] = useState({ updated: {}, deleted: [] });
-
   // Sends edits once saved
-  const saveEdits = async () => {
-    // Deleting items first
-    const deletePromises = [];
-    // Populating list of DELETE requests
-    edits.deleted.forEach(async (id) => {
-      deletePromises.push(
-        axios.delete(`http://localhost:3000/inventory/${id}`),
-      );
-    });
-    // Perform all DELETE requests concurrently
-    Promise.all(deletePromises).catch((error) => { console.error(error); });
+  // const saveEdits = async () => {
+  //   // Deleting items first
+  //   const deletePromises = [];
+  //   // Populating list of DELETE requests
+  //   edits.deleted.forEach(async (id) => {
+  //     deletePromises.push(
+  //       axios.delete(`http://localhost:3000/inventory/${id}`),
+  //     );
+  //   });
+  //   // Perform all DELETE requests concurrently
+  //   Promise.all(deletePromises).catch((error) => { console.error(error); });
 
-    // Updating edited values
-    const editPromises = [];
-    // Populating list of PUT requests
-    console.log('edits.updated():', edits.updated);
-    Object.keys(edits.updated).forEach(async (id) => {
-      editPromises.push(
-        axios.put(`http://localhost:3000/inventory/${id}`, edits.updated[id]),
-      );
-    });
-    // Perform all PUT requests concurrently
-    Promise.all(editPromises).catch((error) => { console.error(error); });
+  //   // Updating edited values
+  //   const editPromises = [];
+  //   // Populating list of PUT requests
+  //   console.log('edits.updated():', edits.updated);
+  //   Object.keys(edits.updated).forEach(async (id) => {
+  //     editPromises.push(
+  //       axios.put(`http://localhost:3000/inventory/${id}`, edits.updated[id]),
+  //     );
+  //   });
+  //   // Perform all PUT requests concurrently
+  //   Promise.all(editPromises).catch((error) => { console.error(error); });
 
-    // Removing deleted items from item state variable
-    // setItems(items.filter((item) => !edits.deleted.includes(item.id)));
-    // Retrieving updated values from server
-    // prop.getItems();
-  };
-
-  useEffect(() => {
-    console.log('Edit State changed');
-    saveEdits();
-  }, [prop.editState]);
+  //   // Removing deleted items from item state variable
+  //   // setItems(items.filter((item) => !edits.deleted.includes(item.id)));
+  //   // Retrieving updated values from server
+  //   // prop.getItems();
+  // };
 
   return (
     <div className="table">
@@ -84,8 +75,6 @@ const Table = (prop) => {
               <EditableItem
                 key={item.id}
                 item={item}
-                edits={edits}
-                editState={prop.editState}
                 modified={false}
               />
             ))}
@@ -94,5 +83,7 @@ const Table = (prop) => {
     </div>
   );
 };
+
+// TODO: Add mapStateToProps function
 
 export default Table;

@@ -8,8 +8,15 @@ export default (state = initialState, action) => {
   switch (action.type) {
     // Adding a new item edit
     case 'edits/addItemEdit': {
-      console.log('[ACTION: edits/addItemEdit] Item edit added');
-      return state;
+      console.log(`[ACTION: edits/addItemEdit] Item edit added, id: ${action.payload.id}, newValues: ${action.payload.newValues}`);
+      const { id, newValues } = action.payload;
+      return {
+        ...state,
+        editedItems: {
+          ...state.editedItems,
+          [id]: { ...newValues },
+        },
+      };
     }
     // Adding a new item delete
     case 'edits/addItemDelete': {

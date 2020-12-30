@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import EditButton from './EditButton/EditButton';
 import DivisionMenu from './DivisionMenu/DivisionMenu';
 import CategoryMenu from './CategoryMenu/CategoryMenu';
@@ -126,16 +126,9 @@ const InventoryApp = () => {
         setSearchSubstring={setSearchSubstring}
       />
       <CurrentCategoryLabel />
-      <Table
-        editState={editState}
-      />
+      <Table />
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  const items = getItems(state);
-  return { items };
-};
-
-export default connect(mapStateToProps)(InventoryApp);
+export default InventoryApp;

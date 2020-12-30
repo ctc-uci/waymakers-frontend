@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { deleteItem } from '../redux/actions'; // , editItem
+import { deleteItem, editItem } from '../redux/actions';
 import { getEditing } from '../redux/selectors';
 import store from '../redux/store';
 
@@ -14,10 +14,6 @@ const EditableItem = (props) => {
     category: props.item.category,
   });
 
-  // Tracks edits made, used in Table.js to send
-  // updates to server
-  const [edits] = useState(props.edits);
-
   // Used to update css class of unsaved edits
   const [modified, setModified] = useState(props.modified);
 
@@ -27,12 +23,7 @@ const EditableItem = (props) => {
   // Appends to edits object at every change
   // This could probably be changed to only update once
   const updateEdits = () => {
-    edits.updated[props.item.id] = {
-      name: fieldState.name,
-      quantity: fieldState.quantity,
-      needed: fieldState.needed,
-      category: fieldState.category,
-    };
+    store.dispatch(editItem(props.item.id, fieldState));
   };
 
   // Adds item id to list of items to be deleted
@@ -62,8 +53,10 @@ const EditableItem = (props) => {
   // Updating values when editing
   useEffect(() => {
     setFieldState(fieldState);
-    updateEdits();
-    console.log('useEffect for fieldState called');
+    // Only update edits if user has modified values
+    if (modified) {
+      updateEdits();
+    }
   }, [fieldState]);
 
   // Reset field values once edit canceled
