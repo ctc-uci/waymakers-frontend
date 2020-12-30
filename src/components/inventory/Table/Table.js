@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import EditableItem from '../EditableItem/EditableItem';
 import AddItemModal from '../AddItem/AddItemModal';
 
-import { getItems } from '../redux/selectors';
+import { getItems, getEditing } from '../redux/selectors';
 
 // TODO:
 // X Make handleClick async:
@@ -70,7 +70,7 @@ const Table = (prop) => {
   return (
     <div className="table">
       <div className="mt-3">
-        {prop.editState === 'editing' && <AddItemModal />}
+        {useSelector(getEditing) && <AddItemModal />}
       </div>
       <table className="table mt-3 text-center">
         <thead>

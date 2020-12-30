@@ -1,14 +1,16 @@
 // Initial state populated with sample values
-// const initialState = [{
-//   0: {
-//     name: 'initialState First Item',
-//     quantity: -1,
-//     needed: -1,
-//     div_num: -1,
-//     category_id: -1,
-//   },
-// }];
-const initialState = [];
+/*
+const initialState = [
+    {
+      "id": 0,
+      "name": "sampleItem",
+      "quantity": -1,
+      "needed": -1,
+      "div_num": -1,
+      "category_id": -1
+    }
+*/
+const initialState = []; // List of item objects
 
 // Handles the logic of updating the state
 // depending on which action was dispatched

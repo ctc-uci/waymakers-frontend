@@ -48,6 +48,7 @@ export const startEdits = () => ({
 });
 
 // Creates a edits/saveEdits action
+// TODO: Make API calls for edits/deletions
 export const saveEdits = () => ({
   type: 'edits/saveEdits',
   payload: { },
