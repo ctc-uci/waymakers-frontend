@@ -1,7 +1,7 @@
 const initialState = {
-  editing: false,
-  editedItems: {},
-  deletedItems: [],
+  editing: false, // Indicates if the inventory is currently in edit mode
+  editedItems: {}, // Object which contains new values for any edited items
+  deletedItems: [], // List of item IDs to delete
 };
 
 export default (state = initialState, action) => {
@@ -42,11 +42,14 @@ export default (state = initialState, action) => {
       };
     }
     // Canceling all edits
+    // Resets editedItems, deletedItems to empty values
     case 'edits/cancelEdits': {
       console.log('[ACTION: edits/cancelEdits] Edits canceled');
       return {
         ...state,
         editing: false,
+        editedItems: {},
+        deletedItems: [],
       };
     }
     default: {
