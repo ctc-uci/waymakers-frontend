@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import EditButton from './EditButton/EditButton';
 import DivisionMenu from './DivisionMenu/DivisionMenu';
 import CategoryMenu from './CategoryMenu/CategoryMenu';
@@ -8,7 +8,7 @@ import Table from './Table/Table';
 import './inventory.css';
 
 import { getItems, getCategories } from './redux/selectors';
-import { addItem, fetchItems, fetchCategories } from './redux/actions';
+import { fetchItems, fetchCategories } from './redux/actions';
 import store from './redux/store';
 
 const axios = require('axios');
@@ -82,6 +82,7 @@ const InventoryApp = () => {
     store.dispatch(fetchItems());
   }, [searchSubstring, selectedDivision]);
 
+  /**
   const StoreDisplay = () => {
     const storeItems = useSelector(getItems);
     const divStyle = {
@@ -94,7 +95,7 @@ const InventoryApp = () => {
       </div>
     );
   };
-
+  */
   const CategoryStoreDisplay = () => {
     const storeCategories = useSelector(getCategories);
     const divStyle = {
@@ -107,7 +108,7 @@ const InventoryApp = () => {
       </div>
     );
   };
-
+  /**
   const DispatchStoreButton = () => {
     const dispatch = useDispatch();
     const randID = Math.floor(10 + Math.random() * (100 - 10));
@@ -125,11 +126,9 @@ const InventoryApp = () => {
       </button>
     );
   };
-
+  */
   return (
     <div className="inventory">
-      <StoreDisplay />
-      <DispatchStoreButton />
       <CategoryStoreDisplay />
       <h1>Inventory</h1>
       <CurrentdivisionLabel />
