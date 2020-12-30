@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { deleteItem } from '../redux/actions'; // , editItem
+import { getEditing } from '../redux/selectors';
+import store from '../redux/store';
 
 // Converts table rows into forms when in Edit mode
 const EditableItem = (props) => {
@@ -17,6 +21,9 @@ const EditableItem = (props) => {
   // Used to update css class of unsaved edits
   const [modified, setModified] = useState(props.modified);
 
+  // Used to update css class of unsaved delete
+  const [deleted, setDeleted] = useState(false);
+
   // Appends to edits object at every change
   // This could probably be changed to only update once
   const updateEdits = () => {
@@ -29,10 +36,11 @@ const EditableItem = (props) => {
   };
 
   // Adds item id to list of items to be deleted
-  const deleteItem = () => {
-    console.log('Deleting Item');
-    props.edits.deleted.push(props.item.id);
-    console.log(props.edits);
+  const deleteHandler = () => {
+    if (!deleted) {
+      store.dispatch(deleteItem(props.item.id));
+      setDeleted(true);
+    }
   };
 
   // Updates text fields when editing
@@ -124,13 +132,13 @@ const EditableItem = (props) => {
         />
       </td>
       <td>
-        <button type="button" className="btn btn-outline-danger" onClick={deleteItem}>Delete</button>
+        <button type="button" className="btn btn-outline-danger" onClick={deleteHandler}>Delete</button>
       </td>
     </tr>
   );
 
   // Decides which table row to show, dependant on edit mode
-  return props.editState === 'editing' ? formItem : staticItem;
+  return useSelector(getEditing) ? formItem : staticItem;
 };
 
 export default EditableItem;

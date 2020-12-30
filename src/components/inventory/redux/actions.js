@@ -41,6 +41,12 @@ export const deleteItem = (id) => ({
   payload: { id },
 });
 
+// Creates a edits/addItemEdit action
+export const editItem = () => ({
+  type: 'edits/addItemEdit',
+  payload: { },
+});
+
 // Creates a edits/startEdits action
 export const startEdits = () => ({
   type: 'edits/startEdits',

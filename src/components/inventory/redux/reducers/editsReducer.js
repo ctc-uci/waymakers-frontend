@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
       console.log('[ACTION: edits/addItemDelete] Item delete added');
       return {
         ...state,
-        deletedItems: [...state.deletedItems, action.payload],
+        deletedItems: [...state.deletedItems, action.payload.id],
       };
     }
     // Adding a new category delete

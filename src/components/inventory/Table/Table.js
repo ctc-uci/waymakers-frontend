@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import EditableItem from '../EditableItem/EditableItem';
-import AddItemModal from '../AddItem/AddItemModal';
 
-import { getItems, getEditing } from '../redux/selectors';
+import { getItems } from '../redux/selectors';
 
 // TODO:
 // X Make handleClick async:
@@ -69,9 +68,6 @@ const Table = (prop) => {
 
   return (
     <div className="table">
-      <div className="mt-3">
-        {useSelector(getEditing) && <AddItemModal />}
-      </div>
       <table className="table mt-3 text-center">
         <thead>
           <tr>

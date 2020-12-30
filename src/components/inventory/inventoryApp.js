@@ -4,10 +4,11 @@ import EditButton from './EditButton/EditButton';
 import DivisionMenu from './DivisionMenu/DivisionMenu';
 import CategoryMenu from './CategoryMenu/CategoryMenu';
 import SearchItem from './SearchItem/SearchItem';
+import AddItemModal from './AddItem/AddItemModal';
 import Table from './Table/Table';
-import './inventory.css';
+import './inventoryApp.css';
 
-import { getItems } from './redux/selectors';
+import { getItems, getEditing } from './redux/selectors';
 import { fetchItems } from './redux/actions';
 import store from './redux/store';
 
@@ -66,10 +67,13 @@ const InventoryApp = () => {
   const CurrentdivisionLabel = () => {
     const currentDivision = selectedDivision === '' ? ' All Division' : ` ${selectedDivision}`;
     return (
-      <h3>
-        Showing Division:
-        {currentDivision}
-      </h3>
+      <div>
+        <h3>
+          Showing Division:
+          {currentDivision}
+        </h3>
+        {useSelector(getEditing) && <AddItemModal />}
+      </div>
     );
   };
   // Once component mounts, call getCategories and getDivisions
