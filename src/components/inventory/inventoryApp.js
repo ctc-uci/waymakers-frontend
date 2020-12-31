@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import EditButton from './EditButton/EditButton';
 import DivisionMenu from './DivisionMenu/DivisionMenu';
 import CategoryMenu from './CategoryMenu/CategoryMenu';
 import SearchItem from './SearchItem/SearchItem';
+import AddItemModal from './AddItem/AddItemModal';
 import Table from './Table/Table';
-import './inventory.css';
+import './inventoryApp.css';
 
-import { getItems, getCategories } from './redux/selectors';
+import { getCategories, getEditing } from './redux/selectors';
 import { fetchItems, fetchCategories } from './redux/actions';
 import store from './redux/store';
 
@@ -63,10 +64,13 @@ const InventoryApp = () => {
   const CurrentdivisionLabel = () => {
     const currentDivision = selectedDivision === '' ? ' All Division' : ` ${selectedDivision}`;
     return (
-      <h3>
-        Showing Division:
-        {currentDivision}
-      </h3>
+      <div>
+        <h3>
+          Showing Division:
+          {currentDivision}
+        </h3>
+        {useSelector(getEditing) && <AddItemModal />}
+      </div>
     );
   };
   // Once component mounts, call getCategories and getDivisions
@@ -152,16 +156,9 @@ const InventoryApp = () => {
         setSearchSubstring={setSearchSubstring}
       />
       <CurrentCategoryLabel />
-      <Table
-        editState={editState}
-      />
+      <Table />
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  const items = getItems(state);
-  return { items };
-};
-
-export default connect(mapStateToProps)(InventoryApp);
+export default InventoryApp;
