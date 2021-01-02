@@ -7,7 +7,7 @@ export default (state = initialState, action) => {
     case 'categories/categoriesLoaded': {
       console.log('[ACTION: categories/categoriesLoaded] Categories loaded');
       // Overloaded current state with new items list
-      return action.payload;
+      return [{ label: 'Show All Categories' }].concat(action.payload);
     }
     case 'categories/categoryAdded': {
       console.log(`[ACTION: categories/categoryAdded] Adding category with label ${action.payload}`);
@@ -15,9 +15,8 @@ export default (state = initialState, action) => {
       return [...state, action.payload];
     }
     case 'categories/categoryDeleted': { // TODO
-      const { id } = action.payload;
-      console.log(`[ACTION: categories/categoryDeleted] Deleting category with id=${id}`);
-      return state;
+      console.log('[ACTION: categories/categoryDeleted] Deleting category');
+      return [{ label: 'Show All Categories' }].concat(action.payload);
     }
     default: {
       return state;

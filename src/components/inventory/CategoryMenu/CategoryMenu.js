@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 
+import { deleteCategory, fetchCategories } from '../redux/actions';
+
 // const axios = require('axios');
 
 // TODO: Implement category deletion
@@ -10,10 +12,13 @@ const CategoryMenu = (prop) => {
   const [categoryList, setCategoryList] = useState(prop.categoryList);
 
   // List of categories to be deleted (ids)
-  // const deleteCategories = [];
+  const deleteCategories = [];
 
   // Sends edits once saved
   const saveDeletes = async () => {
+    deleteCategories.forEach(async (id) => {
+      deleteCategory(id);
+    });
     // const deletePromises = [];
     // // Populating list of DELETE requests
     // deleteCategories.forEach(async (id) => {
@@ -23,8 +28,7 @@ const CategoryMenu = (prop) => {
     // });
     // // Perform all DELETE requests concurrently
     // Promise.all(deletePromises).catch((error) => { console.error(error); });
-
-    // prop.getCategories();
+    fetchCategories();
   };
 
   useEffect(() => {
@@ -34,35 +38,37 @@ const CategoryMenu = (prop) => {
   }, [prop.editState]);
 
   // Returns a button for a single category
-  const MenuItem = (label) => {
+  const MenuItem = (id, label) => {
     // Updates selectedCategory in inventory.js, using function passed in
-    const selectCategory = () => {
+    const selectCategoryToDisplay = () => {
       const selectedCategory = (label === 'Show All Categories') ? '' : label;
       prop.setSelectedCategory(selectedCategory);
     };
-    const deleteCategory = () => {
-      const selectedCategory = (label === 'Show All Categories') ? '' : label;
-      prop.setSelectedCategory(selectedCategory);
+    const selectCategoryToDelete = () => {
+      if (label !== 'Show All Categories') {
+        deleteCategories.push(id);
+        console.log(deleteCategories);
+      }
     };
     const selectCategoryButton = (onClickFunction) => (
-      <button type="button" className="btn btn-warning" onClick={onClickFunction}>
+      <button key={id} type="button" className="btn btn-warning" onClick={onClickFunction}>
         {label}
       </button>
     );
     const deleteCategoryButton = (onClickFunction) => (
-      <button type="button" className="btn btn-danger" onClick={onClickFunction}>
+      <button key={id} type="button" className="btn btn-danger" onClick={onClickFunction}>
         X|
         {label}
       </button>
     );
 
-    return prop.editState === 'editing' ? deleteCategoryButton(deleteCategory) : selectCategoryButton(selectCategory);
+    return prop.editState === 'editing' ? deleteCategoryButton(selectCategoryToDelete) : selectCategoryButton(selectCategoryToDisplay);
   };
 
   // Creating list of buttons for category menu
   const Menu = (list) => list.map((el) => {
-    const { label } = el;
-    return MenuItem(label);
+    const { id, label } = el;
+    return MenuItem(id, label);
   });
 
   // Left and right arrows for category traversal

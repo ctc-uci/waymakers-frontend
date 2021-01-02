@@ -36,10 +36,16 @@ export const addCategory = (newCategory) => async (dispatch) => {
 };
 
 // Creates a category/categoryDeleted action
-export const deleteCategory = (id) => ({
-  type: 'categories/categoryDeleted',
-  payload: { id },
-});
+export const deleteCategory = (id) => async (dispatch) => {
+  console.log('[IN DELETECATEGORY]');
+  console.log(id);
+  try {
+    const response = await axios.delete(`http://localhost:3000/category/${id}`);
+    dispatch({ type: 'categories/categoriesDeleted', payload: response.data });
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // Fetching categories from server
 export const fetchCategories = () => async (dispatch) => {
