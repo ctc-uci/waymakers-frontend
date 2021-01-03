@@ -8,17 +8,17 @@ import AddItemModal from './AddItem/AddItemModal';
 import Table from './Table/Table';
 import './inventoryApp.css';
 
-import { getItems, getEditing } from './redux/selectors';
-import { fetchItems } from './redux/actions';
+import {
+  getCategories, getEditing, getSelectedCategoryID, getSelectedCategoryLabel,
+} from './redux/selectors';
+import { fetchItems, fetchCategories } from './redux/actions';
 import store from './redux/store';
 
 const axios = require('axios');
 
 const InventoryApp = () => {
-  // Current list of categories (in scroll menu)
-  const [categoryList, setCategoryList] = useState([]);
   // Category selected by user in CategoryMenu
-  const [selectedCategory, setSelectedCategory] = useState('');
+  // const [selectedCategory, setSelectedCategory] = useState('');
   // Search substring
   const [searchSubstring, setSearchSubstring] = useState('');
   // Division list
@@ -28,7 +28,7 @@ const InventoryApp = () => {
   // Edit state
   const [editState, setEditState] = useState('');
 
-  // Request categories from server
+  /**
   const getCategories = async () => {
     console.log('Getting categories');
     try {
@@ -39,10 +39,10 @@ const InventoryApp = () => {
       console.error(err.message);
     }
   };
-
+  */
   // Displays selected category
   const CurrentCategoryLabel = () => {
-    const currentCategory = selectedCategory === '' ? ' All Categories' : ` ${selectedCategory}`;
+    const currentCategory = useSelector(getSelectedCategoryLabel) === '' ? ' All Categories' : ` ${useSelector(getSelectedCategoryLabel)}`;
     return (
       <h3>
         Showing Category:
@@ -50,7 +50,6 @@ const InventoryApp = () => {
       </h3>
     );
   };
-
   // Request Divisions from server
   const getDivisions = async () => {
     console.log('Getting Division');
@@ -78,16 +77,18 @@ const InventoryApp = () => {
   };
   // Once component mounts, call getCategories and getDivisions
   useEffect(() => {
-    getCategories();
     getDivisions();
     // Fetching items from server, and updating store
     store.dispatch(fetchItems());
+    // Fetching categories from server, and updating store
+    store.dispatch(fetchCategories());
   }, []);
   // Updates items list when selectedCategory changes or searchSubstring changes
   useEffect(() => {
     store.dispatch(fetchItems());
-  }, [selectedCategory, searchSubstring, selectedDivision]);
+  }, [searchSubstring, selectedDivision, useSelector(getSelectedCategoryID)]);
 
+  /**
   const StoreDisplay = () => {
     const storeItems = useSelector(getItems);
     const divStyle = {
@@ -100,10 +101,41 @@ const InventoryApp = () => {
       </div>
     );
   };
-
+  */
+  const CategoryStoreDisplay = () => {
+    const storeCategories = useSelector(getCategories);
+    const divStyle = {
+      border: '1px solid black',
+    };
+    return (
+      <div style={divStyle}>
+        <h4>Redux Store: getCategories</h4>
+        <pre>{JSON.stringify(storeCategories, null, 2)}</pre>
+      </div>
+    );
+  };
+  /**
+  const DispatchStoreButton = () => {
+    const dispatch = useDispatch();
+    const randID = Math.floor(10 + Math.random() * (100 - 10));
+    const newItem = {
+      name: 'newItem',
+      quantity: 6,
+      needed: 9,
+      div_num: 0,
+      category_id: 0,
+    };
+    const handleClick = () => { dispatch(addItem(randID, newItem)); };
+    return (
+      <button type="button" onClick={handleClick}>
+        Add random item
+      </button>
+    );
+  };
+  */
   return (
     <div className="inventory">
-      <StoreDisplay />
+      <CategoryStoreDisplay />
       <h1>Inventory</h1>
       <CurrentdivisionLabel />
       <EditButton
@@ -116,10 +148,8 @@ const InventoryApp = () => {
         setSelectedDivision={setSelectedDivision}
       />
       <CategoryMenu
-        selectedCategory={selectedCategory}
-        categoryList={categoryList}
-        setSelectedCategory={setSelectedCategory}
-        editState={editState}
+        categoryList={useSelector(getCategories)}
+        editing={useSelector(getEditing)}
       />
       <SearchItem
         searchSubstring={searchSubstring}

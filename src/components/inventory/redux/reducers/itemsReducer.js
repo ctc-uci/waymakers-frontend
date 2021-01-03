@@ -14,7 +14,8 @@ Sample element for itemList
 const initialState = {
   itemsList: [], // List of item objects
   selectedDivision: null, // ID of the selected division
-  selectedCategory: null, // ID of the selected category
+  selectedCategoryID: null, // ID of the selected category
+  selectedCategoryLabel: '', // Label of theselected category
   searchTerm: '', // String value of the current search term
 };
 
@@ -36,6 +37,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         itemsList: [...state.itemsList, action.payload],
+      };
+    }
+    case 'items/categorySelected': {
+      console.log(`[ACTION: items/categorySelected] Selecting category with id ${action.payload}`);
+      return {
+        ...state,
+        selectedCategoryID: action.payload.newCategoryID,
+        selectedCategoryLabel: action.payload.newCategoryLabel,
       };
     }
     default: {

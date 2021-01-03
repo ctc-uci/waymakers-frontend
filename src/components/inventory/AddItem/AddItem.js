@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import store from '../redux/store';
-import { addItem } from '../redux/actions';
+import { addItem, addCategory } from '../redux/actions';
 
 const axios = require('axios');
 
@@ -26,7 +26,7 @@ const AddItem = () => {
   const onSubmitAddItem = () => {
     // TODO: Handle empty/invalid items better
     if (name === '' || quantity < 0 || needed < 0) {
-      alert('Invalid values for a new item');
+      // alert('Invalid values for a new item');
       return;
     }
     store.dispatch(addItem({
@@ -36,15 +36,9 @@ const AddItem = () => {
 
   const onSubmitAddCategory = async () => {
     if (label === '') return;
-    try {
-      console.log(label);
-      const response = await axios.post('http://localhost:3000/category', {
-        label,
-      });
-      console.log(response);
-    } catch (err) {
-      console.error(err);
-    }
+    store.dispatch(addCategory({
+      label,
+    }));
   };
   const onSubmitAddWarehouse = async () => {
     if (warehouselabel === '') return;
