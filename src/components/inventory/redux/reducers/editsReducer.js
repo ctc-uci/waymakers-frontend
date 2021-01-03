@@ -44,12 +44,14 @@ export default (state = initialState, action) => {
         editing: true,
       };
     }
-    // Saving all edits
-    case 'edits/saveEdits': {
+    // Edits have been saved
+    case 'edits/editsSaved': {
       console.log('[ACTION: edits/saveEdits] Edits saved');
       return {
         ...state,
         editing: false,
+        editedItems: {},
+        deletedItems: [],
       };
     }
     // Canceling all edits
