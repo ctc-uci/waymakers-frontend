@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
       console.log('[ACTION: edits/addCategoryDelete] Category delete added');
       return {
         ...state,
-        deletedCategories: [...state.deletedCategoriies, action.payload.id],
+        deletedCategories: [...state.deletedCategories, action.payload.id],
       };
     }
     // Set editing to true

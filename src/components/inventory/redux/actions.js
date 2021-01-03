@@ -38,17 +38,11 @@ export const addCategory = (newCategory) => async (dispatch) => {
   }
 };
 
-// Creates a category/categoryDeleted action
-export const deleteCategory = (id) => async (dispatch) => {
-  console.log('[IN DELETECATEGORY]');
-  console.log(id);
-  try {
-    const response = await axios.delete(`http://localhost:3000/category/${id}`);
-    dispatch({ type: 'categories/categoriesDeleted', payload: response.data });
-  } catch (err) {
-    console.error(err);
-  }
-};
+// Creates a edits/addItemDelete action
+export const deleteCategory = (id) => ({
+  type: 'edits/addCategoryDelete',
+  payload: { id },
+});
 
 // Fetching categories from server
 export const fetchCategories = () => async (dispatch) => {
@@ -96,7 +90,7 @@ export const saveEdits = () => async (dispatch) => {
   console.log('in saveEdits');
   const editPromises = [];
 
-  // Populating list with DELETE requests
+  // Populating list with DELETE ITEM requests
   const deletedItems = [...store.getState().edits.deletedItems];
   console.log(deletedItems);
   deletedItems.forEach(async (id) => {
@@ -105,7 +99,15 @@ export const saveEdits = () => async (dispatch) => {
     );
   });
 
-  // Populating list of PUT requests
+  // Populating list with DELETE CATEGORY requests
+  const deletedCategories = [...store.getState().edits.deletedCategories];
+  deletedCategories.forEach(async (id) => {
+    editPromises.push(
+      axios.delete(`http://localhost:3000/category/${id}`),
+    );
+  });
+
+  // Populating list with PUT ITEM requests
   const editedItems = { ...store.getState().edits.editedItems };
   Object.keys(editedItems).forEach(async (id) => {
     editPromises.push(
