@@ -81,7 +81,6 @@ export const saveEdits = () => async (dispatch) => {
   Promise.all(editPromises)
     .catch((error) => { console.error(error); })
     .then(() => {
-      // console.log('Promise done: ', data);
       // Dispatch editsSaved action
       dispatch({ type: 'edits/editsSaved', payload: {} });
       // Fetch items list again
