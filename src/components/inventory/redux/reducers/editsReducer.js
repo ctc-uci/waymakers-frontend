@@ -55,7 +55,6 @@ export default (state = initialState, action) => {
     case 'edits/cancelEdits': {
       console.log('[ACTION: edits/cancelEdits] Edits canceled');
       return {
-        ...state,
         editing: false,
         editedItems: {},
         deletedItems: [],

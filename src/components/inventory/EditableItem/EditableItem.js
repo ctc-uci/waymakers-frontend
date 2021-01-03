@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { deleteItem, editItem } from '../redux/actions';
 import { getEditing } from '../redux/selectors';
 import store from '../redux/store';
@@ -54,22 +54,21 @@ const EditableItem = (props) => {
   useEffect(() => {
     setFieldState(fieldState);
     // Only update edits if user has modified values
-    if (modified) {
+    // and table is in edit mode
+    if (modified && props.editing) {
       updateEdits();
     }
   }, [fieldState]);
 
   // Reset field values once edit canceled
   useEffect(() => {
-    if (props.editState === 'canceled') {
-      setFieldState({
-        name: props.item.name,
-        quantity: props.item.quantity,
-        needed: props.item.needed,
-        category: props.item.category,
-      });
-    }
-  }, [props.editState]);
+    setFieldState({
+      name: props.item.name,
+      quantity: props.item.quantity,
+      needed: props.item.needed,
+      category: props.item.category,
+    });
+  }, [props.item, props.editing]);
 
   // Static row to display when not in Edit mode
   const staticItem = (
@@ -131,7 +130,15 @@ const EditableItem = (props) => {
   );
 
   // Decides which table row to show, dependant on edit mode
-  return useSelector(getEditing) ? formItem : staticItem;
+  return props.editing ? formItem : staticItem;
 };
 
-export default EditableItem;
+// Connecting component props to redux state
+const mapStateToProps = (state, ownProps) => ({
+  editing: getEditing(state),
+  key: ownProps.key,
+  item: ownProps.item,
+  modified: ownProps.modified,
+});
+
+export default connect(mapStateToProps, null)(EditableItem);

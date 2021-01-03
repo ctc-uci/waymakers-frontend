@@ -38,6 +38,7 @@ const Table = (items) => (
   </div>
 );
 
+// Connecting component props to redux state
 const mapStateToProps = (state) => {
   const itemsList = getItems(state);
   const items = Object.keys(itemsList).map((i) => itemsList[i]);

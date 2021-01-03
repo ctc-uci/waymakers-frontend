@@ -3,6 +3,8 @@
 // Gets items from store
 export const getItems = (store) => store.items.itemsList;
 
+export const getItemByID = (store, id) => store.items.itemsList.find((item) => item.id === id);
+
 // Gets if inventory is in edit mode
 export const getEditing = (store) => store.edits.editing;
 
