@@ -13,8 +13,8 @@ Sample element for itemList
 // Initial state populated with sample values
 const initialState = {
   itemsList: [], // List of item objects
-  selectedCategory: null, // ID of the selected category
   selectedDivision: null, // ID of the selected division
+  selectedCategory: null, // ID of the selected category
   searchTerm: '', // String value of the current search term
 };
 

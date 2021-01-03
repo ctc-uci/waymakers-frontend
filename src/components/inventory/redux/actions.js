@@ -1,16 +1,19 @@
 // Functions defined here create and dispatch action
 // objects that are used to modify the state
+import store from './store';
+
 const axios = require('axios');
 
 // Fetching items from server
 export const fetchItems = () => async (dispatch) => {
   const url = 'http://localhost:3000/inventory/';
-  // TODO: Add filtering by division/category/search
+  // Getting filter values from store -
+  // may be possible to do this with a selector
   const paramsQuery = {
     params: {
-      division: '',
-      category: '',
-      search: '',
+      division: store.getState().items.selectedDivision,
+      category: store.getState().items.selectedCategory,
+      search: store.getState().items.searchTerm,
     },
   };
 
