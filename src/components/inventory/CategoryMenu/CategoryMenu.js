@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
-
-import { deleteCategory, fetchCategories } from '../redux/actions';
-
+import MenuItem from './CategoryMenuItem';
 // const axios = require('axios');
 
 // TODO: Implement category deletion
 
 const CategoryMenu = (prop) => {
   // Gets category list from inventory.js
-  const [categoryList, setCategoryList] = useState(prop.categoryList);
-
+  // const [categoryList, setCategoryList] = useState(props.categoryList);
   // List of categories to be deleted (ids)
-  const deleteCategories = [];
+  // const deleteCategories = [];
 
   // Sends edits once saved
   const saveDeletes = async () => {
-    deleteCategories.forEach(async (id) => {
-      deleteCategory(id);
-    });
+    // deleteCategories.forEach(async (id) => {
+    //   deleteCategory(id);
+    // });
     // const deletePromises = [];
     // // Populating list of DELETE requests
     // deleteCategories.forEach(async (id) => {
@@ -28,42 +25,25 @@ const CategoryMenu = (prop) => {
     // });
     // // Perform all DELETE requests concurrently
     // Promise.all(deletePromises).catch((error) => { console.error(error); });
-    fetchCategories();
+    // fetchCategories();
   };
 
   useEffect(() => {
-    if (prop.editState === 'saved') {
+    if (prop.editing) {
       saveDeletes();
     }
-  }, [prop.editState]);
+  }, [prop.editing]);
 
-  // Returns a button for a single category
-  const MenuItem = (id, label) => {
-    // Updates selectedCategory in inventory.js, using function passed in
-    const selectCategoryToDisplay = () => {
-      const selectedCategory = (label === 'Show All Categories') ? '' : label;
-      prop.setSelectedCategory(selectedCategory);
-    };
-    const selectCategoryToDelete = () => {
-      if (label !== 'Show All Categories') {
-        deleteCategories.push(id);
-        console.log(deleteCategories);
-      }
-    };
-    const selectCategoryButton = (onClickFunction) => (
-      <button key={id} type="button" className="btn btn-warning" onClick={onClickFunction}>
-        {label}
-      </button>
-    );
-    const deleteCategoryButton = (onClickFunction) => (
-      <button key={id} type="button" className="btn btn-danger" onClick={onClickFunction}>
-        X|
-        {label}
-      </button>
-    );
+  // Left and right arrows for category traversal
+  const Arrow = (text, className) => <div className={className}>{text}</div>;
+  const ArrowLeft = Arrow('<', 'arrow-prev');
+  const ArrowRight = Arrow('>', 'arrow-next');
 
-    return prop.editState === 'editing' ? deleteCategoryButton(selectCategoryToDelete) : selectCategoryButton(selectCategoryToDisplay);
-  };
+  /**
+  // Updates state when category list in inventory.js updates
+  useEffect(() => {
+    setCategoryList(props.categoryList);
+  }, [props.categoryList]);
 
   // Creating list of buttons for category menu
   const Menu = (list) => list.map((el) => {
@@ -71,27 +51,24 @@ const CategoryMenu = (prop) => {
     return MenuItem(id, label);
   });
 
-  // Left and right arrows for category traversal
-  const Arrow = (text, className) => <div className={className}>{text}</div>;
-  const ArrowLeft = Arrow('<', 'arrow-prev');
-  const ArrowRight = Arrow('>', 'arrow-next');
-
+  // Creates a menu for the current state
   const [menu, setMenu] = useState(Menu(categoryList, 0));
-
-  // Updates state when category list in inventory.js updates
-  useEffect(() => {
-    setCategoryList(prop.categoryList);
-  }, [prop.categoryList]);
 
   // Updates list of category buttons once category list is updated,
   // or edit state is changed
   useEffect(() => {
     setMenu(Menu(categoryList, 0));
-  }, [categoryList, prop.editState]);
-
+  }, [categoryList, props.editing]);
+  */
   return (
     <ScrollMenu
-      data={menu}
+      data={prop.categoryList.map((category) => (
+        <MenuItem
+          key={category.id}
+          category={category}
+          setSelectedCategory={prop.setSelectedCategory}
+        />
+      ))}
       arrowLeft={ArrowLeft}
       arrowRight={ArrowRight}
       selected={0}

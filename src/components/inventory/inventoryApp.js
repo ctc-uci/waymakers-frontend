@@ -146,10 +146,9 @@ const InventoryApp = () => {
         setSelectedDivision={setSelectedDivision}
       />
       <CategoryMenu
-        selectedCategory={selectedCategory}
         categoryList={useSelector(getCategories)}
         setSelectedCategory={setSelectedCategory}
-        editState={editState}
+        editing={useSelector(getEditing)}
       />
       <SearchItem
         searchSubstring={searchSubstring}
