@@ -2,6 +2,7 @@ const initialState = {
   editing: false, // Indicates if the inventory is currently in edit mode
   editedItems: {}, // Object which contains new values for any edited items
   deletedItems: [], // List of item IDs to delete
+  deletedCategories: [], // List of category IDs to delete
 };
 
 export default (state = initialState, action) => {
@@ -30,7 +31,10 @@ export default (state = initialState, action) => {
     case 'edits/addCategoryDelete': {
       // TODO
       console.log('[ACTION: edits/addCategoryDelete] Category delete added');
-      return state;
+      return {
+        ...state,
+        deletedCategories: [...state.deletedCategories, action.payload.id],
+      };
     }
     // Set editing to true
     case 'edits/startEdits': {
@@ -55,7 +59,6 @@ export default (state = initialState, action) => {
     case 'edits/cancelEdits': {
       console.log('[ACTION: edits/cancelEdits] Edits canceled');
       return {
-        ...state,
         editing: false,
         editedItems: {},
         deletedItems: [],
