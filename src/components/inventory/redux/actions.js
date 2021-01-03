@@ -25,6 +25,24 @@ export const fetchItems = () => async (dispatch) => {
   }
 };
 
+// Creates an items/searchTermModified action
+export const searchItems = (searchTerm) => ({
+  type: 'items/searchTermModified',
+  payload: { searchTerm },
+});
+
+// Creates an items/searchCategoryModified action
+export const searchCategories = (id) => ({
+  type: 'items/searchCategoryModified',
+  payload: { id },
+});
+
+// Creates an items/searchDivisionModified action
+export const searchDivisions = (id) => ({
+  type: 'items/searchDivisionModified',
+  payload: { id },
+});
+
 // Creates an items/itemAdded action
 export const addItem = (newItem) => async (dispatch) => {
   try {

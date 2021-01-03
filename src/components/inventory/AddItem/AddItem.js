@@ -26,7 +26,7 @@ const AddItem = () => {
   const onSubmitAddItem = () => {
     // TODO: Handle empty/invalid items better
     if (name === '' || quantity < 0 || needed < 0) {
-      alert('Invalid values for a new item');
+      // alert('Invalid values for a new item');
       return;
     }
     store.dispatch(addItem({

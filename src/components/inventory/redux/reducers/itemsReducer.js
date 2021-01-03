@@ -38,6 +38,27 @@ export default (state = initialState, action) => {
         itemsList: [...state.itemsList, action.payload],
       };
     }
+    case 'items/searchTermModified': {
+      // Modifies the search term for the item state
+      return {
+        ...state,
+        searchTerm: action.payload,
+      };
+    }
+    case 'items/searchDivisionModified': {
+      // Modifies the division to be searched (id) for the item state
+      return {
+        ...state,
+        selectedDivision: action.payload,
+      };
+    }
+    case 'items/searchCategoryModified': {
+      // Modifies the category to be searched (id) for the item state
+      return {
+        ...state,
+        selectedCategory: action.payload,
+      };
+    }
     default: {
       return state;
     }
