@@ -6,13 +6,13 @@ const axios = require('axios');
 
 // Fetching items from server
 export const fetchItems = () => async (dispatch) => {
-  const url = 'http://localhost:3000/inventory/';
+  const url = 'http://localhost:3000/inventory/get/';
   // Getting filter values from store -
   // may be possible to do this with a selector
   const paramsQuery = {
     params: {
       division: store.getState().items.selectedDivision,
-      category: store.getState().items.selectedCategory,
+      category: store.getState().items.selectedCategoryID,
       search: store.getState().items.searchTerm,
     },
   };
@@ -24,6 +24,12 @@ export const fetchItems = () => async (dispatch) => {
     console.error(err);
   }
 };
+
+// Creates an items/categorySelected action
+export const changeSelectedCategory = (newCategoryID, newCategoryLabel) => ({
+  type: 'items/categorySelected',
+  payload: { newCategoryID, newCategoryLabel },
+});
 
 // Creates a category/categoryAdded action
 export const addCategory = (newCategory) => async (dispatch) => {
@@ -115,15 +121,18 @@ export const saveEdits = () => async (dispatch) => {
     );
   });
 
+  console.log(editPromises);
   // Perform all requests concurrently
   Promise.all(editPromises)
     .catch((error) => { console.error(error); })
-    .then(() => {
-      // console.log('Promise done: ', data);
+    .then((data) => {
+      console.log('Promise done: ', data);
       // Dispatch editsSaved action
       dispatch({ type: 'edits/editsSaved', payload: {} });
       // Fetch items list again
       dispatch(fetchItems());
+      // Fetch category list again
+      dispatch(fetchCategories());
     });
 };
 

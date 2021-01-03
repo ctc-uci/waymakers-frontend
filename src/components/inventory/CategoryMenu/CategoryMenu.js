@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import MenuItem from './CategoryMenuItem';
 // const axios = require('axios');
@@ -11,6 +11,7 @@ const CategoryMenu = (prop) => {
   // List of categories to be deleted (ids)
   // const deleteCategories = [];
 
+  /**
   // Sends edits once saved
   const saveDeletes = async () => {
     // deleteCategories.forEach(async (id) => {
@@ -27,13 +28,12 @@ const CategoryMenu = (prop) => {
     // Promise.all(deletePromises).catch((error) => { console.error(error); });
     // fetchCategories();
   };
-
   useEffect(() => {
-    if (prop.editing) {
+    if (prop.editing === 'saved') {
       saveDeletes();
     }
   }, [prop.editing]);
-
+  */
   // Left and right arrows for category traversal
   const Arrow = (text, className) => <div className={className}>{text}</div>;
   const ArrowLeft = Arrow('<', 'arrow-prev');
@@ -66,7 +66,6 @@ const CategoryMenu = (prop) => {
         <MenuItem
           key={category.id}
           category={category}
-          setSelectedCategory={prop.setSelectedCategory}
         />
       ))}
       arrowLeft={ArrowLeft}

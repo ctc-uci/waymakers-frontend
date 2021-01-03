@@ -21,5 +21,6 @@ const enhancer = composeEnhancers(
 */
 // Creates a store using the "rootReducer"
 // defined in ./reducers/index.js
-// export default createStore(rootReducer);
+// export default createStore(rootReducer, enhancer);
+
 export default createStore(rootReducer, applyMiddleware(thunk));

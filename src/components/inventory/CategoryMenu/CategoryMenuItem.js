@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getEditing } from '../redux/selectors';
 import store from '../redux/store';
-import { deleteCategory } from '../redux/actions';
+import { deleteCategory, changeSelectedCategory } from '../redux/actions';
 
 // Returns a button for a single category
 const MenuItem = (props) => {
@@ -11,8 +11,9 @@ const MenuItem = (props) => {
   const [deleted, setDeleted] = useState(false);
   // Updates selectedCategory in inventory.js, using function passed in
   const selCategory = () => {
-    const selectedCategory = (props.category.label === 'Show All Categories') ? '' : props.category.label;
-    props.setSelectedCategory(selectedCategory);
+    const selectedCategoryID = (props.category.label === 'Show All Categories') ? null : props.category.id;
+    const selectedCategoryLabel = (props.category.label === 'Show All Categories') ? '' : props.category.label;
+    store.dispatch(changeSelectedCategory(selectedCategoryID, selectedCategoryLabel));
   };
   // Adds category ID to list of category IDs to be deleted
   const delCategory = () => {

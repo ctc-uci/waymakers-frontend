@@ -3,6 +3,12 @@
 // Gets items from store
 export const getItems = (store) => store.items.itemsList;
 
+// Gets current selected category ID
+export const getSelectedCategoryID = (store) => store.items.selectedCategoryID;
+
+// Gets current selected category label
+export const getSelectedCategoryLabel = (store) => store.items.selectedCategoryLabel;
+
 // Gets categories from store
 export const getCategories = (store) => store.categories;
 

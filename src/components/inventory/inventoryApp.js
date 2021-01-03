@@ -8,7 +8,9 @@ import AddItemModal from './AddItem/AddItemModal';
 import Table from './Table/Table';
 import './inventoryApp.css';
 
-import { getCategories, getEditing } from './redux/selectors';
+import {
+  getCategories, getEditing, getSelectedCategoryID, getSelectedCategoryLabel,
+} from './redux/selectors';
 import { fetchItems, fetchCategories } from './redux/actions';
 import store from './redux/store';
 
@@ -16,7 +18,7 @@ const axios = require('axios');
 
 const InventoryApp = () => {
   // Category selected by user in CategoryMenu
-  const [selectedCategory, setSelectedCategory] = useState('');
+  // const [selectedCategory, setSelectedCategory] = useState('');
   // Search substring
   const [searchSubstring, setSearchSubstring] = useState('');
   // Division list
@@ -40,7 +42,7 @@ const InventoryApp = () => {
   */
   // Displays selected category
   const CurrentCategoryLabel = () => {
-    const currentCategory = selectedCategory === '' ? ' All Categories' : ` ${selectedCategory}`;
+    const currentCategory = useSelector(getSelectedCategoryLabel) === '' ? ' All Categories' : ` ${useSelector(getSelectedCategoryLabel)}`;
     return (
       <h3>
         Showing Category:
@@ -84,7 +86,7 @@ const InventoryApp = () => {
   // Updates items list when selectedCategory changes or searchSubstring changes
   useEffect(() => {
     store.dispatch(fetchItems());
-  }, [searchSubstring, selectedDivision]);
+  }, [searchSubstring, selectedDivision, useSelector(getSelectedCategoryID)]);
 
   /**
   const StoreDisplay = () => {
@@ -147,7 +149,6 @@ const InventoryApp = () => {
       />
       <CategoryMenu
         categoryList={useSelector(getCategories)}
-        setSelectedCategory={setSelectedCategory}
         editing={useSelector(getEditing)}
       />
       <SearchItem
