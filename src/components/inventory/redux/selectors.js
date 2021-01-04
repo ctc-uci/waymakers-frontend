@@ -3,8 +3,6 @@
 // Gets items from store
 export const getItems = (store) => store.items.itemsList;
 
-export const getItemByID = (store, id) => store.items.itemsList.find((item) => item.id === id);
-
 // Gets current selected category ID
 export const getSelectedCategoryID = (store) => store.items.selectedCategoryID;
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import store from '../redux/store';
 import { addItem, addCategory } from '../redux/actions';
+import { getCategories } from '../redux/selectors';
 
 const axios = require('axios');
 
@@ -26,7 +28,6 @@ const AddItem = () => {
   const onSubmitAddItem = () => {
     // TODO: Handle empty/invalid items better
     if (name === '' || quantity < 0 || needed < 0) {
-      // alert('Invalid values for a new item');
       return;
     }
     store.dispatch(addItem({
@@ -76,13 +77,21 @@ const AddItem = () => {
           value={needed}
           onChange={(e) => setNeeded(e.target.value)}
         />
-        <input
-          type="text"
+        <select
           className="form-control"
-          placeholder="Item Category"
-          value={category}
+          id="categories"
+          name="categories"
           onChange={(e) => setCategory(e.target.value)}
-        />
+        >
+          <option value="" selected>No category</option>
+          {/* Creating dropdown menu items from categories list */}
+          {/* category.label is displayed, but the value of the option will be the ID */}
+          {useSelector(getCategories)
+            .filter((cat) => cat.id > 0)
+            .map((cat) => (
+              <option value={cat.id}>{cat.label}</option>
+            ))}
+        </select>
         <input
           type="text"
           className="form-control"
