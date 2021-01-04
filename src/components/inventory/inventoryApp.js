@@ -54,7 +54,7 @@ const InventoryApp = () => {
   const getDivisions = async () => {
     console.log('Getting Division');
     try {
-      const response = await axios.get('http://localhost:3000/Division/');
+      const response = await axios.get('http://localhost:3000/divisions/');
       // Adding All Division" to divisionList
       setDivisionList([{ divisionLabel: 'Show All Divisions' }].concat(response.data));
     } catch (err) {
