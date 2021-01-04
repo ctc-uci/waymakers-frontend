@@ -39,6 +39,20 @@ export default (state = initialState, action) => {
         itemsList: [...state.itemsList, action.payload],
       };
     }
+    case 'items/searchTermModified': {
+      // Modifies the search term for the item state
+      return {
+        ...state,
+        searchTerm: action.payload,
+      };
+    }
+    case 'items/searchDivisionModified': {
+      // Modifies the division to be searched (id) for the item state
+      return {
+        ...state,
+        selectedDivision: action.payload,
+      };
+    }
     case 'items/categorySelected': {
       console.log(`[ACTION: items/categorySelected] Selecting category with id ${action.payload}`);
       return {
