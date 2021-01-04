@@ -17,8 +17,6 @@ import store from './redux/store';
 const axios = require('axios');
 
 const InventoryApp = () => {
-  // Category selected by user in CategoryMenu
-  // const [selectedCategory, setSelectedCategory] = useState('');
   // Search substring
   const [searchSubstring, setSearchSubstring] = useState('');
   // Division list
@@ -28,18 +26,6 @@ const InventoryApp = () => {
   // Edit state
   const [editState, setEditState] = useState('');
 
-  /**
-  const getCategories = async () => {
-    console.log('Getting categories');
-    try {
-      const response = await axios.get('http://localhost:3000/category/');
-      // Adding All Categories" to categoryList
-      setCategoryList([{ label: 'Show All Categories' }].concat(response.data));
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-  */
   // Displays selected category
   const CurrentCategoryLabel = () => {
     const currentCategory = useSelector(getSelectedCategoryLabel) === '' ? ' All Categories' : ` ${useSelector(getSelectedCategoryLabel)}`;
@@ -63,7 +49,7 @@ const InventoryApp = () => {
   };
 
   // Displays selected Division
-  const CurrentdivisionLabel = () => {
+  const CurrentDivisionLabel = () => {
     const currentDivision = selectedDivision === '' ? ' All Division' : ` ${selectedDivision}`;
     return (
       <div>
@@ -78,9 +64,8 @@ const InventoryApp = () => {
   // Once component mounts, call getCategories and getDivisions
   useEffect(() => {
     getDivisions();
-    // Fetching items from server, and updating store
+    // Fetching items and categories from server, and updating store
     store.dispatch(fetchItems());
-    // Fetching categories from server, and updating store
     store.dispatch(fetchCategories());
   }, []);
   // Updates items list when selectedCategory changes or searchSubstring changes
@@ -102,42 +87,10 @@ const InventoryApp = () => {
     );
   };
   */
-  const CategoryStoreDisplay = () => {
-    const storeCategories = useSelector(getCategories);
-    const divStyle = {
-      border: '1px solid black',
-    };
-    return (
-      <div style={divStyle}>
-        <h4>Redux Store: getCategories</h4>
-        <pre>{JSON.stringify(storeCategories, null, 2)}</pre>
-      </div>
-    );
-  };
-  /**
-  const DispatchStoreButton = () => {
-    const dispatch = useDispatch();
-    const randID = Math.floor(10 + Math.random() * (100 - 10));
-    const newItem = {
-      name: 'newItem',
-      quantity: 6,
-      needed: 9,
-      div_num: 0,
-      category_id: 0,
-    };
-    const handleClick = () => { dispatch(addItem(randID, newItem)); };
-    return (
-      <button type="button" onClick={handleClick}>
-        Add random item
-      </button>
-    );
-  };
-  */
   return (
     <div className="inventory">
-      <CategoryStoreDisplay />
       <h1>Inventory</h1>
-      <CurrentdivisionLabel />
+      <CurrentDivisionLabel />
       <EditButton
         editState={editState}
         setEditState={setEditState}

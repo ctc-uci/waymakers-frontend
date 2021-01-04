@@ -6,7 +6,7 @@ const axios = require('axios');
 
 // Fetching items from server
 export const fetchItems = () => async (dispatch) => {
-  const url = 'http://localhost:3000/inventory/get/';
+  const url = 'http://localhost:3000/inventory/';
   // Getting filter values from store -
   // may be possible to do this with a selector
   const paramsQuery = {
@@ -108,7 +108,7 @@ export const saveEdits = () => async (dispatch) => {
   console.log('in saveEdits');
   const editPromises = [];
 
-  // Populating list with DELETE ITEM requests
+  // Populating list with DELETE requests for each deleted item
   const deletedItems = [...store.getState().edits.deletedItems];
   console.log(deletedItems);
   deletedItems.forEach(async (id) => {
@@ -117,7 +117,7 @@ export const saveEdits = () => async (dispatch) => {
     );
   });
 
-  // Populating list with DELETE CATEGORY requests
+  // Populating list with DELETE requests for each deleted category
   const deletedCategories = [...store.getState().edits.deletedCategories];
   deletedCategories.forEach(async (id) => {
     editPromises.push(
@@ -125,7 +125,7 @@ export const saveEdits = () => async (dispatch) => {
     );
   });
 
-  // Populating list with PUT ITEM requests
+  // Populating list with PUT requests for each edited item
   const editedItems = { ...store.getState().edits.editedItems };
   Object.keys(editedItems).forEach(async (id) => {
     editPromises.push(
@@ -133,7 +133,6 @@ export const saveEdits = () => async (dispatch) => {
     );
   });
 
-  console.log(editPromises);
   // Perform all requests concurrently
   Promise.all(editPromises)
     .catch((error) => { console.error(error); })
