@@ -116,19 +116,19 @@ export const saveEdits = () => async (dispatch) => {
     );
   });
 
-  // Populating list with DELETE requests for each deleted category
-  const deletedCategories = [...store.getState().edits.deletedCategories];
-  deletedCategories.forEach(async (id) => {
-    editPromises.push(
-      axios.delete(`http://localhost:3000/category/${id}`),
-    );
-  });
-
   // Populating list with PUT requests for each edited item
   const editedItems = { ...store.getState().edits.editedItems };
   Object.keys(editedItems).forEach(async (id) => {
     editPromises.push(
       axios.put(`http://localhost:3000/inventory/${id}`, editedItems[id]),
+    );
+  });
+
+  // Populating list with DELETE requests for each deleted category
+  const deletedCategories = [...store.getState().edits.deletedCategories];
+  deletedCategories.forEach(async (id) => {
+    editPromises.push(
+      axios.delete(`http://localhost:3000/category/${id}`),
     );
   });
 
