@@ -20,7 +20,7 @@ const EditableItem = (props) => {
   });
 
   // Used to update css class of unsaved edits
-  const [modified, setModified] = useState(props.modified);
+  const [modified, setModified] = useState(false);
 
   // Used to update css class of unsaved delete
   const [deleted, setDeleted] = useState(false);
@@ -28,7 +28,9 @@ const EditableItem = (props) => {
   // Appends to edits object at every change
   // This could probably be changed to only update once
   const updateEdits = () => {
+    console.log(props.item.id);
     store.dispatch(editItem(props.item.id, fieldState));
+    setModified(false);
   };
 
   // Adds item id to list of items to be deleted
@@ -61,6 +63,7 @@ const EditableItem = (props) => {
     // Only update edits if user has modified values
     // and table is in edit mode
     if (modified && props.editing) {
+      console.log(props.editing);
       updateEdits();
     }
   }, [fieldState]);
@@ -73,7 +76,7 @@ const EditableItem = (props) => {
       needed: props.item.needed,
       category: props.item.category_id,
     });
-  }, [props.item, props.editing]);
+  }, [props.item, useSelector(getEditing)]);
 
   // Static row to display when not in Edit mode
   const staticItem = (

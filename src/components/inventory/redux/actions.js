@@ -110,7 +110,6 @@ export const saveEdits = () => async (dispatch) => {
 
   // Populating list with DELETE requests for each deleted item
   const deletedItems = [...store.getState().edits.deletedItems];
-  console.log(deletedItems);
   deletedItems.forEach(async (id) => {
     editPromises.push(
       axios.delete(`http://localhost:3000/inventory/${id}`),
