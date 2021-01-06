@@ -13,7 +13,7 @@ Sample element for itemList
 // Initial state populated with sample values
 const initialState = {
   itemsList: [], // List of item objects
-  selectedDivision: null, // ID of the selected division
+  selectedDivision: -1, // ID of the selected division
   selectedCategoryID: null, // ID of the selected category
   selectedCategoryLabel: '', // Label of theselected category
   searchTerm: '', // String value of the current search term
@@ -50,7 +50,7 @@ export default (state = initialState, action) => {
       // Modifies the division to be searched (id) for the item state
       return {
         ...state,
-        selectedDivision: action.payload,
+        selectedDivision: action.payload.id,
       };
     }
     case 'items/categorySelected': {

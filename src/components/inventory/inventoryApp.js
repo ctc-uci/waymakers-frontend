@@ -9,20 +9,18 @@ import Table from './Table/Table';
 import './inventoryApp.css';
 
 import {
-  getCategories, getEditing, getSelectedCategoryID, getSelectedCategoryLabel,
+  getCategories,
+  getEditing,
+  getSelectedCategoryID,
+  getSelectedCategoryLabel,
+  getSelectedDivision,
 } from './redux/selectors';
-import { fetchItems, fetchCategories } from './redux/actions';
+import { fetchItems, fetchCategories, fetchDivisions } from './redux/actions';
 import store from './redux/store';
-
-const axios = require('axios');
 
 const InventoryApp = () => {
   // Search substring
   const [searchSubstring, setSearchSubstring] = useState('');
-  // Division list
-  const [divisionList, setDivisionList] = useState([]);
-  // Division selected by user
-  const [selectedDivision, setSelectedDivision] = useState('');
   // Edit state
   const [editState, setEditState] = useState('');
 
@@ -31,47 +29,35 @@ const InventoryApp = () => {
     const currentCategory = useSelector(getSelectedCategoryLabel) === '' ? ' All Categories' : ` ${useSelector(getSelectedCategoryLabel)}`;
     return (
       <h3>
-        Showing Category:
         {currentCategory}
       </h3>
     );
   };
-  // Request Divisions from server
-  const getDivisions = async () => {
-    console.log('Getting Division');
-    try {
-      const response = await axios.get('http://localhost:3000/divisions/');
-      // Adding All Division" to divisionList
-      setDivisionList([{ divisionLabel: 'Show All Divisions' }].concat(response.data));
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
-
   // Displays selected Division
   const CurrentDivisionLabel = () => {
-    const currentDivision = selectedDivision === '' ? ' All Division' : ` ${selectedDivision}`;
+    const selectedDivision = useSelector(getSelectedDivision);
+    const divisionLabel = selectedDivision.id === -1 ? ' All Division' : ` ${selectedDivision.div_name}`;
     return (
       <div>
-        <h3>
-          Showing Division:
-          {currentDivision}
-        </h3>
+        <h1>
+          {divisionLabel}
+          <span> Inventory</span>
+        </h1>
         {useSelector(getEditing) && <AddItemModal />}
       </div>
     );
   };
-  // Once component mounts, call getCategories and getDivisions
+  // Once component mounts, fetch items, categories, and divisions
+  // from server and populate store
   useEffect(() => {
-    getDivisions();
-    // Fetching items and categories from server, and updating store
     store.dispatch(fetchItems());
     store.dispatch(fetchCategories());
+    store.dispatch(fetchDivisions());
   }, []);
   // Updates items list when selectedCategory changes or searchSubstring changes
   useEffect(() => {
     store.dispatch(fetchItems());
-  }, [searchSubstring, selectedDivision, useSelector(getSelectedCategoryID)]);
+  }, [searchSubstring, useSelector(getSelectedCategoryID), useSelector(getSelectedDivision)]);
 
   /**
   const StoreDisplay = () => {
@@ -89,17 +75,12 @@ const InventoryApp = () => {
   */
   return (
     <div className="inventory">
-      <h1>Inventory</h1>
       <CurrentDivisionLabel />
       <EditButton
         editState={editState}
         setEditState={setEditState}
       />
-      <DivisionMenu
-        selectedDivision={selectedDivision}
-        divisionList={divisionList}
-        setSelectedDivision={setSelectedDivision}
-      />
+      <DivisionMenu />
       <CategoryMenu
         categoryList={useSelector(getCategories)}
         editing={useSelector(getEditing)}

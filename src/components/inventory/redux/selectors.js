@@ -12,6 +12,15 @@ export const getSelectedCategoryLabel = (store) => store.items.selectedCategoryL
 // Gets categories from store
 export const getCategories = (store) => store.categories;
 
+// Gets divisions from store
+export const getDivisions = (store) => store.divisions;
+
+// Gets selected division object
+export const getSelectedDivision = (store) => {
+  const selectedID = store.items.selectedDivision;
+  return store.divisions.find((div) => div.id === selectedID);
+};
+
 // Gets if inventory is in edit mode
 export const getEditing = (store) => store.edits.editing;
 

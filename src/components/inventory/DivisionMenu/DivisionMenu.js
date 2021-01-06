@@ -1,45 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import './DivisionMenu.css';
 
-const DivisionMenu = (prop) => {
-  // Gets division list from inventory.js
-  const [divisionList, setdivisionList] = useState(prop.divisionList);
+import { getDivisions, getSelectedDivision } from '../redux/selectors';
+import { changeSelectedDivision } from '../redux/actions';
+import store from '../redux/store';
 
+const DivisionMenu = (prop) => {
   // Returns a button for a single Division
-  const MenuItem = (divisionLabel) => (
+  const MenuItem = (divisionID, divisionLabel) => (
     <label htmlFor={divisionLabel}>
       <input
-        id={divisionLabel}
+        id={divisionID}
         type="radio"
         name="division"
-        value={divisionLabel}
-        onChange={() => {
-          const selectedCategory = (divisionLabel === 'Show All Divisions') ? '' : divisionLabel;
-          prop.setSelectedDivision(selectedCategory);
-        }}
+        value={divisionID}
+        onChange={() => { store.dispatch(changeSelectedDivision(divisionID)); }}
       />
       {divisionLabel}
     </label>
   );
 
   // Creating list of buttons for Division menu
-  const Menu = (list) => list.map((el) => {
-    const { divisionLabel } = el;
-    console.log({ divisionLabel }, { el });
-    return MenuItem(divisionLabel);
-  });
+  const Menu = (list) => list.map((div) => MenuItem(div.id, div.div_name));
 
-  const [menu, setMenu] = useState(Menu(divisionList, 0));
-
-  // Updates state when Division list in inventory.js updates
-  useEffect(() => {
-    setdivisionList(prop.divisionList);
-  }, [prop.divisionList]);
+  const [menu, setMenu] = useState(Menu(prop.divisionList, 0));
 
   // Updates list of Division buttons once Division list is updated
   useEffect(() => {
-    setMenu(Menu(divisionList, 0));
-  }, [divisionList]);
+    setMenu(Menu(prop.divisionList, 0));
+  }, [prop.divisionList]);
 
   return (
     <form>
@@ -50,4 +40,10 @@ const DivisionMenu = (prop) => {
   );
 };
 
-export default DivisionMenu;
+// Connecting component props to redux state
+const mapStateToProps = (state) => ({
+  divisionList: getDivisions(state),
+  selectedDivision: getSelectedDivision(state),
+});
+
+export default connect(mapStateToProps, null)(DivisionMenu);
