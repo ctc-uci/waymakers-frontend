@@ -61,21 +61,6 @@ const InventoryApp = () => {
     useSelector(getSelectedCategoryID),
     useSelector(getSelectedDivision),
   ]);
-
-  /**
-  const StoreDisplay = () => {
-    const storeItems = useSelector(getItems);
-    const divStyle = {
-      border: '1px solid black',
-    };
-    return (
-      <div style={divStyle}>
-        <h4>Redux Store: getItems</h4>
-        <pre>{JSON.stringify(storeItems, null, 2) }</pre>
-      </div>
-    );
-  };
-  */
   return (
     <div className="inventory">
       <CurrentDivisionLabel />
