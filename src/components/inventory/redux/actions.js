@@ -32,7 +32,7 @@ export const searchItems = (searchTerm) => ({
 });
 
 // Creates an items/searchDivisionModified action
-export const searchDivisions = (id) => ({
+export const changeSelectedDivision = (id) => ({
   type: 'items/searchDivisionModified',
   payload: { id },
 });
@@ -68,6 +68,17 @@ export const fetchCategories = () => async (dispatch) => {
   try {
     const response = await axios.get(url);
     dispatch({ type: 'categories/categoriesLoaded', payload: response.data });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// Fetching divisions from server
+export const fetchDivisions = () => async (dispatch) => {
+  const url = 'http://localhost:3000/divisions/';
+  try {
+    const response = await axios.get(url);
+    dispatch({ type: 'divisions/divisionsLoaded', payload: response.data });
   } catch (err) {
     console.error(err);
   }

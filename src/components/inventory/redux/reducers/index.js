@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import itemsReducer from './itemsReducer';
 import categoriesReducer from './categoriesReducer';
+import divisionsReducer from './divisionsReducer';
 import editsReducer from './editsReducer';
 
 // Combines all reducers into a single "rootReducer"
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   items: itemsReducer,
   edits: editsReducer,
   categories: categoriesReducer,
+  divisions: divisionsReducer,
 });
 
 export default rootReducer;
