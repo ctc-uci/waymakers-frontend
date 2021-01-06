@@ -1,15 +1,3 @@
-/*
-Sample element for itemList
-  {
-    "id": 0,
-    "name": "sampleItem",
-    "quantity": -1,
-    "needed": -1,
-    "div_num": -1,
-    "category_id": -1
-  }
-*/
-
 // Initial state populated with sample values
 const initialState = {
   itemsList: [], // List of item objects
@@ -24,7 +12,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'items/itemsLoaded': {
-      console.log('[ACTION: items/itemsLoaded] Items loaded');
       // Overriding the current itemsList with the new one
       return {
         ...state,
@@ -32,7 +19,6 @@ export default (state = initialState, action) => {
       };
     }
     case 'items/itemAdded': {
-      console.log(`[ACTION: items/itemAdded] Adding item with content ${action.payload}`);
       // Appending the new item
       return {
         ...state,
@@ -54,7 +40,6 @@ export default (state = initialState, action) => {
       };
     }
     case 'items/categorySelected': {
-      console.log(`[ACTION: items/categorySelected] Selecting category with id ${action.payload}`);
       return {
         ...state,
         selectedCategoryID: action.payload.newCategoryID,

@@ -9,7 +9,6 @@ export default (state = initialState, action) => {
   switch (action.type) {
     // Adding a new item edit
     case 'edits/addItemEdit': {
-      console.log(`[ACTION: edits/addItemEdit] Item edit added, id: ${action.payload.id}, newValues: ${action.payload.newValues}`);
       const { id, newValues } = action.payload;
       return {
         ...state,
@@ -21,7 +20,6 @@ export default (state = initialState, action) => {
     }
     // Adding a new item delete
     case 'edits/addItemDelete': {
-      console.log('[ACTION: edits/addItemDelete] Item delete added');
       return {
         ...state,
         deletedItems: [...state.deletedItems, action.payload.id],
@@ -29,8 +27,6 @@ export default (state = initialState, action) => {
     }
     // Adding a new category delete
     case 'edits/addCategoryDelete': {
-      // TODO
-      console.log('[ACTION: edits/addCategoryDelete] Category delete added');
       return {
         ...state,
         deletedCategories: [...state.deletedCategories, action.payload.id],
@@ -38,7 +34,6 @@ export default (state = initialState, action) => {
     }
     // Set editing to true
     case 'edits/startEdits': {
-      console.log('[ACTION: edits/startEdits] Edit started');
       return {
         ...state,
         editing: true,
@@ -46,7 +41,6 @@ export default (state = initialState, action) => {
     }
     // Edits have been saved
     case 'edits/editsSaved': {
-      console.log('[ACTION: edits/saveEdits] Edits saved');
       return {
         ...state,
         editing: false,
@@ -58,7 +52,6 @@ export default (state = initialState, action) => {
     // Canceling all edits
     // Resets editedItems, deletedItems to empty values
     case 'edits/cancelEdits': {
-      console.log('[ACTION: edits/cancelEdits] Edits canceled');
       return {
         editing: false,
         editedItems: {},

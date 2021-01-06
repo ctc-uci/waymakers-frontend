@@ -6,7 +6,6 @@ import store from '../redux/store';
 
 const EditButton = () => {
   const handleClick = (e) => {
-    console.log('Button Clicked: ', e.target.id);
     if (e.target.id === 'start-edit') {
       store.dispatch(startEdits());
     } else if (e.target.id === 'save-edit') {

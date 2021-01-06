@@ -21,6 +21,7 @@ export const fetchItems = () => async (dispatch) => {
     const response = await axios.get(url, paramsQuery);
     dispatch({ type: 'items/itemsLoaded', payload: response.data });
   } catch (err) {
+    // eslint-disable-next-line
     console.error(err);
   }
 };
@@ -45,13 +46,11 @@ export const changeSelectedCategory = (newCategoryID, newCategoryLabel) => ({
 
 // Creates a category/categoryAdded action
 export const addCategory = (newCategory) => async (dispatch) => {
-  console.log('[IN ADDCATEGORY]');
-  console.log(newCategory);
   try {
     const response = await axios.post('http://localhost:3000/category', newCategory);
-    console.log(response);
     dispatch({ type: 'categories/categoryAdded', payload: response.data });
   } catch (err) {
+    // eslint-disable-next-line
     console.error(err);
   }
 };
@@ -69,6 +68,7 @@ export const fetchCategories = () => async (dispatch) => {
     const response = await axios.get(url);
     dispatch({ type: 'categories/categoriesLoaded', payload: response.data });
   } catch (err) {
+    // eslint-disable-next-line
     console.error(err);
   }
 };
@@ -80,6 +80,7 @@ export const fetchDivisions = () => async (dispatch) => {
     const response = await axios.get(url);
     dispatch({ type: 'divisions/divisionsLoaded', payload: response.data });
   } catch (err) {
+    // eslint-disable-next-line
     console.error(err);
   }
 };
@@ -88,9 +89,9 @@ export const fetchDivisions = () => async (dispatch) => {
 export const addItem = (newItem) => async (dispatch) => {
   try {
     const response = await axios.post('http://localhost:3000/inventory', newItem);
-    console.log(response);
     dispatch({ type: 'items/itemAdded', payload: response.data });
   } catch (err) {
+    // eslint-disable-next-line
     console.error(err);
   }
 };
@@ -116,7 +117,6 @@ export const startEdits = () => ({
 
 // Creates a edits/saveEdits action
 export const saveEdits = () => async (dispatch) => {
-  console.log('in saveEdits');
   const editPromises = [];
   const deletePromises = [];
 
@@ -146,7 +146,10 @@ export const saveEdits = () => async (dispatch) => {
 
   // Perform all put requests concurrently
   Promise.all(editPromises)
-    .catch((error) => { console.error(error); })
+    .catch((error) => {
+      // eslint-disable-next-line
+      console.error(error);
+    })
     .then(() => {
       // If there aren't any delete promises, we can just fetch the items now
       if (deletePromises.length === 0) {
@@ -161,7 +164,10 @@ export const saveEdits = () => async (dispatch) => {
 
   // Perform all delete requests concurrently
   Promise.all(deletePromises)
-    .catch((error) => { console.error(error); })
+    .catch((error) => {
+      // eslint-disable-next-line
+      console.error(error);
+    })
     .then(() => {
       // Dispatch editsSaved action
       dispatch({ type: 'edits/editsSaved', payload: {} });

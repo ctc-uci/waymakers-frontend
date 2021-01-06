@@ -44,12 +44,11 @@ const AddItem = () => {
   const onSubmitAddWarehouse = async () => {
     if (warehouselabel === '') return;
     try {
-      console.log('warehouse label', warehouselabel);
-      const response = await axios.post('http://localhost:3000/warehouse', {
+      await axios.post('http://localhost:3000/warehouse', {
         warehouselabel,
       });
-      console.log(response);
     } catch (err) {
+      // eslint-disable-next-line
       console.error(err);
     }
   };

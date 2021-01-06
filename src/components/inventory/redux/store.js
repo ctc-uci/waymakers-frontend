@@ -1,8 +1,7 @@
-import { createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 // import { createStore, applyMiddleware, compose } from 'redux'; // Non-windows
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
-
 
 // // Uncomment to debug store with Redux DevTools on non-windows
 // /* eslint-disable no-underscore-dangle */

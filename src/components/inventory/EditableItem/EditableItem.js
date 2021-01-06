@@ -28,7 +28,6 @@ const EditableItem = (props) => {
   // Appends to edits object at every change
   // This could probably be changed to only update once
   const updateEdits = () => {
-    console.log(props.item.id);
     store.dispatch(editItem(props.item.id, fieldState));
     setModified(false);
   };
@@ -63,7 +62,6 @@ const EditableItem = (props) => {
     // Only update edits if user has modified values
     // and table is in edit mode
     if (modified && props.editing) {
-      console.log(props.editing);
       updateEdits();
     }
   }, [fieldState]);

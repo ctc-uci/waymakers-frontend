@@ -8,7 +8,6 @@ const initialState = [{
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'divisions/divisionsLoaded': {
-      console.log('[ACTION: divisions/divisionsLoaded] Divisions loaded');
       return [...state, ...action.payload];
     }
     default: {
