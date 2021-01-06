@@ -12,10 +12,12 @@ export default (state = initialState, action) => {
       // Appending the new item
       return [...state, action.payload];
     }
-    case 'categories/categoryDeleted': { // TODO
+    case 'categories/categoryDeleted': {
+      // Overload current state with new items list (without the deleted category)
       return [{ id: -1, label: 'Show All Categories' }].concat(action.payload);
     }
     default: {
+      // Return our current list of categories if nothing happened
       return state;
     }
   }

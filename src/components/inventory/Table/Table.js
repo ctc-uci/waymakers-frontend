@@ -4,13 +4,7 @@ import EditableItem from '../EditableItem/EditableItem';
 
 import { getItems } from '../redux/selectors';
 
-// TODO:
-// - Add ascending and descending sort to table (currently sorted by id)
-// - Improve CSS styling:
-//    - Better positioning for buttons
-//    - Mark unsaved edits with orange outline and icon
-//    - Add strike-through for unsaved deleted
-
+// This is where we display the items in the database
 const Table = (items) => (
   <div className="table">
     <table className="table mt-3 text-center">

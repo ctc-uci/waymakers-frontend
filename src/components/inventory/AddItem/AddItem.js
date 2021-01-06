@@ -30,13 +30,14 @@ const AddItem = () => {
     if (name === '' || quantity < 0 || needed < 0) {
       return;
     }
+    // Create an add item action
     store.dispatch(addItem({
       name, quantity, needed, division, category,
     }));
   };
 
   const onSubmitAddCategory = async () => {
-    if (label === '') return;
+    // Create an add category action
     store.dispatch(addCategory({
       label,
     }));

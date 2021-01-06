@@ -40,6 +40,7 @@ export default (state = initialState, action) => {
       };
     }
     case 'items/categorySelected': {
+      // Modifies the category to be searched (label and id) for the item state
       return {
         ...state,
         selectedCategoryID: action.payload.newCategoryID,

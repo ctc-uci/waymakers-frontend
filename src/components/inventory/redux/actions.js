@@ -29,7 +29,7 @@ export const fetchItems = () => async (dispatch) => {
 // Creates an items/searchTermModified action
 export const searchItems = (searchTerm) => ({
   type: 'items/searchTermModified',
-  payload: { searchTerm },
+  payload: searchTerm,
 });
 
 // Creates an items/searchDivisionModified action

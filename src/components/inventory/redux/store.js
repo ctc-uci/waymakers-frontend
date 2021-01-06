@@ -5,17 +5,21 @@ import rootReducer from './reducers';
 
 // // Uncomment to debug store with Redux DevTools on non-windows
 // /* eslint-disable no-underscore-dangle */
-// const composeEnhancers = typeof window === 'object'
-//   && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-//   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-//     // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-//   }) : compose;
+/**
+const composeEnhancers = typeof window === 'object'
+  && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+  }) : compose;
+  */
 // /* eslint-enable */
 
 // // Apply middleware here
-// const enhancer = composeEnhancers(
-//   applyMiddleware(thunk),
-// );
+/**
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+);
+*/
 // // Creates a store using the "rootReducer"
 // // defined in ./reducers/index.js
 // export default createStore(rootReducer, enhancer);
