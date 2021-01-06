@@ -20,6 +20,8 @@ import { fetchItems, fetchCategories, fetchDivisions } from './redux/actions';
 import store from './redux/store';
 
 const InventoryApp = () => {
+  // search substring for the search bar
+  const [searchSubstring, setSearchSubstring] = useState('');
   // Edit state
   const [editState, setEditState] = useState('');
 
@@ -74,7 +76,8 @@ const InventoryApp = () => {
         editing={useSelector(getEditing)}
       />
       <SearchItem
-        searchSubstring={useSelector(getSearchTerm)}
+        searchSubstring={searchSubstring}
+        setSearchSubstring={setSearchSubstring}
       />
       <CurrentCategoryLabel />
       <Table />

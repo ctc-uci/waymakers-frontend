@@ -1,20 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { searchItems } from '../redux/actions';
 import store from '../redux/store';
 
 // This is a search bar that lets us search for items
 const SearchItem = (prop) => {
-  const handleChange = (e) => {
-    console.log(prop.searchSubstring);
-    store.dispatch(searchItems(e.target.value));
-  };
+  useEffect(() => {
+    store.dispatch(searchItems(prop.searchSubstring));
+  }, [prop.searchSubstring]);
+
   return (
     <input
       type="text"
       className="form-control"
       placeholder="Search for an item..."
       value={prop.searchSubstring}
-      onChange={handleChange}
+      onChange={(e) => prop.setSearchSubstring(e.target.value)}
     />
   );
 };

@@ -41,9 +41,10 @@ export default (state = initialState, action) => {
     }
     case 'items/searchTermModified': {
       // Modifies the search term for the item state
+      console.log(`[SEARCH TERM MODIFIED!] VALUE IS ${action.payload}`);
       return {
         ...state,
-        searchTerm: state.searchTerm + action.payload,
+        searchTerm: action.payload,
       };
     }
     case 'items/searchDivisionModified': {
