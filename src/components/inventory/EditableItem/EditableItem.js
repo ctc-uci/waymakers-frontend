@@ -76,6 +76,7 @@ const EditableItem = (props) => {
       needed: props.item.needed,
       category: props.item.category_id,
     });
+    setDeleted(false);
   }, [props.item, useSelector(getEditing)]);
 
   // Static row to display when not in Edit mode

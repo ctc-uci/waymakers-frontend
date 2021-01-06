@@ -118,16 +118,9 @@ export const startEdits = () => ({
 export const saveEdits = () => async (dispatch) => {
   console.log('in saveEdits');
   const editPromises = [];
+  const deletePromises = [];
 
-  // Populating list with DELETE requests for each deleted item
-  const deletedItems = [...store.getState().edits.deletedItems];
-  deletedItems.forEach(async (id) => {
-    editPromises.push(
-      axios.delete(`http://localhost:3000/inventory/${id}`),
-    );
-  });
-
-  // Populating list with PUT requests for each edited item
+  // Populating edited list with PUT requests for each edited item
   const editedItems = { ...store.getState().edits.editedItems };
   Object.keys(editedItems).forEach(async (id) => {
     editPromises.push(
@@ -135,16 +128,39 @@ export const saveEdits = () => async (dispatch) => {
     );
   });
 
+  // Populating list with DELETE requests for each deleted item
+  const deletedItems = [...store.getState().edits.deletedItems];
+  deletedItems.forEach(async (id) => {
+    deletePromises.push(
+      axios.delete(`http://localhost:3000/inventory/${id}`),
+    );
+  });
+
   // Populating list with DELETE requests for each deleted category
   const deletedCategories = [...store.getState().edits.deletedCategories];
   deletedCategories.forEach(async (id) => {
-    editPromises.push(
+    deletePromises.push(
       axios.delete(`http://localhost:3000/category/${id}`),
     );
   });
 
-  // Perform all requests concurrently
+  // Perform all put requests concurrently
   Promise.all(editPromises)
+    .catch((error) => { console.error(error); })
+    .then(() => {
+      // If there aren't any delete promises, we can just fetch the items now
+      if (deletePromises.length === 0) {
+        // Dispatch editsSaved action
+        dispatch({ type: 'edits/editsSaved', payload: {} });
+        // Fetch items list again
+        dispatch(fetchItems());
+        // Fetch category list again
+        dispatch(fetchCategories());
+      }
+    });
+
+  // Perform all delete requests concurrently
+  Promise.all(deletedItems)
     .catch((error) => { console.error(error); })
     .then(() => {
       // Dispatch editsSaved action

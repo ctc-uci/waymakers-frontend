@@ -52,6 +52,7 @@ export default (state = initialState, action) => {
         editing: false,
         editedItems: {},
         deletedItems: [],
+        deletedCategories: [],
       };
     }
     // Canceling all edits
@@ -62,6 +63,7 @@ export default (state = initialState, action) => {
         editing: false,
         editedItems: {},
         deletedItems: [],
+        deletedCategories: [],
       };
     }
     default: {
