@@ -34,11 +34,13 @@ const MenuItem = (props) => {
       setDeleted(true);
     }
   };
+  // A button that lets you choose which category to select
   const selCategoryButton = (onClickFunction) => (
     <button key={props.category.id} type="button" className="btn btn-warning" onClick={onClickFunction}>
       {props.category.label}
     </button>
   );
+  // A button that lets you choose which category to delete
   const delCategoryButton = (onClickFunction) => (
     <button key={props.category.id} type="button" className="btn btn-danger" onClick={onClickFunction}>
       X |

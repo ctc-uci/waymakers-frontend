@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
       // Modifies the search term for the item state
       return {
         ...state,
-        searchTerm: action.payload,
+        searchTerm: state.searchTerm + action.payload,
       };
     }
     case 'items/searchDivisionModified': {
@@ -55,6 +55,7 @@ export default (state = initialState, action) => {
     }
     case 'items/categorySelected': {
       console.log(`[ACTION: items/categorySelected] Selecting category with id ${action.payload}`);
+      // Modifies the category to be searched (id and label) for the item state
       return {
         ...state,
         selectedCategoryID: action.payload.newCategoryID,

@@ -14,13 +14,12 @@ import {
   getSelectedCategoryID,
   getSelectedCategoryLabel,
   getSelectedDivision,
+  getSearchTerm,
 } from './redux/selectors';
 import { fetchItems, fetchCategories, fetchDivisions } from './redux/actions';
 import store from './redux/store';
 
 const InventoryApp = () => {
-  // Search substring
-  const [searchSubstring, setSearchSubstring] = useState('');
   // Edit state
   const [editState, setEditState] = useState('');
 
@@ -54,10 +53,14 @@ const InventoryApp = () => {
     store.dispatch(fetchCategories());
     store.dispatch(fetchDivisions());
   }, []);
-  // Updates items list when selectedCategory changes or searchSubstring changes
+  // Updates items list when search term, category, or division changes
   useEffect(() => {
     store.dispatch(fetchItems());
-  }, [searchSubstring, useSelector(getSelectedCategoryID), useSelector(getSelectedDivision)]);
+  }, [
+    useSelector(getSearchTerm),
+    useSelector(getSelectedCategoryID),
+    useSelector(getSelectedDivision),
+  ]);
 
   /**
   const StoreDisplay = () => {
@@ -86,8 +89,7 @@ const InventoryApp = () => {
         editing={useSelector(getEditing)}
       />
       <SearchItem
-        searchSubstring={searchSubstring}
-        setSearchSubstring={setSearchSubstring}
+        searchSubstring={useSelector(getSearchTerm)}
       />
       <CurrentCategoryLabel />
       <Table />

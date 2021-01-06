@@ -46,7 +46,6 @@ export default (state = initialState, action) => {
     }
     // Edits have been saved
     case 'edits/editsSaved': {
-      console.log('[ACTION: edits/saveEdits] Edits saved');
       return {
         ...state,
         editing: false,
@@ -58,7 +57,6 @@ export default (state = initialState, action) => {
     // Canceling all edits
     // Resets editedItems, deletedItems to empty values
     case 'edits/cancelEdits': {
-      console.log('[ACTION: edits/cancelEdits] Edits canceled');
       return {
         editing: false,
         editedItems: {},

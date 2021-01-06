@@ -3,6 +3,9 @@
 // Gets items from store
 export const getItems = (store) => store.items.itemsList;
 
+// Gets current search term
+export const getSearchTerm = (store) => store.items.searchTerm;
+
 // Gets current selected category ID
 export const getSelectedCategoryID = (store) => store.items.selectedCategoryID;
 
