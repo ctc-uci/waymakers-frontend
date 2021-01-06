@@ -137,12 +137,7 @@ export const saveEdits = () => async (dispatch) => {
   Promise.all(editPromises)
     .catch((error) => { console.error(error); })
     .then(() => {
-      // Dispatch editsSaved action
-      // dispatch({ type: 'edits/editsSaved', payload: {} });
-      // Fetch items list again
-      // dispatch(fetchItems());
-      // Fetch category list again
-      // dispatch(fetchCategories());
+      // If there aren't any delete promises, we can just fetch the items now
       if (deletePromises.length === 0) {
         // Dispatch editsSaved action
         dispatch({ type: 'edits/editsSaved', payload: {} });
