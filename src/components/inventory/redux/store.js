@@ -17,9 +17,8 @@ const composeEnhancers = typeof window === 'object'
 const enhancer = composeEnhancers(
   applyMiddleware(thunk),
 );
-*/
 // Creates a store using the "rootReducer"
 // defined in ./reducers/index.js
-// export default createStore(rootReducer, enhancer);
-
+export default createStore(rootReducer, enhancer);
+*/
 export default createStore(rootReducer, applyMiddleware(thunk));

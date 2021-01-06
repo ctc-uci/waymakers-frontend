@@ -66,6 +66,7 @@ const CategoryMenu = (prop) => {
         <MenuItem
           key={category.id}
           category={category}
+          editing={prop.editing}
         />
       ))}
       arrowLeft={ArrowLeft}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 import { getEditing } from '../redux/selectors';
@@ -9,6 +9,18 @@ import { deleteCategory, changeSelectedCategory } from '../redux/actions';
 const MenuItem = (props) => {
   // Keeps track of whether or not a category has been deleted
   const [deleted, setDeleted] = useState(false);
+
+  // This will mark a category as not deleted (if the user presses the cancel button)
+  const unDeleteCategory = () => {
+    if (!props.editing) {
+      setDeleted(false);
+    }
+  };
+  // We will unmark a category menu item as deleted if edits are cancelled
+  useEffect(() => {
+    unDeleteCategory();
+  }, [props.editing]);
+
   // Updates selectedCategory in inventory.js, using function passed in
   const selCategory = () => {
     const selectedCategoryID = (props.category.label === 'Show All Categories') ? null : props.category.id;
