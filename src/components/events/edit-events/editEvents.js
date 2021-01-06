@@ -10,7 +10,6 @@ import AddEventPopup from './addEventPopup';
 
 const EditEvents = () => {
   const [events, setEvents] = useState([]);
-  const [filter, setFilter] = useState('week');
   const [editPopup, setEditPopup] = useState(false);
   const [addPopup, setAddPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -48,8 +47,6 @@ const EditEvents = () => {
   };
 
   const renderEvents = () => {
-    // TODO: Filter week and month events!
-
     // eslint-disable-next-line
     console.log('implement filtering here');
     // Render first two events for now
@@ -59,7 +56,7 @@ const EditEvents = () => {
         event={event}
         onEditEventClick={onEditEventClick}
       />
-    ));
+    )).reverse().slice(0, 2);
   };
 
   function renderEditPopup() {
@@ -90,10 +87,6 @@ const EditEvents = () => {
 
   return (
     <div className="editEventsContainer">
-      <div className="toggle-buttons">
-        <button className={filter === 'week' ? 'active' : 'disabled'} type="button" onClick={() => { setFilter('week'); }} aria-label="Change filter to week">This Week</button>
-        <button className={filter === 'month' ? 'active' : 'disabled'} type="button" onClick={() => { setFilter('month'); }} aria-label="Change filter to month">This Month</button>
-      </div>
       <div id="middle-section">
         {renderEditPopup()}
         {renderAddPopup()}
