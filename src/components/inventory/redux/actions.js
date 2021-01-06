@@ -149,7 +149,7 @@ export const saveEdits = () => async (dispatch) => {
     });
 
   // Perform all delete requests concurrently
-  Promise.all(deletedItems)
+  Promise.all(deletePromises)
     .catch((error) => { console.error(error); })
     .then(() => {
       // Dispatch editsSaved action
