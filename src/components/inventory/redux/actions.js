@@ -11,7 +11,7 @@ export const fetchItems = () => async (dispatch) => {
   // may be possible to do this with a selector
   const paramsQuery = {
     params: {
-      division: store.getState().items.selectedDivision,
+      division: store.getState().items.selectedDivisionID,
       category: store.getState().items.selectedCategoryID,
       search: store.getState().items.searchTerm,
     },

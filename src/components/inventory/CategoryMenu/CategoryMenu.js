@@ -1,6 +1,6 @@
 import React from 'react';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
-import MenuItem from './CategoryMenuItem';
+import CategoryMenuItem from './CategoryMenuItem';
 
 const CategoryMenu = (prop) => {
   // Arrows for menu navigation
@@ -11,7 +11,7 @@ const CategoryMenu = (prop) => {
   return (
     <ScrollMenu
       data={prop.categoryList.map((category) => (
-        <MenuItem
+        <CategoryMenuItem
           key={category.id}
           category={category}
           editing={prop.editing}

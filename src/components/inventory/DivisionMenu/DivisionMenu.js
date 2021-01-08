@@ -9,7 +9,7 @@ import store from '../redux/store';
 const DivisionMenu = (prop) => {
   // Returns a button for a single Division
   const MenuItem = (divisionID, divisionLabel) => (
-    <>
+    <label htmlFor={divisionLabel}>
       <input
         id={divisionID}
         type="radio"
@@ -18,7 +18,7 @@ const DivisionMenu = (prop) => {
         onChange={() => { store.dispatch(changeSelectedDivision(divisionID, divisionLabel)); }}
       />
       {divisionLabel}
-    </>
+    </label>
   );
 
   // Creating list of buttons for Division menu

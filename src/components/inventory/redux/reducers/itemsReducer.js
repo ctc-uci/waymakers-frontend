@@ -37,7 +37,8 @@ export default (state = initialState, action) => {
       // Modifies the division to be searched (id) for the item state
       return {
         ...state,
-        selectedDivision: action.payload.id,
+        selectedDivisionID: action.payload.newDivisionID,
+        selectedDivisionLabel: action.payload.newDivisionLabel,
       };
     }
     case 'items/categorySelected': {

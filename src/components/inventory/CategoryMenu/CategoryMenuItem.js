@@ -6,7 +6,7 @@ import store from '../redux/store';
 import { deleteCategory, changeSelectedCategory } from '../redux/actions';
 
 // Returns a button for a single category
-const MenuItem = (props) => {
+const CategoryMenuItem = (props) => {
   // Keeps track of whether or not a category has been deleted
   const [deleted, setDeleted] = useState(false);
 
@@ -50,4 +50,4 @@ const MenuItem = (props) => {
   return useSelector(getEditing) && props.category.label !== 'Show All Categories' ? delCategoryButton(delCategory) : selCategoryButton(selCategory);
 };
 
-export default MenuItem;
+export default CategoryMenuItem;
