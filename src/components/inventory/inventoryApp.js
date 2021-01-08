@@ -13,8 +13,9 @@ import {
   getEditing,
   getSelectedCategoryID,
   getSelectedCategoryLabel,
-  getSelectedDivision,
   getSearchTerm,
+  getSelectedDivisionID,
+  getSelectedDivisionLabel,
 } from './redux/selectors';
 import { fetchItems, fetchCategories, fetchDivisions } from './redux/actions';
 import store from './redux/store';
@@ -36,12 +37,11 @@ const InventoryApp = () => {
   };
   // Displays selected Division
   const CurrentDivisionLabel = () => {
-    const selectedDivision = useSelector(getSelectedDivision);
-    const divisionLabel = selectedDivision.id === -1 ? ' All Division' : ` ${selectedDivision.div_name}`;
+    const currentDivision = useSelector(getSelectedDivisionLabel) === '' ? ' All Divisions' : `${useSelector(getSelectedDivisionLabel)}`;
     return (
       <div>
         <h1>
-          {divisionLabel}
+          {currentDivision}
           <span> Inventory</span>
         </h1>
         {useSelector(getEditing) && <AddItemModal />}
@@ -61,7 +61,7 @@ const InventoryApp = () => {
   }, [
     useSelector(getSearchTerm),
     useSelector(getSelectedCategoryID),
-    useSelector(getSelectedDivision),
+    useSelector(getSelectedDivisionID),
   ]);
   return (
     <div className="inventory">

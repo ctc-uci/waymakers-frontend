@@ -2,23 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import './DivisionMenu.css';
 
-import { getDivisions, getSelectedDivision } from '../redux/selectors';
+import { getDivisions, getSelectedDivisionLabel } from '../redux/selectors';
 import { changeSelectedDivision } from '../redux/actions';
 import store from '../redux/store';
 
 const DivisionMenu = (prop) => {
   // Returns a button for a single Division
   const MenuItem = (divisionID, divisionLabel) => (
-    <label htmlFor={divisionLabel}>
+    <>
       <input
         id={divisionID}
         type="radio"
         name="division"
         value={divisionID}
-        onChange={() => { store.dispatch(changeSelectedDivision(divisionID)); }}
+        onChange={() => { store.dispatch(changeSelectedDivision(divisionID, divisionLabel)); }}
       />
       {divisionLabel}
-    </label>
+    </>
   );
 
   // Creating list of buttons for Division menu
@@ -43,7 +43,7 @@ const DivisionMenu = (prop) => {
 // Connecting component props to redux state
 const mapStateToProps = (state) => ({
   divisionList: getDivisions(state),
-  selectedDivision: getSelectedDivision(state),
+  selectedDivision: getSelectedDivisionLabel(state),
 });
 
 export default connect(mapStateToProps, null)(DivisionMenu);

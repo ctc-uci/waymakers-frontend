@@ -33,9 +33,9 @@ export const searchItems = (searchTerm) => ({
 });
 
 // Creates an items/searchDivisionModified action
-export const changeSelectedDivision = (id) => ({
+export const changeSelectedDivision = (newDivisionID, newDivisionLabel) => ({
   type: 'items/searchDivisionModified',
-  payload: { id },
+  payload: { newDivisionID, newDivisionLabel },
 });
 
 // Creates an items/categorySelected action
@@ -49,6 +49,17 @@ export const addCategory = (newCategory) => async (dispatch) => {
   try {
     const response = await axios.post('http://localhost:3000/category', newCategory);
     dispatch({ type: 'categories/categoryAdded', payload: response.data });
+  } catch (err) {
+    // eslint-disable-next-line
+    console.error(err);
+  }
+};
+
+// Creates a divisions/divisionAdded action
+export const addDivision = (newDivision) => async (dispatch) => {
+  try {
+    const response = await axios.post('http://localhost:3000/divisions', newDivision);
+    dispatch({ type: 'divisions/divisionAdded', payload: response.data });
   } catch (err) {
     // eslint-disable-next-line
     console.error(err);

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import store from '../redux/store';
-import { addItem, addCategory } from '../redux/actions';
+import { addItem, addCategory, addDivision } from '../redux/actions';
 import { getCategories, getDivisions } from '../redux/selectors';
-
-const axios = require('axios');
 
 // note: this is only used in AddItemModal.js
 
@@ -20,10 +18,10 @@ const AddItem = () => {
   const [category, setCategory] = useState('');
   // name of category to add
   const [label, setLabel] = useState('');
-  // warehouse of item
+  // division of item
   const [division, setDivision] = useState('');
-  // name of warehouse to add
-  const [warehouselabel, setWarehouseLabel] = useState('');
+  // name of division to add
+  const [divisionLabel, setDivisionLabel] = useState('');
 
   const onSubmitAddItem = () => {
     // TODO: Handle empty/invalid items better
@@ -42,16 +40,11 @@ const AddItem = () => {
       label,
     }));
   };
-  const onSubmitAddWarehouse = async () => {
-    if (warehouselabel === '') return;
-    try {
-      await axios.post('http://localhost:3000/warehouse', {
-        warehouselabel,
-      });
-    } catch (err) {
-      // eslint-disable-next-line
-      console.error(err);
-    }
+  const onSubmitAddDivision = async () => {
+    // Create an add division action
+    store.dispatch(addDivision({
+      divisionLabel,
+    }));
   };
 
   return (
@@ -120,16 +113,16 @@ const AddItem = () => {
         />
         <button type="submit" className="btn btn-success">Add Category</button>
       </form>
-      {/** ADD WAREHOUSE BUTTON */}
-      <form className="d-flex flex-column" onSubmit={onSubmitAddWarehouse}>
+      {/** ADD DIVISION BUTTON */}
+      <form className="d-flex flex-column" onSubmit={onSubmitAddDivision}>
         <input
           type="text"
-          placeholder="Warehouse Label"
+          placeholder="Division Label"
           className="form-control"
-          value={warehouselabel}
-          onChange={(e) => setWarehouseLabel(e.target.value)}
+          value={divisionLabel}
+          onChange={(e) => setDivisionLabel(e.target.value)}
         />
-        <button type="submit" className="btn btn-success">Add Warehouse</button>
+        <button type="submit" className="btn btn-success">Add Division</button>
       </form>
     </>
   );

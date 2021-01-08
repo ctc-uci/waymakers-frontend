@@ -1,7 +1,8 @@
 // Initial state populated with sample values
 const initialState = {
   itemsList: [], // List of item objects
-  selectedDivision: -1, // ID of the selected division
+  selectedDivisionID: -1, // ID of the selected division
+  selectedDivisionLabel: '', // div_name of the selected division
   selectedCategoryID: null, // ID of the selected category
   selectedCategoryLabel: '', // Label of theselected category
   searchTerm: '', // String value of the current search term
