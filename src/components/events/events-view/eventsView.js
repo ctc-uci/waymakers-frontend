@@ -11,6 +11,7 @@ import '@fullcalendar/timegrid/main.css';
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 
 import EventPopup from '../event-popup/eventPopup';
+import HoursPopup from '../hours-popup/hoursPopup';
 
 import './eventsView.css';
 
@@ -68,11 +69,19 @@ const EventsView = () => {
 
   function renderPopup() {
     if (showPopup) {
+      if (cal === 'eventCal') {
+        return (
+          <EventPopup
+            event={selectedEvent}
+            onClose={() => setShowPopup(false)}
+            addEvent={cal === 'eventCal' ? () => addEvent(selectedEvent) : null}
+          />
+        );
+      }
+      // show hours popup for MyEvents events
       return (
-        <EventPopup
-          event={selectedEvent}
+        <HoursPopup
           onClose={() => setShowPopup(false)}
-          addEvent={cal === 'eventCal' ? () => addEvent(selectedEvent) : null}
         />
       );
     }
@@ -105,8 +114,8 @@ const EventsView = () => {
     <div>
       {renderPopup()}
       <div id="filters">
-        <button className="button" type="button" onClick={() => { setCal('myCal'); }} disabled={cal === 'MyCal'} aria-label="Change calendar to my calendar">My Events</button>
-        <button className="button" type="button" onClick={() => { setCal('eventCal'); }} disabled={cal === 'EventCal'} aria-label="Change calendar to event calendar">Current Events</button>
+        <button className="button" type="button" onClick={() => { setCal('myCal'); }} disabled={cal === 'myCal'} aria-label="Change calendar to my calendar">My Events</button>
+        <button className="button" type="button" onClick={() => { setCal('eventCal'); }} disabled={cal === 'eventCal'} aria-label="Change calendar to event calendar">Current Events</button>
         <select name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
           <option value="timeGridDay">Day</option>
           <option value="timeGridWeek">Week</option>
