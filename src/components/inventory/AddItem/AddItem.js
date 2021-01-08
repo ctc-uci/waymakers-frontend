@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import store from '../redux/store';
 import { addItem, addCategory } from '../redux/actions';
-import { getCategories } from '../redux/selectors';
+import { getCategories, getDivisions } from '../redux/selectors';
 
 const axios = require('axios');
 
@@ -92,13 +92,21 @@ const AddItem = () => {
               <option value={cat.id}>{cat.label}</option>
             ))}
         </select>
-        <input
-          type="text"
+        <select
           className="form-control"
-          placeholder="Item Division"
-          value={division}
+          id="divisions"
+          name="divisions"
           onChange={(e) => setDivision(e.target.value)}
-        />
+        >
+          <option value="" selected>No division</option>
+          {/* Creating dropdown menu items from divisions list */}
+          {/* division.div_name is displayed, but the value of the option will be the ID */}
+          {useSelector(getDivisions)
+            .filter((div) => div.id > 0)
+            .map((div) => (
+              <option value={div.id}>{div.div_name}</option>
+            ))}
+        </select>
         <button type="submit" className="btn btn-success">Add</button>
       </form>
       {/** ADD CATEGORY BUTTON */}
