@@ -37,7 +37,8 @@ const InventoryApp = () => {
   };
   // Displays selected Division
   const CurrentDivisionLabel = () => {
-    const currentDivision = useSelector(getSelectedDivisionLabel) === '' ? ' All Divisions' : `${useSelector(getSelectedDivisionLabel)}`;
+    let currentDivision = useSelector(getSelectedDivisionLabel);
+    currentDivision = currentDivision === '' ? ' All Divisions' : currentDivision;
     return (
       <div>
         <h1>
