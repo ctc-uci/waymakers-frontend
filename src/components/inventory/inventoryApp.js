@@ -9,7 +9,6 @@ import Table from './Table/Table';
 import './inventoryApp.css';
 
 import {
-  getCategories,
   getEditing,
   getSelectedCategoryID,
   getSelectedCategoryLabel,
@@ -72,10 +71,7 @@ const InventoryApp = () => {
         setEditState={setEditState}
       />
       <DivisionMenu />
-      <CategoryMenu
-        categoryList={useSelector(getCategories)}
-        editing={useSelector(getEditing)}
-      />
+      <CategoryMenu />
       <SearchItem
         searchSubstring={searchSubstring}
         setSearchSubstring={setSearchSubstring}

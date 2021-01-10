@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import CategoryMenuItem from './CategoryMenuItem';
+import { getCategories, getEditing } from '../redux/selectors';
 
 const CategoryMenu = (prop) => {
   // Arrows for menu navigation
@@ -24,4 +26,9 @@ const CategoryMenu = (prop) => {
   );
 };
 
-export default CategoryMenu;
+const mapStateToProps = (state) => ({
+  categoryList: getCategories(state),
+  editing: getEditing(state),
+});
+
+export default connect(mapStateToProps, null)(CategoryMenu);
