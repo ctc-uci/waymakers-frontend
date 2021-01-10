@@ -9,6 +9,7 @@ import LogIn from './components/login/login';
 import ManageUsers from './components/admin/manageusers/manageusers';
 import ManageDB from './components/admin/managedb/managedb';
 import Profile from './components/profile/profile';
+import editProfile from './templates/editProfile';
 import Hours from './components/volunteer/volHours/hours';
 import Tier from './components/volunteer/tier/tier';
 import Forms from './components/volunteer/forms/forms';
@@ -30,6 +31,7 @@ ReactDOM.render(
             <Route path="/register" component={Register} />
             <Route path="/login" component={LogIn} />
             <Route path="/profile" component={Profile} />
+            <Route path="/editProfile" component={editProfile} />
           </Switch>
 
           <Switch>
