@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './hoursPopup.css';
 
-const HoursPopup = ({ onClose }) => {
-  const [name, setName] = useState('');
-  const [eventTitle, setEventTitle] = useState('');
-  const [location, setLocation] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
+const HoursPopup = ({ event, onClose }) => {
+  console.log(event);
+  const [name, setName] = useState(''); // TODO: Autofill with authenticated user's name
+  const [eventTitle, setEventTitle] = useState(event ? event.title : '');
+  const [location, setLocation] = useState(event ? event.extendedProps.location : '');
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
   const [totalHours, setTotalHours] = useState(0);
-  const [division, setDivision] = useState('Select a Division');
+  const [division, setDivision] = useState('Select a Division'); // TODO: Autofill division, and set readonly later!
   const [notes, setNotes] = useState('');
 
   return (
@@ -25,12 +26,12 @@ const HoursPopup = ({ onClose }) => {
         <label htmlFor="title">
           Title of Event
           <br />
-          <input id="title" type="text" value={eventTitle} onChange={(e) => setEventTitle(e.target.value)} required />
+          <input id="title" type="text" value={eventTitle} onChange={(e) => setEventTitle(e.target.value)} required readOnly={event} />
         </label>
         <label htmlFor="location">
           Location
           <br />
-          <input id="location" type="text" value={location} onChange={(e) => setLocation(e.target.value)} required />
+          <input id="location" type="text" value={location} onChange={(e) => setLocation(e.target.value)} required readOnly={event} />
         </label>
         <label htmlFor="start">
           Start Time
@@ -70,6 +71,11 @@ const HoursPopup = ({ onClose }) => {
 
 HoursPopup.propTypes = {
   onClose: PropTypes.func.isRequired,
+  event: PropTypes.objectOf(PropTypes.string),
+};
+
+HoursPopup.defaultProps = {
+  event: null,
 };
 
 export default HoursPopup;
