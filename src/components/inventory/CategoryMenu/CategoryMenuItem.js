@@ -41,12 +41,15 @@ const CategoryMenuItem = (props) => {
     </button>
   );
   // A button that lets you choose which category to delete
-  const delCategoryButton = (onClickFunction) => (
-    <button key={props.category.id} type="button" className="btn btn-danger" onClick={onClickFunction}>
-      X |
-      {props.category.label}
-    </button>
-  );
+  const delCategoryButton = (onClickFunction) => {
+    const label = deleted ? `${props.category.label} (Deleted)` : props.category.label;
+    return (
+      <button key={props.category.id} type="button" className="btn btn-danger" onClick={onClickFunction}>
+        X |
+        {label}
+      </button>
+    );
+  };
   return useSelector(getEditing) && props.category.label !== 'Show All Categories' ? delCategoryButton(delCategory) : selCategoryButton(selCategory);
 };
 
