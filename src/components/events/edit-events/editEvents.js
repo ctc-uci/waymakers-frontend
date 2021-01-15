@@ -14,19 +14,14 @@ const EditEvents = () => {
   const [addPopup, setAddPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
+  // TODO: Convert date to PST when grabbing from database
+
   async function getEvents() {
     try {
       let allEvents = await axios.get('http://localhost:3000/events/');
+      console.log(allEvents.data);
       if (allEvents.status === 200) {
-        allEvents = allEvents.data.map((event) => ({
-          title: event.event_name,
-          startTime: event.start_time,
-          endTime: event.end_time,
-          eventType: event.event_type,
-          location: event.event_location,
-          description: event.event_description,
-          id: event.event_id,
-        }));
+        allEvents = allEvents.data;
       }
       setEvents(allEvents);
     } catch (e) {

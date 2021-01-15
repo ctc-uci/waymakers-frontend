@@ -10,15 +10,17 @@ const AddEventPopup = ({ onClose }) => {
   const [endTime, setEndTime] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [eventType, setEventType] = useState('Volunteer');
+  const [division, setDivision] = useState('Volunteer');
+
+  // TODO: Import DateTime picker component since datetimelocal not on safari
 
   // adds event to the database
   const onSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(startTime);
     const newEvent = {
       eventName: title,
-      eventType,
+      division,
       eventLocation: location,
       eventDescription: description,
       startTime: new Date(startTime),
@@ -54,7 +56,7 @@ const AddEventPopup = ({ onClose }) => {
         <br />
         <label htmlFor="event-type">
           Event Type:
-          <select id="event-type" name="event-type" onChange={(e) => setEventType(e.target.value)}>
+          <select id="event-type" name="division" onChange={(e) => setDivision(e.target.value)}>
             <option value="volunteer">Volunteer</option>
             <option value="outreach">Outreach</option>
           </select>

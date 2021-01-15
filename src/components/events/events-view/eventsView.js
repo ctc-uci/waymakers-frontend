@@ -35,12 +35,12 @@ const EventsView = () => {
       console.log(allEvents);
       if (allEvents.status === 200) {
         allEvents = allEvents.data.map((event) => ({
-          title: event.eventName,
-          type: event.eventType,
+          title: event.title,
+          type: event.division,
           start: event.startTime,
           end: event.endTime,
-          location: event.eventLocation,
-          description: event.eventDescription,
+          location: event.location,
+          description: event.description,
           id: event.id,
         }));
       }

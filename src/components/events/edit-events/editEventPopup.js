@@ -24,10 +24,10 @@ const EditEventPopup = ({ event, onClose }) => {
       endTime: new Date(endTime),
       isAllDay: false, // default to false right now
     };
-
+    console.log(1);
     try {
       const updatedEvent = await axios.put(`http://localhost:3000/events/${event.id}`, editedEvent);
-
+      console.log(2);
       if (updatedEvent.status === 200 && updatedEvent.data) {
         // eslint-disable-next-line
         console.log('Event added successfully');
@@ -39,7 +39,7 @@ const EditEventPopup = ({ event, onClose }) => {
       // eslint-disable-next-line
       console.log('Error while trying to add event ' + error);
     }
-
+    console.log(3);
     onClose();
   };
 
