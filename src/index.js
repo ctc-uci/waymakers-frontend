@@ -15,6 +15,7 @@ import Forms from './components/volunteer/forms/forms';
 import Inventory from './components/inventory/inventory';
 import Reports from './components/reports/reports';
 import Events from './components/events/events';
+import ViewHours from './components/events/view-hours/viewHours';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -47,6 +48,7 @@ ReactDOM.render(
             <Route path="/inventory" component={Inventory} />
             <Route path="/reports" component={Reports} />
             <Route path="/events" component={Events} />
+            <Route path="/viewhours" component={ViewHours} />
           </Switch>
         </div>
       </div>

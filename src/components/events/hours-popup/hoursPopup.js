@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
 import './hoursPopup.css';
 
 const HoursPopup = ({ event, onClose }) => {
@@ -8,7 +10,7 @@ const HoursPopup = ({ event, onClose }) => {
   const [name, setName] = useState(''); // TODO: Autofill with authenticated user's name
   const [eventTitle, setEventTitle] = useState(event ? event.title : '');
   const [eventLocation, setEventLocation] = useState(event ? event.extendedProps.location : '');
-  const [logStart, setLogStart] = useState(null);
+  const [logStart, setLogStart] = useState('');
   const [logEnd, setLogEnd] = useState(null);
   const [totalHours, setTotalHours] = useState(0);
   const [division, setDivision] = useState('Select a Division'); // TODO: Autofill division, and set readonly later!
@@ -24,13 +26,12 @@ const HoursPopup = ({ event, onClose }) => {
     e.preventDefault();
 
     try {
-      console.log('HELLO');
       // TODO: Check valid start log and end log time (must be during the event)
-
+      console.log(logStart);
       // create log
       const newLog = {
         userId: '9dzJHRJKWTe6xMt304uvpzoohEX2',
-        eventId: '1',
+        eventId: event.id,
         /* TODO:  Get id from event prop or selected event (need to conditionally
           render dropdown and set value
           to the event id of each event */
@@ -43,14 +44,15 @@ const HoursPopup = ({ event, onClose }) => {
         division,
         additionalNotes,
       };
-
+      console.log(newLog);
       // axios call to send to backend
       console.log('about to send request');
-      const addedLog = await axios.post('http://localhost:3000/events/loghours', newLog);
+      const addedLog = await axios.post('http://localhost:3000/logs/add', newLog);
       console.log(addedLog);
       if (addedLog.status === 200 && addedLog.data) {
         // eslint-disable-next-line
         console.log('Log added successfully');
+        onClose();
       } else {
         // eslint-disable-next-line
         console.log('Failed to create Log');
@@ -83,12 +85,20 @@ const HoursPopup = ({ event, onClose }) => {
         </label>
         <label htmlFor="start">
           Start Time
-          <input id="start" type="datetime-local" value={logStart} onChange={(e) => setLogStart(e.target.value)} required />
+          <Datetime
+            id="s"
+            onChange={(e) => setLogStart(e.toString().substring(0, e.toString().length - 8))}
+            required
+          />
+          {/* <input id="start" type="datetime-local" value={logStart
+            onChange={(e) => setLogStart(e.target.value)} required /> */}
         </label>
         <br />
         <label htmlFor="end">
           End Time
-          <input id="end" type="datetime-local" value={logEnd} onChange={(e) => setLogEnd(e.target.value)} required />
+          <Datetime id="s" onChange={(e) => setLogEnd(e.toString().substring(0, e.toString().length - 8))} required />
+          {/* <input id="end" type="datetime-local" value={logEnd}
+            onChange={(e) => setLogEnd(e.target.value)} required /> */}
         </label>
         <label htmlFor="hours">
           Total Hours

@@ -1,22 +1,26 @@
 import React from 'react';
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import './hoursBox.css';
 
-const HoursBox = () => {
-  const getRows = () => {
-    console.log('hi');
+const HoursBox = ({ events }) => {
+  console.log(events);
+  console.log(events.events);
+  const getRows = (event) => {
+    console.log(event);
     return (
       <tr>
-        <td>hi</td>
-        <td>hi</td>
-        <td>hi</td>
-        <td>hi</td>
-        <td>hi</td>
+        <td>{event.event_name}</td>
+        <td>{event.start_time}</td>
+        <td>{event.event_location}</td>
+        <td>{event.log_start}</td>
+        <td>{event.log_end}</td>
+        <td>{event.total_hours}</td>
       </tr>
     );
   };
+  console.log(events);
   return (
     <div id="hours-box">
       <div id="header">
@@ -53,15 +57,18 @@ const HoursBox = () => {
           <th>Event Name</th>
           <th>Date</th>
           <th>Location</th>
+          <th>Start</th>
+          <th>End</th>
           <th>Total hours</th>
-          <th>Status</th>
         </tr>
-        {getRows()}
-        {getRows()}
-        {getRows()}
+        { events.map((event) => getRows(event)) }
       </table>
     </div>
   );
+};
+
+HoursBox.propTypes = {
+  events: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default HoursBox;
