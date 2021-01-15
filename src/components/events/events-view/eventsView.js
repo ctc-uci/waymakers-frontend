@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
+
+// import axios from 'axios';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -10,14 +12,17 @@ import '@fullcalendar/timegrid/main.css';
 
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 
+import { getEventsForFullCalendar } from '../redux/selectors';
 import EventPopup from '../event-popup/eventPopup';
 import HoursPopup from '../hours-popup/hoursPopup';
+import store from '../redux/store';
+import { fetchEvents } from '../redux/actions';
 
 import './eventsView.css';
 
 const EventsView = () => {
   // make sure to be able to set timezone?
-  const [events, setEvents] = useState([]);
+  // const [events, setEvents] = useState([]);
   const [cal, setCal] = useState('eventCal');
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
@@ -28,31 +33,38 @@ const EventsView = () => {
   const calendarEl = useRef(null);
 
   // Alters event object keys for FullCalendar library
-  async function getEventsForCalendar() {
-    try {
-      let allEvents = await axios.get('http://localhost:3000/events/');
-      console.log('all events');
-      console.log(allEvents);
-      if (allEvents.status === 200) {
-        allEvents = allEvents.data.map((event) => ({
-          title: event.eventName,
-          type: event.eventType,
-          start: event.startTime,
-          end: event.endTime,
-          location: event.eventLocation,
-          description: event.eventDescription,
-          id: event.id,
-        }));
-      }
-      setEvents(allEvents);
-    } catch (e) {
-      // eslint-disable-next-line
-      console.log('Error while getting events from the backend!');
-    }
-  }
+  // async function getEventsForCalendar() {
+  //   try {
+  //     let allEvents = store.;
+  //     let allEvents = await axios.get('http://localhost:3000/events/');
+  //     console.log('all events');
+  //     console.log(allEvents);
+  //     if (allEvents.status === 200) {
+  //       allEvents = allEvents.data.map((event) => ({
+  //         title: event.eventName,
+  //         type: event.eventType,
+  //         start: event.startTime,
+  //         end: event.endTime,
+  //         location: event.eventLocation,
+  //         description: event.eventDescription,
+  //         id: event.id,
+  //       }));
+  //     }
+  //     setEvents(allEvents);
+  //   } catch (e) {
+  //     // eslint-disable-next-line
+  //     console.log('Error while getting events from the backend!');
+  //   }
+  // }
 
+  // Might need to refresh events if things change in store??
+  // useEffect(() => {
+  // }, [useSelector(getEvents)])
+
+  // Load Events
   useEffect(() => {
-    getEventsForCalendar();
+    console.log('fetching events');
+    store.dispatch(fetchEvents);
   }, []);
 
   // update calendar
@@ -98,12 +110,12 @@ const EventsView = () => {
     //   calendar = currentEvents;
     // }
     // eslint-disable-next-line
-    console.log(events);
+    console.log(useSelector(getEventsForFullCalendar));
     return (
       <FullCalendar
         plugins={[timeGridPlugin, dayGridPlugin]}
         initialView="timeGridWeek"
-        events={events}
+        events={useSelector(getEventsForFullCalendar)}
         eventClick={onEventClick}
         contentHeight={450}
         ref={calendarEl}
