@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
-// import axios from 'axios';
+import { useSelector, connect } from 'react-redux';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -15,14 +15,13 @@ import { YearPicker, MonthPicker } from 'react-dropdown-date';
 import { getEventsForFullCalendar } from '../redux/selectors';
 import EventPopup from '../event-popup/eventPopup';
 import HoursPopup from '../hours-popup/hoursPopup';
-import store from '../redux/store';
+
 import { fetchEvents } from '../redux/actions';
 
 import './eventsView.css';
 
-const EventsView = () => {
+const EventsView = ({ getEvents }) => {
   // make sure to be able to set timezone?
-  // const [events, setEvents] = useState([]);
   const [cal, setCal] = useState('eventCal');
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
@@ -32,39 +31,12 @@ const EventsView = () => {
 
   const calendarEl = useRef(null);
 
-  // Alters event object keys for FullCalendar library
-  // async function getEventsForCalendar() {
-  //   try {
-  //     let allEvents = store.;
-  //     let allEvents = await axios.get('http://localhost:3000/events/');
-  //     console.log('all events');
-  //     console.log(allEvents);
-  //     if (allEvents.status === 200) {
-  //       allEvents = allEvents.data.map((event) => ({
-  //         title: event.eventName,
-  //         type: event.eventType,
-  //         start: event.startTime,
-  //         end: event.endTime,
-  //         location: event.eventLocation,
-  //         description: event.eventDescription,
-  //         id: event.id,
-  //       }));
-  //     }
-  //     setEvents(allEvents);
-  //   } catch (e) {
-  //     // eslint-disable-next-line
-  //     console.log('Error while getting events from the backend!');
-  //   }
-  // }
-
-  // Might need to refresh events if things change in store??
-  // useEffect(() => {
-  // }, [useSelector(getEvents)])
-
   // Load Events
   useEffect(() => {
-    console.log('fetching events');
-    store.dispatch(fetchEvents);
+    (async () => {
+      console.log('fetching events');
+      await getEvents();
+    })();
   }, []);
 
   // update calendar
@@ -173,4 +145,10 @@ const EventsView = () => {
   );
 };
 
-export default EventsView;
+EventsView.propTypes = {
+  getEvents: PropTypes.func.isRequired,
+};
+
+export default connect(null, {
+  getEvents: fetchEvents, // rename fetchEvents action
+})(EventsView);

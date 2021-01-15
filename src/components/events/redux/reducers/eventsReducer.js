@@ -1,21 +1,12 @@
-/*
-Sample element for eventList
-  {
-    "id": 0,
-    "title": "sampleItem",
-    "startTime": -1,
-    "endTime": -1,
-  }
-*/
-
 // Initial state populated with sample values
-const initialState = {
+export const initialState = {
   eventsList: [], // List of event objects
 };
 
 // Handles the logic of updating the state
 // depending on which action was dispatched
 export default (state = initialState, action) => {
+  console.log(action.type);
   switch (action.type) {
     case 'events/eventsLoaded': {
       console.log('[ACTION: events/eventsLoaded] Events loaded');
@@ -25,6 +16,8 @@ export default (state = initialState, action) => {
         eventsList: action.payload,
       };
     }
+
+    // TODO: Test add, edit, delete actions
     case 'events/eventAdded': {
       console.log(`[ACTION: events/eventAdded] Adding event with content ${action.payload}`);
       // Appending the new event

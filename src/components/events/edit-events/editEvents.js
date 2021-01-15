@@ -17,15 +17,16 @@ const EditEvents = () => {
   async function getEvents() {
     try {
       let allEvents = await axios.get('http://localhost:3000/events/');
+      console.log(allEvents);
       if (allEvents.status === 200) {
         allEvents = allEvents.data.map((event) => ({
-          title: event.event_name,
-          startTime: event.start_time,
-          endTime: event.end_time,
-          eventType: event.event_type,
-          location: event.event_location,
-          description: event.event_description,
-          id: event.event_id,
+          title: event.title,
+          startTime: event.startTime,
+          endTime: event.endTime,
+          division: event.division,
+          location: event.location,
+          description: event.description,
+          id: event.id,
         }));
       }
       setEvents(allEvents);
@@ -40,7 +41,7 @@ const EditEvents = () => {
     getEvents();
   }, []);
 
-  // passed into Event component for the Edit button => shows the popup
+  // Passed into Event component for the Edit button => shows the popup
   const onEditEventClick = (event) => {
     setSelectedEvent(event);
     setEditPopup(true);
