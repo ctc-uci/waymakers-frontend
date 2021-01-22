@@ -9,7 +9,7 @@ import Availability from '../components/profile/availability/Availability';
 
 import profCircle from '../images/profCircle.png';
 
-function viewProfile(props) {
+function viewProfile() {
   // Notes for Preston:
   //  - explain async better?
   //  - explain componentDidMount concept
@@ -23,7 +23,7 @@ function viewProfile(props) {
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [address, setAddress] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [birthday, setBday] = useState('');
 
   const [tier, setTier] = useState(0);
   const [status, setStatus] = useState('Volunteer');
@@ -36,16 +36,9 @@ function viewProfile(props) {
   useEffect(async () => {
     setLoading(true);
 
-    console.log(props);
-
     const result = await axios.get(
-      'http://localhost:3001/accounts/4jkl5llkjljkfs3fsdcs        ', {
-        params: {
-          accessToken: props.cookies.cookies.accessToken,
-        },
-      },
+      'http://localhost:3001/accounts/iwMEiOFVVHUTqlTG9xzSEsvTC473',
     );
-
     const { account, permissions, availability } = result.data;
     const {
       locationstreet, locationcity, locationstate, locationzip,
@@ -56,7 +49,7 @@ function viewProfile(props) {
     setEmail('p@uci.edu');
     setNumber('(555) 555-5555');
     setAddress(`${locationstreet} ${locationcity}, ${locationstate} ${locationzip}`);
-    setBirthday(account.birthdate);
+    setBday(account.birthdate);
     setTier(account.tier);
     setStatus(permissions.permissions);
     setAvailabilities(availability);
