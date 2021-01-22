@@ -3,10 +3,13 @@ import { useHistory } from 'react-router-dom';
 import {
   Card, Button, Alert,
 } from 'react-bootstrap';
-import auth from '../firebase/firebase';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 import EditEvents from '../events/edit-events/editEvents';
+import auth from '../firebase/firebase';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+  const { cookies } = props;
   const history = useHistory();
   const [error, setError] = useState('');
 
@@ -14,6 +17,9 @@ const Dashboard = () => {
     try {
       await auth.signOut();
       history.push('/login');
+      // Removing session cookie
+      cookies.remove('accessToken');
+      cookies.remove('userId');
       // Sign-out successful
     } catch (err) {
       setError(err.message);
@@ -40,4 +46,8 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+Dashboard.propTypes = {
+  cookies: instanceOf(Cookies).isRequired,
+};
+
+export default withCookies(Dashboard);
