@@ -10,7 +10,7 @@ import EditAvailability from '../components/profile/editAvailability/editAvailab
 
 import profCircle from '../images/profCircle.png';
 
-function editProfile() {
+function editProfile(props) {
   // Idea: we have states for each of the information fields we're allowed to change
   // Then, we have a handle function for each of those states that we pass down as props to
   // the edit components.
@@ -33,11 +33,11 @@ function editProfile() {
 
   const [email, setEmail] = useState('');
   // const [number, setNumber] = useState('');
-  const [street, setstreet] = useState('');
-  const [city, setcity] = useState('');
-  const [state, setstate] = useState('');
-  const [zip, setzip] = useState(0);
-  const [birthday, setBday] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zip, setZip] = useState(0);
+  const [birthday, setBirthday] = useState('');
 
   const [tier, setTier] = useState(3);
   const [status, setStatus] = useState('Volunteer');
@@ -50,7 +50,11 @@ function editProfile() {
   useEffect(async () => {
     setLoading(true);
     const result = await axios.get(
-      'http://localhost:3001/accounts/iwMEiOFVVHUTqlTG9xzSEsvTC473',
+      'http://localhost:3001/accounts/4jkl5llkjljkfs3fsdcs        ', {
+        params: {
+          accessToken: props.cookies.cookies.accessToken,
+        },
+      },
     );
     const { account, permissions } = result.data; // deal with availability later
     const {
@@ -61,11 +65,11 @@ function editProfile() {
     setLastname(account.lastname);
     setEmail('p@uci.edu');
     // setNumber('(555) 555-5555');
-    setstreet(locationstreet);
-    setcity(locationcity);
-    setstate(locationstate);
-    setzip(locationzip);
-    setBday(account.birthdate);
+    setStreet(locationstreet);
+    setCity(locationcity);
+    setState(locationstate);
+    setZip(locationzip);
+    setBirthday(account.birthdate);
     setTier(account.tier);
     setStatus(permissions.permissions);
     // setAvailabilities(availability);
@@ -75,7 +79,7 @@ function editProfile() {
   // Use axios PUT request to send new info to backend api, but only after form is "submitted"
   const updateInfo = async () => {
     await axios.put(
-      'http://localhost:3001/accounts/iwMEiOFVVHUTqlTG9xzSEsvTC473', {
+      'http://localhost:3001/accounts/4jkl5llkjljkfs3fsdcs        ', {
         firstname,
         lastname,
         birthdate: birthday,
@@ -85,6 +89,7 @@ function editProfile() {
         locationzip: zip,
         tier,
         permission: status,
+        accessToken: props.cookies.cookies.accessToken,
       },
     );
     history.push('/profile');
