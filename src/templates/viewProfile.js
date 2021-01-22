@@ -23,7 +23,7 @@ function viewProfile() {
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [address, setAddress] = useState('');
-  const [birthday, setBday] = useState('');
+  const [birthday, setBirthday] = useState('');
 
   const [tier, setTier] = useState(0);
   const [status, setStatus] = useState('Volunteer');
@@ -37,8 +37,11 @@ function viewProfile() {
     setLoading(true);
 
     const result = await axios.get(
-      'http://localhost:3001/accounts/iwMEiOFVVHUTqlTG9xzSEsvTC473',
+      'http://localhost:3001/accounts/4jkl5llkjljkfs3fsdcs        ', {
+        withCredentials: true,
+      },
     );
+
     const { account, permissions, availability } = result.data;
     const {
       locationstreet, locationcity, locationstate, locationzip,
@@ -49,7 +52,7 @@ function viewProfile() {
     setEmail('p@uci.edu');
     setNumber('(555) 555-5555');
     setAddress(`${locationstreet} ${locationcity}, ${locationstate} ${locationzip}`);
-    setBday(account.birthdate);
+    setBirthday(account.birthdate);
     setTier(account.tier);
     setStatus(permissions.permissions);
     setAvailabilities(availability);
