@@ -9,10 +9,9 @@ require('dotenv').config();
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: 'waymakers.firebaseapp.com',
-  databaseURL: 'https://waymakers.firebaseio.com',
-  projectId: 'waymakers',
-  storageBucket: 'waymakers.appspot.com',
+  authDomain: 'waymakers-6465d.firebaseapp.com',
+  projectId: 'waymakers-6465d',
+  storageBucket: 'waymakers-6465d.appspot.com',
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
