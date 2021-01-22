@@ -5,16 +5,12 @@ import {
   Card, Button, Form, Alert,
 } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
-import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
 import auth from '../firebase/firebase';
 
-const LogIn = (props) => {
-  const { cookies } = props;
+const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
   const history = useHistory();
 
   const updateEmail = (event) => {
@@ -28,16 +24,6 @@ const LogIn = (props) => {
   async function login() {
     try {
       const user = await auth.signInWithEmailAndPassword(email, password);
-
-      const idToken = firebase.auth().currentUser.getIdToken();
-      console.log(`idToken: ${idToken}`);
-
-      // Setting a session cookie
-      cookies.set('accessToken', idToken, {
-        path: '/',
-        maxAge: 3600,
-      });
-
       // eslint-disable-next-line
       console.log(user);
       history.push('/');
@@ -107,8 +93,4 @@ const LogIn = (props) => {
   );
 };
 
-LogIn.propTypes = {
-  cookies: instanceOf(Cookies).isRequired,
-};
-
-export default withCookies(LogIn);
+export default LogIn;
