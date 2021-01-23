@@ -10,14 +10,10 @@ import '@fullcalendar/timegrid/main.css';
 
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 
-import EventPopup from '../event-popup/eventPopup';
+import DialogueBox from '../dialogue-box/dialogueBox';
 
-import './eventsView.css';
-
-const EventsView = () => {
-  // make sure to be able to set timezone?
+const VolunteerEventAggregatePage = () => {
   const [events, setEvents] = useState([]);
-  const [cal, setCal] = useState('eventCal');
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
 
@@ -26,10 +22,11 @@ const EventsView = () => {
 
   const calendarEl = useRef(null);
 
-  // Alters event object keys for FullCalendar library
   async function getEventsForCalendar() {
     try {
-      let allEvents = await axios.get('http://localhost:3001/events');
+      const url = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/events`;
+      console.log(url);
+      let allEvents = await axios.get(url);
       if (allEvents.status === 200) {
         allEvents = allEvents.data.map((event) => ({
           title: event.event_name,
@@ -47,11 +44,9 @@ const EventsView = () => {
       console.log('Error while getting events from the backend!');
     }
   }
-
   useEffect(() => {
     getEventsForCalendar();
   }, []);
-
   // update calendar
   useEffect(() => {
     calendarEl.current.getApi().changeView('dayGridMonth', `${year}-${month < 10 ? '0' : ''}${month}-01`);
@@ -60,31 +55,23 @@ const EventsView = () => {
 
   const onEventClick = (event) => {
     setSelectedEvent(event.event);
-    setShowPopup(!showPopup);
+    setShowPopup(true);
   };
 
-  // TODO: Need to connect to user tables to add this event to their list!
-  const addEvent = (event) => event;
-
-  function renderPopup() {
+  const renderPopup = () => {
+    console.log('rendering popup');
     if (showPopup) {
       return (
-        <EventPopup
+        <DialogueBox
           event={selectedEvent}
           onClose={() => setShowPopup(false)}
-          addEvent={cal === 'eventCal' ? () => addEvent(selectedEvent) : null}
         />
       );
     }
     return null;
-  }
+  };
 
   const getCalendar = () => {
-    // TODO: Add filtering based on what calendar is showing
-    // let calendar = myEvents;
-    // if (cal === 'EventCal') {
-    //   calendar = currentEvents;
-    // }
     // eslint-disable-next-line
     console.log(events);
     return (
@@ -103,10 +90,8 @@ const EventsView = () => {
 
   return (
     <div>
-      {renderPopup()}
       <div id="filters">
-        <button className="button" type="button" onClick={() => { setCal('myCal'); }} disabled={cal === 'MyCal'} aria-label="Change calendar to my calendar">My Events</button>
-        <button className="button" type="button" onClick={() => { setCal('eventCal'); }} disabled={cal === 'EventCal'} aria-label="Change calendar to event calendar">Current Events</button>
+        <h3>Select an Event to View Data</h3>
         <select name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
           <option value="timeGridDay">Day</option>
           <option value="timeGridWeek">Week</option>
@@ -139,14 +124,16 @@ const EventsView = () => {
           name="year"
         />
       </div>
-      <div id="calendar" className={showPopup ? 'blur' : ''}>
+      <div id="calendar">
 
         {getCalendar()}
 
       </div>
 
+      {renderPopup()}
+
     </div>
   );
 };
 
-export default EventsView;
+export default VolunteerEventAggregatePage;
