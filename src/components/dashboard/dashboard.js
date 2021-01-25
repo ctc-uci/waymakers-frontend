@@ -3,9 +3,11 @@ import { useHistory } from 'react-router-dom';
 import {
   Card, Button, Alert,
 } from 'react-bootstrap';
+
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import EditEvents from '../events/edit-events/editEvents';
+import InventoryComponent from './inventory-component/inventoryComponent';
 import auth from '../firebase/firebase';
 
 const Dashboard = (props) => {
@@ -41,6 +43,7 @@ const Dashboard = (props) => {
       </div>
       <div>
         <EditEvents />
+        <InventoryComponent />
       </div>
     </div>
   );
