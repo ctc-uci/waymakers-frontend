@@ -1,21 +1,5 @@
 .top-volunteers-div {
-    display: flex;
-    flex-direction: column;
-    background-color: #c4c4c46b;
-    justify-content: space-around;
-    width: 15%;
-}
-
-.top-volunteer-item {
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    align-self: center;
-    width: auto;
-}
-
-.top-volunteer-item + .top-volunteer-item {
-    border-top: 2px solid #5e5e5e6b;
+    width: 25%;
 }
 
 .avatar {
@@ -25,4 +9,14 @@
     background-color:#4242426b;
     display: block;
     margin-right: 10px;
+}
+
+.top-volunteer-item {
+    display: flex;
+    flex-direction: row;
+}
+
+.list-group {
+    width: 70%;
+    border-radius: 0;
 }
