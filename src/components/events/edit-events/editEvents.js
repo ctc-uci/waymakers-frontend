@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import './editEvents.css';
-import { Link } from 'react-router-dom';
-
 import Event from '../event/event';
 import EditEventPopup from './editEventPopup';
 import AddEventPopup from './addEventPopup';
+
+const instance = axios.create({
+  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
+  withCredentials: true,
+});
 
 const EditEvents = () => {
   const [events, setEvents] = useState([]);
@@ -16,17 +20,10 @@ const EditEvents = () => {
 
   async function getEvents() {
     try {
-      let allEvents = await axios.get('http://localhost:3000/events/');
+      let allEvents = await instance.get('events');
+
       if (allEvents.status === 200) {
-        allEvents = allEvents.data.map((event) => ({
-          title: event.event_name,
-          startTime: event.start_time,
-          endTime: event.end_time,
-          eventType: event.event_type,
-          location: event.event_location,
-          description: event.event_description,
-          id: event.event_id,
-        }));
+        allEvents = allEvents.data;
       }
       setEvents(allEvents);
     } catch (e) {
@@ -38,25 +35,24 @@ const EditEvents = () => {
   // Load / Refresh events
   useEffect(() => {
     getEvents();
-  }, []);
+  }, [addPopup]);
 
-  // passed into Event component for the Edit button => shows the popup
+  // Passed into Event component for the Edit button => shows the popup
   const onEditEventClick = (event) => {
     setSelectedEvent(event);
     setEditPopup(true);
   };
 
   const renderEvents = () => {
-    // eslint-disable-next-line
-    console.log('implement filtering here');
+    const f = events.filter((event) => (new Date(event.startTime)) > (new Date())).slice(0, 2);
     // Render first two events for now
-    return events.map((event) => (
+    return f.map((event) => (
       <Event
         key={event.id}
         event={event}
         onEditEventClick={onEditEventClick}
       />
-    )).reverse().slice(0, 2);
+    ));
   };
 
   function renderEditPopup() {

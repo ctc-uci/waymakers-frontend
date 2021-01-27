@@ -20,6 +20,7 @@ import Inventory from './components/inventory/inventory';
 import Reports from './components/reports/reports';
 import Events from './components/events/events';
 import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggregate-page/volunteerEventAggregatePage';
+import viewHours from './components/events/view-hours/viewHours';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -56,6 +57,7 @@ ReactDOM.render(
               <ProtectedRoute path="/inventory" component={Inventory} />
               <ProtectedRoute path="/reports" component={Reports} />
               <ProtectedRoute path="/events" component={Events} />
+              <ProtectedRoute path="/viewHours" component={viewHours} />
             </Switch>
           </div>
         </div>

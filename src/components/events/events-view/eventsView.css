@@ -15,3 +15,7 @@
 .blur{
     filter: blur(3px);
 }
+
+.selected{
+    color: lightblue;
+}

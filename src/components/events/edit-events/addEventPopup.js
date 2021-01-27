@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
 
 import '../event-popup/eventPopup.css';
+
+const instance = axios.create({
+  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
+  withCredentials: true,
+});
 
 const AddEventPopup = ({ onClose }) => {
   const [title, setTitle] = useState('');
@@ -10,15 +17,16 @@ const AddEventPopup = ({ onClose }) => {
   const [endTime, setEndTime] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [eventType, setEventType] = useState('Volunteer');
+  const [division, setDivision] = useState('Volunteer');
+
+  // TODO: Import DateTime picker component since datetimelocal not on safari
 
   // adds event to the database
   const onSubmit = async (e) => {
     e.preventDefault();
-
     const newEvent = {
       eventName: title,
-      eventType,
+      division,
       eventLocation: location,
       eventDescription: description,
       startTime: new Date(startTime),
@@ -27,7 +35,7 @@ const AddEventPopup = ({ onClose }) => {
     };
 
     try {
-      const addedEvent = await axios.post('http://localhost:3000/events/add', newEvent);
+      const addedEvent = await instance.post('events/add', newEvent);
       if (addedEvent.status === 200 && addedEvent.data) {
         // eslint-disable-next-line
         console.log('Event added successfully');
@@ -54,21 +62,27 @@ const AddEventPopup = ({ onClose }) => {
         <br />
         <label htmlFor="event-type">
           Event Type:
-          <select id="event-type" name="event-type" onChange={(e) => setEventType(e.target.value)}>
+          <select id="event-type" name="division" onChange={(e) => setDivision(e.target.value)}>
             <option value="volunteer">Volunteer</option>
             <option value="outreach">Outreach</option>
           </select>
         </label>
         <br />
-        <label htmlFor="start-time">
-          Start Time:
-          <input id="start-time" type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
-        </label>
+        <div>Start Time</div>
+        <Datetime
+          initialValue={new Date(startTime)}
+          id="start-date"
+          onChange={(e) => setStartTime(e.toString().substring(0, e.toString().length - 8))}
+          required
+        />
         <br />
-        <label htmlFor="end-time">
-          End Time:
-          <input id="end-time" type="datetime-local" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
-        </label>
+        <div>End Time</div>
+        <Datetime
+          initialValue={new Date(endTime)}
+          id="end-date"
+          onChange={(e) => setEndTime(e.toString().substring(0, e.toString().length - 8))}
+          required
+        />
         <br />
         <label htmlFor="location">
           Location:

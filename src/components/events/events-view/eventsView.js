@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
+
+import { useSelector, connect } from 'react-redux';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -10,13 +12,16 @@ import '@fullcalendar/timegrid/main.css';
 
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 
+import { getEventsForFullCalendar } from '../redux/selectors';
 import EventPopup from '../event-popup/eventPopup';
+import HoursPopup from '../hours-popup/hoursPopup';
+
+import { fetchEvents } from '../redux/actions';
 
 import './eventsView.css';
 
-const EventsView = () => {
+const EventsView = ({ getEvents }) => {
   // make sure to be able to set timezone?
-  const [events, setEvents] = useState([]);
   const [cal, setCal] = useState('eventCal');
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
@@ -26,30 +31,35 @@ const EventsView = () => {
 
   const calendarEl = useRef(null);
 
+  // <<<<<<< HEAD
   // Alters event object keys for FullCalendar library
-  async function getEventsForCalendar() {
-    try {
-      let allEvents = await axios.get('http://localhost:3001/events');
-      if (allEvents.status === 200) {
-        allEvents = allEvents.data.map((event) => ({
-          title: event.event_name,
-          type: event.event_type,
-          start: event.start_time,
-          end: event.end_time,
-          location: event.event_location,
-          description: event.event_description,
-          id: event.id,
-        }));
-      }
-      setEvents(allEvents);
-    } catch (e) {
-      // eslint-disable-next-line
-      console.log('Error while getting events from the backend!');
-    }
-  }
+  // async function getEventsForCalendar() {
+  //   try {
+  //     let allEvents = await axios.get('http://localhost:3001/events');
+  //     if (allEvents.status === 200) {
+  //       allEvents = allEvents.data.map((event) => ({
+  //         title: event.event_name,
+  //         type: event.event_type,
+  //         start: event.start_time,
+  //         end: event.end_time,
+  //         location: event.event_location,
+  //         description: event.event_description,
+  //         id: event.id,
+  //       }));
+  //     }
+  //     setEvents(allEvents);
+  //   } catch (e) {
+  //     // eslint-disable-next-line
+  //     console.log('Error while getting events from the backend!');
+  //   }
+  // }
 
+  // =======
+  // >>>>>>> dev
   useEffect(() => {
-    getEventsForCalendar();
+    (async () => {
+      await getEvents();
+    })();
   }, []);
 
   // update calendar
@@ -68,36 +78,42 @@ const EventsView = () => {
 
   function renderPopup() {
     if (showPopup) {
+      if (cal === 'eventCal') {
+        return (
+          <EventPopup
+            event={selectedEvent}
+            onClose={() => setShowPopup(false)}
+            addEvent={cal === 'eventCal' ? () => addEvent(selectedEvent) : null}
+          />
+        );
+      }
+      // show hours popup for MyEvents events
       return (
-        <EventPopup
-          event={selectedEvent}
+        <HoursPopup
           onClose={() => setShowPopup(false)}
-          addEvent={cal === 'eventCal' ? () => addEvent(selectedEvent) : null}
+          event={selectedEvent}
         />
       );
     }
     return null;
   }
 
-  const getCalendar = () => {
+  const getCalendar = () => (
     // TODO: Add filtering based on what calendar is showing
     // let calendar = myEvents;
     // if (cal === 'EventCal') {
     //   calendar = currentEvents;
     // }
     // eslint-disable-next-line
-    console.log(events);
-    return (
-      <FullCalendar
-        plugins={[timeGridPlugin, dayGridPlugin]}
-        initialView="timeGridWeek"
-        events={events}
-        eventClick={onEventClick}
-        contentHeight={450}
-        ref={calendarEl}
-      />
-    );
-  };
+    <FullCalendar
+      plugins={[timeGridPlugin, dayGridPlugin]}
+      initialView="timeGridWeek"
+      events={useSelector(getEventsForFullCalendar)}
+      eventClick={onEventClick}
+      contentHeight={450}
+      ref={calendarEl}
+    />
+  );
 
   const getCurrentYear = () => new Date().getFullYear();
 
@@ -105,8 +121,8 @@ const EventsView = () => {
     <div>
       {renderPopup()}
       <div id="filters">
-        <button className="button" type="button" onClick={() => { setCal('myCal'); }} disabled={cal === 'MyCal'} aria-label="Change calendar to my calendar">My Events</button>
-        <button className="button" type="button" onClick={() => { setCal('eventCal'); }} disabled={cal === 'EventCal'} aria-label="Change calendar to event calendar">Current Events</button>
+        <button className="button" type="button" onClick={() => { setCal('eventCal'); }} disabled={cal === 'eventCal'} aria-label="Change calendar to event calendar">Current Events</button>
+        <button className="button" type="button" onClick={() => { setCal('myCal'); }} disabled={cal === 'myCal'} aria-label="Change calendar to my calendar">My Events</button>
         <select name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
           <option value="timeGridDay">Day</option>
           <option value="timeGridWeek">Week</option>
@@ -140,7 +156,7 @@ const EventsView = () => {
         />
       </div>
       <div id="calendar" className={showPopup ? 'blur' : ''}>
-
+        <h3>{cal === 'myCal' ? 'My Events' : 'Current Events'}</h3>
         {getCalendar()}
 
       </div>
@@ -149,4 +165,10 @@ const EventsView = () => {
   );
 };
 
-export default EventsView;
+EventsView.propTypes = {
+  getEvents: PropTypes.func.isRequired,
+};
+
+export default connect(null, {
+  getEvents: fetchEvents, // rename fetchEvents action
+})(EventsView);

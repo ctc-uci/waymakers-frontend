@@ -10,7 +10,7 @@ const EventPopup = ({ event, onClose, addEvent }) => {
     year: 'numeric',
     day: 'numeric',
     timeZoneName: 'short',
-    timeZone: 'UTC',
+    timeZone: 'PST',
     locale: 'en',
   };
 
@@ -30,8 +30,8 @@ const EventPopup = ({ event, onClose, addEvent }) => {
   return (
     <div className="popup">
       <h3>{event.title}</h3>
-      <p>{`Start: ${startDate}`}</p>
-      <p>{`End: ${endDate}`}</p>
+      <p>{`Start: ${new Date(startDate).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}`}</p>
+      <p>{`End: ${new Date(endDate).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}`}</p>
       <p>{`Location: ${event.extendedProps.location}`}</p>
       <p>{`Details: ${event.extendedProps.description}`}</p>
       {renderAddButton()}
