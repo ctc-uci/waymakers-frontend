@@ -45,7 +45,7 @@ const topVolunteersComponent = ({ event }) => {
   return (
     <div className="top-volunteers-div">
       <h2>Top Volunteers:</h2>
-      <ul className="list-group">
+      <ul className="list-group list-group-flush">
         {topVolunteers.map((volunteer) => (
           TopVolunteerItem(volunteer)
         ))}

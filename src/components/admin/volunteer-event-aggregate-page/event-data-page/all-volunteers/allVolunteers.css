@@ -1,0 +1,8 @@
+.volunteer-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.volunteer-position {
+    margin-left: auto;
+}

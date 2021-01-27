@@ -16,6 +16,10 @@
     flex-direction: row;
 }
 
+.list-group-item + .list-group-item {
+    border-top: .5px solid #4242426b;
+}
+
 .list-group {
     width: 70%;
     border-radius: 0;
