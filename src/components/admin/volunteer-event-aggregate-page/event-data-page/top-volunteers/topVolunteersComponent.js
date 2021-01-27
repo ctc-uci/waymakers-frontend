@@ -3,24 +3,23 @@ import React, { useState, useEffect } from 'react';
 
 import './topVolunteersComponent.css';
 
-const topVolunteersComponent = () => {
+const topVolunteersComponent = ({ event }) => {
   const instance = axios.create({
     baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
     withCredentials: true,
   });
-  const [topVolunteers, setTopVolunteers] = useState([
-    { firstname: 'joe', lastname: 'shmoe', sum: 50 },
-  ]);
+  const [topVolunteers, setTopVolunteers] = useState([]);
 
   const paramQuery = {
     params: {
+      // event: event.id,
       event: 21,
     },
   };
 
   const getTopVolunteers = async () => {
     const volunteers = await instance.get('volunteerData/top/', paramQuery);
-    console.log(volunteers);
+    console.log(event.id);
     setTopVolunteers(volunteers.data);
   };
 

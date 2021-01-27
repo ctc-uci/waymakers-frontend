@@ -46,6 +46,7 @@ ReactDOM.render(
               <ProtectedRoute path="/admin/users" component={ManageUsers} />
               <ProtectedRoute path="/admin/db" component={ManageDB} />
               <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
+              <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
               <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
             </Switch>
 
