@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-
+import { withCookies, Cookies } from 'react-cookie';
 import { useSelector, connect } from 'react-redux';
 
 import FullCalendar from '@fullcalendar/react';
@@ -12,17 +12,19 @@ import '@fullcalendar/timegrid/main.css';
 
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 
-import { getEventsForFullCalendar } from '../redux/selectors';
+import { getEventsForFullCalendar, getUserEventsForFullCalendar } from '../redux/selectors';
 import EventPopup from '../event-popup/eventPopup';
 import HoursPopup from '../hours-popup/hoursPopup';
 
-import { fetchEvents } from '../redux/actions';
+import { fetchEvents, fetchUserEvents, addUserEvent } from '../redux/actions';
 
 import './eventsView.css';
 
-const EventsView = ({ getEvents }) => {
+const EventsView = ({
+  getEvents, getUserEvents, addEventToUserCalendar, cookies,
+}) => {
   // make sure to be able to set timezone?
-  const [cal, setCal] = useState('eventCal');
+  const [cal, setCal] = useState('myCal');
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
 
@@ -31,34 +33,10 @@ const EventsView = ({ getEvents }) => {
 
   const calendarEl = useRef(null);
 
-  // <<<<<<< HEAD
-  // Alters event object keys for FullCalendar library
-  // async function getEventsForCalendar() {
-  //   try {
-  //     let allEvents = await axios.get('http://localhost:3001/events');
-  //     if (allEvents.status === 200) {
-  //       allEvents = allEvents.data.map((event) => ({
-  //         title: event.event_name,
-  //         type: event.event_type,
-  //         start: event.start_time,
-  //         end: event.end_time,
-  //         location: event.event_location,
-  //         description: event.event_description,
-  //         id: event.id,
-  //       }));
-  //     }
-  //     setEvents(allEvents);
-  //   } catch (e) {
-  //     // eslint-disable-next-line
-  //     console.log('Error while getting events from the backend!');
-  //   }
-  // }
-
-  // =======
-  // >>>>>>> dev
   useEffect(() => {
     (async () => {
       await getEvents();
+      await getUserEvents('9dzJHRJKWTe6xMt304uvpzoohEX2');
     })();
   }, []);
 
@@ -73,8 +51,10 @@ const EventsView = ({ getEvents }) => {
     setShowPopup(!showPopup);
   };
 
-  // TODO: Need to connect to user tables to add this event to their list!
-  const addEvent = (event) => event;
+  const addEvent = (userId, eventId) => {
+    addEventToUserCalendar(userId, eventId);
+    setShowPopup(false);
+  };
 
   function renderPopup() {
     if (showPopup) {
@@ -83,7 +63,7 @@ const EventsView = ({ getEvents }) => {
           <EventPopup
             event={selectedEvent}
             onClose={() => setShowPopup(false)}
-            addEvent={cal === 'eventCal' ? () => addEvent(selectedEvent) : null}
+            addEvent={cal === 'eventCal' && !useSelector(getUserEventsForFullCalendar).includes(selectedEvent) ? () => addEvent(cookies.cookies.userId, selectedEvent.id) : null}
           />
         );
       }
@@ -98,22 +78,25 @@ const EventsView = ({ getEvents }) => {
     return null;
   }
 
-  const getCalendar = () => (
-    // TODO: Add filtering based on what calendar is showing
-    // let calendar = myEvents;
-    // if (cal === 'EventCal') {
-    //   calendar = currentEvents;
-    // }
-    // eslint-disable-next-line
-    <FullCalendar
-      plugins={[timeGridPlugin, dayGridPlugin]}
-      initialView="timeGridWeek"
-      events={useSelector(getEventsForFullCalendar)}
-      eventClick={onEventClick}
-      contentHeight={450}
-      ref={calendarEl}
-    />
-  );
+  const getCalendar = () => {
+    let events;
+    if (cal === 'myCal') {
+      events = useSelector(getUserEventsForFullCalendar);
+    } else {
+      events = useSelector(getEventsForFullCalendar);
+    }
+
+    return (
+      <FullCalendar
+        plugins={[timeGridPlugin, dayGridPlugin]}
+        initialView="timeGridWeek"
+        events={events}
+        eventClick={onEventClick}
+        contentHeight={450}
+        ref={calendarEl}
+      />
+    );
+  };
 
   const getCurrentYear = () => new Date().getFullYear();
 
@@ -167,8 +150,13 @@ const EventsView = ({ getEvents }) => {
 
 EventsView.propTypes = {
   getEvents: PropTypes.func.isRequired,
+  getUserEvents: PropTypes.func.isRequired,
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
+  addEventToUserCalendar: PropTypes.func.isRequired,
 };
 
-export default connect(null, {
+export default withCookies(connect(null, {
   getEvents: fetchEvents, // rename fetchEvents action
-})(EventsView);
+  getUserEvents: fetchUserEvents,
+  addEventToUserCalendar: addUserEvent,
+})(EventsView));

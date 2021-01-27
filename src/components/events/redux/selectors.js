@@ -24,3 +24,26 @@ export const getEventsForFullCalendar = (store) => {
     id: event.id,
   }));
 };
+
+export const getUserEvents = (store) => {
+  if (store.events && store.events.userEventsList) {
+    return store.events.userEventsList;
+  }
+  return [];
+};
+
+export const getUserEventsForFullCalendar = (store) => {
+  const events = getUserEvents(store);
+  if (events.length === 0) {
+    return [];
+  }
+  return events.map((event) => ({
+    title: event.title,
+    type: event.division,
+    start: event.startTime,
+    end: event.endTime,
+    location: event.location,
+    description: event.description,
+    id: event.id,
+  }));
+};
