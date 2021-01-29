@@ -17,7 +17,8 @@ const AddEventPopup = ({ onClose }) => {
   const [endTime, setEndTime] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [division, setDivision] = useState('Volunteer');
+  const [eventType, setEventType] = useState('Volunteer');
+  const [division, setDivision] = useState('Crisis-Response-Team');
 
   // TODO: Import DateTime picker component since datetimelocal not on safari
 
@@ -26,9 +27,10 @@ const AddEventPopup = ({ onClose }) => {
     e.preventDefault();
     const newEvent = {
       eventName: title,
-      division,
+      eventType,
       eventLocation: location,
       eventDescription: description,
+      division: division.replace(/-/g, ' '),
       startTime: new Date(startTime),
       endTime: new Date(endTime),
       isAllDay: false, // default to false right now
@@ -62,12 +64,24 @@ const AddEventPopup = ({ onClose }) => {
         <br />
         <label htmlFor="event-type">
           Event Type:
-          <select id="event-type" name="division" onChange={(e) => setDivision(e.target.value)}>
-            <option value="volunteer">Volunteer</option>
-            <option value="outreach">Outreach</option>
+          <br />
+          <select id="event-type" name="eventType" onChange={(e) => setEventType(e.target.value)}>
+            <option value="Volunteer">Volunteer</option>
+            <option value="Outreach">Outreach</option>
           </select>
         </label>
         <br />
+
+        <label htmlFor="division">
+          Division:
+          <br />
+          <select id="division" name="division" value={division} onChange={(e) => setDivision(e.target.value)}>
+            <option value="Crisis-Response-Team">Crisis Response Team</option>
+            <option value="Gang-Services">Gang Services</option>
+            <option value="Human-Trafficking">Human Trafficking</option>
+          </select>
+        </label>
+
         <div>Start Time</div>
         <Datetime
           initialValue={new Date(startTime)}
