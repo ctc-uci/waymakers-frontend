@@ -16,7 +16,8 @@ export const getEventsForFullCalendar = (store) => {
   }
   return events.map((event) => ({
     title: event.title,
-    type: event.division,
+    division: event.division,
+    eventType: event.eventType,
     start: event.startTime,
     end: event.endTime,
     location: event.location,
@@ -39,7 +40,8 @@ export const getUserEventsForFullCalendar = (store) => {
   }
   return events.map((event) => ({
     title: event.title,
-    type: event.division,
+    division: event.division,
+    eventType: event.eventType,
     start: event.startTime,
     end: event.endTime,
     location: event.location,
