@@ -1,3 +1,11 @@
+.volunteer-table {
+    border-color: black;
+}
+
+.volunteer-table tr:nth-child(4n+1), .volunteer-table tr:nth-child(4n+2) {
+    background-color: #6e6d6d6b;
+}
+
 .volunteer-info {
     display: flex;
     flex-direction: row;
@@ -5,4 +13,17 @@
 
 .volunteer-position {
     margin-left: auto;
+}
+
+.volunteer-cardinality {
+    display: flex;
+    flex-direction: row;
+}
+
+.volunteer-cardinality .volunteer-number {
+    margin-left: auto;
+}
+
+.volunteer-cardinality {
+    padding: 10px;
 }

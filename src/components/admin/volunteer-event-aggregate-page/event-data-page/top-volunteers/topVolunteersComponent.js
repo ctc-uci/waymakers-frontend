@@ -12,8 +12,8 @@ const topVolunteersComponent = ({ event }) => {
 
   const paramQuery = {
     params: {
-      // event: event.id,
-      event: 21,
+      event: event.id,
+      // event: 21,
     },
   };
 
