@@ -86,12 +86,13 @@ export const fetchUserEvents = (userId) => async (dispatch) => {
 export const addUserEvent = (userId, eventId) => async (dispatch) => {
   try {
     const response = await instance.post('userEvent/add', { userId, eventId });
-    console.log(response);
+    console.log(response.status);
     if (response.status === 200) {
       dispatch({ type: 'events/userEventAdded', payload: response.data });
     }
     return null;
   } catch (err) {
+    console.log('You already added this event to your calendar.');
     // eslint-disable-next-line
     console.error(err);
     return err;

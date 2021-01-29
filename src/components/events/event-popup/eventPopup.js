@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { formatDate } from '@fullcalendar/core';
+import { withCookies, Cookies } from 'react-cookie';
+import { connect } from 'react-redux';
+import { addUserEvent } from '../redux/actions';
 
 import './eventPopup.css';
 
-const EventPopup = ({ event, onClose, addEvent }) => {
+const EventPopup = ({
+  event, onClose, canAdd, addEventToUserCalendar, cookies,
+}) => {
   const formatConfig = {
     month: 'long',
     year: 'numeric',
@@ -17,9 +22,14 @@ const EventPopup = ({ event, onClose, addEvent }) => {
   const startDate = formatDate(event.start, formatConfig);
   const endDate = formatDate(event.end, formatConfig);
 
+  const addEvent = () => {
+    addEventToUserCalendar(cookies.cookies.userId, event.id);
+    onClose();
+  };
+
   // Renders add button if addEvent was passed in (so MyEvents will have no add button)
   const renderAddButton = () => {
-    if (addEvent != null) {
+    if (canAdd === true) {
       return (
         <button type="button" aria-label="add event to my cal" onClick={addEvent}>Add</button>
       );
@@ -43,11 +53,11 @@ const EventPopup = ({ event, onClose, addEvent }) => {
 EventPopup.propTypes = {
   event: PropTypes.objectOf(PropTypes.string).isRequired,
   onClose: PropTypes.func.isRequired,
-  addEvent: PropTypes.func,
+  canAdd: PropTypes.bool.isRequired,
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
+  addEventToUserCalendar: PropTypes.func.isRequired,
 };
 
-EventPopup.defaultProps = {
-  addEvent: null,
-};
-
-export default EventPopup;
+export default withCookies(connect(null, {
+  addEventToUserCalendar: addUserEvent,
+})(EventPopup));

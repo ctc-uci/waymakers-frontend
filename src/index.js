@@ -56,8 +56,8 @@ ReactDOM.render(
             <Switch>
               <ProtectedRoute path="/inventory" component={Inventory} />
               <ProtectedRoute path="/reports" component={Reports} />
+              <ProtectedRoute path="/events/viewHours" component={viewHours} />
               <ProtectedRoute path="/events" component={Events} />
-              <ProtectedRoute path="/viewHours" component={viewHours} />
             </Switch>
           </div>
         </div>

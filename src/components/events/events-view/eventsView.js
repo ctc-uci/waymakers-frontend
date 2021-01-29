@@ -16,27 +16,24 @@ import { getEventsForFullCalendar, getUserEventsForFullCalendar } from '../redux
 import EventPopup from '../event-popup/eventPopup';
 import HoursPopup from '../hours-popup/hoursPopup';
 
-import { fetchEvents, fetchUserEvents, addUserEvent } from '../redux/actions';
+import { fetchEvents, fetchUserEvents } from '../redux/actions';
 
 import './eventsView.css';
 
 const EventsView = ({
-  getEvents, getUserEvents, addEventToUserCalendar, cookies,
+  getEvents, getUserEvents, cookies,
 }) => {
-  // make sure to be able to set timezone?
   const [cal, setCal] = useState('myCal');
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
-
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1); // stored as int
-
   const calendarEl = useRef(null);
 
   useEffect(() => {
     (async () => {
       await getEvents();
-      await getUserEvents('9dzJHRJKWTe6xMt304uvpzoohEX2');
+      await getUserEvents(cookies.cookies.userId);
     })();
   }, []);
 
@@ -51,22 +48,19 @@ const EventsView = ({
     setShowPopup(!showPopup);
   };
 
-  const addEvent = (userId, eventId) => {
-    addEventToUserCalendar(userId, eventId);
-    setShowPopup(false);
-  };
-
   function renderPopup() {
     if (showPopup) {
       if (cal === 'eventCal') {
+        // TODO: Set canAdd to true/false depending on if event is already in user's cal
         return (
           <EventPopup
             event={selectedEvent}
             onClose={() => setShowPopup(false)}
-            addEvent={cal === 'eventCal' && !useSelector(getUserEventsForFullCalendar).includes(selectedEvent) ? () => addEvent(cookies.cookies.userId, selectedEvent.id) : null}
+            canAdd
           />
         );
       }
+
       // show hours popup for MyEvents events
       return (
         <HoursPopup
@@ -152,11 +146,9 @@ EventsView.propTypes = {
   getEvents: PropTypes.func.isRequired,
   getUserEvents: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
-  addEventToUserCalendar: PropTypes.func.isRequired,
 };
 
 export default withCookies(connect(null, {
   getEvents: fetchEvents, // rename fetchEvents action
   getUserEvents: fetchUserEvents,
-  addEventToUserCalendar: addUserEvent,
 })(EventsView));
