@@ -13,14 +13,16 @@ const AllVolunteers = (prop) => {
     withCredentials: true,
   });
 
+  const [allVolunteers, setAllVolunteers] = useState([]);
+
+  const [selectedTier, setTier] = useState('');
+
   const paramQuery = {
     params: {
       event: prop.event.id,
-      // event: 21,
+      tier: selectedTier,
     },
   };
-
-  const [allVolunteers, setAllVolunteers] = useState([]);
 
   const getAllVolunteers = async () => {
     const volunteers = await instance.get('volunteerData/all/', paramQuery);
@@ -29,7 +31,7 @@ const AllVolunteers = (prop) => {
 
   useEffect(() => {
     getAllVolunteers();
-  }, []);
+  }, [selectedTier]);
 
   const VolunteerItem = (volunteer, index) => (
     <>
@@ -42,7 +44,7 @@ const AllVolunteers = (prop) => {
               {volunteer.lastname}
             </div>
             <div className="volunteer-position">
-              Position V
+              {volunteer.tier}
             </div>
           </div>
         </th>
@@ -65,7 +67,23 @@ const AllVolunteers = (prop) => {
   return (
     <table className="table table-bordered volunteer-table border-dark">
       <thead className="border-dark">
-        <th scope="col"><h1>List of Volunteers</h1></th>
+        <th scope="col" className="all-volunteers-table-head">
+          <h1>List of Volunteers</h1>
+          <select
+            className="form-control all-volunteers-tier-selection"
+            id="tiers"
+            name="tiers"
+            onChange={(e) => setTier(e.target.value)}
+          >
+            <option value="" selected>All Tiers</option>
+            {/* Creating dropdown menu items from categories list */}
+            {/* category.label is displayed, but the value of the option will be the ID */}
+            <option value="1">Tier 1</option>
+            <option value="2">Tier 2</option>
+            <option value="3">Tier 3</option>
+            <option value="4">Tier 4</option>
+          </select>
+        </th>
       </thead>
       <tbody>
         {allVolunteers.map((volunteer, index) => (

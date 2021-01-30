@@ -15,9 +15,10 @@
     margin-left: auto;
 }
 
-.volunteer-cardinality {
+.volunteer-cardinality, .all-volunteers-table-head{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .volunteer-cardinality .volunteer-number {
@@ -26,4 +27,8 @@
 
 .volunteer-cardinality {
     padding: 10px;
+}
+
+#tiers {
+    width: 10%;
 }
