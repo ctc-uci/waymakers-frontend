@@ -76,8 +76,7 @@ const AllVolunteers = (prop) => {
             onChange={(e) => setTier(e.target.value)}
           >
             <option value="" selected>All Tiers</option>
-            {/* Creating dropdown menu items from categories list */}
-            {/* category.label is displayed, but the value of the option will be the ID */}
+            {/* Dropdown menu for tiers */}
             <option value="1">Tier 1</option>
             <option value="2">Tier 2</option>
             <option value="3">Tier 3</option>
