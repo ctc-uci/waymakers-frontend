@@ -20,6 +20,7 @@ import Inventory from './components/inventory/inventory';
 import Reports from './components/reports/reports';
 import Events from './components/events/events';
 import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggregate-page/volunteerEventAggregatePage';
+import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
 
 import './index.css';
@@ -44,7 +45,9 @@ ReactDOM.render(
             <Switch>
               <ProtectedRoute path="/admin/users" component={ManageUsers} />
               <ProtectedRoute path="/admin/db" component={ManageDB} />
-              <Route path="/admin/aggregate" component={VolunteerEventAggregatePage} />
+              <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
+              <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
+              <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
             </Switch>
 
             <Switch>

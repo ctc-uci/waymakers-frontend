@@ -20,24 +20,29 @@ const VolunteerEventAggregatePage = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1); // stored as int
 
+  const instance = axios.create({
+    baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
+    withCredentials: true,
+  });
+
   const calendarEl = useRef(null);
 
   async function getEventsForCalendar() {
     try {
-      const url = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/events`;
-      console.log(url);
-      let allEvents = await axios.get(url);
+      let allEvents = await instance.get('events');
+      console.log(allEvents);
       if (allEvents.status === 200) {
         allEvents = allEvents.data.map((event) => ({
-          title: event.event_name,
+          title: event.title,
           type: event.event_type,
-          start: event.start_time,
-          end: event.end_time,
-          location: event.event_location,
-          description: event.event_description,
+          start: event.startTime,
+          end: event.endTime,
+          location: event.location,
+          description: event.description,
           id: event.id,
         }));
       }
+      console.log(allEvents);
       setEvents(allEvents);
     } catch (e) {
       // eslint-disable-next-line
@@ -47,6 +52,7 @@ const VolunteerEventAggregatePage = () => {
   useEffect(() => {
     getEventsForCalendar();
   }, []);
+
   // update calendar
   useEffect(() => {
     calendarEl.current.getApi().changeView('dayGridMonth', `${year}-${month < 10 ? '0' : ''}${month}-01`);
@@ -124,14 +130,13 @@ const VolunteerEventAggregatePage = () => {
           name="year"
         />
       </div>
+
       <div id="calendar">
 
         {getCalendar()}
 
       </div>
-
       {renderPopup()}
-
     </div>
   );
 };

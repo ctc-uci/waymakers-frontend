@@ -1,0 +1,34 @@
+.volunteer-table {
+    border-color: black;
+}
+
+.volunteer-table tr:nth-child(4n+1), .volunteer-table tr:nth-child(4n+2) {
+    background-color: #6e6d6d6b;
+}
+
+.volunteer-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.volunteer-position {
+    margin-left: auto;
+}
+
+.volunteer-cardinality, .all-volunteers-table-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.volunteer-cardinality .volunteer-number {
+    margin-left: auto;
+}
+
+.volunteer-cardinality {
+    padding: 10px;
+}
+
+#tiers {
+    width: 10%;
+}
