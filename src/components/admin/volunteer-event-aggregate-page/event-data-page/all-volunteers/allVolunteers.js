@@ -80,7 +80,7 @@ const AllVolunteers = (prop) => {
         <h3>Sort by</h3>
         <select
           className="form-control all-volunteers-tier-selection"
-          id="tiers"
+          id="sort-by"
           name="tiers"
           onChange={(e) => setSortingMethod(e.target.value)}
         >
