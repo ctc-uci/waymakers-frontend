@@ -2,6 +2,11 @@
     border-color: black;
 }
 
+.all-volunteers-table-header {
+    display: flex;
+    flex-direction: row;
+}
+
 .volunteer-table tr:nth-child(4n+1), .volunteer-table tr:nth-child(4n+2) {
     background-color: #6e6d6d6b;
 }
@@ -21,7 +26,7 @@
     justify-content: space-between;
 }
 
-.volunteer-cardinality .volunteer-number {
+.volunteer-cardinality .volunteer-total-hours {
     margin-left: auto;
 }
 
