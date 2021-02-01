@@ -45,15 +45,17 @@ const Overview = (prop) => {
   const OverviewItem = (event) => {
     const startTimeSplit = event.st.split(':');
     const startTimeSplitHour = parseInt(startTimeSplit[0], 10);
-    const startTimeSuffix = startTimeSplitHour > 12 ? 'PM' : 'AM';
-    const startHour = startTimeSplitHour > 12 ? startTimeSplitHour - 12 : startTimeSplitHour;
+    const startTimeSuffix = startTimeSplitHour >= 12 ? 'PM' : 'AM';
+    const startHourTemp = startTimeSplitHour > 12 ? startTimeSplitHour - 12 : startTimeSplitHour;
+    const startHour = startHourTemp === 0 ? 12 : startHourTemp;
     const startMinute = startTimeSplit[1];
     const startMonth = monthDict[event.startMonth];
 
     const endTimeSplit = event.et.split(':');
     const endTimeSplitHour = parseInt(endTimeSplit[0], 10);
-    const endTimeSuffix = endTimeSplitHour > 12 ? 'PM' : 'AM';
-    const endHour = endTimeSplitHour > 12 ? endTimeSplitHour - 12 : endTimeSplitHour;
+    const endTimeSuffix = endTimeSplitHour >= 12 ? 'PM' : 'AM';
+    const endHourTemp = endTimeSplitHour > 12 ? endTimeSplitHour - 12 : endTimeSplitHour;
+    const endHour = endHourTemp === 0 ? 12 : endHourTemp;
     const endMinute = endTimeSplit[1];
     const endMonth = monthDict[event.endMonth];
 
