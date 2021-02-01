@@ -49,14 +49,15 @@ const EventsView = ({
   };
 
   function renderPopup() {
+    const userEvents = useSelector(getUserEventsForFullCalendar);
     if (showPopup) {
       if (cal === 'eventCal') {
-        // TODO: Set canAdd to true/false depending on if event is already in user's cal
+        const found = userEvents.filter((event) => event.id === parseInt(selectedEvent.id, 10));
         return (
           <EventPopup
             event={selectedEvent}
             onClose={() => setShowPopup(false)}
-            canAdd
+            canAdd={found.length !== 1}
           />
         );
       }
@@ -98,8 +99,24 @@ const EventsView = ({
     <div>
       {renderPopup()}
       <div id="filters">
-        <button className="button" type="button" onClick={() => { setCal('eventCal'); }} disabled={cal === 'eventCal'} aria-label="Change calendar to event calendar">Current Events</button>
-        <button className="button" type="button" onClick={() => { setCal('myCal'); }} disabled={cal === 'myCal'} aria-label="Change calendar to my calendar">My Events</button>
+        <button
+          className="button"
+          type="button"
+          onClick={() => { setCal('eventCal'); }}
+          disabled={cal === 'eventCal'}
+          aria-label="Change calendar to event calendar"
+        >
+          Current Events
+        </button>
+        <button
+          className="button"
+          type="button"
+          onClick={() => { setCal('myCal'); }}
+          disabled={cal === 'myCal'}
+          aria-label="Change calendar to my calendar"
+        >
+          My Events
+        </button>
         <select name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
           <option value="timeGridDay">Day</option>
           <option value="timeGridWeek">Week</option>
