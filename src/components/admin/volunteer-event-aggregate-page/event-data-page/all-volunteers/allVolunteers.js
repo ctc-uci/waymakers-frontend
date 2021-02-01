@@ -29,7 +29,7 @@ const AllVolunteers = (prop) => {
   const getAllVolunteers = async () => {
     const volunteers = await instance.get('volunteerData/all/', paramQuery);
     setAllVolunteers(volunteers.data);
-    setTotalHours(volunteers.data.map((v) => v.sum).reduce((acc, v) => acc + v));
+    setTotalHours(volunteers.data.map((v) => v.sum).reduce((acc, v) => acc + v, 0));
   };
 
   useEffect(() => {

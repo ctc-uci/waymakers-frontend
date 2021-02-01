@@ -47,14 +47,14 @@ const Overview = (prop) => {
     const startTimeSplitHour = parseInt(startTimeSplit[0], 10);
     const startTimeSuffix = startTimeSplitHour > 12 ? 'PM' : 'AM';
     const startHour = startTimeSplitHour > 12 ? startTimeSplitHour - 12 : startTimeSplitHour;
-    const startMinute = parseInt(startTimeSplit[1], 10);
+    const startMinute = startTimeSplit[1];
     const startMonth = monthDict[event.startMonth];
 
     const endTimeSplit = event.et.split(':');
     const endTimeSplitHour = parseInt(endTimeSplit[0], 10);
     const endTimeSuffix = endTimeSplitHour > 12 ? 'PM' : 'AM';
     const endHour = endTimeSplitHour > 12 ? endTimeSplitHour - 12 : endTimeSplitHour;
-    const endMinute = parseInt(endTimeSplit[1], 10);
+    const endMinute = endTimeSplit[1];
     const endMonth = monthDict[event.endMonth];
 
     const startDate = `${startMonth} ${event.startDay}${suffixDict[event.startDay % 10] === undefined ? 'th' : suffixDict[event.startDay % 10]}`;
