@@ -1,3 +1,5 @@
+@import '../../common/vars.css';
+
 .layout {
-  background: purple;
+  background: white;
 }

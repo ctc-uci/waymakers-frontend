@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant&display=swap');
+
+:root {
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+
+    --text-color-dark: #003E53;
+    --text-color-light: #F9F9F9;
+
+    --color-dark-blue: #003E53;
+    --color-orange: #DC624E;
+    --color-dark-purple: #5A4ABC;
+    --color-light-purple: #AD90FF;
+    --color-light-green: #0CA27E;
+    --color-green: #5D9A64;
+}

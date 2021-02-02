@@ -21,8 +21,8 @@ import Reports from './components/reports/reports';
 import Events from './components/events/events';
 import viewHours from './components/events/view-hours/viewHours';
 
-import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
