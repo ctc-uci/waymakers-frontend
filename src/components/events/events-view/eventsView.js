@@ -99,24 +99,8 @@ const EventsView = ({
     <div>
       {renderPopup()}
       <div id="filters">
-        <button
-          className="button"
-          type="button"
-          onClick={() => { setCal('eventCal'); }}
-          disabled={cal === 'eventCal'}
-          aria-label="Change calendar to event calendar"
-        >
-          Current Events
-        </button>
-        <button
-          className="button"
-          type="button"
-          onClick={() => { setCal('myCal'); }}
-          disabled={cal === 'myCal'}
-          aria-label="Change calendar to my calendar"
-        >
-          My Events
-        </button>
+        <button className="button" type="button" onClick={() => { setCal('eventCal'); }} disabled={cal === 'eventCal'} aria-label="Change calendar to event calendar">More Events</button>
+        <button className="button" type="button" onClick={() => { setCal('myCal'); }} disabled={cal === 'myCal'} aria-label="Change calendar to my calendar">My Events</button>
         <select name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
           <option value="timeGridDay">Day</option>
           <option value="timeGridWeek">Week</option>
@@ -150,7 +134,7 @@ const EventsView = ({
         />
       </div>
       <div id="calendar" className={showPopup ? 'blur' : ''}>
-        <h3>{cal === 'myCal' ? 'My Events' : 'Current Events'}</h3>
+        <h3>{cal === 'myCal' ? 'My Events' : 'More Events'}</h3>
         {getCalendar()}
 
       </div>
