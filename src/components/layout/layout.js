@@ -8,6 +8,7 @@ import './layout.css';
 const Layout = () => (
   <div className="layout">
     <Header />
+    <p>Content</p>
     <Footer />
   </div>
 );
