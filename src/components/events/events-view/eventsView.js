@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { useSelector, connect } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -15,6 +16,8 @@ import { YearPicker, MonthPicker } from 'react-dropdown-date';
 import { getEventsForFullCalendar, getUserEventsForFullCalendar } from '../redux/selectors';
 import EventPopup from '../event-popup/eventPopup';
 import HoursPopup from '../hours-popup/hoursPopup';
+import DialogueBox from '../../admin/dialogue-box/dialogueBox';
+import EditEventPopup from '../edit-events/editEventPopup';
 
 import { fetchEvents, fetchUserEvents } from '../redux/actions';
 
@@ -23,7 +26,9 @@ import './eventsView.css';
 const EventsView = ({
   getEvents, getUserEvents, cookies,
 }) => {
-  const [cal, setCal] = useState('myCal');
+  // const [cal, setCal] = useState('myCal');
+  const [showMoreEvents, setShowMoreEvents] = useState(true);
+  const [showMyEvents, setShowMyEvents] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
   const [year, setYear] = useState(new Date().getFullYear());
@@ -48,21 +53,45 @@ const EventsView = ({
     setShowPopup(!showPopup);
   };
 
+  // Different popup rendered based on what page/route we are on
+  // Volunteer Dashboard => AddPopup/EventPopup
+  // Admin Aggregate Page => DialogueBox
+  // Add/Modify/Remove Events Page => EditEventPopup
   function renderPopup() {
     const userEvents = useSelector(getUserEventsForFullCalendar);
+    const pathName = useLocation().pathname;
+    // Check if event selected = user Event
+    // if it is => HoursPopup
+    // else => big if statement with other popups
+    const found = userEvents.filter((event) => event.id === parseInt(selectedEvent.id, 10));
     if (showPopup) {
-      if (cal === 'eventCal') {
-        const found = userEvents.filter((event) => event.id === parseInt(selectedEvent.id, 10));
-        return (
-          <EventPopup
-            event={selectedEvent}
-            onClose={() => setShowPopup(false)}
-            canAdd={found.length !== 1}
-          />
-        );
+      // Event is NOT on the user's calendar
+      if (showMoreEvents && found.length !== 1) {
+        switch (pathName) {
+          case '/volunteer/events':
+            return (
+              <EventPopup
+                event={selectedEvent}
+                onClose={() => setShowPopup(false)}
+                canAdd={found.length !== 1}
+              />
+            );
+          case '/events':
+            return <EditEventPopup onClose={() => setShowPopup(false)} event={selectedEvent} />;
+          case '/admin/aggregate':
+            return <DialogueBox onClose={() => setShowPopup(false)} event={selectedEvent} />;
+          default: break;
+        }
+      } else if (showMoreEvents) {
+        switch (pathName) {
+          case '/events':
+            return <EditEventPopup onClose={() => setShowPopup(false)} event={selectedEvent} />;
+          case '/admin/aggregate':
+            return <DialogueBox onClose={() => setShowPopup(false)} event={selectedEvent} />;
+          default: break;
+        }
       }
-
-      // show hours popup for MyEvents events
+      // Event is on the user's calendar already
       return (
         <HoursPopup
           onClose={() => setShowPopup(false)}
@@ -75,9 +104,11 @@ const EventsView = ({
 
   const getCalendar = () => {
     let events;
-    if (cal === 'myCal') {
+    if (showMyEvents && !showMoreEvents) { // Only My Events checked off
       events = useSelector(getUserEventsForFullCalendar);
-    } else {
+    } else if (!showMyEvents && showMoreEvents) { // Only More Events checked off
+      events = useSelector(getEventsForFullCalendar);
+    } else { // Both My Events and More Events checked
       events = useSelector(getEventsForFullCalendar);
     }
 
@@ -95,12 +126,30 @@ const EventsView = ({
 
   const getCurrentYear = () => new Date().getFullYear();
 
+  const renderCheckboxes = () => {
+    const pathName = useLocation().pathname;
+    if (pathName === '/volunteer/events') {
+      return (
+        <div>
+          <label htmlFor="more-events-cb">
+            More Events
+            <input id="more-events-cb" type="checkbox" checked={showMoreEvents} onClick={() => { setShowMoreEvents(!showMoreEvents); }} aria-label="Show More Events" />
+          </label>
+          <label htmlFor="more-events-cb">
+            My Events
+            <input id="my-events-cb" type="checkbox" checked={showMyEvents} onClick={() => { setShowMyEvents(!showMyEvents); }} aria-label="Show My Events" />
+          </label>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div>
       {renderPopup()}
       <div id="filters">
-        <button className="button" type="button" onClick={() => { setCal('eventCal'); }} disabled={cal === 'eventCal'} aria-label="Change calendar to event calendar">More Events</button>
-        <button className="button" type="button" onClick={() => { setCal('myCal'); }} disabled={cal === 'myCal'} aria-label="Change calendar to my calendar">My Events</button>
+        {renderCheckboxes()}
         <select name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
           <option value="timeGridDay">Day</option>
           <option value="timeGridWeek">Week</option>
@@ -133,8 +182,7 @@ const EventsView = ({
           name="year"
         />
       </div>
-      <div id="calendar" className={showPopup ? 'blur' : ''}>
-        <h3>{cal === 'myCal' ? 'My Events' : 'More Events'}</h3>
+      <div id="calendar">
         {getCalendar()}
 
       </div>

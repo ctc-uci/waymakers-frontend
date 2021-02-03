@@ -15,16 +15,19 @@ const DialogueBox = ({ event, onClose }) => {
     locale: 'en',
   };
 
-  console.log(event.id);
+  console.log(event);
 
   // TODO: Date/time needs to be converted to PST!!
   const startDate = formatDate(event.start, formatConfig);
 
   return (
     <div id="dialogue-box">
-      <h3 id="event-title">{event.title}</h3>
-      <h3>EVENT TYPE GOES HERE</h3>
-      <p id="event-start-time">{`Start: ${startDate}`}</p>
+      <div id="top-info">
+        <button id="close-button" type="button" aria-label="close data" onClick={onClose}>&#10006;</button>
+        <h3 id="event-title">{event.title}</h3>
+        <h4 id="event-type">{`${event.extendedProps.eventType} Event`}</h4>
+      </div>
+      <p id="event-start-time">{`Start: ${new Date(startDate)}`}</p>
       <Link to={`/admin/event/${event.id}`}>
         <button id="view-data-button" type="button" aria-label="view data" onClick={onClose}>View Data</button>
       </Link>
