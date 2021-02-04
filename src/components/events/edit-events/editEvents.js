@@ -83,7 +83,8 @@ const EditEvents = () => {
 
   return (
     <div className="editEventsContainer">
-      <div id="middle-section">
+      <h3>Events</h3>
+      <div id="middle-section" className="top-item-box">
         {renderEditPopup()}
         {renderAddPopup()}
         {renderEvents()}
@@ -91,10 +92,10 @@ const EditEvents = () => {
           <button type="button" className="add-event-button" onClick={() => setAddPopup(!addPopup)}>+</button>
           <p>Add Event</p>
         </div>
+        <Link to="/events">
+          <button className="all-events" type="button">All Events</button>
+        </Link>
       </div>
-      <Link to="/events">
-        <button className="all-events" type="button">All Events</button>
-      </Link>
     </div>
   );
 };
