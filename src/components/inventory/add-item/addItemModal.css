@@ -1,9 +1,11 @@
+@import '../../../common/vars.css';
+
 .add-item-modal-content {
   position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 40px;
-  bottom: 40px;
+  top: 20%;
+  left: 20%;
+  right: 20%;
+  bottom: 20%;
   border: 1.6px solid #ccc;
   background: #fff;
   overflow: auto;
@@ -11,11 +13,4 @@
   outline: none;
   padding: 20px;
   -webkit-overflow-scrolling: touch;
-}
-.add-item-modal-overlay { 
-  position: fixed;
-  top: 200px;
-  left: 500px;
-  right: 500px;
-  bottom: 200px;
 }
