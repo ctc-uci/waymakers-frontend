@@ -16,7 +16,6 @@ const AddItemModal = () => {
       <div>
         <Modal
           className="add-item-modal-content"
-          overlayClassName="add-item-modal-overlay"
           isOpen={modalIsOpen}
           onRequestClose={() => setModalIsOpen(false)}
         >

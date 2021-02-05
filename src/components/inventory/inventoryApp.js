@@ -6,6 +6,7 @@ import CategoryMenu from './category-menu/categoryMenu';
 import SearchItem from './search-item/searchItem';
 import AddItemModal from './add-item/addItemModal';
 import Table from './table/table';
+import AddCategoryButton from './add-category/addCategory';
 
 import './inventoryApp.css';
 
@@ -72,6 +73,7 @@ const InventoryApp = () => {
       <CurrentDivisionLabel />
       <EditButton />
       <DivisionMenu />
+      <AddCategoryButton />
       <CategoryMenu />
       <SearchItem />
       <CurrentCategoryLabel />
