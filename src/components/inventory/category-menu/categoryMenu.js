@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import CategoryMenuItem from './categoryMenuItem';
 import { getCategories, getEditing } from '../redux/selectors';
+import './categoryMenu.css';
 
 const axios = require('axios');
 
@@ -11,8 +12,8 @@ const axios = require('axios');
 const CategoryMenu = (prop) => {
   // Arrows for menu navigation
   const Arrow = (text, className) => <div className={className}>{text}</div>;
-  const ArrowLeft = Arrow('<', 'arrow-prev');
-  const ArrowRight = Arrow('>', 'arrow-next');
+  const ArrowLeft = Arrow('< ', 'arrow-prev');
+  const ArrowRight = Arrow(' >', 'arrow-next');
   const [categories, setCategories] = useState([]);
   const [currentCategories, setCurrentCategories] = useState([]);
 
@@ -46,7 +47,7 @@ const CategoryMenu = (prop) => {
       ))}
       arrowLeft={ArrowLeft}
       arrowRight={ArrowRight}
-      dragging={false}
+      alignCenter={false}
       scrollBy={4}
     />
   );

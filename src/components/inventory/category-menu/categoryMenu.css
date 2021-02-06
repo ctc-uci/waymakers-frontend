@@ -1,0 +1,33 @@
+@import '../../../common/vars.css';
+
+.arrow-prev {
+    margin-right: 1px;
+}
+
+.arrow-next {
+    margin-left: 1px;
+}
+
+.menu-wrapper {
+    padding: 1px;
+}
+
+.menu-wrapper--inner {
+    padding: 1.4px;
+}
+
+.scroll-menu-arrow {
+    font-weight: 600;
+    font-size: 250%;
+}
+
+.category-button {
+    padding: 0 40px;
+    margin: 5px 10px;
+    cursor: pointer;
+    border: 1px transparent solid;
+}
+
+.edit-category-button {
+
+}

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import store from '../redux/store';
 import { deleteCategory, changeSelectedCategory } from '../redux/actions';
 import { getEditing } from '../redux/selectors';
+import './categoryMenu.css';
 
 // Returns a button for a single category
 const CategoryMenuItem = (props) => {
@@ -36,7 +37,7 @@ const CategoryMenuItem = (props) => {
   };
   // A button that lets you choose which category to select
   const selCategoryButton = (onClickFunction) => (
-    <button key={props.category.id} type="button" className="btn btn-warning" onClick={onClickFunction}>
+    <button key={props.category.id} type="button" className="category-button" onClick={onClickFunction}>
       {props.category.label}
     </button>
   );
@@ -44,7 +45,7 @@ const CategoryMenuItem = (props) => {
   const delCategoryButton = (onClickFunction) => {
     const label = deleted ? `${props.category.label} (Deleted)` : props.category.label;
     return (
-      <button key={props.category.id} type="button" className="btn btn-danger" onClick={onClickFunction}>
+      <button key={props.category.id} type="button" className="edit-category-button" onClick={onClickFunction}>
         X |
         {label}
       </button>
