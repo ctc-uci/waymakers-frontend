@@ -8,6 +8,7 @@ import Contact from '../components/profile/contact/Contact';
 import Availability from '../components/profile/availability/Availability';
 
 import profCircle from '../images/profCircle.png';
+import Qualification from '../components/profile/qualifications/qualifications';
 
 function viewProfile() {
   // Notes for Preston:
@@ -64,6 +65,28 @@ function viewProfile() {
   }
   console.log('render'); // Remove this later
 
+  const complete = [
+    {
+      question: 'Did you upload valid driver\'s license?',
+      response: 'Yes',
+      date: '11/16/2020',
+      status: 'Qualified',
+    },
+    {
+      question: 'Have you completed your Live Scan?',
+      response: 'Yes',
+      date: '11/19/2020',
+      status: 'Qualified',
+    },
+    {
+      question: 'Did you attend the new volunteer orientation?',
+      response: 'Yes',
+      date: '11/16/2020',
+      status: 'Qualified',
+    },
+  ];
+
+  const incomplete = ['Valid Driver\'s License', 'Confidentiality Agreement', 'Current Car Insurance', 'TSA Background Check'];
   // Passing user info as props to About, Contact and (eventually) availability components
   // Also, remove the two buttons later
   return (
@@ -93,6 +116,11 @@ function viewProfile() {
         <div>
           <div className="availCard">
             <Availability availabilities={availabilities} />
+          </div>
+        </div>
+        <div>
+          <div className="qualCard">
+            <Qualification complete={complete} incomplete={incomplete} />
           </div>
         </div>
       </div>
