@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { connect } from 'react-redux';
 import store from '../redux/store';
 import { addCategory } from '../redux/actions';
+import { getCategories } from '../redux/selectors';
 import './addCategory.css';
-
-// TO DO 1: figure out how to make the category actually send to the backend thru redux ahaha
-// TO DO 2: ask design team how adding an item/category should look beyond the buttons
-// TO DO 3: make this component only available when in edit mode
 
 Modal.setAppElement('#root');
 const AddCategoryButton = () => {
   const [popup, setPopup] = useState(false);
-  const [category, setCategory] = useState('');
-
-  console.log(category);
+  const [label, setLabel] = useState('');
 
   const handleOnSubmit = () => {
     // create an add category action
     store.dispatch(addCategory({
-      category,
+      label,
     }));
   };
 
@@ -39,7 +35,7 @@ const AddCategoryButton = () => {
               id="add-category-input"
               name="add-category-input"
               placeholder="Category Name"
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => setLabel(e.target.value)}
             />
             <button type="submit" id="submit-button">Add Category</button>
           </form>
@@ -49,4 +45,9 @@ const AddCategoryButton = () => {
   );
 };
 
-export default AddCategoryButton;
+// Connecting component props to redux state
+const mapStateToProps = (state) => ({
+  categories: getCategories(state),
+});
+
+export default connect(mapStateToProps, null)(AddCategoryButton);

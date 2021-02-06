@@ -73,7 +73,7 @@ const InventoryApp = () => {
       <CurrentDivisionLabel />
       <EditButton />
       <DivisionMenu />
-      <AddCategoryButton />
+      {useSelector(getEditing) && <AddCategoryButton />}
       <CategoryMenu />
       <SearchItem />
       <CurrentCategoryLabel />
