@@ -1,14 +1,39 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import CategoryMenuItem from './categoryMenuItem';
 import { getCategories, getEditing } from '../redux/selectors';
+
+const axios = require('axios');
+
+// TO DO: show only 4 categories at a time
 
 const CategoryMenu = (prop) => {
   // Arrows for menu navigation
   const Arrow = (text, className) => <div className={className}>{text}</div>;
   const ArrowLeft = Arrow('<', 'arrow-prev');
   const ArrowRight = Arrow('>', 'arrow-next');
+  const [categories, setCategories] = useState([]);
+  const [currentCategories, setCurrentCategories] = useState([]);
+
+  useEffect(() => {
+    // Fetches item categories
+    const fetchItemCategories = async () => {
+      const response = await axios.get(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/category`,
+        {
+          params: {},
+          withCredentials: true,
+        },
+      );
+      setCategories(response.data);
+      setCurrentCategories(categories.slice(0, 4));
+    };
+    fetchItemCategories();
+    console.log(categories);
+    console.log(currentCategories);
+  }, []);
+
   // We map our database's categories into a list of buttons
   return (
     <ScrollMenu
@@ -21,7 +46,8 @@ const CategoryMenu = (prop) => {
       ))}
       arrowLeft={ArrowLeft}
       arrowRight={ArrowRight}
-      selected={0}
+      dragging={false}
+      scrollBy={4}
     />
   );
 };
