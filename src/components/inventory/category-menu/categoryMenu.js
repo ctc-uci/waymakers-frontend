@@ -15,7 +15,7 @@ const CategoryMenu = (prop) => {
   const ArrowLeft = Arrow('< ', 'arrow-prev');
   const ArrowRight = Arrow(' >', 'arrow-next');
   const [categories, setCategories] = useState([]);
-  const [currentCategories, setCurrentCategories] = useState([]);
+  const [currentCategories, setCurrentCategories] = useState([0, 1, 2, 3]);
 
   useEffect(() => {
     // Fetches item categories
@@ -28,10 +28,16 @@ const CategoryMenu = (prop) => {
         },
       );
       setCategories(response.data);
-      setCurrentCategories(categories.slice(0, 4));
+      if (response.data.length >= 4) {
+        setCurrentCategories([0, 1, 2, 3]);
+      } else {
+        setCurrentCategories([0, 1, 2, 3].slice(0, response.data.length));
+      }
     };
     fetchItemCategories();
+    console.log('Categories!');
     console.log(categories);
+    console.log('Indexes!');
     console.log(currentCategories);
   }, []);
 

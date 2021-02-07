@@ -1,12 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import EditableItem from '../editable-item/editableItem';
+import { getEditing, getItems } from '../redux/selectors';
+import AddItemModal from '../add-item/addItemModal';
 
-import { getItems } from '../redux/selectors';
+import './table.css';
 
 // This is where we display the items in the database
 const Table = (items) => (
   <div className="table">
+    {useSelector(getEditing) && <AddItemModal />}
     <table className="table mt-3 text-center">
       <thead>
         <tr>

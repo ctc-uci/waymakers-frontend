@@ -1,13 +1,43 @@
 @import '../../../common/vars.css';
 
 .edit-button {
-
+    border: none;
+    position: absolute;
+    right: 20%;
+    top: 23%;
+    background: none;
+    text-decoration: underline;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-size: x-large;
+    color: var(--text-color-dark);
+    font-weight: bold;
 }
-
-.save-edit-button {
-
+.save-button {  
+    border: none;
+    position: absolute;
+    right: 20%;
+    top: 23%;
+    background: none;
+    text-decoration: underline;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-size: x-large;
+    color: var(--text-color-dark);
+    font-weight: bold;
 }
-
-.cancel-edit-button {
-
+.cancel-button {
+    border: none;   
+    background: none;
+    position: absolute;
+    right: 16%;
+    top: 23%;
+    text-decoration: underline;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-size: x-large;
+    color: var(--text-color-dark);
+    font-weight: bold;
+}
+.edit-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    float: right;
 }

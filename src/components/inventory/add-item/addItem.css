@@ -16,7 +16,19 @@
 }
 
 .add-item-button {
-
+  padding: 0 40px;
+  margin: 5px 10px;
+  font-family: "Assistant", Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  border: 2px solid;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: medium;
+  color: var(--text-color-light);
+  background-color: var(--color-green);
+  outline-color: var(--color-green);
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 
 .close-add-item {
