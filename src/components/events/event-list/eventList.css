@@ -1,0 +1,31 @@
+.event-list { 
+    width: 100%;
+}
+
+.event-list-title {
+    color: var(--text-color-dark);
+    font-weight: bold;
+}
+
+.events-container {
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    min-height: 60vh;
+}
+
+.event-div {
+    flex: 0 1 60px;
+    padding: 15px 20px;
+}
+
+.events-see-more {
+    align-self: center;
+    margin-top: auto;
+}
+
+.events-see-more > a {
+    text-decoration: underline;
+}

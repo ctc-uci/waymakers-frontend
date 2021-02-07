@@ -5,7 +5,6 @@ import { CookiesProvider } from 'react-cookie';
 
 import ProtectedRoute from './routes/ProtectedRoute';
 import Layout from './components/layout/layout';
-import Dashboard from './components/dashboard/dashboard';
 import Register from './components/register/register';
 import LogIn from './components/login/login';
 import ManageUsers from './components/admin/manageusers/manageusers';
@@ -26,13 +25,12 @@ import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Layout />
     <CookiesProvider>
       <Router>
         <div className="App">
           <div className="container">
             <Switch>
-              <ProtectedRoute path="/" component={Dashboard} exact />
+              <ProtectedRoute path="/" component={Layout} exact />
               <Route path="/register" component={Register} />
               <Route path="/login" component={LogIn} />
               {/* <ProtectedRoute path="/profile" component={Profile} /> */}

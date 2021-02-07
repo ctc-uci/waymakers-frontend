@@ -2,6 +2,7 @@ import React from 'react';
 // import "./events.css";
 import PropTypes from 'prop-types';
 import Event from '../event/event';
+import './eventList.css';
 
 // events = Array of objects with event details
 /*
@@ -13,14 +14,25 @@ import Event from '../event/event';
   description: description
 }
 */
-const EventList = ({ events, title }) => {
+const EventList = ({ events, title, listType }) => {
   // render Event components based on events prop
-  const renderEvents = () => events.map((event) => <Event event={event} />);
+  console.log(events);
+
+  const renderEvents = () => events.map((event) => (
+    <div className="event-div">
+      <Event event={event} eventType={listType} />
+    </div>
+  ));
 
   return (
-    <div className="eventList">
-      <h1>{title}</h1>
-      {renderEvents()}
+    <div className="event-list">
+      <h5 className="event-list-title">{ title }</h5>
+      <div className="events-container">
+        {renderEvents()}
+        <div className="events-see-more">
+          <a href="/">see more</a>
+        </div>
+      </div>
     </div>
   );
 };
@@ -28,6 +40,7 @@ const EventList = ({ events, title }) => {
 EventList.propTypes = {
   events: PropTypes.arrayOf(Object).isRequired,
   title: PropTypes.string,
+  listType: PropTypes.string.isRequired,
 };
 
 EventList.defaultProps = {

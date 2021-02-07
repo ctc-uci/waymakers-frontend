@@ -1,36 +1,53 @@
-.eventContainer {
-    /* background-color: #999999;
-    /* border-radius: 10%; */
-    /* min-height: 10px; */ 
-    background-color: lightgrey;
-    width: 300px;
-    border: none;
-    padding: 50px;
-    margin: 20px;
+.event-container {
+    display: flex;
+    /* margin: auto; */
+    color: var(--text-color-light);
+    padding: 15px 20px;
+    align-items: center;
 }
 
-.actionButton {
-    width: 30%;
-    padding-left: 2.5%;
-    padding-right: 2.5%;
+.more-events {
+    background-color: var(--color-dark-blue);
 }
 
-.eventName {
-    text-emphasis: bold;
-    font-size: 15px;
+.my-events {
+    background-color: var(--color-orange);
 }
 
-.condensedEventDetails {
-    width: 60%;
-    border: 1px black;
-    padding-left: 10%;
-    padding-right: 10%;
+.event-button {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    min-width: 40px;
+    margin-right: 10px;
+    background-color: white;
+    border-radius: 50%;
 }
 
-.arrowContainer {
-    width: 15%;
-    border-radius: 7.5%;
-    border: 1px black;
-    padding-left: 2.5%;
-    padding-right: 2.5%;
+.event-date-section {
+    margin: auto 10px;
+}
+
+.event-info-section {
+    margin: auto 10px;
+}
+
+.event-day {
+    font-weight: bolder;
+    margin: 0;
+}
+
+.event-month {
+    margin: 0;
+}
+
+.event-title {
+    font-weight: bolder;
+    margin: 0;
+}
+
+.event-time {
+    margin: 0;
 }

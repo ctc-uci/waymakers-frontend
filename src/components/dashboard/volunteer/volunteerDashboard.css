@@ -1,0 +1,28 @@
+.my-stats-section {
+    width: 85%;
+    margin: 30px auto;
+}
+
+.filler {
+    height: 100px;
+    width: 100%;
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.my-stats-title {
+    color: var(--text-color-dark);
+    font-weight: bold;
+}
+
+.events-section {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    width: 85%;
+}
+
+.event-list-component {
+    flex: 0 1 48%;
+}
