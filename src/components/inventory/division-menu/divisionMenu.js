@@ -6,12 +6,13 @@ import store from '../redux/store';
 import { changeSelectedDivision } from '../redux/actions';
 import { getDivisions, getSelectedDivisionID, getWarehouses } from '../redux/selectors';
 
+import './divisionMenu.css';
+
 const DivisionMenu = (prop) => (
-  <div>
+  <div id="division-menu-wrapper">
     <select
-      id="categories"
       name="category"
-      className="form-control"
+      className="division-menu"
       value={prop.selectedDivision}
       onChange={(e) => { store.dispatch(changeSelectedDivision(parseInt(e.target.value, 10))); }}
     >

@@ -1,0 +1,15 @@
+.division-menu {
+    margin: 0 auto;
+    border: none;
+    outline: none;
+    width: 40%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#divison-menu-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

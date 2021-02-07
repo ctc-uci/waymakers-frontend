@@ -1,0 +1,15 @@
+.item-search {
+    width: 100%;
+    height: 40px;
+    text-align: left;
+    padding-left: 15px;
+    background-color: rgba(0, 171, 198, 0.1);
+    border: 0px;
+    border-radius: 3px;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    color: #000;
+}
+/* 
+.item-search::placeholder {
+    color: #555;
+} */

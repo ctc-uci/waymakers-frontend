@@ -1,0 +1,14 @@
+.inventory {
+
+}
+
+#inventory-top {
+    display: flex;
+    flex-direction: row;
+}
+
+.current-category-label {
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    color: var(--text-color-dark);
+    font-weight: 600;
+}

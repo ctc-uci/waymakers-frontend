@@ -4,7 +4,6 @@ import EditButton from './edit-button/editButton';
 import DivisionMenu from './division-menu/divisionMenu';
 import CategoryMenu from './category-menu/categoryMenu';
 import SearchItem from './search-item/searchItem';
-import AddItemModal from './add-item/addItemModal';
 import Table from './table/table';
 import AddCategoryButton from './add-category/addCategory';
 
@@ -32,7 +31,7 @@ const InventoryApp = () => {
   const CurrentCategoryLabel = () => {
     const currentCategory = useSelector(getSelectedCategoryLabel) === '' ? ' All Categories' : ` ${useSelector(getSelectedCategoryLabel)}`;
     return (
-      <h3>
+      <h3 className="current-category-label">
         {currentCategory}
       </h3>
     );
@@ -47,7 +46,6 @@ const InventoryApp = () => {
           {currentDivision}
           <span> Inventory</span>
         </h1>
-        {useSelector(getEditing) && <AddItemModal />}
       </div>
     );
   };
@@ -70,12 +68,12 @@ const InventoryApp = () => {
   ]);
   return (
     <div className="inventory">
-      <CurrentDivisionLabel />
       <EditButton />
+      <CurrentDivisionLabel />
       <DivisionMenu />
       {useSelector(getEditing) && <AddCategoryButton />}
-      <CategoryMenu />
       <SearchItem />
+      <CategoryMenu />
       <CurrentCategoryLabel />
       <Table />
     </div>

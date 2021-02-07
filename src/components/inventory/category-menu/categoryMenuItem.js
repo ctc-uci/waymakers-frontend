@@ -46,7 +46,6 @@ const CategoryMenuItem = (props) => {
     const label = deleted ? `${props.category.label} (Deleted)` : props.category.label;
     return (
       <button key={props.category.id} type="button" className="edit-category-button" onClick={onClickFunction}>
-        X |
         {label}
       </button>
     );

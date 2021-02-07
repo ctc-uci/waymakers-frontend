@@ -19,15 +19,49 @@
 .scroll-menu-arrow {
     font-weight: 600;
     font-size: 250%;
+    color: var(--color-dark-blue)
 }
 
 .category-button {
     padding: 0 40px;
     margin: 5px 10px;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
     cursor: pointer;
-    border: 1px transparent solid;
+    border: 2px solid;
+    border-radius: 6px;
+    color: var(--color-green);
+    background-color: white;
+    outline-color: var(--color-green);
+}
+
+.category-button:hover {
+    color: var(--text-color-light);
+    background-color:var(--color-green);
+    outline-color: var(--color-green);
+    transition: 0.2s
+}
+
+.category-button:focus {
+    color: var(--text-color-light);
+    background-color:var(--color-green);
+    outline-color: var(--color-green);
 }
 
 .edit-category-button {
+    padding: 0 40px;
+    margin: 5px 10px;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    border: 2px solid;
+    border-radius: 6px;
+    color: var(--color-green);
+    background-color: white;
+    outline-color: var(--color-green);
+}
 
+.edit-category-button:hover {
+    color: var(--text-color-light);
+    background-color:var(--color-green);
+    outline-color: var(--color-green);
+    transition: 0.2s
 }
