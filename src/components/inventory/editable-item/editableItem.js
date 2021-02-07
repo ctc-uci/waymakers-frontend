@@ -5,6 +5,8 @@ import store from '../redux/store';
 import { deleteItem, editItem } from '../redux/actions';
 import { getEditing, getCategories } from '../redux/selectors';
 
+import './editableItem.css';
+
 const getCategoryLabelFromID = (id) => {
   const category = useSelector(getCategories).find((cat) => cat.id === id);
   return category ? category.label : '';
@@ -81,10 +83,10 @@ const EditableItem = (props) => {
   // Static row to display when not in Edit mode
   const staticItem = (
     <tr>
-      <td>{fieldState.name}</td>
-      <td>{fieldState.quantity}</td>
-      <td>{fieldState.needed}</td>
-      <td>{getCategoryLabelFromID(fieldState.category)}</td>
+      <td className="item-name">{fieldState.name}</td>
+      <td className="item-qty">{fieldState.quantity}</td>
+      <td className="item-needed">{fieldState.needed}</td>
+      <td className="item-cat">{getCategoryLabelFromID(fieldState.category)}</td>
     </tr>
   );
 
@@ -94,42 +96,42 @@ const EditableItem = (props) => {
     // CSS class to indicate that value has been changed
     // TODO: Add a separate css class for deleted items
     <tr className={modified ? 'modified' : null}>
-      <td>
+      <td className="item-name-field">
         <form id={props.item.id} />
         <input
           name="name"
           type="text"
-          className="form-control"
+          className="item-edit-name"
           value={fieldState.name}
           form={props.item.id}
           onChange={handleChange}
         />
       </td>
-      <td>
+      <td className="item-qty-field">
         <input
           name="quantity"
           type="number"
-          className="form-control"
+          className="item-edit-qty"
           value={fieldState.quantity}
           form={props.item.id}
           onChange={handleChange}
         />
       </td>
-      <td>
+      <td className="item-needed-field">
         <input
           name="needed"
           type="number"
-          className="form-control"
+          className="item-edit-needed"
           value={fieldState.needed}
           form={props.item.id}
           onChange={handleChange}
         />
       </td>
-      <td>
+      <td className="item-cat-field">
         <select
           id="categories"
           name="category"
-          className="form-control"
+          className="item-edit-cat"
           value={fieldState.category}
           form={props.item.id}
           onChange={handleChange}

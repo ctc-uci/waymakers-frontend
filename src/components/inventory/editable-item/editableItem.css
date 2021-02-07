@@ -1,0 +1,48 @@
+.item-name, .item-qty, .item-needed, .item-cat {
+    padding: 10px;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    color: var(--text-color-dark);
+}
+
+.item-name-field, .item-qty-field, .item-needed-field, .item-cat-field {
+    padding: 7px;
+}
+
+.item-edit-name {
+    padding: 3px;
+    padding-left: 5px;
+    border-radius: 0px;
+    border: solid 1px var(--text-color-dark);
+    width: 80%;
+}
+
+.item-edit-cat {
+    width: 50%;
+    text-align-last: center;
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 0px;
+    border: solid 1px var(--text-color-dark);
+}
+
+.item-edit-qty, .item-edit-needed {
+    text-align: center;
+    padding: 5px;
+    padding-left: 12px;
+    border-radius: 0px;
+    border: solid 1px var(--text-color-dark);
+    width: 30%;
+    height: 100%;
+}
+
+.item-qty-field, .item-cat-field {
+    display: flex;
+    flex: 0 0 100%;
+    justify-content: center;
+    margin: auto;
+}
+
+.item-qty, .item-needed, .item-cat {
+    text-align: center;
+}

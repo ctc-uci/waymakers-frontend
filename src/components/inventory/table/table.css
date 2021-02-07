@@ -1,0 +1,22 @@
+.items-table {
+    width: 100%;
+}
+
+.items-table-header {
+    border-bottom: solid 1px var(--color-dark-blue);
+}
+
+.items-th-name, .items-th-stock, .items-th-number, .items-th-cat {
+    padding: 12px;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    color: var(--text-color-dark);
+}
+
+.items-th-name {
+    width: 30%;
+}
+
+.items-th-stock, .items-th-number, .items-th-cat {
+    text-align: center;
+}
