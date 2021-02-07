@@ -8,15 +8,15 @@ import './table.css';
 
 // This is where we display the items in the database
 const Table = (items) => (
-  <div className="table">
+  <div>
     {useSelector(getEditing) && <AddItemModal />}
-    <table className="table mt-3 text-center">
+    <table className="items-table">
       <thead>
-        <tr>
-          <th>Name</th>
-          <th>In stock</th>
-          <th>Number needed</th>
-          <th>Category</th>
+        <tr className="items-table-header">
+          <th className="items-th-name">Name</th>
+          <th className="items-th-stock">In Stock</th>
+          <th className="items-th-number"># Needed</th>
+          <th className="items-th-cat">Category</th>
         </tr>
       </thead>
       <tbody>
