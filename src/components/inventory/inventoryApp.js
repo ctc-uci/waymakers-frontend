@@ -6,7 +6,7 @@ import CategoryMenu from './category-menu/categoryMenu';
 import SearchItem from './search-item/searchItem';
 import Table from './table/table';
 import AddCategoryButton from './add-category/addCategory';
-
+import AddItemModal from './add-item/addItemModal';
 import './inventoryApp.css';
 
 import store from './redux/store';
@@ -30,9 +30,11 @@ const InventoryApp = () => {
   const CurrentCategoryLabel = () => {
     const currentCategory = useSelector(getSelectedCategoryLabel) === '' ? ' All Categories' : ` ${useSelector(getSelectedCategoryLabel)}`;
     return (
-      <h3 className="current-category-label">
-        {currentCategory}
-      </h3>
+      <div>
+        <h3 className="current-category-label">
+          {currentCategory}
+        </h3>
+      </div>
     );
   };
   useEffect(() => {
@@ -59,7 +61,10 @@ const InventoryApp = () => {
         {useSelector(getEditing) && <AddCategoryButton />}
         <CategoryMenu />
       </div>
-      <CurrentCategoryLabel />
+      <div id="table-header-container">
+        <CurrentCategoryLabel />
+        {useSelector(getEditing) && <AddItemModal />}
+      </div>
       <Table />
     </div>
   );
