@@ -11,7 +11,7 @@ Modal.setAppElement('#root');
 const AddItemModal = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   return (
-    <div>
+    <div id="add-item-button-container">
       <button type="button" className="add-item-button" onClick={() => setModalIsOpen(true)}>Add Item</button>
       <div>
         <Modal

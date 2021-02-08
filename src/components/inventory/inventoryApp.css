@@ -8,6 +8,7 @@
 }
 
 .current-category-label {
+    display: flex;
     font-family: "Assistant", Arial, Helvetica, sans-serif;
     color: var(--text-color-dark);
     font-weight: 600;
@@ -17,4 +18,10 @@
    display: flex;
    flex-direction: row;
    align-items: center;
+}
+
+#table-header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
