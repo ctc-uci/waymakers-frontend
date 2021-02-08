@@ -30,6 +30,7 @@ const EventsView = ({
   const [showMoreEvents, setShowMoreEvents] = useState(true);
   const [showMyEvents, setShowMyEvents] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
+  const [showEditPopup, setShowEditPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1); // stored as int
@@ -64,7 +65,7 @@ const EventsView = ({
     // if it is => HoursPopup
     // else => big if statement with other popups
     const found = userEvents.filter((event) => event.id === parseInt(selectedEvent.id, 10));
-    if (showPopup) {
+    if (showPopup || showEditPopup) {
       // Event is NOT on the user's calendar
       if (showMoreEvents && found.length !== 1) {
         switch (pathName) {
@@ -77,7 +78,23 @@ const EventsView = ({
               />
             );
           case '/events':
-            return <EditEventPopup onClose={() => setShowPopup(false)} event={selectedEvent} />;
+            if (showEditPopup) {
+              return (
+                <EditEventPopup
+                  onClose={() => setShowEditPopup(false)}
+                  event={selectedEvent}
+                />
+              );
+            }
+            return (
+              <EventPopup
+                onClose={() => setShowPopup(false)}
+                event={selectedEvent}
+                canAdd={false}
+                showEditButton
+                onEditButtonClick={() => setShowEditPopup(true)}
+              />
+            );
           case '/admin/aggregate':
             return <DialogueBox onClose={() => setShowPopup(false)} event={selectedEvent} />;
           default: break;
@@ -85,7 +102,23 @@ const EventsView = ({
       } else if (showMoreEvents) {
         switch (pathName) {
           case '/events':
-            return <EditEventPopup onClose={() => setShowPopup(false)} event={selectedEvent} />;
+            if (showEditPopup) {
+              return (
+                <EditEventPopup
+                  onClose={() => setShowEditPopup(false)}
+                  event={selectedEvent}
+                />
+              );
+            }
+            return (
+              <EventPopup
+                onClose={() => setShowPopup(false)}
+                event={selectedEvent}
+                canAdd={false}
+                showEditButton
+                onEditButtonClick={() => setShowEditPopup(true)}
+              />
+            );
           case '/admin/aggregate':
             return <DialogueBox onClose={() => setShowPopup(false)} event={selectedEvent} />;
           default: break;
@@ -130,15 +163,19 @@ const EventsView = ({
     const pathName = useLocation().pathname;
     if (pathName === '/volunteer/events') {
       return (
-        <div>
-          <label htmlFor="more-events-cb">
-            More Events
-            <input id="more-events-cb" type="checkbox" checked={showMoreEvents} onClick={() => { setShowMoreEvents(!showMoreEvents); }} aria-label="Show More Events" />
-          </label>
-          <label htmlFor="more-events-cb">
-            My Events
-            <input id="my-events-cb" type="checkbox" checked={showMyEvents} onClick={() => { setShowMyEvents(!showMyEvents); }} aria-label="Show My Events" />
-          </label>
+        <div id="checkboxes">
+          <fieldset>
+            <label htmlFor="more-events-cb" className="checkbox-label">
+              <input id="more-events-cb" type="checkbox" checked={showMoreEvents} onClick={() => { setShowMoreEvents(!showMoreEvents); }} aria-label="Show More Events" />
+              {/* <span className="checkbox-custom" /> */}
+              <span>More Events</span>
+            </label>
+            <label htmlFor="more-events-cb" className="checkbox-label">
+              <input id="my-events-cb" type="checkbox" checked={showMyEvents} onClick={() => { setShowMyEvents(!showMyEvents); }} aria-label="Show My Events" />
+              {/* <span className="checkbox-custom" /> */}
+              <span>My Events</span>
+            </label>
+          </fieldset>
         </div>
       );
     }
@@ -147,44 +184,45 @@ const EventsView = ({
 
   return (
     <div>
-      {renderPopup()}
-      <div id="filters">
+      <div id="top-of-calendar">
+        {renderPopup()}
+        <div id="event-date-picker">
+          <select className="picker" name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
+            <option className="picker" value="timeGridDay">Day View</option>
+            <option className="picker" value="timeGridWeek">Week View</option>
+            <option className="picker" value="dayGridMonth" selected="selected">Month View</option>
+          </select>
+          <MonthPicker
+            defaultValue="Select Month"
+            endYearGiven
+            year={year}
+            value={month - 1}
+            onChange={(newMonth) => {
+              if (newMonth !== '') {
+                setMonth(parseInt(newMonth, 10) + 1);
+              }
+            }}
+            id="month"
+            name="month"
+          />
+          <YearPicker
+            defaultValue="Select Year"
+            start={getCurrentYear() - 2}
+            end={getCurrentYear() + 10}
+            value={year}
+            onChange={(newYear) => {
+              if (newYear !== '') {
+                setYear(newYear);
+              }
+            }}
+            id="year"
+            name="year"
+          />
+        </div>
         {renderCheckboxes()}
-        <select name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
-          <option value="timeGridDay">Day</option>
-          <option value="timeGridWeek">Week</option>
-          <option value="dayGridMonth" selected="selected">Month</option>
-        </select>
-        <MonthPicker
-          defaultValue="Select Month"
-          endYearGiven
-          year={year}
-          value={month - 1}
-          onChange={(newMonth) => {
-            if (newMonth !== '') {
-              setMonth(parseInt(newMonth, 10) + 1);
-            }
-          }}
-          id="month"
-          name="month"
-        />
-        <YearPicker
-          defaultValue="Select Year"
-          start={getCurrentYear() - 2}
-          end={getCurrentYear() + 10}
-          value={year}
-          onChange={(newYear) => {
-            if (newYear !== '') {
-              setYear(newYear);
-            }
-          }}
-          id="year"
-          name="year"
-        />
       </div>
       <div id="calendar">
         {getCalendar()}
-
       </div>
 
     </div>

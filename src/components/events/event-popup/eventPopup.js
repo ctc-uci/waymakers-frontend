@@ -8,7 +8,7 @@ import { addUserEvent } from '../redux/actions';
 import './eventPopup.css';
 
 const EventPopup = ({
-  event, onClose, canAdd, addEventToUserCalendar, cookies,
+  event, onClose, canAdd, addEventToUserCalendar, cookies, showEditButton, onEditButtonClick,
 }) => {
   const formatConfig = {
     month: 'long',
@@ -37,9 +37,25 @@ const EventPopup = ({
     return null;
   };
 
+  // Renders edit button as needed
+  const renderEditButton = () => {
+    if (showEditButton === true) {
+      const switchToEditPopup = () => {
+        onClose();
+        onEditButtonClick();
+      };
+      return (
+        <button type="button" aria-label="edit event" onClick={switchToEditPopup}>Edit Event</button>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="popup">
-      <h3>{event.title}</h3>
+      <h3>View Event Information</h3>
+      {renderEditButton()}
+      <h5>{event.title}</h5>
       <p>{`Start: ${new Date(startDate).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}`}</p>
       <p>{`End: ${new Date(endDate).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}`}</p>
       <p>{`Location: ${event.extendedProps.location}`}</p>
@@ -56,6 +72,13 @@ EventPopup.propTypes = {
   canAdd: PropTypes.bool.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   addEventToUserCalendar: PropTypes.func.isRequired,
+  showEditButton: PropTypes.bool,
+  onEditButtonClick: PropTypes.func,
+};
+
+EventPopup.defaultProps = {
+  showEditButton: false,
+  onEditButtonClick: null,
 };
 
 export default withCookies(connect(null, {

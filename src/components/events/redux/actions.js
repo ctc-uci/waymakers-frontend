@@ -53,10 +53,11 @@ export const deleteEvent = (eventId) => async (dispatch) => {
 
 // Creates a events/eventEdit action
 export const editEvent = (eventId, updatedEvent) => async (dispatch) => {
+  console.log('calling editEvent action');
   try {
     const response = await instance.put(`events/${eventId}`, updatedEvent);
     if (response.status === 200) {
-      dispatch({ type: 'events/eventEdit', payload: response.data });
+      dispatch({ type: 'events/eventEdited', payload: response.data });
     }
     return null;
   } catch (err) {

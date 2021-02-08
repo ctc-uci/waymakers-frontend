@@ -1,29 +1,36 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+// import axios from 'axios';
 import Datetime from 'react-datetime';
+import { connect } from 'react-redux';
+
 import 'react-datetime/css/react-datetime.css';
 
 import '../event-popup/eventPopup.css';
 
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
+import { editEvent } from '../redux/actions';
 
-const EditEventPopup = ({ event, onClose }) => {
+// const instance = axios.create({
+//   baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
+//   withCredentials: true,
+// });
+
+// Configured to use the FullCalendar EventAPI object fields only
+// Might want to write a function to convert back and forth for consistency
+const EditEventPopup = ({ event, onClose, updateEvent }) => {
   const [title, setTitle] = useState(event.title);
-  const [startTime, setStartDate] = useState(event.startTime);
-  const [endTime, setEndDate] = useState(event.endTime);
-  const [location, setLocation] = useState(event.location);
-  const [description, setDescription] = useState(event.description);
-  const [eventType, setEventType] = useState(event.eventType);
-  const [division, setDivision] = useState(event.division.replace(/\s+/g, '-'));
+  const [startTime, setStartDate] = useState(new Date(event.start));
+  const [endTime, setEndDate] = useState(new Date(event.end));
+  const [location, setLocation] = useState(event.extendedProps.location);
+  const [description, setDescription] = useState(event.extendedProps.description);
+  const [eventType, setEventType] = useState(event.extendedProps.eventType);
+  const [division, setDivision] = useState(event.extendedProps.division.replace(/\s+/g, '-'));
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
     const editedEvent = {
+      eventId: event.id,
       eventName: title,
       eventType,
       eventLocation: location,
@@ -33,19 +40,22 @@ const EditEventPopup = ({ event, onClose }) => {
       endTime: new Date(endTime),
       isAllDay: false, // default to false right now
     };
-    try {
-      const updatedEvent = await instance.put(`events/${event.id}`, editedEvent);
-      if (updatedEvent.status === 200 && updatedEvent.data) {
-        // eslint-disable-next-line
-        console.log('Event added successfully');
-      } else {
-        // eslint-disable-next-line
-        console.log('Failed to create event');
-      }
-    } catch (error) {
-      // eslint-disable-next-line
-      console.log('Error while trying to add event ' + error);
-    }
+
+    updateEvent(event.id, editedEvent);
+    // try {
+    //   const updatedEvent = editEvent(event.id, editedEvent);
+    //   console.log(updatedEvent);
+    //   if (updatedEvent.status === 200 && updatedEvent.data) {
+    //     // eslint-disable-next-line
+    //     console.log('Event added successfully');
+    //   } else {
+    //     // eslint-disable-next-line
+    //     console.log('Failed to create event');
+    //   }
+    // } catch (error) {
+    //   // eslint-disable-next-line
+    //   console.log('Error while trying to add event ' + error);
+    // }
     onClose();
   };
 
@@ -82,7 +92,7 @@ const EditEventPopup = ({ event, onClose }) => {
         {/* Cannot use label for Datetime component */}
         <div>Start Time:</div>
         <Datetime
-          initialValue={new Date(event.startTime)}
+          initialValue={startTime}
           id="start-date"
           onChange={(e) => setStartDate(e.toString().substring(0, e.toString().length - 8))}
           required
@@ -91,7 +101,7 @@ const EditEventPopup = ({ event, onClose }) => {
 
         <div>End Time:</div>
         <Datetime
-          initialValue={new Date(event.endTime)}
+          initialValue={endTime}
           id="end-date"
           onChange={(e) => setEndDate(e.toString().substring(0, e.toString().length - 8))}
           required
@@ -118,6 +128,9 @@ const EditEventPopup = ({ event, onClose }) => {
 EditEventPopup.propTypes = {
   event: PropTypes.objectOf(PropTypes.string).isRequired,
   onClose: PropTypes.func.isRequired,
+  updateEvent: PropTypes.func.isRequired,
 };
 
-export default EditEventPopup;
+export default connect(null, {
+  updateEvent: editEvent,
+})(EditEventPopup);
