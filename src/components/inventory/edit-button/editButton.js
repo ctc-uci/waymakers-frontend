@@ -19,10 +19,10 @@ const EditButton = () => {
 
   const editButtonPair = (
     <div className="edit-button-wrapper">
-      <button type="button" id="save-edit" className="save-button" onClick={handleClick}>
+      <button type="button" id="save-edit" className="edit-button" onClick={handleClick}>
         Save
       </button>
-      <button type="button" id="cancel-edit" className="cancel-button" onClick={handleClick}>
+      <button type="button" id="cancel-edit" className="edit-button" onClick={handleClick}>
         Cancel
       </button>
     </div>

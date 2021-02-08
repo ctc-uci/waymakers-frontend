@@ -22,7 +22,6 @@ import {
   getSelectedCategoryLabel,
   getSearchTerm,
   getSelectedDivisionID,
-  getSelectedDivisionLabel,
   getSelectedWarehouseID,
 } from './redux/selectors';
 
@@ -36,21 +35,6 @@ const InventoryApp = () => {
       </h3>
     );
   };
-  // Displays selected Division
-  const CurrentDivisionLabel = () => {
-    let currentDivision = useSelector(getSelectedDivisionLabel);
-    currentDivision = currentDivision === '' ? ' All Divisions' : currentDivision;
-    return (
-      <div>
-        <h1>
-          {currentDivision}
-          <span> Inventory</span>
-        </h1>
-      </div>
-    );
-  };
-  // Once component mounts, fetch items, categories, and divisions
-  // from server and populate store
   useEffect(() => {
     store.dispatch(fetchItems());
     store.dispatch(fetchCategories());
@@ -69,10 +53,9 @@ const InventoryApp = () => {
   return (
     <div className="inventory">
       <EditButton />
-      <CurrentDivisionLabel />
       <DivisionMenu />
-      {useSelector(getEditing) && <AddCategoryButton />}
       <SearchItem />
+      {useSelector(getEditing) && <AddCategoryButton />}
       <CategoryMenu />
       <CurrentCategoryLabel />
       <Table />
