@@ -1,15 +1,15 @@
 .division-menu {
+    display: flex;
     margin: 0 auto;
     border: none;
     outline: none;
-    width: 40%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    width: inherit;
+    padding: 5px;
+    font-size: xxx-large;
+    cursor: pointer;
+    text-align-last: center;
 }
 
-#divison-menu-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+.division-menu-container {
+    padding-bottom: 10px;
 }

@@ -16,6 +16,7 @@
 }
 
 .add-item-button {
+  float: right;
   padding: 0 40px;
   margin: 5px 10px;
   font-family: "Assistant", Arial, Helvetica, sans-serif;
