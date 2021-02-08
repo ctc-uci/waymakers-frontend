@@ -1,6 +1,8 @@
 @import '../../../common/vars.css';
 
 .add-category-button {
+    float: left;
+    margin-right: 5px;
     background-color: var(--color-green);
     color: var(--text-color-light);
     font-size: 150%;
