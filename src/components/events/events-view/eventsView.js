@@ -19,6 +19,8 @@ import HoursPopup from '../hours-popup/hoursPopup';
 import DialogueBox from '../../admin/dialogue-box/dialogueBox';
 import EditEventPopup from '../edit-events/editEventPopup';
 
+import EventCheckBoxes from './eventCheckBoxes';
+
 import { fetchEvents, fetchUserEvents } from '../redux/actions';
 
 import './eventsView.css';
@@ -26,7 +28,6 @@ import './eventsView.css';
 const EventsView = ({
   getEvents, getUserEvents, cookies,
 }) => {
-  // const [cal, setCal] = useState('myCal');
   const [showMoreEvents, setShowMoreEvents] = useState(true);
   const [showMyEvents, setShowMyEvents] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
@@ -159,29 +160,6 @@ const EventsView = ({
 
   const getCurrentYear = () => new Date().getFullYear();
 
-  const renderCheckboxes = () => {
-    const pathName = useLocation().pathname;
-    if (pathName === '/volunteer/events') {
-      return (
-        <div id="checkboxes">
-          <fieldset>
-            <label htmlFor="more-events-cb" className="checkbox-label">
-              <input id="more-events-cb" type="checkbox" checked={showMoreEvents} onClick={() => { setShowMoreEvents(!showMoreEvents); }} aria-label="Show More Events" />
-              {/* <span className="checkbox-custom" /> */}
-              <span>More Events</span>
-            </label>
-            <label htmlFor="more-events-cb" className="checkbox-label">
-              <input id="my-events-cb" type="checkbox" checked={showMyEvents} onClick={() => { setShowMyEvents(!showMyEvents); }} aria-label="Show My Events" />
-              {/* <span className="checkbox-custom" /> */}
-              <span>My Events</span>
-            </label>
-          </fieldset>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <div>
       <div id="top-of-calendar">
@@ -219,7 +197,12 @@ const EventsView = ({
             name="year"
           />
         </div>
-        {renderCheckboxes()}
+        <EventCheckBoxes
+          showMyEvents={showMyEvents}
+          showMoreEvents={showMoreEvents}
+          onMoreClick={(value) => setShowMoreEvents(value)}
+          onMyClick={(value) => setShowMyEvents(value)}
+        />
       </div>
       <div id="calendar">
         {getCalendar()}
