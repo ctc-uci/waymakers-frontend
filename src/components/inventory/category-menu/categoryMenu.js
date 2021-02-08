@@ -43,19 +43,21 @@ const CategoryMenu = (prop) => {
 
   // We map our database's categories into a list of buttons
   return (
-    <ScrollMenu
-      data={prop.categoryList.map((category) => (
-        <CategoryMenuItem
-          key={category.id}
-          category={category}
-          editing={prop.editing}
-        />
-      ))}
-      arrowLeft={ArrowLeft}
-      arrowRight={ArrowRight}
-      alignCenter={false}
-      scrollBy={4}
-    />
+    <div id="scroll-menu-container">
+      <ScrollMenu
+        data={prop.categoryList.map((category) => (
+          <CategoryMenuItem
+            key={category.id}
+            category={category}
+            editing={prop.editing}
+          />
+        ))}
+        arrowLeft={ArrowLeft}
+        arrowRight={ArrowRight}
+        alignCenter={false}
+        scrollBy={4}
+      />
+    </div>
   );
 };
 

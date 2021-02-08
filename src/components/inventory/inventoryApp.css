@@ -12,3 +12,9 @@
     color: var(--text-color-dark);
     font-weight: 600;
 }
+
+#category-container {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}

@@ -18,6 +18,15 @@
     color: var(--color-dark-blue)
 }
 
+#scroll-menu-container {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.horizontal-menu {
+    height: max-content;
+}
+
 .category-button {
     padding: 0 40px;
     margin: 5px 10px;

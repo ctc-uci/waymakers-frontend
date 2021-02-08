@@ -55,8 +55,10 @@ const InventoryApp = () => {
       <EditButton />
       <DivisionMenu />
       <SearchItem />
-      {useSelector(getEditing) && <AddCategoryButton />}
-      <CategoryMenu />
+      <div id="category-container">
+        {useSelector(getEditing) && <AddCategoryButton />}
+        <CategoryMenu />
+      </div>
       <CurrentCategoryLabel />
       <Table />
     </div>
