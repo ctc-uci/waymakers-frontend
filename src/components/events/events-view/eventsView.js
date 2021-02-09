@@ -18,7 +18,7 @@ import EventPopup from '../event-popup/eventPopup';
 import HoursPopup from '../hours-popup/hoursPopup';
 import DialogueBox from '../../admin/dialogue-box/dialogueBox';
 import EditEventPopup from '../edit-events/editEventPopup';
-
+import DayPicker from './daypicker';
 import EventCheckBoxes from './eventCheckBoxes';
 
 import { fetchEvents, fetchUserEvents } from '../redux/actions';
@@ -35,6 +35,7 @@ const EventsView = ({
   const [selectedEvent, setSelectedEvent] = useState({});
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1); // stored as int
+  const [day, setDay] = useState(new Date().getDate());
   const calendarEl = useRef(null);
 
   useEffect(() => {
@@ -46,11 +47,17 @@ const EventsView = ({
 
   // update calendar
   useEffect(() => {
+    console.log([year, month, day]);
     calendarEl.current.getApi().changeView('dayGridMonth', `${year}-${month < 10 ? '0' : ''}${month}-01`);
     calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
   }, [year, month]);
 
+  useEffect(() => {
+    calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
+  }, [day]);
+
   const onEventClick = (event) => {
+    console.log(day);
     setSelectedEvent(event.event);
     setShowPopup(!showPopup);
   };
@@ -139,15 +146,27 @@ const EventsView = ({
   const getCalendar = () => {
     const userEvents = useSelector(getUserEventsForFullCalendar);
     const allEvents = useSelector(getEventsForFullCalendar);
+    const userEventIds = userEvents.map((event) => event.id);
     let events;
     if (showMyEvents && !showMoreEvents) { // Only My Events checked off
       events = userEvents;
     } else if (!showMyEvents && showMoreEvents) { // Only More Events checked off
-      const userEventIds = userEvents.map((event) => event.id);
       events = allEvents.filter((event) => !userEventIds.includes(event.id));
     } else { // Both My Events and More Events checked
       events = allEvents;
     }
+
+    events = events.map((event) => {
+      const newEvent = event;
+      newEvent.textColor = 'var(--text-color-light)';
+      newEvent.eventBorderColor = 'transparent';
+      if (userEventIds.includes(newEvent.id)) {
+        newEvent.backgroundColor = 'var(--color-light-green)';
+      } else {
+        newEvent.backgroundColor = 'var(--text-color-dark)';
+      }
+      return newEvent;
+    });
 
     return (
       <FullCalendar
@@ -184,10 +203,10 @@ const EventsView = ({
       <div id="top-of-calendar">
         {renderPopup()}
         <div id="event-date-picker">
-          <select className="picker" name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
-            <option className="picker" value="timeGridDay">Day View</option>
-            <option className="picker" value="timeGridWeek">Week View</option>
-            <option className="picker" value="dayGridMonth" selected="selected">Month View</option>
+          <select className="picker view-picker" name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
+            <option className="picker view-picker" value="timeGridDay">Day View</option>
+            <option className="picker view-picker" value="timeGridWeek">Week View</option>
+            <option className="picker view-picker" value="dayGridMonth" selected="selected">Month View</option>
           </select>
           <MonthPicker
             defaultValue="Select Month"
@@ -202,6 +221,7 @@ const EventsView = ({
             id="month"
             name="month"
           />
+          <DayPicker month={month} year={year} onDayChange={(newDay) => setDay(newDay)} />
           <YearPicker
             defaultValue="Select Year"
             start={getCurrentYear() - 2}
