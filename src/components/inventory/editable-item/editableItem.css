@@ -1,3 +1,5 @@
+@import '../../../common/vars.css';
+
 .item-name, .item-qty, .item-needed, .item-cat {
     padding: 10px;
     font-family: "Assistant", Arial, Helvetica, sans-serif;
@@ -45,4 +47,22 @@
 
 .item-qty, .item-needed, .item-cat {
     text-align: center;
+}
+
+#delete-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.table-item-delete-button{
+    background-image: url(images/deleteItem.png);
+    background-repeat: no-repeat;
+    background-color: white;
+    border: none;
+    padding: 19px;
+}
+
+.table-item-delete-button:hover{
+    transition: 0.2s;
+    opacity: 0.7;
 }
