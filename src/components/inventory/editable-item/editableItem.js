@@ -7,6 +7,8 @@ import { getEditing, getCategories } from '../redux/selectors';
 
 import './editableItem.css';
 
+// BUG TO FIX: undoing a delete on an item (need to create a redux action?)
+
 const getCategoryLabelFromID = (id) => {
   const category = useSelector(getCategories).find((cat) => cat.id === id);
   return category ? category.label : '';
@@ -21,6 +23,9 @@ const EditableItem = (props) => {
     needed: props.item.needed,
     category: props.item.category_id,
   });
+
+  // Used to indicate whether an item is deleted or not (BUGGED FUNCTIONALITY)
+  const [buttonOpacity, setButtonOpacity] = useState(1.0);
 
   // Used to update css class of unsaved edits
   const [modified, setModified] = useState(false);
@@ -40,6 +45,11 @@ const EditableItem = (props) => {
     if (!deleted) {
       store.dispatch(deleteItem(props.item.id));
       setDeleted(true);
+      setButtonOpacity(0.7);
+    } else {
+      // TO DO: undo item deletion (BUG)
+      setDeleted(false);
+      setButtonOpacity(1.0);
     }
   };
 
@@ -147,7 +157,15 @@ const EditableItem = (props) => {
         </select>
       </td>
       <td>
-        <button type="button" className="btn btn-outline-danger" onClick={deleteHandler}>Delete</button>
+        <div id="delete-wrapper">
+          <button
+            type="button"
+            aria-label="delete"
+            className="table-item-delete-button"
+            onClick={deleteHandler}
+            style={{ opacity: buttonOpacity }}
+          />
+        </div>
       </td>
     </tr>
   );
