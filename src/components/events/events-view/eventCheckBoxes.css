@@ -1,6 +1,7 @@
 #event-checkboxes{
   display: flex;
   direction: row;
+  margin-left: 1em;
 }
 
 .check-box{

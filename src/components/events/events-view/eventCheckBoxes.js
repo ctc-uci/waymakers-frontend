@@ -8,7 +8,6 @@ import './eventCheckBoxes.css';
 const EventCheckBoxes = ({
   showMoreEvents, showMyEvents, onMoreClick, onMyClick,
 }) => {
-  const [myEventsBorderColor, setMyEventsBorderColor] = useState('var(--color-light-green)');
   const [moreEventsBackground, setMoreEventsBackground] = useState('var(--color-dark-blue)');
   const [myEventsBackground, setMyEventsBackground] = useState('var(--color-light-green)');
   return (
@@ -47,7 +46,7 @@ const EventCheckBoxes = ({
         <Checkbox
           checked={showMyEvents}
           icon={<Icon.ImCheckmark color="white" size={14} />}
-          borderColor={myEventsBorderColor}
+          borderColor="var(--color-light-green)"
           // borderWidth={0}
           borderRadius={4}
           style={{
@@ -66,10 +65,8 @@ const EventCheckBoxes = ({
           onChange={(value) => {
             if (value === true) {
               // change border color
-              setMyEventsBorderColor('var(--color-light-green)');
               setMyEventsBackground('var(--color-light-green)');
             } else {
-              setMyEventsBorderColor('var(--color-orange)');
               setMyEventsBackground('transparent');
             }
             onMyClick(value); // changes showMyEvents state in EventsView
