@@ -136,13 +136,16 @@ const EventsView = ({
   }
 
   const getCalendar = () => {
+    const userEvents = useSelector(getUserEventsForFullCalendar);
+    const allEvents = useSelector(getEventsForFullCalendar);
     let events;
     if (showMyEvents && !showMoreEvents) { // Only My Events checked off
-      events = useSelector(getUserEventsForFullCalendar);
+      events = userEvents;
     } else if (!showMyEvents && showMoreEvents) { // Only More Events checked off
-      events = useSelector(getEventsForFullCalendar);
+      const userEventIds = userEvents.map((event) => event.id);
+      events = allEvents.filter((event) => !userEventIds.includes(event.id));
     } else { // Both My Events and More Events checked
-      events = useSelector(getEventsForFullCalendar);
+      events = allEvents;
     }
 
     return (
