@@ -163,6 +163,22 @@ const EventsView = ({
 
   const getCurrentYear = () => new Date().getFullYear();
 
+  const renderCheckboxes = () => {
+    const pathName = useLocation().pathname;
+    console.log(pathName);
+    if (pathName === '/volunteer/events') {
+      return (
+        <EventCheckBoxes
+          showMyEvents={showMyEvents}
+          showMoreEvents={showMoreEvents}
+          onMoreClick={(value) => setShowMoreEvents(value)}
+          onMyClick={(value) => setShowMyEvents(value)}
+        />
+      );
+    }
+    return null;
+  };
+
   return (
     <div>
       <div id="top-of-calendar">
@@ -200,12 +216,7 @@ const EventsView = ({
             name="year"
           />
         </div>
-        <EventCheckBoxes
-          showMyEvents={showMyEvents}
-          showMoreEvents={showMoreEvents}
-          onMoreClick={(value) => setShowMoreEvents(value)}
-          onMyClick={(value) => setShowMyEvents(value)}
-        />
+        {renderCheckboxes()}
       </div>
       <div id="calendar">
         {getCalendar()}
