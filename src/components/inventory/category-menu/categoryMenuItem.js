@@ -28,7 +28,8 @@ const CategoryMenuItem = (props) => {
     const selectedCategoryLabel = (props.category.label === 'Show All Categories') ? '' : props.category.label;
     store.dispatch(changeSelectedCategory(selectedCategoryID, selectedCategoryLabel));
   };
-  // Adds category ID to list of category IDs to be deleted
+  // Adds category ID to list of category IDs to be deleted if delete is toggled on; otherwise, reverts the category delete
+  // both in the component and in the Redux store
   const toggleDelCategory = () => {
     if (!deleted) {
       store.dispatch(deleteCategory(props.category.id));
