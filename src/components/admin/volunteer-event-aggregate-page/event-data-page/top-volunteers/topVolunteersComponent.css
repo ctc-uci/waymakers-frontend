@@ -1,0 +1,26 @@
+.top-volunteers-div {
+    width: 25%;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color:#4242426b;
+    display: block;
+    margin-right: 10px;
+}
+
+.top-volunteer-item {
+    display: flex;
+    flex-direction: row;
+}
+
+.list-group-item + .list-group-item {
+    border-top: .5px solid #4242426b;
+}
+
+.list-group {
+    width: 70%;
+    border-radius: 0;
+}

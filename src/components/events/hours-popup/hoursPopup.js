@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { withCookies, Cookies } from 'react-cookie';
 import axios from 'axios';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
@@ -12,14 +13,14 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-const HoursPopup = ({ event, onClose }) => {
+const HoursPopup = ({ event, onClose, cookies }) => {
   const [name, setName] = useState(''); // TODO: Autofill with authenticated user's name
   const [eventTitle, setEventTitle] = useState(event ? event.title : '');
   const [eventLocation, setEventLocation] = useState(event ? event.extendedProps.location : '');
   const [logStart, setLogStart] = useState('');
   const [logEnd, setLogEnd] = useState(null);
   const [totalHours, setTotalHours] = useState(0);
-  const [division, setDivision] = useState('Select a Division');
+  const [division, setDivision] = useState(event ? event.extendedProps.division.replace(/\s+/g, '-') : 'Select a Division'); // TODO: Fix attribute name
   const [additionalNotes, setNotes] = useState('');
   const [userEvents] = useState(useSelector(getEvents));
   const [selectedEventId, setSelectedEventId] = useState(event ? event.id : null);
@@ -35,7 +36,7 @@ const HoursPopup = ({ event, onClose }) => {
       if (userEvent.title === title) {
         setEventTitle(userEvent.title);
         setEventLocation(userEvent.location);
-        setDivision(userEvent.division);
+        setDivision(userEvent.division.replace(/\s+/g, '-'));
         setSelectedEventId(userEvent.id);
       }
     });
@@ -77,15 +78,11 @@ const HoursPopup = ({ event, onClose }) => {
       // TODO: Check valid start log and end log time (must be during the event)
       // create log
       const newLog = {
-        userId: '9dzJHRJKWTe6xMt304uvpzoohEX2',
+        userId: cookies.cookies.userId,
         eventId: selectedEventId,
-        name,
-        eventTitle,
-        eventLocation,
         logStart,
         logEnd,
         totalHours,
-        division,
         additionalNotes,
       };
       // axios call to send to backend
@@ -140,9 +137,9 @@ const HoursPopup = ({ event, onClose }) => {
           Division
           <br />
           <select id="division" name="division" value={division} onChange={(e) => setDivision(e.target.value)} readOnly>
-            <option value="crisis-response-team">Crisis Response Team</option>
-            <option value="gang-services">Gang Services</option>
-            <option value="human-trafficking">Human Trafficking</option>
+            <option value="Crisis-Response-Team">Crisis Response Team</option>
+            <option value="Gang-Services">Gang Services</option>
+            <option value="Human-Trafficking">Human Trafficking</option>
           </select>
         </label>
         <label htmlFor="notes">
@@ -160,10 +157,11 @@ const HoursPopup = ({ event, onClose }) => {
 HoursPopup.propTypes = {
   onClose: PropTypes.func.isRequired,
   event: PropTypes.objectOf(PropTypes.string),
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
 };
 
 HoursPopup.defaultProps = {
   event: null,
 };
 
-export default HoursPopup;
+export default withCookies(HoursPopup);
