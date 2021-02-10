@@ -143,6 +143,11 @@ export const deleteCategory = (id) => ({
   payload: { id },
 });
 
+export const undeleteCategory = (id) => ({
+  type: 'edits/revertCategoryDelete',
+  payload: { id },
+});
+
 // Creates a divisions/divisionAdded action
 export const addDivision = (newDivision) => async (dispatch) => {
   try {

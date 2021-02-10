@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import store from '../redux/store';
-import { deleteCategory, changeSelectedCategory } from '../redux/actions';
+import { deleteCategory, undeleteCategory, changeSelectedCategory } from '../redux/actions';
 import { getEditing } from '../redux/selectors';
 import './categoryMenu.css';
 
@@ -29,10 +29,13 @@ const CategoryMenuItem = (props) => {
     store.dispatch(changeSelectedCategory(selectedCategoryID, selectedCategoryLabel));
   };
   // Adds category ID to list of category IDs to be deleted
-  const delCategory = () => {
+  const toggleDelCategory = () => {
     if (!deleted) {
       store.dispatch(deleteCategory(props.category.id));
       setDeleted(true);
+    } else {
+      store.dispatch(undeleteCategory(props.category.id));
+      setDeleted(false);
     }
   };
   // A button that lets you choose which category to select
@@ -50,7 +53,7 @@ const CategoryMenuItem = (props) => {
       </button>
     );
   };
-  return useSelector(getEditing) && props.category.label !== 'Show All Categories' ? delCategoryButton(delCategory) : selCategoryButton(selCategory);
+  return useSelector(getEditing) && props.category.label !== 'Show All Categories' ? delCategoryButton(toggleDelCategory) : selCategoryButton(selCategory);
 };
 
 export default CategoryMenuItem;
