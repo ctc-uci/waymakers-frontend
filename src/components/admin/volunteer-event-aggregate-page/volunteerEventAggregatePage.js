@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
-import { useSelector, connect } from 'react-redux';
+import axios from 'axios';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -12,29 +10,47 @@ import '@fullcalendar/timegrid/main.css';
 
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 
-import { getEventsForFullCalendar, getUserEventsForFullCalendar } from '../redux/selectors';
-import EventPopup from '../event-popup/eventPopup';
-import HoursPopup from '../hours-popup/hoursPopup';
+import DialogueBox from '../dialogue-box/dialogueBox';
 
-import { fetchEvents, fetchUserEvents } from '../redux/actions';
-
-import './eventsView.css';
-
-const EventsView = ({
-  getEvents, getUserEvents, cookies,
-}) => {
-  const [cal, setCal] = useState('myCal');
+const VolunteerEventAggregatePage = () => {
+  const [events, setEvents] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
+
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1); // stored as int
+
+  const instance = axios.create({
+    baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
+    withCredentials: true,
+  });
+
   const calendarEl = useRef(null);
 
+  async function getEventsForCalendar() {
+    try {
+      let allEvents = await instance.get('events');
+      console.log(allEvents);
+      if (allEvents.status === 200) {
+        allEvents = allEvents.data.map((event) => ({
+          title: event.title,
+          type: event.event_type,
+          start: event.startTime,
+          end: event.endTime,
+          location: event.location,
+          description: event.description,
+          id: event.id,
+        }));
+      }
+      console.log(allEvents);
+      setEvents(allEvents);
+    } catch (e) {
+      // eslint-disable-next-line
+      console.log('Error while getting events from the backend!');
+    }
+  }
   useEffect(() => {
-    (async () => {
-      await getEvents();
-      await getUserEvents(cookies.cookies.userId);
-    })();
+    getEventsForCalendar();
   }, []);
 
   // update calendar
@@ -45,42 +61,25 @@ const EventsView = ({
 
   const onEventClick = (event) => {
     setSelectedEvent(event.event);
-    setShowPopup(!showPopup);
+    setShowPopup(true);
   };
 
-  function renderPopup() {
-    const userEvents = useSelector(getUserEventsForFullCalendar);
+  const renderPopup = () => {
+    console.log('rendering popup');
     if (showPopup) {
-      if (cal === 'eventCal') {
-        const found = userEvents.filter((event) => event.id === parseInt(selectedEvent.id, 10));
-        return (
-          <EventPopup
-            event={selectedEvent}
-            onClose={() => setShowPopup(false)}
-            canAdd={found.length !== 1}
-          />
-        );
-      }
-
-      // show hours popup for MyEvents events
       return (
-        <HoursPopup
-          onClose={() => setShowPopup(false)}
+        <DialogueBox
           event={selectedEvent}
+          onClose={() => setShowPopup(false)}
         />
       );
     }
     return null;
-  }
+  };
 
   const getCalendar = () => {
-    let events;
-    if (cal === 'myCal') {
-      events = useSelector(getUserEventsForFullCalendar);
-    } else {
-      events = useSelector(getEventsForFullCalendar);
-    }
-
+    // eslint-disable-next-line
+    console.log(events);
     return (
       <FullCalendar
         plugins={[timeGridPlugin, dayGridPlugin]}
@@ -97,26 +96,8 @@ const EventsView = ({
 
   return (
     <div>
-      {renderPopup()}
       <div id="filters">
-        <button
-          className="button"
-          type="button"
-          onClick={() => { setCal('eventCal'); }}
-          disabled={cal === 'eventCal'}
-          aria-label="Change calendar to event calendar"
-        >
-          Current Events
-        </button>
-        <button
-          className="button"
-          type="button"
-          onClick={() => { setCal('myCal'); }}
-          disabled={cal === 'myCal'}
-          aria-label="Change calendar to my calendar"
-        >
-          My Events
-        </button>
+        <h3>Select an Event to View Data</h3>
         <select name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
           <option value="timeGridDay">Day</option>
           <option value="timeGridWeek">Week</option>
@@ -149,23 +130,15 @@ const EventsView = ({
           name="year"
         />
       </div>
-      <div id="calendar" className={showPopup ? 'blur' : ''}>
-        <h3>{cal === 'myCal' ? 'My Events' : 'Current Events'}</h3>
+
+      <div id="calendar">
+
         {getCalendar()}
 
       </div>
-
+      {renderPopup()}
     </div>
   );
 };
 
-EventsView.propTypes = {
-  getEvents: PropTypes.func.isRequired,
-  getUserEvents: PropTypes.func.isRequired,
-  cookies: PropTypes.instanceOf(Cookies).isRequired,
-};
-
-export default withCookies(connect(null, {
-  getEvents: fetchEvents, // rename fetchEvents action
-  getUserEvents: fetchUserEvents,
-})(EventsView));
+export default VolunteerEventAggregatePage;

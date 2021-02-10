@@ -1,6 +1,7 @@
 // Initial state populated with sample values
 export const initialState = {
   eventsList: [], // List of event objects
+  userEventsList: [],
 };
 
 // Handles the logic of updating the state
@@ -50,8 +51,33 @@ export default (state = initialState, action) => {
         eventsList: updatedList,
       };
     }
+
+    // USER EVENTS
+    case 'events/userEventsLoaded': {
+      // eslint-disable-next-line
+      console.log('[ACTION: events/userEventsLoaded] Events loaded');
+      console.log(action.payload);
+      // Overriding the current eventsList with the new one
+      return {
+        ...state,
+        userEventsList: action.payload,
+      };
+    }
     default: {
       return state;
+    }
+
+    case 'events/userEventAdded': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/userEventAdded] Adding event with content ${action.payload}`);
+      // Appending the new event
+      const id = action.payload[0].eventId;
+      // TODO: Add error handling in case event not found?
+      const addedEvent = state.eventsList.filter((event) => event.id === id)[0];
+      return {
+        ...state,
+        userEventsList: [...state.userEventsList, addedEvent],
+      };
     }
   }
 };
