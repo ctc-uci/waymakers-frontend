@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const DayPicker = ({ month, year, onDayChange }) => {
-  console.log(onDayChange);
   const getFebDays = () => {
     if (year % 4 === 0) {
       if (year % 100 === 0 && year % 400 !== 0) {
@@ -34,7 +33,6 @@ const DayPicker = ({ month, year, onDayChange }) => {
     for (let i = 1; i <= numDays; i += 1) {
       dayOptionTags.push(<option className="picker" value={i}>{i}</option>);
     }
-    console.log(dayOptionTags);
     return dayOptionTags;
   };
 

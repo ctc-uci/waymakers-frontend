@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
-
 import '../event-popup/eventPopup.css';
 
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
+import { connect } from 'react-redux';
+import { addEvent } from '../redux/actions';
 
-const AddEventPopup = ({ onClose }) => {
+// import axios from 'axios';
+// const instance = axios.create({
+//   baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
+//   withCredentials: true,
+// });
+
+const AddEventPopup = ({ onClose, addNewEvent }) => {
   const [title, setTitle] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -36,20 +38,7 @@ const AddEventPopup = ({ onClose }) => {
       isAllDay: false, // default to false right now
     };
 
-    try {
-      const addedEvent = await instance.post('events/add', newEvent);
-      if (addedEvent.status === 200 && addedEvent.data) {
-        // eslint-disable-next-line
-        console.log('Event added successfully');
-      } else {
-        // eslint-disable-next-line
-        console.log('Failed to create event');
-      }
-    } catch (error) {
-      // eslint-disable-next-line
-      console.log('Error while trying to add event ' + error);
-    }
-    // close the popup
+    addNewEvent(newEvent);
     onClose();
   };
 
@@ -117,6 +106,10 @@ const AddEventPopup = ({ onClose }) => {
 
 AddEventPopup.propTypes = {
   onClose: PropTypes.func.isRequired,
+  addNewEvent: PropTypes.func.isRequired,
 };
 
-export default AddEventPopup;
+// export default AddEventPopup;
+export default connect(null, {
+  addNewEvent: addEvent,
+})(AddEventPopup);

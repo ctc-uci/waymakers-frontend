@@ -42,20 +42,6 @@ const EditEventPopup = ({ event, onClose, updateEvent }) => {
     };
 
     updateEvent(event.id, editedEvent);
-    // try {
-    //   const updatedEvent = editEvent(event.id, editedEvent);
-    //   console.log(updatedEvent);
-    //   if (updatedEvent.status === 200 && updatedEvent.data) {
-    //     // eslint-disable-next-line
-    //     console.log('Event added successfully');
-    //   } else {
-    //     // eslint-disable-next-line
-    //     console.log('Failed to create event');
-    //   }
-    // } catch (error) {
-    //   // eslint-disable-next-line
-    //   console.log('Error while trying to add event ' + error);
-    // }
     onClose();
   };
 

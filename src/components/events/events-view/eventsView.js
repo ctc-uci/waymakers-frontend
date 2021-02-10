@@ -47,7 +47,6 @@ const EventsView = ({
 
   // update calendar
   useEffect(() => {
-    console.log([year, month, day]);
     calendarEl.current.getApi().changeView('dayGridMonth', `${year}-${month < 10 ? '0' : ''}${month}-01`);
     calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
   }, [year, month]);
@@ -57,7 +56,6 @@ const EventsView = ({
   }, [day]);
 
   const onEventClick = (event) => {
-    console.log(day);
     setSelectedEvent(event.event);
     setShowPopup(!showPopup);
   };
@@ -184,7 +182,6 @@ const EventsView = ({
 
   const renderCheckboxes = () => {
     const pathName = useLocation().pathname;
-    console.log(pathName);
     if (pathName === '/volunteer/events') {
       return (
         <EventCheckBoxes

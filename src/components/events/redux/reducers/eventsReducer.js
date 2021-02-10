@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
       // Appending the new event
       return {
         ...state,
-        eventsList: [...state.eventsList, action.payload.rows[0]],
+        eventsList: [...state.eventsList, action.payload[0]],
       };
     }
     case 'events/eventDeleted': {
