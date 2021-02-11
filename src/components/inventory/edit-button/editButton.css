@@ -12,30 +12,6 @@
     color: var(--text-color-dark);
     font-weight: bold;
 }
-/* .save-button {  
-    border: none;
-    position: absolute;
-    right: 20%;
-    top: 23%;
-    background: none;
-    text-decoration: underline;
-    font-family: "Assistant", Arial, Helvetica, sans-serif;
-    font-size: x-large;
-    color: var(--text-color-dark);
-    font-weight: bold;
-}
-.cancel-button {
-    border: none;   
-    background: none;
-    position: absolute;
-    right: 16%;
-    top: 23%;
-    text-decoration: underline;
-    font-family: "Assistant", Arial, Helvetica, sans-serif;
-    font-size: x-large;
-    color: var(--text-color-dark);
-    font-weight: bold;
-} */
 
 .edit-button-wrapper {
     display: flex;
