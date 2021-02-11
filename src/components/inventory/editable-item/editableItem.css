@@ -1,52 +1,42 @@
 @import '../../../common/vars.css';
 
-.item-name, .item-qty, .item-needed, .item-cat {
+.static-item-name {
     padding: 10px;
-    font-family: "Assistant", Arial, Helvetica, sans-serif;
-    font-size: 18px;
-    color: var(--text-color-dark);
+    min-width: 350px;
+    max-width: 450px;
+    font-size: 20px;
 }
 
-.item-name-field, .item-qty-field, .item-needed-field, .item-cat-field {
+.static-item-attribute {
     padding: 7px;
+    font-size: 20px;
 }
 
 .item-edit-name {
-    padding: 3px;
-    padding-left: 5px;
-    border-radius: 0px;
-    border: solid 1px var(--text-color-dark);
-    width: 80%;
+    padding: 7px;
+    min-width: 350px;
+    max-width: 450px;
 }
 
-.item-edit-cat {
+.table-input-name {
+    min-height: 7px;
+    width: max-content;
+    color: var(--text-color-dark);
+    font-size: 20px;
+    width: 90%;
+}
+
+.table-input {
+    min-height: 25px;
+    color: var(--text-color-dark);
+    font-size: 20px;
     width: 50%;
-    text-align-last: center;
-    padding: 5px;
-    padding-left: 10px;
-    border-radius: 0px;
-    border: solid 1px var(--text-color-dark);
 }
 
-.item-edit-qty, .item-edit-needed {
-    text-align: center;
-    padding: 5px;
-    padding-left: 12px;
-    border-radius: 0px;
-    border: solid 1px var(--text-color-dark);
-    width: 30%;
-    height: 100%;
-}
-
-.item-qty-field, .item-cat-field {
-    display: flex;
-    flex: 0 0 100%;
-    justify-content: center;
-    margin: auto;
-}
-
-.item-qty, .item-needed, .item-cat {
-    text-align: center;
+.category-dropdown {
+    font-size: 20px;
+    color: var(--text-color-dark);
+    width: 75%;
 }
 
 #delete-wrapper {
@@ -57,9 +47,10 @@
 .table-item-delete-button{
     background-image: url(images/deleteItem.png);
     background-repeat: no-repeat;
-    background-color: white;
+    background-color: transparent;
     border: none;
     padding: 19px;
+    text-align: right;
 }
 
 .table-item-delete-button:hover{

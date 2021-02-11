@@ -7,7 +7,7 @@ import { getEditing, getCategories } from '../redux/selectors';
 
 import './editableItem.css';
 
-// BUG TO FIX: undoing a delete on an item (need to create a redux action?)
+// TO DO: undoing a delete on an item (need to create a redux action?)
 
 const getCategoryLabelFromID = (id) => {
   const category = useSelector(getCategories).find((cat) => cat.id === id);
@@ -47,7 +47,7 @@ const EditableItem = (props) => {
       setDeleted(true);
       setButtonOpacity(0.7);
     } else {
-      // TO DO: undo item deletion (BUG)
+      // TO DO: undo item deletion
       setDeleted(false);
       setButtonOpacity(1.0);
     }
@@ -92,11 +92,11 @@ const EditableItem = (props) => {
 
   // Static row to display when not in Edit mode
   const staticItem = (
-    <tr>
-      <td className="item-name">{fieldState.name}</td>
-      <td className="item-qty">{fieldState.quantity}</td>
-      <td className="item-needed">{fieldState.needed}</td>
-      <td className="item-cat">{getCategoryLabelFromID(fieldState.category)}</td>
+    <tr className="static-table-row">
+      <td className="static-item-name">{fieldState.name}</td>
+      <td className="static-item-attribute">{fieldState.quantity}</td>
+      <td className="static-item-attribute">{fieldState.needed}</td>
+      <td className="static-item-attribute">{getCategoryLabelFromID(fieldState.category)}</td>
     </tr>
   );
 
@@ -105,43 +105,42 @@ const EditableItem = (props) => {
   const formItem = (
     // CSS class to indicate that value has been changed
     // TODO: Add a separate css class for deleted items
-    <tr className={modified ? 'modified' : null}>
-      <td className="item-name-field">
-        <form id={props.item.id} />
+    <tr className="edit-table-row">
+      <td className="item-edit-name">
         <input
           name="name"
           type="text"
-          className="item-edit-name"
+          className="table-input-name"
           value={fieldState.name}
           form={props.item.id}
           onChange={handleChange}
         />
       </td>
-      <td className="item-qty-field">
+      <td>
         <input
           name="quantity"
           type="number"
-          className="item-edit-qty"
+          className="table-input"
           value={fieldState.quantity}
           form={props.item.id}
           onChange={handleChange}
         />
       </td>
-      <td className="item-needed-field">
+      <td>
         <input
           name="needed"
           type="number"
-          className="item-edit-needed"
+          className="table-input"
           value={fieldState.needed}
           form={props.item.id}
           onChange={handleChange}
         />
       </td>
-      <td className="item-cat-field">
+      <td>
         <select
           id="categories"
           name="category"
-          className="item-edit-cat"
+          className="category-dropdown"
           value={fieldState.category}
           form={props.item.id}
           onChange={handleChange}

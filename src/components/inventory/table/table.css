@@ -1,22 +1,33 @@
 .items-table {
     width: 100%;
+    table-layout: fixed;
 }
 
-.items-table-header {
+.items-table thead {
     border-bottom: solid 1px var(--color-dark-blue);
 }
 
-.items-th-name, .items-th-stock, .items-th-number, .items-th-cat {
+.items-table thead tr {
     padding: 12px;
     font-family: "Assistant", Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 20px;
     color: var(--text-color-dark);
 }
 
-.items-th-name {
-    width: 30%;
+.items-table tbody {
+    border-collapse: separate;
+    color: var(--text-color-dark);
+    font-size: 20px;
 }
 
-.items-th-stock, .items-th-number, .items-th-cat {
-    text-align: center;
+.th-name {
+    width: 50%;
+}
+
+.th-quantity {
+    width: 15%;
+}
+
+.th-category {
+    width: 20%;
 }

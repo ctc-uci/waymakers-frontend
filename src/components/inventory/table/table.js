@@ -5,16 +5,18 @@ import { getItems } from '../redux/selectors';
 
 import './table.css';
 
+// TO DO: prevent table columns from changing size when searching for items
+
 // This is where we display the items in the database
 const Table = (items) => (
   <div>
     <table className="items-table">
       <thead>
-        <tr className="items-table-header">
-          <th className="items-th-name">Name</th>
-          <th className="items-th-stock">In Stock</th>
-          <th className="items-th-number"># Needed</th>
-          <th className="items-th-cat">Category</th>
+        <tr>
+          <th className="th-name">Name</th>
+          <th className="th-quantity">In Stock</th>
+          <th className="th-quantity"> # Needed</th>
+          <th className="th-category">Category</th>
         </tr>
       </thead>
       <tbody>
