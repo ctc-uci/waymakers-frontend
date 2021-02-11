@@ -32,37 +32,37 @@ ReactDOM.render(
     <CookiesProvider>
       <Router>
         <div className="App">
-          <div className="container">
-            <Switch>
-              <ProtectedRoute path="/" component={Dashboard} exact />
-              <Route path="/register" component={Register} />
-              <Route path="/login" component={LogIn} />
-              {/* <ProtectedRoute path="/profile" component={Profile} /> */}
-              <ProtectedRoute path="/profile" component={viewProfile} />
-              <ProtectedRoute path="/editProfile" component={editProfile} />
-            </Switch>
+          {/* <div className="container"> */}
+          <Switch>
+            <ProtectedRoute path="/" component={Dashboard} exact />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={LogIn} />
+            {/* <ProtectedRoute path="/profile" component={Profile} /> */}
+            <ProtectedRoute path="/profile" component={viewProfile} />
+            <ProtectedRoute path="/editProfile" component={editProfile} />
+          </Switch>
 
-            <Switch>
-              <ProtectedRoute path="/admin/users" component={ManageUsers} />
-              <ProtectedRoute path="/admin/db" component={ManageDB} />
-              <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
-              <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
-              <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
-            </Switch>
+          <Switch>
+            <ProtectedRoute path="/admin/users" component={ManageUsers} />
+            <ProtectedRoute path="/admin/db" component={ManageDB} />
+            <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
+            <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
+            <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
+          </Switch>
 
-            <Switch>
-              <ProtectedRoute path="/volunteer/hours" component={Hours} />
-              <ProtectedRoute path="/volunteer/tier" component={Tier} />
-              <ProtectedRoute path="/volunteer/forms" component={Forms} />
-            </Switch>
+          <Switch>
+            <ProtectedRoute path="/volunteer/hours" component={Hours} />
+            <ProtectedRoute path="/volunteer/tier" component={Tier} />
+            <ProtectedRoute path="/volunteer/forms" component={Forms} />
+          </Switch>
 
-            <Switch>
-              <ProtectedRoute path="/inventory" component={Inventory} />
-              <ProtectedRoute path="/reports" component={Reports} />
-              <ProtectedRoute path="/events/viewHours" component={viewHours} />
-              <ProtectedRoute path="/events" component={Events} />
-            </Switch>
-          </div>
+          <Switch>
+            <ProtectedRoute path="/inventory" component={Inventory} />
+            <ProtectedRoute path="/reports" component={Reports} />
+            <ProtectedRoute path="/events/viewHours" component={viewHours} />
+            <ProtectedRoute path="/events" component={Events} />
+          </Switch>
+          {/* </div> */}
         </div>
       </Router>
     </CookiesProvider>

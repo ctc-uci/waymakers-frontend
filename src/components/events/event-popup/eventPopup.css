@@ -1,15 +1,97 @@
-.popup{
-    border: 1px;
-    z-index: 3;
-    background-color: #ffa29c;
-    color: black;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    padding: 2em;
-    width: 20em;
-    border-radius: 5px;
-    transform: translate(-50%, -50%);
-    margin: auto;
+@import '../../../common/vars.css';
 
+.popup {
+    position: absolute;
+    z-index: 3;
+
+    border-radius: 10px;
+
+    background: var(--color-dark-blue);
+
+    /* width: 22%;
+    height: 50%; */
+    width: 22vw;
+    height: 50vh;
+}
+
+.popup .event-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(196, 196, 196);
+    /* font-size: 36px;     */
+    font-size: 2rem;
+
+    height: 24%;
+}
+
+.popup .popup-header {
+    font-weight: bold;
+
+    /* background-color: var(--color-dark-blue); */
+
+    padding-left: 5%;
+    padding-top: 5%;
+
+    height: 22%;
+}
+
+.popup .popup-header .event-time {
+    font-size: 1.4rem;
+
+    color: var(--color-light-orange);
+}
+
+.popup .popup-header .event-name { 
+    /* font-size: 30px; */
+    font-size: 2rem;
+
+    color: var(--text-color-light);
+}
+
+.popup .details-section {
+    color: white;
+    background-color: var(--color-dark-blue);
+
+    padding-left: 5%;
+
+    height: 26%;
+}
+
+.popup .details-section .event-info {
+    margin-top: 3%;
+}
+
+.popup .details-section .event-info .event-detail {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 1%;
+}
+
+.popup .details-section .event-info .event-detail .event-detail-icon {
+    height: 25px;
+    width: 25px;
+}
+
+.popup .details-section .event-info .event-detail .event-detail-label {
+    /* font-size: 20px; */
+    font-size: 1.1rem;
+
+    margin-left: 2%;
+}
+
+.popup .event-description {
+    background-color: var(--color-dark-blue);
+
+    color: white;
+
+    /* font-size: 20px; */
+    font-size: 1.1rem;
+    text-align: left;
+
+    padding: 5% 11.5% 5% 11.5%;
+
+    height: 30%;
 }
