@@ -8,8 +8,9 @@
     width: inherit;
     padding: 5px;
     font-family: "Assistant", Arial, Helvetica, sans-serif;
+    color: var(--text-color-dark);
     font-weight: 700;
-    font-size: xxx-large;
+    font-size: 48px;
     cursor: pointer;
     text-align-last: center;
 }

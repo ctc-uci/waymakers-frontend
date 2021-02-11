@@ -1,9 +1,5 @@
 @import '../../../common/vars.css';
 
-#add-item-button-container {
-  display: flex;
-}
-
 .add-item-modal-content {
   position: absolute;
   top: 20%;
@@ -20,20 +16,14 @@
 }
 
 .add-item-button {
-  padding: 0 40px;
-  font-family: "Assistant", Arial, Helvetica, sans-serif;
-  cursor: pointer;
   border: 2px solid;
-  border-radius: 6px;
+  border-radius: 15px;
+  font-family: "Assistant", Arial, Helvetica, sans-serif;
   font-weight: bold;
-  font-size: medium;
+  font-size: 20px;
   color: var(--text-color-light);
   background-color: var(--color-green);
   outline-color: var(--color-green);
-  padding-top: 1px;
-  padding-bottom: 1px;
-}
-
-.close-add-item {
-  
+  width: 164px;
+  cursor: pointer;
 }
