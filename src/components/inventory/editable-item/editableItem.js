@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 
 import store from '../redux/store';
-import { deleteItem, editItem } from '../redux/actions';
+import { deleteItem, editItem, undeleteItem } from '../redux/actions';
 import { getEditing, getCategories } from '../redux/selectors';
 
 import './editableItem.css';
-
-// TO DO: undoing a delete on an item (need to create a redux action?)
 
 const getCategoryLabelFromID = (id) => {
   const category = useSelector(getCategories).find((cat) => cat.id === id);
@@ -47,7 +45,7 @@ const EditableItem = (props) => {
       setDeleted(true);
       setButtonOpacity(0.7);
     } else {
-      // TO DO: undo item deletion
+      store.dispatch(undeleteItem(props.item.id));
       setDeleted(false);
       setButtonOpacity(1.0);
     }
@@ -104,7 +102,6 @@ const EditableItem = (props) => {
   // column has an input that uses that form
   const formItem = (
     // CSS class to indicate that value has been changed
-    // TODO: Add a separate css class for deleted items
     <tr className="edit-table-row">
       <td className="item-edit-name">
         <input

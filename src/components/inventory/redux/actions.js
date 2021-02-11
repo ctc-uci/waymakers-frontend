@@ -119,6 +119,12 @@ export const deleteItem = (id) => ({
   payload: { id },
 });
 
+// Creates a edits/revertItemDelete action
+export const undeleteItem = (id) => ({
+  type: 'edits/revertItemDelete',
+  payload: { id },
+});
+
 // Creates a edits/addItemEdit action
 // newValues must be an object
 export const editItem = (id, newValues) => ({

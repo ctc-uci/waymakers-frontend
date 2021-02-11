@@ -25,6 +25,14 @@ export default (state = initialState, action) => {
         deletedItems: [...state.deletedItems, action.payload.id],
       };
     }
+    // Undoing an item deletion
+    case 'edits/revertItemDelete': {
+      const index = state.deletedItems.indexOf(action.payload.id);
+      if (index > -1) {
+        state.deletedItems.splice(index, 1);
+      }
+      return state;
+    }
     // Adding a new category delete
     case 'edits/addCategoryDelete': {
       return {
