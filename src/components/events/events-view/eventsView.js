@@ -141,6 +141,31 @@ const EventsView = ({
     return null;
   }
 
+  const renderHeader = (arg) => {
+    if (arg.view.type === 'timeGridWeek') {
+      return (
+        <div className="week-header">
+          <p id="header-date">{arg.date.getDate()}</p>
+          <p id="header-day">{new Date(arg.date).toLocaleString('en-us', { weekday: 'short' })}</p>
+        </div>
+      );
+    }
+    return <p>{arg.text}</p>;
+  };
+
+  const renderEventContent = (eventInfo) => {
+    console.log(eventInfo.extendedProps);
+    return (
+      <div id="event-block">
+        <p>{eventInfo.event.title}</p>
+        <button type="button" onClick={() => console.log('hi')}>+</button>
+        <div id="strip">
+          Hi
+        </div>
+      </div>
+    );
+  };
+
   const getCalendar = () => {
     const userEvents = useSelector(getUserEventsForFullCalendar);
     const allEvents = useSelector(getEventsForFullCalendar);
@@ -158,13 +183,31 @@ const EventsView = ({
       const newEvent = event;
       newEvent.textColor = 'var(--text-color-light)';
       newEvent.eventBorderColor = 'transparent';
+      // newEvent.displayEventTime = 'false';
       if (userEventIds.includes(newEvent.id)) {
-        newEvent.backgroundColor = 'var(--color-light-green)';
+        newEvent.eventColor = 'var(--color-light-green)';
+        // newEvent.backgroundColor = 'var(--color-light-green)';
       } else {
-        newEvent.backgroundColor = 'var(--text-color-dark)';
+        newEvent.eventColor = 'var(--text-color-dark)';
+        // newEvent.backgroundColor = 'var(--text-color-dark)';
       }
       return newEvent;
     });
+
+    events = [
+      {
+        title: 'Study Session',
+        start: Date.parse('11 Feb 2021 13:12:00 PST'),
+        end: Date.parse('11 Feb 2021 15:15:00 PST'),
+        division: 'hi',
+        location: 'Schol',
+        id: 3,
+        backgroundColor: 'var(--text-color-dark)',
+        borderColor: 'var(--text-color-dark)',
+      },
+    ];
+
+    console.log(events);
 
     return (
       <FullCalendar
@@ -174,6 +217,9 @@ const EventsView = ({
         eventClick={onEventClick}
         contentHeight={450}
         ref={calendarEl}
+        dayHeaderContent={renderHeader}
+        dayHeaderClassNames="test-headers"
+        eventContent={renderEventContent}
       />
     );
   };

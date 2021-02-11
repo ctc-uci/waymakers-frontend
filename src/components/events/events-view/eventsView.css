@@ -39,3 +39,46 @@
     color: var(--text-color-dark-green);
     border: none;
 }
+
+.week-header{
+    border: none;
+}
+
+.week-header p{
+    margin-bottom: 0px;
+}
+
+#header-date{
+    font-size: 1.25em;
+    padding-bottom: 0px;
+}
+
+#header-day{
+    color: var(--color-dark-blue);
+    font-size: 0.75em;
+}
+
+.test-headers{
+    /* background: blue; */
+    border: none;
+}
+
+#event-block{
+    color: var(--text-color-light);
+    padding: 0.25em;
+    font-weight: bold;
+}
+
+#strip{
+    width: 30px;
+    height: 100%;
+    background-color: yellow;
+}
+
+#event-block button{
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    background-color: var(--color-light-blue);
+}
