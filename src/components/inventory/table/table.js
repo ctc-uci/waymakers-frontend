@@ -17,6 +17,7 @@ const Table = (items) => (
           <th className="th-quantity">In Stock</th>
           <th className="th-quantity"> # Needed</th>
           <th className="th-category">Category</th>
+          <th className="th-blank" aria-label="blank" />
         </tr>
       </thead>
       <tbody>

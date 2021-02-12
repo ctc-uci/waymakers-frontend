@@ -21,13 +21,16 @@
 }
 
 .th-name {
-    width: 50%;
+    width: 45%;
+    padding-left: 1%;
 }
 
 .th-quantity {
     width: 15%;
+    text-align: center;
 }
 
 .th-category {
     width: 20%;
+    text-align: center;
 }

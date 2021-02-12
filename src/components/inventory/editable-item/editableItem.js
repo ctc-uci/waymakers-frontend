@@ -62,6 +62,30 @@ const EditableItem = (props) => {
     }));
   };
 
+  // Decrement field value
+
+  const incrementField = (e) => {
+    setModified(true);
+    const { name } = e.target;
+
+    setFieldState((prevState) => ({
+      ...prevState,
+      [name]: prevState.[name] + 1,
+    }));
+  };
+
+  // Increment field value
+
+  const decrementField = (e) => {
+    setModified(true);
+    const { name } = e.target;
+
+    setFieldState((prevState) => ({
+      ...prevState,
+      [name]: prevState.[name] - 1,
+    }));
+  };
+
   // Sets field state on component mount
   useEffect(() => {
     setFieldState(fieldState);
@@ -113,44 +137,98 @@ const EditableItem = (props) => {
           onChange={handleChange}
         />
       </td>
-      <td>
-        <input
-          name="quantity"
-          type="number"
-          className="table-input"
-          value={fieldState.quantity}
-          form={props.item.id}
-          onChange={handleChange}
-        />
+      <td className="item-qty-field">
+        <div className="change-quantity-wrapper">
+          <div className="minus-button-wrapper">
+            <button
+              type="button"
+              name="quantity"
+              aria-label="minus"
+              className="item-edit-minus-button"
+              form={props.item.id}
+              onClick={decrementField}
+            >
+              -
+            </button>
+          </div>
+          <input
+            name="quantity"
+            type="number"
+            className="table-input"
+            value={fieldState.quantity}
+            form={props.item.id}
+            onChange={handleChange}
+          />
+          <div className="plus-button-wrapper">
+            <button
+              type="button"
+              name="quantity"
+              aria-label="plus"
+              className="item-edit-plus-button"
+              form={props.item.id}
+              onClick={incrementField}
+            >
+              +
+            </button>
+          </div>
+        </div>
       </td>
-      <td>
-        <input
-          name="needed"
-          type="number"
-          className="table-input"
-          value={fieldState.needed}
-          form={props.item.id}
-          onChange={handleChange}
-        />
+      <td className="item-needed-field">
+        <div className="change-quantity-wrapper">
+          <div className="minus-button-wrapper">
+            <button
+              type="button"
+              name="needed"
+              aria-label="-"
+              className="item-edit-minus-button"
+              form={props.item.id}
+              onClick={decrementField}
+            >
+              -
+            </button>
+          </div>
+          <input
+            name="needed"
+            type="number"
+            className="table-input"
+            value={fieldState.needed}
+            form={props.item.id}
+            onChange={handleChange}
+          />
+          <div className="plus-button-wrapper">
+            <button
+              type="button"
+              name="needed"
+              aria-label="+"
+              className="item-edit-plus-button"
+              form={props.item.id}
+              onClick={incrementField}
+            >
+              +
+            </button>
+          </div>
+        </div>
       </td>
-      <td>
-        <select
-          id="categories"
-          name="category"
-          className="category-dropdown"
-          value={fieldState.category}
-          form={props.item.id}
-          onChange={handleChange}
-        >
-          <option value="">No category</option>
-          {/* Creating dropdown menu items from categories list */}
-          {/* category.label is displayed, but the value of the option will be the ID */}
-          {useSelector(getCategories)
-            .filter((cat) => cat.id > 0)
-            .map((cat) => (
-              <option key={props.item.id} value={cat.id}>{cat.label}</option>
-            ))}
-        </select>
+      <td className="item-cat-field">
+        <div className="super-wrapper">
+          <select
+            id="categories"
+            name="category"
+            className="category-dropdown"
+            value={fieldState.category}
+            form={props.item.id}
+            onChange={handleChange}
+          >
+            <option value="">No category</option>
+            {/* Creating dropdown menu items from categories list */}
+            {/* category.label is displayed, but the value of the option will be the ID */}
+            {useSelector(getCategories)
+              .filter((cat) => cat.id > 0)
+              .map((cat) => (
+                <option key={props.item.id} value={cat.id}>{cat.label}</option>
+              ))}
+          </select>
+        </div>
       </td>
       <td>
         <div id="delete-wrapper">
