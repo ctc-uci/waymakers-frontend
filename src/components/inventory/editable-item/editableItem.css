@@ -4,12 +4,12 @@
     padding: 10px;
     min-width: 350px;
     max-width: 450px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .static-item-attribute {
     padding: 7px;
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
 }
 
@@ -23,7 +23,7 @@
     min-height: 7px;
     width: max-content;
     color: var(--text-color-dark);
-    font-size: 20px;
+    font-size: 18px;
     width: 90%;
     border: solid 2px var(--color-dark-blue);
 }
@@ -31,17 +31,18 @@
 .table-input {
     min-height: 25px;
     color: var(--text-color-dark);
-    font-size: 20px;
+    font-size: 18px;
     width: 50%;
     border: solid 2px var(--color-dark-blue);
     text-align: center;
 }
 
 .category-dropdown {
-    font-size: 20px;
+    font-size: 18px;
     color: var(--text-color-dark);
     width: 75%;
     border: solid 2px var(--color-dark-blue);
+    text-align-last: center;
 }
 
 #delete-wrapper {
