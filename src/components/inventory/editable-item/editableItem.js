@@ -210,7 +210,7 @@ const EditableItem = (props) => {
         </div>
       </td>
       <td className="item-cat-field">
-        <div className="super-wrapper">
+        <div className="change-quantity-wrapper">
           <select
             id="categories"
             name="category"
