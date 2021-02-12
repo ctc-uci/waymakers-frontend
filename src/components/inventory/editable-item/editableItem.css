@@ -15,7 +15,7 @@
     padding: 3px;
     padding-left: 5px;
     border-radius: 0px;
-    border: solid 1px var(--text-color-dark);
+    border: solid 2px var(--text-color-dark);
     width: 80%;
 }
 
@@ -25,15 +25,14 @@
     padding: 5px;
     padding-left: 10px;
     border-radius: 0px;
-    border: solid 1px var(--text-color-dark);
+    border: solid 2px var(--text-color-dark);
 }
 
 .item-edit-qty, .item-edit-needed {
     text-align: center;
     padding: 5px;
-    padding-left: 12px;
     border-radius: 0px;
-    border: solid 1px var(--text-color-dark);
+    border: solid 2px var(--text-color-dark);
     width: 30%;
     height: 100%;
 }
@@ -65,4 +64,34 @@
 .table-item-delete-button:hover{
     transition: 0.2s;
     opacity: 0.7;
+}
+
+.item-edit-plus-button, .item-edit-minus-button {
+    min-width: 25px;
+    min-height: 20px;
+    border-radius: 100%;
+    background-color: var(--color-green);
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+    color: white;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+}
+
+.minus-button-wrapper, .plus-button-wrapper {
+    padding-top: 4px;
+}
+
+.minus-button-wrapper {
+    padding-right: 7px;
+}
+
+.plus-button-wrapper {
+    padding-left: 7px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
 }

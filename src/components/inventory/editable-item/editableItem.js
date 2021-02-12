@@ -64,6 +64,30 @@ const EditableItem = (props) => {
     }));
   };
 
+  // Decrement field value
+
+  const incrementField = (e) => {
+    setModified(true);
+    const { name } = e.target;
+
+    setFieldState((prevState) => ({
+      ...prevState,
+      [name]: prevState.[name] + 1,
+    }));
+  };
+
+  // Increment field value
+
+  const decrementField = (e) => {
+    setModified(true);
+    const { name } = e.target;
+
+    setFieldState((prevState) => ({
+      ...prevState,
+      [name]: prevState.[name] - 1,
+    }));
+  };
+
   // Sets field state on component mount
   useEffect(() => {
     setFieldState(fieldState);
@@ -118,6 +142,18 @@ const EditableItem = (props) => {
         />
       </td>
       <td className="item-qty-field">
+        <div className="minus-button-wrapper">
+          <button
+            type="button"
+            name="quantity"
+            aria-label="minus"
+            className="item-edit-minus-button"
+            form={props.item.id}
+            onClick={decrementField}
+          >
+            -
+          </button>
+        </div>
         <input
           name="quantity"
           type="number"
@@ -126,8 +162,32 @@ const EditableItem = (props) => {
           form={props.item.id}
           onChange={handleChange}
         />
+        <div className="plus-button-wrapper">
+          <button
+            type="button"
+            name="quantity"
+            aria-label="plus"
+            className="item-edit-plus-button"
+            form={props.item.id}
+            onClick={incrementField}
+          >
+            +
+          </button>
+        </div>
       </td>
       <td className="item-needed-field">
+        <div className="minus-button-wrapper">
+          <button
+            type="button"
+            name="needed"
+            aria-label="-"
+            className="item-edit-minus-button"
+            form={props.item.id}
+            onClick={decrementField}
+          >
+            -
+          </button>
+        </div>
         <input
           name="needed"
           type="number"
@@ -136,6 +196,18 @@ const EditableItem = (props) => {
           form={props.item.id}
           onChange={handleChange}
         />
+        <div className="plus-button-wrapper">
+          <button
+            type="button"
+            name="needed"
+            aria-label="+"
+            className="item-edit-plus-button"
+            form={props.item.id}
+            onClick={incrementField}
+          >
+            +
+          </button>
+        </div>
       </td>
       <td className="item-cat-field">
         <select
