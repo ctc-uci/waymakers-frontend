@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import "./events.css";
 import PropTypes from 'prop-types';
 import Event from '../event/event';
@@ -14,13 +14,24 @@ import './eventList.css';
   description: description
 }
 */
-const EventList = ({ events, title, listType }) => {
+const EventList = ({
+  events, title, listType, onEventButtonClick,
+}) => {
   // render Event components based on events prop
-  console.log(events);
+  // console.log(events);
 
-  const renderEvents = () => events.map((event) => (
+  useEffect(() => {
+    console.log('event list rendering');
+  }, [events]);
+
+  const renderEvents = () => events.map((event, index) => (
     <div className="event-div">
-      <Event event={event} eventType={listType} />
+      <Event
+        event={event}
+        eventType={listType}
+        index={index}
+        onEventButtonClick={onEventButtonClick}
+      />
     </div>
   ));
 
@@ -41,6 +52,7 @@ EventList.propTypes = {
   events: PropTypes.arrayOf(Object).isRequired,
   title: PropTypes.string,
   listType: PropTypes.string.isRequired,
+  onEventButtonClick: PropTypes.func.isRequired,
 };
 
 EventList.defaultProps = {

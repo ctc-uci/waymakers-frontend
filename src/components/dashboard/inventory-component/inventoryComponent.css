@@ -1,17 +1,40 @@
-#top-item-box {
+.inventory-component {
+  background-color: var(--color-light-blue);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 15px 20px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  background-color: #c4c4c46b;
+  flex-direction: column;
+}
+
+.warehouse-selector-title {
+  color: var(--text-color-dark);
+}
+
+.top-items-section {
+  display: flex;
+  justify-content: space-between;
 }
 
 .top-item {
-  background-color: #C4C4C4;
-  flex: 1 0 calc(33.333% - 20px);
-  margin: 10px 10px 10px;
+  background-color: var(--color-dark-blue);
+  color: var(--text-color-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-#view-inventory-button {
-  align-self: flex-end;
-  margin: 10px 0px 10px;
+.view-inventory-section {
+  align-self: center;
+  width: 100%;
+}
+
+.view-inventory-button {
+  background-color: var(--color-green);
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  padding: 5px;
+  width: 50%;
 }

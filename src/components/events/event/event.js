@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import './event.css';
 // import '../edit-events/editEvents.css';
 
-const Event = ({ event, eventType }) => {
+const Event = ({
+  event, eventType, index, onEventButtonClick,
+}) => {
   // Date formatting
   const startDate = new Date(event.startTime);
   const endDate = new Date(event.endTime);
@@ -11,9 +13,16 @@ const Event = ({ event, eventType }) => {
   const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(startDate);
   const startTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(startDate);
   const endTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(endDate);
+
   return (
     <div className={`event-container ${eventType}`}>
-      <div className="event-button">
+      <div
+        className="event-button"
+        onClick={() => onEventButtonClick(eventType, index)}
+        onKeyDown={() => onEventButtonClick(eventType, index)}
+        role="button"
+        tabIndex={index}
+      >
         <p>{eventType === 'more-events' ? '+' : '✓'}</p>
       </div>
       <div className="event-date-section">
@@ -31,6 +40,8 @@ const Event = ({ event, eventType }) => {
 Event.propTypes = {
   event: PropTypes.objectOf(String).isRequired,
   eventType: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  onEventButtonClick: PropTypes.func.isRequired,
 };
 
 export default Event;

@@ -19,6 +19,7 @@ import Inventory from './components/inventory/inventory';
 import Reports from './components/reports/reports';
 import Events from './components/events/events';
 import viewHours from './components/events/view-hours/viewHours';
+import AdminDashboard from './components/dashboard/admin/adminDashboard';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
@@ -30,6 +31,8 @@ ReactDOM.render(
         <div className="App">
           <div className="container">
             <Switch>
+              <ProtectedRoute path="/" component={Layout} exact />
+              <ProtectedRoute path="/adminDashboard" component={AdminDashboard} exact />
               <ProtectedRoute path="/" component={Layout} exact />
               <Route path="/register" component={Register} />
               <Route path="/login" component={LogIn} />

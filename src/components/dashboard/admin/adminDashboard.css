@@ -1,0 +1,65 @@
+.admin-components {
+    margin: 30px auto;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+}
+
+.division-selector-title {
+    color: var(--text-color-dark);
+    font-weight: bold;
+}
+
+.component-title {
+    color: var(--text-color-dark);
+    font-weight: bold;
+}
+
+.admin-components-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inventory-events-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 48%;
+}
+
+.analytics-section {
+    width: 48%;
+}
+
+.inventory-section, .upcoming-events-section, .analytics-section, .availability-section {
+    margin-top: 30px;
+}
+
+/* .inventory-component {
+    height: 300px;
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+} */
+
+.upcoming-events-component {
+    height: 300px;
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.analytics-component {
+    height: 675px;
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.availability-component {
+    height: 600px;
+    width: 100%;
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}

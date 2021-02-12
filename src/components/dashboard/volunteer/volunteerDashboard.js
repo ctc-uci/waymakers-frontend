@@ -17,7 +17,8 @@ const VolunteerDashboard = (props) => {
   });
 
   const { cookies } = props;
-  const [events, setEvents] = useState([]);
+  const [moreEvents, setMoreEvents] = useState([]);
+  const [myEvents, setMyEvents] = useState([]);
   const history = useHistory();
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
@@ -42,9 +43,10 @@ const VolunteerDashboard = (props) => {
       let allEvents = await instance.get('events');
 
       if (allEvents.status === 200) {
-        allEvents = allEvents.data;
+        allEvents = allEvents.data.slice(0, 3);
       }
-      setEvents(allEvents);
+      setMoreEvents(allEvents);
+      setMyEvents([...allEvents]);
     } catch (e) {
       // eslint-disable-next-line
       console.log('Error while getting events from the backend!');
@@ -56,6 +58,31 @@ const VolunteerDashboard = (props) => {
     getEvents();
     setLoading(false);
   }, []);
+
+  const onEventButtonClick = (eventType, index) => {
+    // If user clicks on event from More Events section to add to My Events section
+    if (eventType === 'more-events') {
+      // Pop element from moreEvents array and update its state
+      const tempMoreEventsArr = [...moreEvents];
+      const [poppedEvent] = tempMoreEventsArr.splice(index, 1);
+      setMoreEvents(tempMoreEventsArr);
+
+      // Push element that was popped from moreEvents array to myEvents array and update its state
+      const tempMyEventsArr = [...myEvents];
+      tempMyEventsArr.push(poppedEvent);
+      setMyEvents(tempMyEventsArr);
+    } else {
+      // Pop element from myEvents array and update its state
+      const tempMyEventsArr = [...myEvents];
+      const [poppedEvent] = tempMyEventsArr.splice(index, 1);
+      setMyEvents(tempMyEventsArr);
+
+      // Push element that was popped from myEvents array to moreEvents array and update its state
+      const tempMoreEventsArr = [...moreEvents];
+      tempMoreEventsArr.push(poppedEvent);
+      setMoreEvents(tempMoreEventsArr);
+    }
+  };
 
   if (isLoading) {
     return (<div>Loading dashboard...</div>);
@@ -80,10 +107,10 @@ const VolunteerDashboard = (props) => {
       </div>
       <div className="events-section">
         <div className="event-list-component">
-          <EventList events={events.slice(0, 3)} title="More Events" listType="more-events" />
+          <EventList events={moreEvents} title="More Events" listType="more-events" onEventButtonClick={onEventButtonClick} />
         </div>
         <div className="event-list-component">
-          <EventList events={events.slice(0, 3)} title="My Events" listType="my-events" />
+          <EventList events={myEvents} title="My Events" listType="my-events" onEventButtonClick={onEventButtonClick} />
         </div>
       </div>
     </div>

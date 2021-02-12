@@ -11,7 +11,7 @@
 }
 
 .my-events {
-    background-color: var(--color-orange);
+    background-color: var(--color-teal);
 }
 
 .event-button {
@@ -24,6 +24,11 @@
     margin-right: 10px;
     background-color: white;
     border-radius: 50%;
+    cursor: pointer;
+}
+
+.event-button:hover {
+    background-color: lightblue;
 }
 
 .event-date-section {

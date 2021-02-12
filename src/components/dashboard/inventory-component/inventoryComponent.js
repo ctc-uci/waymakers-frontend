@@ -7,6 +7,8 @@ const axios = require('axios');
 
 const InventoryComponent = () => {
   const [topItems, setTopItems] = useState([]);
+  // eslint-disable-next-line
+  const [currWarehouse, setCurrWarehouse] = useState('Warehouse 1');
 
   // Fetching top items from the server
   const getTopItems = async () => {
@@ -24,6 +26,9 @@ const InventoryComponent = () => {
 
   const itemDisplay = (item) => (
     <div className="top-item">
+      <p>
+        {item.name}
+      </p>
       <div>
         In Stock
         {' '}
@@ -34,9 +39,6 @@ const InventoryComponent = () => {
         {' '}
         {item.needed}
       </div>
-      <h4>
-        {item.name}
-      </h4>
     </div>
   );
 
@@ -46,14 +48,18 @@ const InventoryComponent = () => {
   }, []);
 
   return (
-    <div style={{ outline: '1px solid black', display: 'inline-block' }}>
-      <h3>Inventory</h3>
-      <div id="top-item-box">
+    <div className="inventory-component">
+      <div className="warehouse-selector">
+        <h4 className="warehouse-selector-title">{currWarehouse}</h4>
+      </div>
+      <div className="top-items-section">
         {topItems.map((item) => (
           itemDisplay(item)
         ))}
+      </div>
+      <div className="view-inventory-section">
         <Link to="/inventory">
-          <button type="button" id="view-inventory-button">View All</button>
+          <button type="button" className="view-inventory-button">View All</button>
         </Link>
       </div>
     </div>
