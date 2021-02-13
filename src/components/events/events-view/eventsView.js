@@ -179,7 +179,7 @@ const EventsView = ({
               <div id="week-event-content">
                 <p>{eventInfo.event.title}</p>
                 <button type="button">
-                  {isUserEvent ? '+' : <IconAi.AiOutlineCheck size={10} color="black" />}
+                  {isUserEvent ? <IconAi.AiOutlineCheck size={10} color="black" /> : '+'}
                 </button>
               </div>
               <div id="strip" style={{ backgroundColor: eventTypeColor }} />
