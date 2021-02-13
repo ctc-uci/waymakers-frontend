@@ -155,13 +155,19 @@ const EventsView = ({
 
   const renderEventContent = (eventInfo) => {
     console.log(eventInfo.extendedProps);
+    // TODO: Check what view we're in!!!
+    // TODO: get event Type and render color appropriately
+    // TODO: Will have to check what kind of event block to render
+    // based on the page we're on!
+    // Might want to create diff components for this!
+    const eventTypeColor = 'green';
     return (
       <div id="event-block">
-        <p>{eventInfo.event.title}</p>
-        <button type="button" onClick={() => console.log('hi')}>+</button>
-        <div id="strip">
-          Hi
+        <div id="event-content">
+          <p>{eventInfo.event.title}</p>
+          <button type="button" onClick={() => console.log('hi')}>+</button>
         </div>
+        <div id="strip" style={{ backgroundColor: eventTypeColor }} />
       </div>
     );
   };
@@ -194,20 +200,18 @@ const EventsView = ({
       return newEvent;
     });
 
-    events = [
-      {
-        title: 'Study Session',
-        start: Date.parse('11 Feb 2021 13:12:00 PST'),
-        end: Date.parse('11 Feb 2021 15:15:00 PST'),
-        division: 'hi',
-        location: 'Schol',
-        id: 3,
-        backgroundColor: 'var(--text-color-dark)',
-        borderColor: 'var(--text-color-dark)',
-      },
-    ];
-
-    console.log(events);
+    // events = [
+    //   {
+    //     title: 'Study Session',
+    //     start: Date.parse('11 Feb 2021 13:12:00 PST'),
+    //     end: Date.parse('11 Feb 2021 15:15:00 PST'),
+    //     division: 'hi',
+    //     location: 'Schol',
+    //     id: 3,
+    //     backgroundColor: 'var(--text-color-dark)',
+    //     borderColor: 'var(--text-color-dark)',
+    //   },
+    // ];
 
     return (
       <FullCalendar
