@@ -20,7 +20,7 @@
 }
 
 .table-input-name {
-    min-height: 7px;
+    min-height: 35px;
     width: max-content;
     color: var(--text-color-dark);
     font-size: 18px;
@@ -29,7 +29,7 @@
 }
 
 .table-input {
-    min-height: 25px;
+    min-height: 35px;
     color: var(--text-color-dark);
     font-size: 18px;
     width: 50%;
@@ -38,6 +38,7 @@
 }
 
 .category-dropdown {
+    min-height: 35px;
     font-size: 18px;
     color: var(--text-color-dark);
     width: 75%;

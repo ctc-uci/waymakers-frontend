@@ -1,3 +1,18 @@
-.warehouse-radio-button {
-  margin: 0 4px 0 20px;
+.warehouse-menu {
+  display: flex;
+  margin: 0 auto;
+  border: none;
+  outline: none;
+  width: inherit;
+  padding: 5px;
+  font-family: "Assistant", Arial, Helvetica, sans-serif;
+  color: var(--text-color-dark);
+  font-weight: 700;
+  font-size: 32px;
+  cursor: pointer;
+  text-align-last: center;
+}
+
+.warehouse-menu-container {
+  padding-bottom: 15px;
 }
