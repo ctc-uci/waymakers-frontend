@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
-import { addUserEvent } from '../redux/actions';
+import { addUserEvent, fetchEvents } from '../redux/actions';
+import store from '../redux/store';
 
 import './eventPopup.css';
 import locationPinIcon from '../../../images/locationPin.svg';
@@ -31,6 +32,7 @@ const EventPopup = ({
     if (canAdd === true && event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
       const addEvent = () => {
         addEventToUserCalendar(cookies.cookies.userId, event.id);
+        setTimeout(() => { store.dispatch(fetchEvents()); }, 100);
         onClose();
       };
       return (
