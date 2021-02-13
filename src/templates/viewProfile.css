@@ -16,4 +16,18 @@
 
 .abt-contact {
   display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.editButton {
+  background-color: Transparent;
+  color: #003E53;
+  text-decoration: underline;
+  cursor: pointer;
+  border-color: Transparent;
+}
+
+.userName {
+  color: #003E53;
 }

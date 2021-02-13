@@ -1,3 +1,4 @@
+import './viewProfile.css';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 // import '../components/profile/profile.js';
@@ -97,10 +98,10 @@ function viewProfile() {
         </div>
         <div className="name">
           <button type="button" onClick={() => { setStatus('Volunteer'); }}>Change to volunteer</button>
-          <h3>{`${firstName} ${lastName}`}</h3>
+          <h1 className="userName">{`${firstName} ${lastName}`}</h1>
           <button type="button" onClick={() => { setStatus('Admin'); }}>Change to admin</button>
           <ul className="edit-save">
-            <button type="button" onClick={() => { history.push('/editProfile'); }}>
+            <button className="editButton" type="button" onClick={() => { history.push('/editProfile'); }}>
               Edit
             </button>
           </ul>
@@ -109,7 +110,7 @@ function viewProfile() {
           <div className="abtCard">
             <About bday={birthday} tier={tier} status={status} />
           </div>
-          <div className="contactCard">
+          <div className="contact">
             <Contact email={email} number={number} address={address} />
           </div>
         </div>

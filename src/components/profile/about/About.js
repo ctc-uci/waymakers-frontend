@@ -8,7 +8,7 @@ import building from '../../../images/building.png';
 
 function About({ birthday, tier, status }) {
   return (
-    <div className="aboutCard">
+    <div className="about">
       <h2>About</h2>
       <div>
         <p>

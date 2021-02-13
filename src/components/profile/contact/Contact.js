@@ -8,19 +8,19 @@ import house from '../../../images/house.png';
 
 function Contact({ email, number, address }) {
   return (
-    <div className="contactCard">
+    <div className="cntctCard">
       <h2>Contact Info</h2>
       <div>
         <p>
-          <img src={emailPic} alt="" width="15px" height="15px" />
+          <img className="contactImg" src={emailPic} alt="" width="15px" height="15px" />
           {` ${email}`}
         </p>
         <p>
-          <img src={phone} alt="" width="15px" height="15px" />
+          <img className="contactImg" src={phone} alt="" width="15px" height="15px" />
           {` ${number}`}
         </p>
         <p>
-          <img src={house} alt="" width="15px" height="15px" />
+          <img className="contactImg" src={house} alt="" width="15px" height="15px" />
           {` ${address}`}
         </p>
       </div>
