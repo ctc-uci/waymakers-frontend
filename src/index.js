@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 
 import ProtectedRoute from './routes/ProtectedRoute';
-import Layout from './components/layout/layout';
+// import Layout from './components/layout/layout';
 import Dashboard from './components/dashboard/dashboard';
 import Register from './components/register/register';
 import LogIn from './components/login/login';
@@ -23,12 +23,12 @@ import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggr
 import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Layout />
+    {/* <Layout /> */}
     <CookiesProvider>
       <Router>
         <div className="App">

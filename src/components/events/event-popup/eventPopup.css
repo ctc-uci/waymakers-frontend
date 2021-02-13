@@ -4,14 +4,19 @@
     position: absolute;
     z-index: 3;
 
-    border-radius: 10px;
+    border: 0.5px solid #000000;
+    border-radius: 10px 10px 10px 10px;
 
     background: var(--color-dark-blue);
 
-    /* width: 22%;
-    height: 50%; */
+    overflow: hidden;
+
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     width: 22vw;
-    height: 50vh;
+    height: 65vh;
 }
 
 .popup .event-image {
@@ -19,79 +24,116 @@
     justify-content: center;
     align-items: center;
 
+    border-radius: 10px 10px 0px 0px;
+
     background: rgba(196, 196, 196);
-    /* font-size: 36px;     */
+
     font-size: 2rem;
 
-    height: 24%;
+    height: 13vh;
 }
 
-.popup .popup-header {
+.popup .event-info {
+    border-radius: 0px 0px 10px 10px;
+
+    height: 80%;
+}
+
+.popup .event-info .popup-header {
     font-weight: bold;
 
-    /* background-color: var(--color-dark-blue); */
+    overflow: wrap;
 
     padding-left: 5%;
+    padding-right: 5%;
     padding-top: 5%;
 
-    height: 22%;
+    height: auto;
 }
 
-.popup .popup-header .event-time {
+.popup .event-info .popup-header .event-time {
     font-size: 1.4rem;
 
     color: var(--color-light-orange);
 }
 
-.popup .popup-header .event-name { 
-    /* font-size: 30px; */
+.popup .event-info .popup-header .event-name { 
     font-size: 2rem;
 
     color: var(--text-color-light);
 }
 
-.popup .details-section {
+.popup .event-info .details-section {
     color: white;
     background-color: var(--color-dark-blue);
 
     padding-left: 5%;
 
-    height: 26%;
+    margin-bottom: 2%;
+
+    height: auto;
 }
 
-.popup .details-section .event-info {
-    margin-top: 3%;
-}
-
-.popup .details-section .event-info .event-detail {
+.popup .event-info .details-section .event-detail {
     display: flex;
     align-items: center;
 
-    margin-bottom: 1%;
+    margin-bottom: 1.5%;
+
+    height: 10%;
 }
 
-.popup .details-section .event-info .event-detail .event-detail-icon {
+.popup .event-info .details-section .event-detail .event-detail-icon {
     height: 25px;
     width: 25px;
 }
 
-.popup .details-section .event-info .event-detail .event-detail-label {
-    /* font-size: 20px; */
+.popup .event-info .details-section .event-detail .event-detail-label {
     font-size: 1.1rem;
 
-    margin-left: 2%;
+    padding-left: 2%;
 }
 
-.popup .event-description {
+.popup .event-info .event-description {
     background-color: var(--color-dark-blue);
 
     color: white;
 
-    /* font-size: 20px; */
     font-size: 1.1rem;
     text-align: left;
 
-    padding: 5% 11.5% 5% 11.5%;
+    margin: 5% 11.5% 7% 11.5%;
 
-    height: 30%;
+    height: auto;
+}
+
+.popup .event-info .event-buttons {
+    background-color: var(--color-dark-blue);
+    display: flex;
+    flex-direction: row;
+
+    border-radius: 0px 0px 10px 10px;
+
+    justify-content: space-around;
+    
+    margin-bottom: 5%;
+    
+    height: 8%;
+}
+
+.popup .event-info .event-buttons .button {
+    width: 28%;
+    border-radius: 10px;
+    color: white;
+    border: 0;
+    box-shadow: 0px 2px #002835;
+    font-size: 1rem;
+}
+
+.popup .event-info .event-buttons .confirm-button {
+    background-color: var(--color-green);
+}
+
+.popup .event-info .event-buttons .cancel-button {
+    background-color: var(--color-light-orange);
 }
