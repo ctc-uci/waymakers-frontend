@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
@@ -8,8 +8,6 @@ import './eventPopup.css';
 import locationPinIcon from '../../../images/locationPin.svg';
 import folderIcon from '../../../images/folder.svg';
 import peopleIcon from '../../../images/peopleIcon.svg';
-
-const axios = require('axios');
 
 const dayList = [
   'SUN', 'MON', 'TUE', 'WED',
@@ -25,39 +23,15 @@ const monthList = [
 const EventPopup = ({
   event, onClose, canAdd, addEventToUserCalendar, cookies,
 }) => {
-  console.log(event.extendedProps.eventLimit);
   const startDate = new Date(event.start);
   const endDate = new Date(event.end);
 
-  // Current event attendance
-  const [capacity, setCapacity] = useState(event.extendedProps.eventLimit);
-
-  const getAttendance = async () => {
-    const instance = axios.create({
-      baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-      withCredentials: true,
-    });
-    const eventInfo = await instance.get(`userEvent/attendance/${event.id}`);
-    if (eventInfo.data.length >= 1) {
-      const space = parseInt(event.extendedProps.eventLimit, 10)
-                    - parseInt(eventInfo.data[0].attendance, 10);
-      setCapacity(space >= 0 ? space : 0);
-    }
-  };
-
-  // Get event attendance on page load
-  useEffect(() => {
-    getAttendance();
-  }, []);
-
   // Renders add button if addEvent was passed in (so MyEvents will have no add button)
   const renderAddButton = () => {
-    if (canAdd === true && capacity > 0) {
+    if (canAdd === true && event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
       const addEvent = () => {
-        if (capacity > 0) {
-          addEventToUserCalendar(cookies.cookies.userId, event.id);
-          onClose();
-        }
+        addEventToUserCalendar(cookies.cookies.userId, event.id);
+        onClose();
       };
       return (
         <button className="button confirm-button" type="button" aria-label="add event to my cal" onClick={addEvent}>Confirm</button>
@@ -101,7 +75,8 @@ const EventPopup = ({
           <div className="event-detail">
             <img className="event-detail-icon" src={peopleIcon} alt="people" />
             <span className="event-detail-label">
-              {capacity}
+              {parseInt(event.extendedProps.eventLimit, 10)
+               - parseInt(event.extendedProps.eventAttendance, 10)}
               /
               {event.extendedProps.eventLimit}
               {' '}
