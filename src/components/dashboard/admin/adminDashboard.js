@@ -57,11 +57,11 @@ const AdminDashboard = (props) => {
           <div className="inventory-events-section">
             <div className="inventory-section">
               <h5 className="component-title">Inventory</h5>
-              {/* <div className="inventory-component" /> */}
               <InventoryComponent />
             </div>
             <div className="upcoming-events-section">
               <h5 className="component-title">Events</h5>
+              {/* <EditEvents /> */}
               <div className="upcoming-events-component" />
             </div>
           </div>

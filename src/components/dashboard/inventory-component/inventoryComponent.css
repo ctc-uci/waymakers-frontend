@@ -3,12 +3,16 @@
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   padding: 15px 20px;
+  height: 300px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .warehouse-selector-title {
   color: var(--text-color-dark);
+  margin: 0;
+  line-height: 1;
 }
 
 .top-items-section {
@@ -22,10 +26,28 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 30%;
+  padding: 10px;
+}
+
+.top-item-name {
+  font-weight: bold;
+  text-align: center;
+}
+
+.in-stock-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.in-stock-quantity {
+  display: inline;
+  border: 1px solid var(--text-color-light);
+  width: 30%;
+  text-align: center;
 }
 
 .view-inventory-section {
-  align-self: center;
   width: 100%;
 }
 
@@ -36,5 +58,6 @@
   border-radius: 5px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   padding: 5px;
+  margin-left: 25%;
   width: 50%;
 }

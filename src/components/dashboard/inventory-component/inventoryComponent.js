@@ -26,15 +26,15 @@ const InventoryComponent = () => {
 
   const itemDisplay = (item) => (
     <div className="top-item">
-      <p>
+      <p className="top-item-name">
         {item.name}
       </p>
-      <div>
+      <div className="in-stock-line">
         In Stock
         {' '}
-        {item.quantity}
+        <p className="in-stock-quantity">{item.quantity}</p>
       </div>
-      <div>
+      <div className="needed">
         Needed
         {' '}
         {item.needed}

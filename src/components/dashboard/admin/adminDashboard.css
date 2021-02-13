@@ -35,13 +35,6 @@
     margin-top: 30px;
 }
 
-/* .inventory-component {
-    height: 300px;
-    background-color: var(--color-light-blue);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-} */
-
 .upcoming-events-component {
     height: 300px;
     background-color: var(--color-light-blue);
