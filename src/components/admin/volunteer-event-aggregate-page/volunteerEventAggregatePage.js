@@ -7,6 +7,7 @@ const VolunteerEventAggregatePage = () => {
   console.log('hello');
   return (
     <Provider store={store}>
+      <h1>Select Event to View Data</h1>
       <EventsView />
     </Provider>
   );

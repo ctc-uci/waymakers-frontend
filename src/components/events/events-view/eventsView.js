@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { useSelector, connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import * as Icon from 'react-icons/im';
+import * as IconGo from 'react-icons/go';
+import * as IconAi from 'react-icons/ai';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -36,6 +39,7 @@ const EventsView = ({
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1); // stored as int
   const [day, setDay] = useState(new Date().getDate());
+  const [path] = useState(useLocation().pathname);
   const calendarEl = useRef(null);
 
   useEffect(() => {
@@ -66,7 +70,6 @@ const EventsView = ({
   // Add/Modify/Remove Events Page => EditEventPopup
   function renderPopup() {
     const userEvents = useSelector(getUserEventsForFullCalendar);
-    const pathName = useLocation().pathname;
     // Check if event selected = user Event
     // if it is => HoursPopup
     // else => big if statement with other popups
@@ -74,7 +77,7 @@ const EventsView = ({
     if (showPopup || showEditPopup) {
       // Event is NOT on the user's calendar
       if (showMoreEvents && found.length !== 1) {
-        switch (pathName) {
+        switch (path) {
           case '/volunteer/events':
             return (
               <EventPopup
@@ -106,7 +109,7 @@ const EventsView = ({
           default: break;
         }
       } else if (showMoreEvents) {
-        switch (pathName) {
+        switch (path) {
           case '/events':
             if (showEditPopup) {
               return (
@@ -153,24 +156,68 @@ const EventsView = ({
     return <p>{arg.text}</p>;
   };
 
-  const renderEventContent = (eventInfo) => {
-    console.log(eventInfo.extendedProps);
+  function renderEventContent(eventInfo) {
+    console.log(eventInfo);
     // TODO: Check what view we're in!!!
-    // TODO: get event Type and render color appropriately
     // TODO: Will have to check what kind of event block to render
     // based on the page we're on!
     // Might want to create diff components for this!
-    const eventTypeColor = 'green';
+    const eventTypeColors = {
+      Volunteer: 'var(--color-golden-yellow)',
+      Outreach: 'var(--color-golden-yellow)',
+      Other: 'var(--color-light-purple)',
+    };
+    const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
+
+    const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
+
+    if (eventInfo.view.type === 'timeGridWeek') {
+      switch (path) {
+        case '/volunteer/events':
+          return (
+            <div id="week-event-block">
+              <div id="week-event-content">
+                <p>{eventInfo.event.title}</p>
+                <button type="button">
+                  {isUserEvent ? '+' : <IconAi.AiOutlineCheck size={10} color="black" />}
+                </button>
+              </div>
+              <div id="strip" style={{ backgroundColor: eventTypeColor }} />
+            </div>
+          );
+        case '/events':
+          return (
+            <div id="week-edit-event-block">
+              <Icon.ImBin id="trash-can" />
+              <p id="week-edit-event-title">{eventInfo.event.title}</p>
+            </div>
+          );
+        case '/admin/aggregate':
+          return (
+            <div id="week-event-block">
+              <div id="week-event-content">
+                <p>{eventInfo.event.title}</p>
+              </div>
+            </div>
+          );
+        default: break;
+      }
+    }
+
+    const hour = eventInfo.event.start.getHours();
+    const convertedHour = hour < 13 ? hour : hour - 12;
+    const minute = eventInfo.event.start.getMinutes();
+    const displayMinute = `:${minute < 10 ? '0' : ''}${minute}`;
+    // &#8226;
     return (
-      <div id="event-block">
-        <div id="event-content">
-          <p>{eventInfo.event.title}</p>
-          <button type="button" onClick={() => console.log('hi')}>+</button>
-        </div>
-        <div id="strip" style={{ backgroundColor: eventTypeColor }} />
+      <div id="month-event-block">
+        {/* <p id="dot" style={{ color: eventInfo.borderColor }}>&#8226;</p> */}
+        <IconGo.GoPrimitiveDot color={eventInfo.borderColor} size={14} />
+        <p id="monthViewEventTime">{`${convertedHour === 0 ? 12 : convertedHour}${minute === 0 ? '' : displayMinute}${hour < 13 ? 'a' : 'p'}`}</p>
+        <p id="monthViewEventTitle">{eventInfo.event.title}</p>
       </div>
     );
-  };
+  }
 
   const getCalendar = () => {
     const userEvents = useSelector(getUserEventsForFullCalendar);
@@ -189,29 +236,16 @@ const EventsView = ({
       const newEvent = event;
       newEvent.textColor = 'var(--text-color-light)';
       newEvent.eventBorderColor = 'transparent';
-      // newEvent.displayEventTime = 'false';
-      if (userEventIds.includes(newEvent.id)) {
-        newEvent.eventColor = 'var(--color-light-green)';
-        // newEvent.backgroundColor = 'var(--color-light-green)';
+
+      if (path === '/volunteer/events' && userEventIds.includes(newEvent.id)) {
+        newEvent.backgroundColor = 'var(--color-light-green)';
+        newEvent.borderColor = 'var(--color-light-green)';
       } else {
-        newEvent.eventColor = 'var(--text-color-dark)';
-        // newEvent.backgroundColor = 'var(--text-color-dark)';
+        newEvent.backgroundColor = 'var(--text-color-dark)';
+        newEvent.borderColor = 'var(--text-color-dark)';
       }
       return newEvent;
     });
-
-    // events = [
-    //   {
-    //     title: 'Study Session',
-    //     start: Date.parse('11 Feb 2021 13:12:00 PST'),
-    //     end: Date.parse('11 Feb 2021 15:15:00 PST'),
-    //     division: 'hi',
-    //     location: 'Schol',
-    //     id: 3,
-    //     backgroundColor: 'var(--text-color-dark)',
-    //     borderColor: 'var(--text-color-dark)',
-    //   },
-    // ];
 
     return (
       <FullCalendar

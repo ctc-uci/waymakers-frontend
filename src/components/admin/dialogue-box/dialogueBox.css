@@ -1,19 +1,18 @@
 #dialogue-box {
-    border: solid;
-    padding: 1em;
-    z-index: 3;
     background-color: var(--text-color-dark);
     color: var(--text-color-light);
-    position: fixed;
-    /* Fix sizing later */
-    width: 80%;
-    height: 20%;
-    left: 10%;
-    top: 50%;
     border: 5px solid #E4F5F8;
     box-sizing: border-box;
     box-shadow: 3px 3px 5px lightgray;
     border-width: 5px;
+    z-index: 3;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    padding: 2em;
+    width: 40em;
+    transform: translate(-50%, -50%);
+    margin: auto;
 }
 
 
@@ -44,4 +43,5 @@
 
 #event-type {
     float: right;
+    margin-right: 2%;
 }
