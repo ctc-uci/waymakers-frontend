@@ -31,8 +31,10 @@ const EventPopup = ({
   const renderAddButton = () => {
     if (canAdd === true && event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
       const addEvent = () => {
-        addEventToUserCalendar(cookies.cookies.userId, event.id);
-        setTimeout(() => { store.dispatch(fetchEvents()); }, 100);
+        addEventToUserCalendar(cookies.cookies.userId, event.id)
+          .then(() => {
+            store.dispatch(fetchEvents());
+          });
         onClose();
       };
       return (
