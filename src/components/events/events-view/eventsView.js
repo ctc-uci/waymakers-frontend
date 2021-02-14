@@ -3,30 +3,21 @@ import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { useSelector, connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import * as Icon from 'react-icons/im';
-import * as IconGo from 'react-icons/go';
-import * as IconAi from 'react-icons/ai';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
-
-import '@fullcalendar/daygrid/main.css';
-import '@fullcalendar/timegrid/main.css';
-
-import { YearPicker, MonthPicker } from 'react-dropdown-date';
+import EventCheckBoxes from './event-checkboxes/eventCheckBoxes';
+import CalendarFilters from './calendar-filters/calendarFilters';
+import EventBlock from './event-block/eventBlock';
+import CalendarPopup from './calendar-popup/calendarPopup';
 
 import { getEventsForFullCalendar, getUserEventsForFullCalendar } from '../redux/selectors';
-import EventPopup from '../event-popup/eventPopup';
-import HoursPopup from '../hours-popup/hoursPopup';
-import DialogueBox from '../../admin/dialogue-box/dialogueBox';
-import EditEventPopup from '../edit-events/editEventPopup';
-import DayPicker from './daypicker';
-import EventCheckBoxes from './eventCheckBoxes';
-
 import { fetchEvents, fetchUserEvents } from '../redux/actions';
 
 import './eventsView.css';
+import '@fullcalendar/daygrid/main.css';
+import '@fullcalendar/timegrid/main.css';
 
 const EventsView = ({
   getEvents, getUserEvents, cookies,
@@ -49,7 +40,7 @@ const EventsView = ({
     })();
   }, []);
 
-  // update calendar
+  // Update calendar
   useEffect(() => {
     calendarEl.current.getApi().changeView('dayGridMonth', `${year}-${month < 10 ? '0' : ''}${month}-01`);
     calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
@@ -64,84 +55,20 @@ const EventsView = ({
     setShowPopup(!showPopup);
   };
 
-  // Different popup rendered based on what page/route we are on
-  // Volunteer Dashboard => AddPopup/EventPopup
-  // Admin Aggregate Page => DialogueBox
-  // Add/Modify/Remove Events Page => EditEventPopup
   function renderPopup() {
     const userEvents = useSelector(getUserEventsForFullCalendar);
-    // Check if event selected = user Event
-    // if it is => HoursPopup
-    // else => big if statement with other popups
-    const found = userEvents.filter((event) => event.id === parseInt(selectedEvent.id, 10));
-    if (showPopup || showEditPopup) {
-      // Event is NOT on the user's calendar
-      if (showMoreEvents && found.length !== 1) {
-        switch (path) {
-          case '/volunteer/events':
-            return (
-              <EventPopup
-                event={selectedEvent}
-                onClose={() => setShowPopup(false)}
-                canAdd={found.length !== 1}
-              />
-            );
-          case '/events':
-            if (showEditPopup) {
-              return (
-                <EditEventPopup
-                  onClose={() => setShowEditPopup(false)}
-                  event={selectedEvent}
-                />
-              );
-            }
-            return (
-              <EventPopup
-                onClose={() => setShowPopup(false)}
-                event={selectedEvent}
-                canAdd={false}
-                showEditButton
-                onEditButtonClick={() => setShowEditPopup(true)}
-              />
-            );
-          case '/admin/aggregate':
-            return <DialogueBox onClose={() => setShowPopup(false)} event={selectedEvent} />;
-          default: break;
-        }
-      } else if (showMoreEvents) {
-        switch (path) {
-          case '/events':
-            if (showEditPopup) {
-              return (
-                <EditEventPopup
-                  onClose={() => setShowEditPopup(false)}
-                  event={selectedEvent}
-                />
-              );
-            }
-            return (
-              <EventPopup
-                onClose={() => setShowPopup(false)}
-                event={selectedEvent}
-                canAdd={false}
-                showEditButton
-                onEditButtonClick={() => setShowEditPopup(true)}
-              />
-            );
-          case '/admin/aggregate':
-            return <DialogueBox onClose={() => setShowPopup(false)} event={selectedEvent} />;
-          default: break;
-        }
-      }
-      // Event is on the user's calendar already
-      return (
-        <HoursPopup
-          onClose={() => setShowPopup(false)}
-          event={selectedEvent}
-        />
-      );
-    }
-    return null;
+    return (
+      <CalendarPopup
+        userEvents={userEvents}
+        selectedEvent={selectedEvent}
+        setShowPopup={(value) => setShowPopup(value)}
+        setShowEditPopup={(value) => setShowEditPopup(value)}
+        showPopup={showPopup}
+        showEditPopup={showEditPopup}
+        path={path}
+        showMoreEvents={showMoreEvents}
+      />
+    );
   }
 
   const renderHeader = (arg) => {
@@ -157,69 +84,10 @@ const EventsView = ({
   };
 
   function renderEventContent(eventInfo) {
-    console.log(eventInfo);
-    // TODO: Check what view we're in!!!
-    // TODO: Will have to check what kind of event block to render
-    // based on the page we're on!
-    // Might want to create diff components for this!
-    const eventTypeColors = {
-      Volunteer: 'var(--color-golden-yellow)',
-      Outreach: 'var(--color-golden-yellow)',
-      Other: 'var(--color-light-purple)',
-    };
-    const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
-
-    const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
-
-    if (eventInfo.view.type === 'timeGridWeek') {
-      switch (path) {
-        case '/volunteer/events':
-          return (
-            <div id="week-event-block">
-              <div id="week-event-content">
-                <p>{eventInfo.event.title}</p>
-                <button type="button">
-                  {isUserEvent ? <IconAi.AiOutlineCheck size={10} color="black" /> : '+'}
-                </button>
-              </div>
-              <div id="strip" style={{ backgroundColor: eventTypeColor }} />
-            </div>
-          );
-        case '/events':
-          return (
-            <div id="week-edit-event-block">
-              <Icon.ImBin id="trash-can" />
-              <p id="week-edit-event-title">{eventInfo.event.title}</p>
-            </div>
-          );
-        case '/admin/aggregate':
-          return (
-            <div id="week-event-block">
-              <div id="week-event-content">
-                <p>{eventInfo.event.title}</p>
-              </div>
-            </div>
-          );
-        default: break;
-      }
-    }
-
-    const hour = eventInfo.event.start.getHours();
-    const convertedHour = hour < 13 ? hour : hour - 12;
-    const minute = eventInfo.event.start.getMinutes();
-    const displayMinute = `:${minute < 10 ? '0' : ''}${minute}`;
-    // &#8226;
-    return (
-      <div id="month-event-block">
-        {/* <p id="dot" style={{ color: eventInfo.borderColor }}>&#8226;</p> */}
-        <IconGo.GoPrimitiveDot color={eventInfo.borderColor} size={14} />
-        <p id="monthViewEventTime">{`${convertedHour === 0 ? 12 : convertedHour}${minute === 0 ? '' : displayMinute}${hour < 13 ? 'a' : 'p'}`}</p>
-        <p id="monthViewEventTitle">{eventInfo.event.title}</p>
-      </div>
-    );
+    return <EventBlock path={path} eventInfo={eventInfo} />;
   }
 
-  const getCalendar = () => {
+  const filterEvents = () => {
     const userEvents = useSelector(getUserEventsForFullCalendar);
     const allEvents = useSelector(getEventsForFullCalendar);
     const userEventIds = userEvents.map((event) => event.id);
@@ -246,6 +114,11 @@ const EventsView = ({
       }
       return newEvent;
     });
+    return events;
+  };
+
+  const getCalendar = () => {
+    const events = filterEvents();
 
     return (
       <FullCalendar
@@ -261,8 +134,6 @@ const EventsView = ({
       />
     );
   };
-
-  const getCurrentYear = () => new Date().getFullYear();
 
   const renderCheckboxes = () => {
     const pathName = useLocation().pathname;
@@ -283,46 +154,19 @@ const EventsView = ({
     <div>
       <div id="top-of-calendar">
         {renderPopup()}
-        <div id="event-date-picker">
-          <select className="picker view-picker" name="views" id="views" onChange={(e) => { calendarEl.current.getApi().changeView(e.target.value); }}>
-            <option className="picker view-picker" value="timeGridDay">Day View</option>
-            <option className="picker view-picker" value="timeGridWeek">Week View</option>
-            <option className="picker view-picker" value="dayGridMonth" selected="selected">Month View</option>
-          </select>
-          <MonthPicker
-            defaultValue="Select Month"
-            endYearGiven
-            year={year}
-            value={month - 1}
-            onChange={(newMonth) => {
-              if (newMonth !== '') {
-                setMonth(parseInt(newMonth, 10) + 1);
-              }
-            }}
-            id="month"
-            name="month"
-          />
-          <DayPicker month={month} year={year} onDayChange={(newDay) => setDay(newDay)} />
-          <YearPicker
-            defaultValue="Select Year"
-            start={getCurrentYear() - 2}
-            end={getCurrentYear() + 10}
-            value={year}
-            onChange={(newYear) => {
-              if (newYear !== '') {
-                setYear(newYear);
-              }
-            }}
-            id="year"
-            name="year"
-          />
-        </div>
+        <CalendarFilters
+          month={month}
+          year={year}
+          setView={(view) => { calendarEl.current.getApi().changeView(view); }}
+          setDay={(value) => setDay(value)}
+          setMonth={(value) => setMonth(value)}
+          setYear={(value) => setYear(value)}
+        />
         {renderCheckboxes()}
       </div>
       <div id="calendar">
         {getCalendar()}
       </div>
-
     </div>
   );
 };

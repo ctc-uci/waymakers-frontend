@@ -1,7 +1,4 @@
 #calendar{
-    /* width: 80vw; */
-    /* display: flex;
-    flex-direction: column; */
     align-items: center;
     margin: auto;
     margin-bottom: 1em;
@@ -12,32 +9,8 @@
     margin: 1%;
 }
 
-.blur{
-    filter: blur(3px);
-}
-
 .selected{
     color: lightblue;
-}
-
-#event-date-picker {
-    margin-left: 61%;
-}
-
-.picker, #month, #year {
-    background-color: var(--color-green);
-    color: var(--text-color-light);
-    outline: none;
-    border-radius: 8px;
-    margin-left: 10px;
-    padding: 0.25em;
-    border: none;
-}
-
-.view-picker {
-    background: var(--color-pastel-green);
-    color: var(--text-color-dark-green);
-    border: none;
 }
 
 .week-header{
@@ -61,89 +34,4 @@
 .test-headers{
     /* background: blue; */
     border: none;
-}
-
-#week-event-block{
-    color: var(--text-color-light);
-    /* padding: 0.25em; */
-    font-weight: bold;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 100%;
-    padding: 0px;
-}
-
-#week-event-content{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0.2em;
-}
-
-#week-edit-event-content{
-    display: inline;
-}
-
-#strip{
-    width: 10px;
-    min-height: 100%;
-    border-top-right-radius: 1px;
-    border-bottom-right-radius: 1px
-}
-
-#week-event-block p{
-    margin-bottom: 0px;
-    overflow-y: hidden;
-}
-
-#week-event-block button{
-    margin-right: auto;
-    border-radius: 50%;
-    outline: none;
-    border: none;
-    font-weight: bold;
-    background-color: var(--color-light-blue);
-}
-
-#monthViewEventTitle {
-    display: inline;
-    margin-left: 0.2em;
-    font-weight: bold;
-    /* vertical-align: -15%; */
-}
-
-#monthViewEventTime{
-    display: inline;
-    margin-left: 0.2em;
-    /* vertical-align: -15%; */
-}
-
-#dot{
-    display: inline;
-    font-weight: bold;
-    font-size: 1em;
-}
-
-#month-event-block{
-    width: 100%;
-    overflow-x: hidden;
-    display: inline;
-    margin-left: 0.2em;
-    height: 100%;
-    padding: 0px;
-}
-
-#trash-can {
-    color: var(--text-color-light);
-    float: right;
-    margin-right: 3%;
-}
-
-#week-edit-event-block {
-    margin-top: 3%;
-}
-
-#week-edit-event-title {
-    margin-left: 3%;
 }

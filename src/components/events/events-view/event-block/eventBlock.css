@@ -1,0 +1,81 @@
+#week-event-block{
+    color: var(--text-color-light);
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0px;
+}
+
+#week-event-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.2em;
+}
+
+#week-edit-event-content{
+    display: inline;
+}
+
+#strip{
+    width: 10px;
+    min-height: 100%;
+    border-top-right-radius: 1px;
+    border-bottom-right-radius: 1px
+}
+
+#week-event-block p{
+    margin-bottom: 0px;
+    overflow-y: hidden;
+}
+
+#week-event-block button{
+    margin-right: auto;
+    border-radius: 50%;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    background-color: var(--color-light-blue);
+}
+
+#monthViewEventTitle {
+    display: inline;
+    margin-left: 0.2em;
+    font-weight: bold;
+}
+
+#monthViewEventTime{
+    display: inline;
+    margin-left: 0.2em;
+}
+
+#dot{
+    display: inline;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+#month-event-block{
+    width: 100%;
+    overflow-x: hidden;
+    display: inline;
+    margin-left: 0.2em;
+    height: 100%;
+    padding: 0px;
+}
+
+#trash-can {
+    color: var(--text-color-light);
+    float: right;
+    margin-right: 3%;
+}
+
+#week-edit-event-block {
+    margin-top: 3%;
+}
+
+#week-edit-event-title {
+    margin-left: 3%;
+}
