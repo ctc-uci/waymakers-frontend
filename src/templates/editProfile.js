@@ -1,16 +1,26 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
+import {
+  startOfWeek, add, getHours, getDay,
+} from 'date-fns';
 import { useHistory } from 'react-router-dom';
 import './editProfile.css';
 import axios from 'axios';
 
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
+
 import EditAbout from '../components/profile/editAbout/editAbout.js';
 import EditContact from '../components/profile/editContact/editContact.js';
-import EditAvailability from '../components/profile/editAvailability/editAvailability.js';
+import EditAvailability from '../components/profile/editAvailability/editAvailability';
 
 import profCircle from '../images/profCircle.png';
 
-function editProfile() {
+require('dotenv').config();
+
+const editProfile = (props) => {
   // Idea: we have states for each of the information fields we're allowed to change
   // Then, we have a handle function for each of those states that we pass down as props to
   // the edit components.
@@ -27,6 +37,7 @@ function editProfile() {
   //    - Keep as free form text?
   // - How do we deal with bday since date format for PSQL is wack?
   //    - use JS date object?
+  const { cookies } = props;
 
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
@@ -45,16 +56,45 @@ function editProfile() {
   const [isLoading, setLoading] = useState(false);
 
   const history = useHistory();
-  // const [availabilities, setAvailabilities] = useState([]);
+  const [availability, setAvailability] = useState([]);
+
+  const startWeek = startOfWeek(new Date());
+
+  const stringToDate = (dateString) => {
+    const {
+      dayofweek, starttime,
+    } = dateString;
+
+    const splitTime = String(starttime).split(':');
+    const date = add(startWeek, {
+      years: 0,
+      months: 0,
+      weeks: 0,
+      days: dayofweek,
+      hours: splitTime[0],
+      minutes: 0,
+      seconds: 0,
+    });
+
+    return date;
+  };
+
+  // for post/put list of dates -> list of tuples [(dayOfWeek, startTime)]
+
+  const parseDate = (date) => {
+    const hours = getHours(date);
+    return [getDay(date), `${hours}:00:00`];
+  };
 
   useEffect(async () => {
     setLoading(true);
+    const userID = cookies.get('userId');
     const result = await axios.get(
-      'http://localhost:3001/accounts/4jkl5llkjljkfs3fsdcs        ', {
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
         withCredentials: true,
       },
     );
-    const { account, permissions } = result.data; // deal with availability later
+    const { account, permissions } = result.data;
     const {
       locationstreet, locationcity, locationstate, locationzip,
     } = account;
@@ -70,14 +110,43 @@ function editProfile() {
     setBirthday(account.birthdate);
     setTier(account.tier);
     setStatus(permissions.permissions);
-    // setAvailabilities(availability);
+
+    // get req for availability
+    const availabilityResult = await axios.get(
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
+        withCredentials: true,
+      },
+    );
+
+    const { userAvailability } = availabilityResult.data;
+
+    /* for each date string convert to date.
+      destructure: get dayOfWeek and startTime from database
+      split
+      create date object using add
+      dateList is a list dates
+    */
+    const dateList = userAvailability.map((dateString) => (stringToDate(dateString)));
+
+    setAvailability(dateList);
     setLoading(false);
   }, []);
 
   // Use axios PUT request to send new info to backend api, but only after form is "submitted"
   const updateInfo = async () => {
+    const dateList = availability.map((date) => (parseDate(date)));
+
+    const seen = new Set();
+
+    const filteredDates = dateList.filter((date) => {
+      const duplicate = seen.has(date.toString());
+      seen.add(date.toString());
+      return !duplicate;
+    });
+
+    const userID = cookies.get('userId');
     await axios.put(
-      'http://localhost:3001/accounts/4jkl5llkjljkfs3fsdcs        ', {
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
         firstname,
         lastname,
         birthdate: birthday,
@@ -89,6 +158,15 @@ function editProfile() {
         permission: status,
       }, { withCredentials: true },
     );
+
+    await axios.post(
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
+        dates: filteredDates,
+      }, {
+        withCredentials: true,
+      },
+    );
+
     history.push('/profile');
   };
 
@@ -129,13 +207,19 @@ function editProfile() {
           </div>
         </div>
         <div>
-          <div className="availCard">
-            <EditAvailability />
-          </div>
+          <EditAvailability
+            availabilityTimes={availability}
+            setAvailabilityTimes={setAvailability}
+            startWeek={startWeek}
+          />
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default editProfile;
+editProfile.propTypes = {
+  cookies: instanceOf(Cookies).isRequired,
+};
+
+export default withCookies(editProfile);

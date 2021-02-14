@@ -1,6 +1,6 @@
 .add-event-button
 {
-    font-size: larger;
+    font-size: medium;
     border-radius: 100%;
     border: none;
     padding: 5px 10px 5px 10px;
@@ -28,7 +28,7 @@
 }
 
 .all-events {
-    font-size: larger;
+    font-size: medium;
     border-radius: 12px;
     border: none;
     padding: 10px 20px 10px 20px;
@@ -43,3 +43,10 @@
     justify-content: space-around;
     align-items: center;
 }
+
+.top-item-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #c4c4c46b;
+  }

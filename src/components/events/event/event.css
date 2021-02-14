@@ -1,12 +1,10 @@
 .eventContainer {
-    /* background-color: #999999;
-    /* border-radius: 10%; */
-    /* min-height: 10px; */ 
     background-color: lightgrey;
-    width: 300px;
     border: none;
-    padding: 50px;
-    margin: 20px;
+    padding: 20px;
+    margin: 10px;
+    font-size: 11px;
+    max-width: 180px;
 }
 
 .actionButton {
@@ -17,7 +15,7 @@
 
 .eventName {
     text-emphasis: bold;
-    font-size: 15px;
+    font-size: 10px;
 }
 
 .condensedEventDetails {

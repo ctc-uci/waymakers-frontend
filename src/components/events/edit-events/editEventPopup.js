@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import axios from 'axios';
 import Datetime from 'react-datetime';
 import { connect } from 'react-redux';
 
@@ -9,11 +8,6 @@ import 'react-datetime/css/react-datetime.css';
 import '../event-popup/eventPopup.css';
 
 import { editEvent } from '../redux/actions';
-
-// const instance = axios.create({
-//   baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-//   withCredentials: true,
-// });
 
 // Configured to use the FullCalendar EventAPI object fields only
 // Might want to write a function to convert back and forth for consistency
