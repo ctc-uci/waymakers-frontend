@@ -11,7 +11,6 @@ import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
 
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
-
 import { getEventsForFullCalendar, getUserEventsForFullCalendar } from '../redux/selectors';
 import EventPopup from '../event-popup/eventPopup';
 import HoursPopup from '../hours-popup/hoursPopup';

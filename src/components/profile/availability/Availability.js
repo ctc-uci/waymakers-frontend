@@ -1,25 +1,27 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React from 'react';
 import './Availability.css';
+import ScheduleSelector from 'react-schedule-selector';
 
-function Availability({ availabilities }) {
+function Availability({ availabilities, startWeek }) {
+  const handleChange = () => {
+    console.log('');
+  };
+
   return (
     <div className="availCard">
       <h2>Availability</h2>
-      <div className="availTimes">
-        {availabilities.map((avail) => {
-          const { dayOfWeek, startTime, endTime } = avail;
-
-          return (
-            <ul key={avail}>
-              <li>{dayOfWeek}</li>
-              <li>{startTime}</li>
-              <li>{endTime}</li>
-            </ul>
-          );
-        })}
-      </div>
+      <ScheduleSelector
+        selection={availabilities}
+        selectionScheme="square"
+        startDate={startWeek}
+        numDays={7}
+        minTime={7}
+        maxTime={19}
+        hourlyChunks={1}
+        dateFormat="ddd"
+        onChange={handleChange}
+      />
     </div>
   );
 }
