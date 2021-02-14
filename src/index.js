@@ -18,6 +18,8 @@ import Forms from './components/volunteer/forms/forms';
 import Inventory from './components/inventory/inventory';
 import Reports from './components/reports/reports';
 import Events from './components/events/events';
+import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggregate-page/volunteerEventAggregatePage';
+import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
 import AdminDashboard from './components/dashboard/admin/adminDashboard';
 
@@ -44,6 +46,9 @@ ReactDOM.render(
             <Switch>
               <ProtectedRoute path="/admin/users" component={ManageUsers} />
               <ProtectedRoute path="/admin/db" component={ManageDB} />
+              <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
+              <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
+              <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
             </Switch>
 
             <Switch>
@@ -55,8 +60,8 @@ ReactDOM.render(
             <Switch>
               <ProtectedRoute path="/inventory" component={Inventory} />
               <ProtectedRoute path="/reports" component={Reports} />
+              <ProtectedRoute path="/events/viewHours" component={viewHours} />
               <ProtectedRoute path="/events" component={Events} />
-              <ProtectedRoute path="/viewHours" component={viewHours} />
             </Switch>
           </div>
         </div>

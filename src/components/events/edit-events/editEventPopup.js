@@ -18,6 +18,7 @@ const EditEventPopup = ({ event, onClose }) => {
   const [location, setLocation] = useState(event.location);
   const [description, setDescription] = useState(event.description);
   const [eventType, setEventType] = useState(event.eventType);
+  const [division, setDivision] = useState(event.division.replace(/\s+/g, '-'));
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +28,7 @@ const EditEventPopup = ({ event, onClose }) => {
       eventType,
       eventLocation: location,
       eventDescription: description,
+      division: division.replace(/-/g, ' '),
       startTime: new Date(startTime),
       endTime: new Date(endTime),
       isAllDay: false, // default to false right now
@@ -56,14 +58,26 @@ const EditEventPopup = ({ event, onClose }) => {
           <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
         </label>
         <br />
+
         <label htmlFor="event-type">
           Event Type:
+          <br />
           <select id="event-type" name="event-type" value={eventType} onChange={(e) => setEventType(e.target.value)}>
-            <option value="volunteer">Volunteer</option>
-            <option value="outreach">Outreach</option>
+            <option value="Volunteer">Volunteer</option>
+            <option value="Outreach">Outreach</option>
           </select>
         </label>
         <br />
+
+        <label htmlFor="division">
+          Division:
+          <br />
+          <select id="division" name="division" value={division} onChange={(e) => setDivision(e.target.value)}>
+            <option value="Crisis-Response-Team">Crisis Response Team</option>
+            <option value="Gang-Services">Gang Services</option>
+            <option value="Human-Trafficking">Human Trafficking</option>
+          </select>
+        </label>
 
         {/* Cannot use label for Datetime component */}
         <div>Start Time:</div>
