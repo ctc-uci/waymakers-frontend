@@ -37,7 +37,6 @@ ReactDOM.render(
               <ProtectedRoute path="/" component={Layout} exact />
               <ProtectedRoute path="/adminDashboard" component={AdminDashboard} exact />
               <ProtectedRoute path="/adminDashboard2" component={AdminDashboard2} />
-              <ProtectedRoute path="/" component={Layout} exact />
               <Route path="/register" component={Register} />
               <Route path="/login" component={LogIn} />
               {/* <ProtectedRoute path="/profile" component={Profile} /> */}

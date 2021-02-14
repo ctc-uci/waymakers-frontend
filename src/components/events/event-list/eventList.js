@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 // import "./events.css";
 import PropTypes from 'prop-types';
 import Event from '../event/event';
@@ -18,17 +18,12 @@ const EventList = ({
   events, title, listType, onEventButtonClick,
 }) => {
   // render Event components based on events prop
-  // console.log(events);
-
-  useEffect(() => {
-    console.log('event list rendering');
-  }, [events]);
 
   const renderEvents = () => events.map((event, index) => (
     <div className="event-div">
       <Event
         event={event}
-        eventType={listType}
+        listType={listType}
         index={index}
         onEventButtonClick={onEventButtonClick}
       />
@@ -41,7 +36,7 @@ const EventList = ({
       <div className="events-container">
         {renderEvents()}
         <div className="events-see-more">
-          <a href="/">see more</a>
+          <a className="see-more-link" href="/">see more</a>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import {
 
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-// import EditEvents from '../../events/edit-events/editEvents';
+import EditEvents from '../../events/edit-events/editEvents';
 import InventoryComponent from '../inventory-component/inventoryComponent';
 import auth from '../../firebase/firebase';
 import './adminDashboard.css';
@@ -61,8 +61,7 @@ const AdminDashboard = (props) => {
             </div>
             <div className="upcoming-events-section">
               <h5 className="component-title">Events</h5>
-              {/* <EditEvents /> */}
-              <div className="upcoming-events-component" />
+              <EditEvents />
             </div>
           </div>
           <div className="analytics-section">

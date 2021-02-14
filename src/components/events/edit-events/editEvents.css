@@ -1,4 +1,4 @@
-.add-event-button
+/* .add-event-button
 {
     font-size: medium;
     border-radius: 100%;
@@ -49,4 +49,66 @@
     flex-wrap: wrap;
     justify-content: space-around;
     background-color: #c4c4c46b;
-  }
+  } */
+
+.upcoming-events-component {
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 15px 20px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.upcoming-events-title {
+    color: var(--text-color-dark);
+    margin: 0;
+    line-height: 1;
+}
+
+.upcoming-events-sectionn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.upcoming-event {
+    background-color: var(--color-dark-blue);
+    color: var(--text-color-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30%;
+    padding: 10px;
+}
+
+.upcoming-event-name {
+    font-weight: bold;
+    text-align: center;
+}
+
+.event-date {
+    text-align: center;
+    /* font-size: 12px; */
+}
+
+.event-time {
+    text-align: center;
+    /* font-size: 12px; */
+}
+
+.all-events-section {
+    width: 100%;
+}
+
+.all-events-button {
+    background-color: var(--color-green);
+    color: var(--text-color-light);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    padding: 5px;
+    margin-left: 25%;
+    width: 50%;
+}

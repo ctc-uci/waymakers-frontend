@@ -35,12 +35,24 @@
   text-align: center;
 }
 
-.in-stock-line {
+.in-stock {
   display: flex;
   justify-content: space-between;
 }
 
 .in-stock-quantity {
+  display: inline;
+  border: 1px solid var(--text-color-light);
+  width: 30%;
+  text-align: center;
+}
+
+.needed {
+  display: flex;
+  justify-content: space-between;
+}
+
+.needed-quantity {
   display: inline;
   border: 1px solid var(--text-color-light);
   width: 30%;

@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import './Availability.css';
+import './viewAvailability.css';
 import ScheduleSelector from 'react-schedule-selector';
 
-function Availability({ availabilities, startWeek }) {
+function viewAvailability({ availabilities, startWeek }) {
   const handleChange = () => {
     console.log('');
   };
@@ -26,4 +26,4 @@ function Availability({ availabilities, startWeek }) {
   );
 }
 
-export default Availability;
+export default viewAvailability;

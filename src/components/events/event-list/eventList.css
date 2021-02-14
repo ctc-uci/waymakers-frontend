@@ -24,8 +24,14 @@
 .events-see-more {
     align-self: center;
     margin-top: auto;
+    margin-bottom: 15px;
 }
 
 .events-see-more > a {
     text-decoration: underline;
+}
+
+.see-more-link {
+    color: var(--text-color-dark);
+    font-size: 1.5rem;
 }

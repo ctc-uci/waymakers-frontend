@@ -19,6 +19,7 @@ const VolunteerDashboard = (props) => {
   const { cookies } = props;
   const [moreEvents, setMoreEvents] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
+  // const [availabilityMode, setAvailabilityMode] = useState('view');
   const history = useHistory();
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
@@ -44,6 +45,7 @@ const VolunteerDashboard = (props) => {
 
       if (allEvents.status === 200) {
         allEvents = allEvents.data.slice(0, 3);
+        console.log(allEvents);
       }
       setMoreEvents(allEvents);
       setMyEvents([...allEvents]);
@@ -52,6 +54,9 @@ const VolunteerDashboard = (props) => {
       console.log('Error while getting events from the backend!');
     }
   }
+
+  // const renderAvailability = () => availabilityMode === 'view' ? <viewAvailability /> :
+  // <editAvailability />;
 
   useEffect(async () => {
     setLoading(true);
@@ -113,6 +118,18 @@ const VolunteerDashboard = (props) => {
           <EventList events={myEvents} title="My Events" listType="my-events" onEventButtonClick={onEventButtonClick} />
         </div>
       </div>
+      <div className="key-section">
+        <p className="key-text">Key</p>
+        <div className="volunteer-event-square" />
+        <p className="volunteer-event-text">Volunteer Event</p>
+        <div className="outreach-event-square" />
+        <p className="outreach-event-text">Outreach Event</p>
+        <div className="other-event-square" />
+        <p className="other-event-text">Other Event</p>
+      </div>
+      {/* <div className="availability-section">
+        {renderAvailability()}
+      </div> */}
     </div>
   );
 };
