@@ -67,7 +67,7 @@ const EventPopup = ({
 };
 
 EventPopup.propTypes = {
-  event: PropTypes.objectOf(PropTypes.string).isRequired,
+  event: PropTypes.objectOf(PropTypes.any).isRequired,
   onClose: PropTypes.func.isRequired,
   canAdd: PropTypes.bool.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,

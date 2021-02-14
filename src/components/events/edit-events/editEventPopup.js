@@ -112,7 +112,7 @@ const EditEventPopup = ({ event, onClose, updateEvent }) => {
 };
 
 EditEventPopup.propTypes = {
-  event: PropTypes.objectOf(PropTypes.string).isRequired,
+  event: PropTypes.objectOf(PropTypes.any).isRequired,
   onClose: PropTypes.func.isRequired,
   updateEvent: PropTypes.func.isRequired,
 };

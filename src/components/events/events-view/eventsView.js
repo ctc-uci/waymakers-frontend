@@ -87,6 +87,7 @@ const EventsView = ({
     return <EventBlock path={path} eventInfo={eventInfo} />;
   }
 
+  // Returns events based on filters, also adds properties for styling
   const filterEvents = () => {
     const userEvents = useSelector(getUserEventsForFullCalendar);
     const allEvents = useSelector(getEventsForFullCalendar);
@@ -100,6 +101,7 @@ const EventsView = ({
       events = allEvents;
     }
 
+    // Add properties to render styled event blocks
     events = events.map((event) => {
       const newEvent = event;
       newEvent.textColor = 'var(--text-color-light)';

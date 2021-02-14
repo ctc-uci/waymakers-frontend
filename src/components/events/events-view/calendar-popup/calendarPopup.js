@@ -16,7 +16,6 @@ const CalendarPopup = ({
   showEditPopup,
   showMoreEvents,
 }) => {
-  // Different popup rendered based on what page/route we are on
   // Volunteer Dashboard => AddPopup/EventPopup
   // Admin Aggregate Page => DialogueBox
   // Add/Modify/Remove Events Page => EditEventPopup
