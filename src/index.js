@@ -22,6 +22,7 @@ import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggr
 import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
 import AdminDashboard from './components/dashboard/admin/adminDashboard';
+import AdminDashboard2 from './templates/admin-dashboard/adminDashboard';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
@@ -35,6 +36,7 @@ ReactDOM.render(
             <Switch>
               <ProtectedRoute path="/" component={Layout} exact />
               <ProtectedRoute path="/adminDashboard" component={AdminDashboard} exact />
+              <ProtectedRoute path="/adminDashboard2" component={AdminDashboard2} />
               <ProtectedRoute path="/" component={Layout} exact />
               <Route path="/register" component={Register} />
               <Route path="/login" component={LogIn} />
