@@ -6,22 +6,6 @@ import { changeSelectedWarehouse } from '../redux/actions';
 import './warehouseMenu.css';
 
 const WarehouseMenu = (prop) => {
-  //  Returns a button for a single warehouse (old radio button selectors)
-  // const MenuItem = (warehouseID, warehouseLabel) => (
-  //   <label htmlFor={warehouseLabel} key={warehouseID}>
-  //     <input
-  //       id={warehouseID}
-  //       className="warehouse-radio-button"
-  //       type="radio"
-  //       name="warehouse"
-  //       value={warehouseID}
-  //       onChange={() => {
-  //         store.dispatch(changeSelectedWarehouse(parseInt(warehouseID, 10)));
-  //       }}
-  //     />
-  //     {warehouseLabel}
-  //   </label>
-  // );
   // Creating dropdown selector for warehouse menu
   const Menu = (list) => (
     <div className="warehouse-menu-container">
