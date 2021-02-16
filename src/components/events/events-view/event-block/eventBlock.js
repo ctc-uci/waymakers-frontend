@@ -12,7 +12,7 @@ import './eventBlock.css';
 const EventBlock = ({ path, eventInfo, addNewEvent }) => {
   const eventTypeColors = {
     Volunteer: 'var(--color-golden-yellow)',
-    Outreach: 'var(--color-golden-yellow)',
+    Outreach: 'var(--color-pink)',
     Other: 'var(--color-light-purple)',
   };
   const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
