@@ -1,0 +1,24 @@
+#legend {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 80%;
+    margin-left: 1em;
+}
+
+.legend-item {
+    display: flex;
+    flex-direction: row;
+    margin-left: 4em;
+}
+
+.event-type {
+    padding-left: 0.6em;
+}
+
+#legend-title {
+    font-size: 1em;
+    font-weight: bold;
+    display: inline;
+}
+
