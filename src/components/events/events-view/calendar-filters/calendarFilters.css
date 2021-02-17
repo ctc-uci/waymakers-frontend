@@ -1,5 +1,7 @@
 #event-date-picker {
-    margin-left: 61%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1em;
 }
 
 .picker, #month, #year {
