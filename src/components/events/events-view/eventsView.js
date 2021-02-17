@@ -131,8 +131,11 @@ const EventsView = ({
         contentHeight={450}
         ref={calendarEl}
         dayHeaderContent={renderHeader}
-        dayHeaderClassNames="test-headers"
         eventContent={renderEventContent}
+        allDaySlot={false}
+        slotMinTime="09:00:00"
+        slotMaxTime="21:00:00"
+        height="auto"
       />
     );
   };

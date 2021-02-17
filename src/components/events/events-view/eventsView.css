@@ -1,8 +1,25 @@
-#calendar{
+/* #calendar{
     align-items: center;
     margin: auto;
     margin-bottom: 1em;
     padding: 1em;
+    background: white;
+}
+
+/* .fc-scrollgrid fc-scrollgrid-liquid */
+
+/* .fc-scrollgrid-sync-inner {
+    background: var( --color-light-blue);
+}  */
+
+.fc .fc-event-main {
+    padding: 0px;
+}
+
+.fc .fc-event {
+    border-right: 0 !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
 }
 
 .button{

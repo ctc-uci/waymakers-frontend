@@ -39,6 +39,12 @@ const EventBlock = ({ path, eventInfo, addNewEvent }) => {
     addNewEvent(newEvent);
   };
 
+  // const handleAddClick = (e) => {
+  //   console.log('joe');
+  //   e.stopPropagation();
+  //   onAddButtonClick();
+  // };
+
   const renderEventButton = () => {
     if (isUserEvent) {
       const checkIcon = <IconAi.AiOutlineCheck size={10} color="black" />;
