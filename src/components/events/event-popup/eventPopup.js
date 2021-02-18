@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
@@ -27,22 +27,21 @@ const EventPopup = ({
   const startDate = new Date(event.start);
   const endDate = new Date(event.end);
 
-  // Renders add button if addEvent was passed in (so MyEvents will have no add button)
-  const renderAddButton = () => {
-    if (canAdd === true && event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
-      const addEvent = () => {
-        addEventToUserCalendar(cookies.cookies.userId, event.id)
-          .then(() => {
-            store.dispatch(fetchEvents());
-          });
+  const [wantToAdd, setWantToAdd] = useState(false);
+
+  const cancelButton = (
+    <button
+      className="button cancel-button"
+      type="button"
+      aria-label="close popup"
+      onClick={() => {
         onClose();
-      };
-      return (
-        <button className="button confirm-button" type="button" aria-label="add event to my cal" onClick={addEvent}>Confirm</button>
-      );
-    }
-    return null;
-  };
+        setWantToAdd(false);
+      }}
+    >
+      Cancel
+    </button>
+  );
 
   const prettifyDate = () => {
     const startTime = `${dayList[startDate.getDay()]} ${monthList[startDate.getMonth()]} ${startDate.getDate()} ${startDate.getFullYear()} ${startDate.toLocaleTimeString().slice(0, -6)} PM`;
@@ -51,6 +50,54 @@ const EventPopup = ({
                           || startDate.getMonth() !== endDate.getMonth()
                           || startDate.getDate() !== endDate.getDate();
     return `${startTime} - ${differentDays ? endTime : ''} ${endDate.toLocaleTimeString().slice(0, -6)} PM`;
+  };
+
+  const addEvent = () => {
+    addEventToUserCalendar(cookies.cookies.userId, event.id)
+      .then(() => {
+        store.dispatch(fetchEvents());
+      });
+    onClose();
+  };
+
+  const renderButtons = () => {
+    if (canAdd === true && event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
+      if (wantToAdd) {
+        return (
+          <div className="multi-event-option">
+            {cancelButton}
+            <button
+              className="button confirm-button"
+              type="button"
+              aria-label="confirm add event"
+              onClick={() => {
+                addEvent();
+                setWantToAdd(false);
+              }}
+            >
+              Confirm
+            </button>
+          </div>
+        );
+      }
+      return (
+        <div className="single-event-option">
+          <button
+            className="add-intent-button"
+            type="button"
+            aria-label="add to my events"
+            onClick={() => setWantToAdd(true)}
+          >
+            Add to My Events
+          </button>
+        </div>
+      );
+    }
+    return (
+      <div className="single-event-option">
+        {cancelButton}
+      </div>
+    );
   };
 
   return (
@@ -68,7 +115,7 @@ const EventPopup = ({
           {/* <p className="event-name">Wan Outrageously Long Title AAAAAAAAAAAAAAAAAA</p> */}
         </div>
         <div className="details-section">
-          <p>Details</p>
+          <p className="details-title">Details</p>
           <div className="event-detail">
             <img className="event-detail-icon" src={locationPinIcon} alt="location" />
             <span className="event-detail-label">{event.extendedProps.location}</span>
@@ -105,10 +152,10 @@ const EventPopup = ({
             Proin id pulvinar neque. Phasellus sollicitudin consequat ornare.
           </p>
         </div> */}
-        <div className="event-buttons">
-          {renderAddButton()}
-          <button className="button cancel-button" type="button" aria-label="close popup" onClick={onClose}>Cancel</button>
-        </div>
+        {/* <div className="event-buttons"> */}
+        {/* {renderAddButton()} */}
+        {renderButtons()}
+        {/* </div> */}
       </div>
     </div>
   );

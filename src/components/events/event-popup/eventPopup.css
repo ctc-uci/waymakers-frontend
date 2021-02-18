@@ -16,11 +16,7 @@
     margin-left: auto;
     margin-right: auto;
 
-    /* width: 20vw; */
     max-width: 500px;
-    height: 50vh;
-    /* max-height: 45vh; */
-    /* min-height: 600px; */
     height: auto;
 }
 
@@ -34,15 +30,10 @@
     font-size: 1.5rem;
 
     height: 150px;
-    /* height: 50%; */
-    /* height: 100%; */
 }
 
 .popup .event-info {
     border-radius: 0px 0px 10px 10px;
-
-    /* height: 100%; */
-    /* height: 600px; */
 }
 
 .popup .event-info .popup-header {
@@ -60,40 +51,45 @@
 }
 
 .popup .event-info .popup-header .event-time {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 
     color: var(--color-light-orange);
 
-    /* line-height: 20px; */
-    /* margin: 0; */
     padding: 0;
+    margin-bottom: 2%;
 }
 
 .popup .event-info .popup-header .event-name { 
-    font-size: 1.7rem;
+    font-size: 1.5rem;
 
     color: var(--text-color-light);
 
     white-space: normal;
 
     line-height: 26px;
-    height: auto;
+    min-height: 55px;
 
     margin: 0;
-    /* padding: 0; */
+    padding: 0;
 }
 
 .popup .event-info .details-section {
     color: white;
     background-color: var(--color-dark-blue);
 
-    /* font-size: 2rem; */
-
-    padding-left: 5%;
+    padding-left: 3.5%;
+    padding-right: 3.5%;
 
     margin-bottom: 2%;
 
     height: auto;
+}
+
+.popup .event-info .details-section .details-title {
+    font-size: 1.5rem;
+
+    margin-top: 1%;
+    margin-bottom: 3%;
 }
 
 .popup .event-info .details-section .event-detail {
@@ -106,8 +102,8 @@
 }
 
 .popup .event-info .details-section .event-detail .event-detail-icon {
-    height: 25px;
-    width: 25px;
+    height: 23px;
+    width: 23px;
 }
 
 .popup .event-info .details-section .event-detail .event-detail-label {
@@ -124,20 +120,14 @@
     font-size: 1.1rem;
     text-align: left;
 
-    /* margin: 10% 11.5% 10% 11.5%; */
     padding: 2% 11.5% 3.5% 11.5%;
 
     height: auto;
-    /* height: 50px; */
 }
 
-.popup .event-info .event-buttons {
-    background-color: var(--color-dark-blue);
+.popup .event-info .multi-event-option {
     display: flex;
     flex-direction: row;
-
-    border-radius: 0px 0px 10px 10px;
-
     justify-content: space-between;
     
     margin-left: 20%;
@@ -147,21 +137,58 @@
     height: 48px;
 }
 
-.popup .event-info .event-buttons .button {
-    height: 75%;
-    width: 41%;
-    border-radius: 10px;
-    color: white;
-    border: 0;
-    box-shadow: 0px 2px #002835;
-    font-size: 1.2rem;
+.popup .event-info .single-event-option {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 5%;
+    
+    height: 48px;
 }
 
-.popup .event-info .event-buttons .confirm-button {
+.popup .event-info .button {
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0px 2px #002835;
+
+    color: white;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+
+    background: var(--color-green);
+
+    height: 75%;
+    width: 41%;
+}
+
+.popup .event-info .add-intent-button {
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0px 2px #002835;
+
+    color: white;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+
+    background: var(--color-green);
+
+    height: 75%;
+    width: 75%;
+}
+
+.popup .event-info .confirm-button {
     background: rgba(93, 154, 100, 0.8);
 }
 
-.popup .event-info .event-buttons .cancel-button {
-    /* background-color: var(--color-light-orange); */
+.popup .event-info .cancel-button {
     background: #DA6153;
 }
