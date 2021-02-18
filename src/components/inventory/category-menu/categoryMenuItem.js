@@ -47,7 +47,7 @@ const CategoryMenuItem = (props) => {
   );
   // A button that lets you choose which category to delete
   const delCategoryButton = (onClickFunction) => {
-    const label = deleted ? `${props.category.label} (Deleted)` : props.category.label;
+    const label = deleted ? <strike>{props.category.label}</strike> : props.category.label;
     return (
       <button key={props.category.id} type="button" className="edit-category-button" onClick={onClickFunction}>
         {label}
