@@ -22,9 +22,6 @@ const EditableItem = (props) => {
     category: props.item.category_id,
   });
 
-  // Used to indicate whether an item is deleted or not (BUGGED FUNCTIONALITY)
-  const [buttonOpacity, setButtonOpacity] = useState(1.0);
-
   // Used to update css class of unsaved edits
   const [modified, setModified] = useState(false);
 
@@ -43,11 +40,9 @@ const EditableItem = (props) => {
     if (!deleted) {
       store.dispatch(deleteItem(props.item.id));
       setDeleted(true);
-      setButtonOpacity(0.7);
     } else {
       store.dispatch(undeleteItem(props.item.id));
       setDeleted(false);
-      setButtonOpacity(1.0);
     }
   };
 
@@ -235,9 +230,8 @@ const EditableItem = (props) => {
           <button
             type="button"
             aria-label="delete"
-            className="table-item-delete-button"
+            className={deleted ? 'table-item-undelete-button' : 'table-item-delete-button'}
             onClick={deleteHandler}
-            style={{ opacity: buttonOpacity }}
           />
         </div>
       </td>
