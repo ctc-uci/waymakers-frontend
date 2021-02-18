@@ -116,92 +116,108 @@ const EditableItem = (props) => {
       <td className="static-item-attribute">{getCategoryLabelFromID(fieldState.category)}</td>
     </tr>
   );
-
+  // For displaying the different tags depending on whether the item has been deleted or not.
+  // const deletedItem() {
+  //   return <h1>Welcome back!</h1>;
+  // }
+  // const nonDeletedItem(props) {
+  //   return <h1>Please sign up.</h1>;
+  // }
   // Form is created in first column of each row, then each
   // column has an input that uses that form
   const formItem = (
     // CSS class to indicate that value has been changed
     <tr className="edit-table-row">
       <td className="item-edit-name">
-        <input
-          name="name"
-          type="text"
-          className="table-input-name"
-          value={fieldState.name}
-          form={props.item.id}
-          onChange={handleChange}
-        />
-      </td>
-      <td className="item-qty-field">
-        <div className="change-quantity-wrapper">
-          <div className="minus-button-wrapper">
-            <button
-              type="button"
-              name="quantity"
-              aria-label="minus"
-              className="item-edit-minus-button"
-              form={props.item.id}
-              onClick={decrementField}
-            >
-              -
-            </button>
-          </div>
+        {deleted ? <strike>{fieldState.name}</strike> : (
           <input
-            name="quantity"
-            type="number"
-            className="table-input"
-            value={fieldState.quantity}
+            name="name"
+            type="text"
+            className="table-input-name"
+            value={fieldState.name}
             form={props.item.id}
             onChange={handleChange}
           />
-          <div className="plus-button-wrapper">
-            <button
-              type="button"
-              name="quantity"
-              aria-label="plus"
-              className="item-edit-plus-button"
-              form={props.item.id}
-              onClick={incrementField}
-            >
-              +
-            </button>
-          </div>
+        )}
+      </td>
+      <td className="item-qty-field">
+        <div className="change-quantity-wrapper">
+          {deleted ? <strike>{fieldState.quantity}</strike> : (
+            <div className="change-quantity-wrapper">
+              <div className="minus-button-wrapper">
+                <button
+                  type="button"
+                  name="quantity"
+                  aria-label="minus"
+                  className="item-edit-minus-button"
+                  form={props.item.id}
+                  onClick={decrementField}
+                >
+                  -
+                </button>
+              </div>
+              <input
+                name="quantity"
+                type="number"
+                className="table-input"
+                value={fieldState.quantity}
+                form={props.item.id}
+                onChange={handleChange}
+              />
+              <div className="plus-button-wrapper">
+                <button
+                  type="button"
+                  name="quantity"
+                  aria-label="plus"
+                  className="item-edit-plus-button"
+                  form={props.item.id}
+                  onClick={incrementField}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </td>
       <td className="item-needed-field">
         <div className="change-quantity-wrapper">
-          <div className="minus-button-wrapper">
-            <button
-              type="button"
-              name="needed"
-              aria-label="-"
-              className="item-edit-minus-button"
-              form={props.item.id}
-              onClick={decrementField}
-            >
-              -
-            </button>
-          </div>
-          <input
-            name="needed"
-            type="number"
-            className="table-input"
-            value={fieldState.needed}
-            form={props.item.id}
-            onChange={handleChange}
-          />
-          <div className="plus-button-wrapper">
-            <button
-              type="button"
-              name="needed"
-              aria-label="+"
-              className="item-edit-plus-button"
-              form={props.item.id}
-              onClick={incrementField}
-            >
-              +
-            </button>
-          </div>
+          {deleted ? <strike>{fieldState.needed}</strike> : (
+            <div className="change-quantity-wrapper">
+              <div className="minus-button-wrapper">
+                <button
+                  type="button"
+                  name="needed"
+                  aria-label="-"
+                  className="item-edit-minus-button"
+                  form={props.item.id}
+                  onClick={decrementField}
+                >
+                  -
+                </button>
+              </div>
+              <input
+                name="needed"
+                type="number"
+                className="table-input"
+                value={fieldState.needed}
+                form={props.item.id}
+                onChange={handleChange}
+              />
+              <div className="plus-button-wrapper">
+                <button
+                  type="button"
+                  name="needed"
+                  aria-label="+"
+                  className="item-edit-plus-button"
+                  form={props.item.id}
+                  onClick={incrementField}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </td>
       <td className="item-cat-field">
