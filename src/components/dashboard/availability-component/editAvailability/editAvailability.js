@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import './editAvailability.css';
+import './EditAvailability.css';
 import ScheduleSelector from 'react-schedule-selector';
 
 // IF WE WANT TO TRY FULLCAL AGAIN:
@@ -21,7 +21,6 @@ const EditAvailability = ({
 
   return (
     <div className="editAvailCard">
-      <h2>Availability</h2>
       <ScheduleSelector
         selection={availabilityTimes}
         selectionScheme="square"

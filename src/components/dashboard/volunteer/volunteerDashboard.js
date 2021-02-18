@@ -3,12 +3,17 @@ import { useHistory } from 'react-router-dom';
 import {
   Card, Button, Alert,
 } from 'react-bootstrap';
+import {
+  startOfWeek, add, getHours, getDay,
+} from 'date-fns';
 import axios from 'axios';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import auth from '../../firebase/firebase';
 import EventList from '../../events/event-list/eventList';
 import './volunteerDashboard.css';
+import ViewAvailability from '../availability-component/viewAvailability/ViewAvailability';
+import EditAvailability from '../availability-component/editAvailability/EditAvailability';
 
 const VolunteerDashboard = (props) => {
   const instance = axios.create({
@@ -19,10 +24,13 @@ const VolunteerDashboard = (props) => {
   const { cookies } = props;
   const [moreEvents, setMoreEvents] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
-  // const [availabilityMode, setAvailabilityMode] = useState('view');
+  const [availability, setAvailability] = useState([]);
+  const [availabilityMode, setAvailabilityMode] = useState('view');
   const history = useHistory();
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
+
+  const startWeek = startOfWeek(new Date());
   //   const [currDivision, setCurrDivision] = useState('human');
 
   async function logout() {
@@ -55,12 +63,132 @@ const VolunteerDashboard = (props) => {
     }
   }
 
-  // const renderAvailability = () => availabilityMode === 'view' ? <viewAvailability /> :
-  // <editAvailability />;
+  const stringToDate = (dateString) => {
+    const {
+      dayofweek, starttime,
+    } = dateString;
+
+    const splitTime = String(starttime).split(':');
+    const date = add(startWeek, {
+      years: 0,
+      months: 0,
+      weeks: 0,
+      days: dayofweek,
+      hours: splitTime[0],
+      minutes: 0,
+      seconds: 0,
+    });
+
+    return date;
+  };
+
+  const parseDate = (date) => {
+    const hours = getHours(date);
+    return [getDay(date), `${hours}:00:00`];
+  };
+
+  async function getAvailability() {
+    try {
+      console.log('getting availability');
+      const userID = cookies.get('userId');
+
+      const availabilityResult = await axios.get(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
+          withCredentials: true,
+        },
+      );
+
+      const { userAvailability } = availabilityResult.data;
+
+      const dateList = userAvailability.map((dateString) => (stringToDate(dateString)));
+
+      setAvailability(dateList);
+    } catch (e) {
+      // eslint-disable-next-line
+      console.log('Error while getting availability from the backend!');
+    }
+  }
+
+  async function updateAvailability() {
+    const dateList = availability.map((date) => (parseDate(date)));
+    console.log('about to post dateList to POST route');
+    const seen = new Set();
+
+    const filteredDates = dateList.filter((date) => {
+      const duplicate = seen.has(date.toString());
+      seen.add(date.toString());
+      return !duplicate;
+    });
+
+    const userID = cookies.get('userId');
+
+    console.log('dateList to POST:', filteredDates);
+
+    console.log('POST route called');
+
+    await axios.post(
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
+        dates: filteredDates,
+      }, {
+        withCredentials: true,
+      },
+    );
+
+    console.log('post complete');
+
+    setAvailabilityMode('view');
+  }
+
+  function renderAvailability() {
+    // console.log(availabilityViewMode);
+    console.log(`rendering availability in ${availabilityMode} mode`);
+    console.log('availability:', availability);
+    return (
+      <div>
+        {availabilityMode === 'view' ? (
+          <div className="availability-wrapper">
+            <h5 className="availability-title">Availability for the Week</h5>
+            <div
+              className="editButton"
+              onClick={() => { setAvailabilityMode('edit'); }}
+              onKeyDown={() => { setAvailabilityMode('edit'); }}
+              role="button"
+              tabIndex={0}
+            >
+              Change Availability
+            </div>
+            <p className="mode">View Mode</p>
+            <ViewAvailability availabilities={availability} startWeek={startWeek} />
+          </div>
+        )
+          : (
+            <div className="availability-wrapper">
+              <h5 className="availability-title">Availability for the Week</h5>
+              <div
+                className="saveButton"
+                onClick={updateAvailability}
+                onKeyDown={updateAvailability}
+                role="button"
+                tabIndex={0}
+              >
+                Save Changes
+              </div>
+              <p className="mode">Edit Mode</p>
+              <EditAvailability
+                availabilityTimes={availability}
+                setAvailabilityTimes={setAvailability}
+                startWeek={startWeek}
+              />
+            </div>
+          )}
+      </div>
+    );
+  }
 
   useEffect(async () => {
     setLoading(true);
     getEvents();
+    getAvailability();
     setLoading(false);
   }, []);
 
@@ -127,9 +255,9 @@ const VolunteerDashboard = (props) => {
         <div className="other-event-square" />
         <p className="other-event-text">Other Event</p>
       </div>
-      {/* <div className="availability-section">
+      <div className="availability-section">
         {renderAvailability()}
-      </div> */}
+      </div>
     </div>
   );
 };

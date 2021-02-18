@@ -75,3 +75,17 @@
     font-size: 1.3rem;
     margin: 0 10px 0 0;
 }
+
+.availability-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.availability-title {
+    font-weight: bold;
+    color: var(--text-color-dark);
+}
+
+.saveButton, .editButton, .mode {
+    align-self: flex-end;
+}
