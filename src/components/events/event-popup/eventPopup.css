@@ -20,6 +20,34 @@
     height: auto;
 }
 
+.popup .exit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    right: 0;
+
+    border: 0;
+    border-radius: 50%;
+    outline: 0;
+
+    cursor: pointer;
+
+    background: white;
+
+    margin-right: 1%;
+    margin-top: 1%;
+
+    width: 25px;
+    height: 25px;
+}
+
+.popup .exit-button .x-icon {
+    width: 15px;
+    height: 15px;
+}
+
 .popup .event-image {
     display: flex;
     justify-content: center;

@@ -6,9 +6,11 @@ import { addUserEvent, fetchEvents } from '../redux/actions';
 import store from '../redux/store';
 
 import './eventPopup.css';
+
 import locationPinIcon from '../../../images/locationPin.svg';
 import folderIcon from '../../../images/folder.svg';
 import peopleIcon from '../../../images/peopleIcon.svg';
+import cross from '../../../images/cross.svg';
 
 const dayList = [
   'SUN', 'MON', 'TUE', 'WED',
@@ -102,6 +104,14 @@ const EventPopup = ({
 
   return (
     <div className="popup">
+      <button
+        className="exit-button"
+        type="button"
+        aria-label="close"
+        onClick={onClose}
+      >
+        <img className="x-icon" src={cross} alt="close" />
+      </button>
       <div className="event-image">
         <p>Image</p>
       </div>
@@ -110,9 +120,7 @@ const EventPopup = ({
           <p className="event-time">
             {prettifyDate()}
           </p>
-          {/* <br /> */}
           <p className="event-name">{event.title}</p>
-          {/* <p className="event-name">Wan Outrageously Long Title AAAAAAAAAAAAAAAAAA</p> */}
         </div>
         <div className="details-section">
           <p className="details-title">Details</p>
@@ -152,10 +160,7 @@ const EventPopup = ({
             Proin id pulvinar neque. Phasellus sollicitudin consequat ornare.
           </p>
         </div> */}
-        {/* <div className="event-buttons"> */}
-        {/* {renderAddButton()} */}
         {renderButtons()}
-        {/* </div> */}
       </div>
     </div>
   );
