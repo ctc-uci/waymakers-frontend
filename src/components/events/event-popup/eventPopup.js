@@ -45,29 +45,30 @@ const EventPopup = ({
   };
 
   const prettifyDate = () => {
-    const startTime = `${dayList[startDate.getDay()]} ${monthList[startDate.getMonth()]} ${startDate.getDate()} ${startDate.getFullYear()} ${startDate.toLocaleTimeString()}`;
+    const startTime = `${dayList[startDate.getDay()]} ${monthList[startDate.getMonth()]} ${startDate.getDate()} ${startDate.getFullYear()} ${startDate.toLocaleTimeString().slice(0, -6)} PM`;
     const endTime = `\n${dayList[endDate.getDay()]} ${monthList[endDate.getMonth()]} ${endDate.getDate()} ${endDate.getFullYear()}`;
     const differentDays = startDate.getFullYear() !== endDate.getFullYear()
                           || startDate.getMonth() !== endDate.getMonth()
                           || startDate.getDate() !== endDate.getDate();
-    return `${startTime} - ${differentDays ? endTime : ''} ${endDate.toLocaleTimeString()}`;
+    return `${startTime} - ${differentDays ? endTime : ''} ${endDate.toLocaleTimeString().slice(0, -6)} PM`;
   };
 
   return (
     <div className="popup">
       <div className="event-image">
-        Image
+        <p>Image</p>
       </div>
       <div className="event-info">
         <div className="popup-header">
-          <span className="event-time">
+          <p className="event-time">
             {prettifyDate()}
-          </span>
-          <br />
-          <span className="event-name">{event.title}</span>
+          </p>
+          {/* <br /> */}
+          <p className="event-name">{event.title}</p>
+          {/* <p className="event-name">Wan Outrageously Long Title AAAAAAAAAAAAAAAAAA</p> */}
         </div>
         <div className="details-section">
-          <h3>Details</h3>
+          <p>Details</p>
           <div className="event-detail">
             <img className="event-detail-icon" src={locationPinIcon} alt="location" />
             <span className="event-detail-label">{event.extendedProps.location}</span>
@@ -89,11 +90,24 @@ const EventPopup = ({
           </div>
         </div>
         <div className="event-description">
-          {event.extendedProps.description}
+          <p>{event.extendedProps.description}</p>
         </div>
+        {/* <div className="event-description">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Sed faucibus iaculis risus a fermentum. Praesent tristique mollis facilisis.
+            Curabitur dapibus nisl eget lacinia tincidunt. Etiam laoreet ultricies risus.
+            Suspendisse turpis risus, vulputate eget tristique vitae, lobortis ac eros.
+            Mauris id turpis ullamcorper, maximus nisl luctus, volutpat orci. Sed pharetra,
+            eros vitae posuere fringilla, arcu nibh tempor eros, id sodales orci turpis sed libero.
+            Aliquam ultrices sollicitudin risus, vitae maximus ante accumsan nec.
+            Curabitur molestie diam ut nulla ullamcorper suscipit id eu mauris.
+            Proin id pulvinar neque. Phasellus sollicitudin consequat ornare.
+          </p>
+        </div> */}
         <div className="event-buttons">
           {renderAddButton()}
-          <button className="button cancel-button" type="button" aria-label="close popup" onClick={onClose}>Close</button>
+          <button className="button cancel-button" type="button" aria-label="close popup" onClick={onClose}>Cancel</button>
         </div>
       </div>
     </div>
