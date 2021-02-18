@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
+import { useSelector } from 'react-redux';
 import store from '../redux/store';
+import { getEditing } from '../redux/selectors';
 import { changeSelectedWarehouse } from '../redux/actions';
-
+import AddWarehouseButton from './add-warehouse/addWarehouse';
 import './warehouseMenu.css';
 
 const WarehouseMenu = (prop) => {
   // Creating dropdown selector for warehouse menu
+  // <button label="button" type="button" className="add-warehouse-button"> + </button>);
   const Menu = (list) => (
     <div className="warehouse-menu-container">
       <select
@@ -39,9 +41,10 @@ const WarehouseMenu = (prop) => {
   }, [prop.warehouseList]);
 
   return (
-    <form>
+    <div>
+      {useSelector(getEditing) && <AddWarehouseButton />}
       {menu}
-    </form>
+    </div>
   );
 };
 
