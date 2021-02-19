@@ -97,25 +97,8 @@
     color: lightblue;
 }
 
-.week-header{
-    border: none;
-}
-
-.week-header p{
-    margin-bottom: 0px;
-}
-
-#header-date{
-    font-size: 1.25em;
-    padding-bottom: 0px;
-}
-
-#header-day{
-    color: var(--color-dark-blue);
-    font-size: 0.75em;
-}
-
 .test-headers{
     /* background: blue; */
     border: none;
 }
+

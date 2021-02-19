@@ -11,6 +11,7 @@ import EventCheckBoxes from './event-checkboxes/eventCheckBoxes';
 import CalendarFilters from './calendar-filters/calendarFilters';
 import EventBlock from './event-block/eventBlock';
 import CalendarPopup from './calendar-popup/calendarPopup';
+import CalendarDayHeader from './calendar-day-header/calendarDayHeader';
 
 import { getEventsForFullCalendar, getUserEventsForFullCalendar } from '../redux/selectors';
 import { fetchEvents, fetchUserEvents } from '../redux/actions';
@@ -71,16 +72,10 @@ const EventsView = ({
     );
   }
 
-  const renderHeader = (arg) => {
-    if (arg.view.type === 'timeGridWeek') {
-      return (
-        <div className="week-header">
-          <p id="header-date">{arg.date.getDate()}</p>
-          <p id="header-day">{new Date(arg.date).toLocaleString('en-us', { weekday: 'short' })}</p>
-        </div>
-      );
-    }
-    return <p>{arg.text}</p>;
+  const renderHeader = (dayInfo) => {
+    const goToPrev = () => { calendarEl.current.getApi().prev(); };
+    const goToNext = () => { calendarEl.current.getApi().next(); };
+    return <CalendarDayHeader goToPrev={goToPrev} goToNext={goToNext} dayInfo={dayInfo} />;
   };
 
   function renderEventContent(eventInfo) {
@@ -130,6 +125,11 @@ const EventsView = ({
         eventClick={onEventClick}
         contentHeight={450}
         ref={calendarEl}
+        headerToolbar={{
+          left: 'title',
+          center: '',
+          right: '',
+        }}
         dayHeaderContent={renderHeader}
         eventContent={renderEventContent}
         allDaySlot={false}
