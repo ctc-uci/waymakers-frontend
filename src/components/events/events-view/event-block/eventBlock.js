@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import * as Icon from 'react-icons/im';
 import * as IconGo from 'react-icons/go';
 import * as IconAi from 'react-icons/ai';
-
 import { connect } from 'react-redux';
-import { addEvent } from '../../redux/actions';
 
 import './eventBlock.css';
 
-const EventBlock = ({ path, eventInfo, addNewEvent }) => {
+const EventBlock = ({
+  path, eventInfo, setShowPopup, setSelectedEvent,
+}) => {
   const eventTypeColors = {
     Volunteer: 'var(--color-golden-yellow)',
     Outreach: 'var(--color-pink)',
@@ -22,28 +22,9 @@ const EventBlock = ({ path, eventInfo, addNewEvent }) => {
   // TODO: Figure out how to get this to trigger -- a diff click event for the cal triggers
   // before this one does
   const onAddButtonClick = () => {
-    console.log('clicked');
-    const {
-      title, extendedProps, start, end, allDay,
-    } = eventInfo.event;
-    const newEvent = {
-      eventName: title,
-      eventType: extendedProps.eventType,
-      eventLocation: extendedProps.location,
-      eventDescription: extendedProps.description,
-      division: extendedProps.division,
-      startTime: new Date(start),
-      endTime: new Date(end),
-      isAllDay: allDay, // default to false right now
-    };
-    addNewEvent(newEvent);
+    setSelectedEvent(eventInfo.event);
+    setShowPopup(true);
   };
-
-  // const handleAddClick = (e) => {
-  //   console.log('joe');
-  //   e.stopPropagation();
-  //   onAddButtonClick();
-  // };
 
   const renderEventButton = () => {
     if (isUserEvent) {
@@ -103,9 +84,9 @@ const EventBlock = ({ path, eventInfo, addNewEvent }) => {
 EventBlock.propTypes = {
   path: PropTypes.string.isRequired,
   eventInfo: PropTypes.objectOf(PropTypes.any).isRequired,
-  addNewEvent: PropTypes.func.isRequired,
+  setShowPopup: PropTypes.func.isRequired,
+  setSelectedEvent: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
-  addNewEvent: addEvent,
 })(EventBlock);

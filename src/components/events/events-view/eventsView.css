@@ -1,16 +1,43 @@
-/* #calendar{
+#calendar{
     align-items: center;
     margin: auto;
     margin-bottom: 1em;
     padding: 1em;
     background: white;
+    border: 0 !important;
 }
 
 /* .fc-scrollgrid fc-scrollgrid-liquid */
 
-/* .fc-scrollgrid-sync-inner {
+/* .fc-col-header  {
     background: var( --color-light-blue);
+    border-style: none !important;
+    border: 0 !important;
 }  */
+
+/* .fc-timegrid-axis {
+    border-style: none !important;
+    border: 0 !important;
+} */
+
+.thead {
+    border: 0 !important;
+    /* border-collapse: collapse !important; */
+}
+/* To make the calendar background light blue */
+/* .fc-timegrid-slot {
+    background: var( --color-light-blue);
+} */
+
+/* To make the time labels' backgrounds white */
+.fc-timegrid-slot-label-frame{
+    background: white;
+}
+
+/* To make the time labels' backgrounds white */
+.fc-timegrid-slot-label {
+    background: white;
+}
 
 .fc .fc-event-main {
     padding: 0px;

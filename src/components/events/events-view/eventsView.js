@@ -57,6 +57,7 @@ const EventsView = ({
 
   function renderPopup() {
     const userEvents = useSelector(getUserEventsForFullCalendar);
+    console.log(onEventClick);
     return (
       <CalendarPopup
         userEvents={userEvents}
@@ -84,7 +85,14 @@ const EventsView = ({
   };
 
   function renderEventContent(eventInfo) {
-    return <EventBlock path={path} eventInfo={eventInfo} />;
+    return (
+      <EventBlock
+        path={path}
+        eventInfo={eventInfo}
+        setShowPopup={setShowPopup}
+        setSelectedEvent={setSelectedEvent}
+      />
+    );
   }
 
   // Returns events based on filters, also adds properties for styling
@@ -127,7 +135,7 @@ const EventsView = ({
         plugins={[timeGridPlugin, dayGridPlugin]}
         initialView="timeGridWeek"
         events={events}
-        eventClick={onEventClick}
+        eventClick={() => { console.log('who is joe'); }}
         contentHeight={450}
         ref={calendarEl}
         dayHeaderContent={renderHeader}
