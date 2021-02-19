@@ -22,6 +22,73 @@
     border-bottom: 0 !important;
 }
 
+.fc-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start !important;
+}
+
+/* 'Week of XX-XXXX' label */
+.fc-toolbar-title {
+    color: var(--text-color-dark);
+    font-weight: bold;
+}
+
+/* To add 'week of' */
+.fc-toolbar-title::before {
+    content: "Week of ";
+}
+
+/* Remove today button */
+.fc-today-button {
+    display: none !important;
+}
+
+.fc-toolbar-chunk {
+    width: 100%;
+    display: inline-block !important;
+}
+
+.fc-button-group {
+    margin: 0px !important;
+    width: 100%;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+}
+
+/* Remove FullCalendar.io default button color*/
+.fc-button-group .fc-button {
+    border: 0;
+    background: transparent;
+    outline: none !important;
+}
+
+/* Remove FullCalendar.io default hover effect */
+.fc-button-group .fc-button:hover{
+    background: transparent;
+}
+
+.fc-button-group .fc-button:active {
+    background: transparent !important;
+    border-color: transparent !important;
+    outline: none !important;
+}
+
+.fc-button-group .fc-button:focus {
+    outline: none !important;
+}
+
+/* TODO: Find better way to move this to the end of the div*/
+.fc-button-group .fc-next-button {
+    margin-left: 90% !important;
+}
+
+/* Changes arrow color of the buttons */
+.fc-button-group .fc-button .fc-icon {
+    color: var(--text-color-dark);
+}
+
 .button{
     margin: 1%;
 }
