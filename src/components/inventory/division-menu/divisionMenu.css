@@ -23,6 +23,7 @@
 
 .division-menu--open {
     margin-left: 20px;
+    margin-bottom: 5px;
     border: solid var(--text-color-dark);
     background-color: transparent;
     border-width: 0 4px 4px 0;
@@ -34,6 +35,7 @@
   
   .division-menu--close {
     margin-left: 20px;
+    margin-top: 15px;
     border: solid var(--text-color-dark);
     background-color: transparent;
     border-width: 0 4px 4px 0;
