@@ -14,13 +14,14 @@
 .warehouse-menu--top {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   font-size: 32px;
   font-weight: 700;
 }
 
 .warehouse-menu--open {
+  margin-left: 20px;
   border: solid var(--text-color-dark);
   background-color: transparent;
   border-width: 0 4px 4px 0;
@@ -31,6 +32,7 @@
 }
 
 .warehouse-menu--close {
+  margin-left: 20px;
   border: solid var(--text-color-dark);
   background-color: transparent;
   border-width: 0 4px 4px 0;
