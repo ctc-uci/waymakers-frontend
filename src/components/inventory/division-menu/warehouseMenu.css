@@ -49,14 +49,14 @@
   outline: none;
   box-shadow: 2px 2px 6px;
   background-color: solid #FFFF;
-  font-size: 24px;
+  font-size: 20px;
   position: absolute;
   left: 0; 
   right: 0; 
   margin-left: auto; 
   margin-right: auto;
   width: 300px;
-  z-index: 1000;
+  z-index: 1;
 }
 
 .warehosue-menu--list-item {
@@ -66,10 +66,12 @@
   color: var(--text-color-dark);
   width: 300px;
 }
+
 .warehosue-menu--list-item:hover {
   transition: 0.2ms;
   text-decoration: underline;
 }
+
 .warehosue-menu--list-item:focus {
   text-decoration: underline;
 }

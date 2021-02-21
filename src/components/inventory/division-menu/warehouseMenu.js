@@ -17,13 +17,12 @@ const WarehouseMenu = (prop) => {
     } else {
       setOpen(true);
     }
-    console.log(open);
   };
 
   const handleWarehouseClick = (e, warehouseName) => {
     store.dispatch(changeSelectedWarehouse(parseInt(e.target.value, 10)));
     setCurrentWarehouse(warehouseName);
-    setOpen(false);
+    // setOpen(false);
   };
 
   // Creating dropdown selector for warehouse menu
