@@ -23,6 +23,7 @@ const DivisionMenu = (prop) => {
   const handleDivisionClick = (e, divName) => {
     store.dispatch(changeSelectedDivision(parseInt(e.target.value, 10)));
     setCurrentDiviosn(divName);
+    setOpen(false);
   };
 
   const menu = (list) => (
