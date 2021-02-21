@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 300px;
+  width: 450px;
   font-family: "Assistant", Arial, Helvetica, sans-serif;
   color: var(--text-color-dark);
 }
@@ -16,8 +16,9 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  font-size: 32px;
+  font-size: 42px;
   font-weight: 700;
+  line-height: 55px;
 }
 
 .warehouse-menu--open {
@@ -53,7 +54,6 @@
   outline: none;
   box-shadow: 2px 2px 6px;
   background-color: solid #FFFF;
-  font-size: 20px;
   position: absolute;
   left: 0; 
   right: 0; 
@@ -64,11 +64,15 @@
 }
 
 .warehosue-menu--list-item {
+  display: flex;
+  align-items: flex-start;
   text-align: center;
   border: none;
   background-color: #FFFF;
   color: var(--text-color-dark);
-  width: 300px;
+  width: inherit;
+  font-size: 32px;
+  font-weight: 700;
 }
 
 .warehosue-menu--list-item:hover {

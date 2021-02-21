@@ -6,7 +6,7 @@
     align-items: center;
     margin: 0 auto;
     padding-bottom: 10px;
-    width: 450px;
+    width: 550px;
     font-family: "Assistant", Arial, Helvetica, sans-serif;
     color: var(--text-color-dark);
 }
@@ -18,7 +18,8 @@
     justify-content: center;
     align-items: center;
     font-weight: 700;
-    font-size: 40px;
+    font-size: 48px;
+    line-height: 63px;
 }
 
 .division-menu--open {
@@ -49,26 +50,27 @@
 .division-menu--list {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border: none;
-    outline: none;
-    box-shadow: 2px 2px 6px;
-    background-color: solid #FFFF;
-    font-size: 20px;
     position: absolute;
     left: 0; 
     right: 0; 
     margin-left: auto; 
     margin-right: auto;
-    width: 400px;
+    width: 360px;
     z-index: 2;
+    border: none;
+    outline: none;
+    box-shadow: 2px 2px 6px;
+    background-color: solid #FFFF;
 }
 
 .division-menu--list-item {
-    text-align: center;
+    display: flex;
+    align-items: flex-start;
     border: none;
     background-color: #FFFF;
     color: var(--text-color-dark);
+    font-weight: 700;
+    font-size: 32px;
     width: inherit;
 }
 
