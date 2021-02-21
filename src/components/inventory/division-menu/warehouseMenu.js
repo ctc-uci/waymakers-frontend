@@ -42,7 +42,13 @@ const WarehouseMenu = (prop) => {
 
   return (
     <div>
-      {useSelector(getEditing) && <AddWarehouseButton />}
+      {useSelector(getEditing)
+      && (
+      <AddWarehouseButton
+        divisionList={prop.divisionList}
+        selectedDivision={prop.selectedDivision}
+      />
+      )}
       {menu}
     </div>
   );

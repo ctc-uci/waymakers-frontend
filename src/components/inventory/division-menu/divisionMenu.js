@@ -26,7 +26,11 @@ const DivisionMenu = (prop) => (
           ))}
       </select>
     </div>
-    <WarehouseMenu warehouseList={prop.warehouseList} />
+    <WarehouseMenu
+      warehouseList={prop.warehouseList}
+      divisionList={prop.divisionList}
+      selectedDivision={prop.selectedDivision}
+    />
   </div>
 );
 
