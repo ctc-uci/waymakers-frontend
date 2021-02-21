@@ -70,7 +70,12 @@ const WarehouseMenu = (prop) => {
       <div className="warehouse-menu-container">
         <div className="warehouse-menu--top">
           {currentWarehouse}
-          <button type="button" aria-label="arrow" onClick={handleArrowClick} />
+          <button
+            type="button"
+            aria-label="arrow"
+            onClick={handleArrowClick}
+            className={open ? 'warehouse-menu--close' : 'warehouse-menu--open'}
+          />
         </div>
         {open && menu}
       </div>

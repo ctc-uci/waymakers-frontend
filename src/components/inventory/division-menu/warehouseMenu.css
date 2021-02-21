@@ -1,20 +1,77 @@
-.warehouse-menu {
-  border: none;
-  outline: none;
-  width: inherit;
-  padding: 5px;
-  font-family: "Assistant", Arial, Helvetica, sans-serif;
-  color: var(--text-color-dark);
-  font-weight: 700;
-  font-size: 32px;
-  cursor: pointer;
-  text-align-last: center;
-}
+@import '../../../common/vars.css';
 
 .warehouse-menu-container {
+  margin: 0 auto;
   padding-bottom: 15px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  width: 300px;
+  font-family: "Assistant", Arial, Helvetica, sans-serif;
+  color: var(--text-color-dark);
+}
+
+.warehouse-menu--top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.warehouse-menu--open {
+  border: solid var(--text-color-dark);
+  background-color: transparent;
+  border-width: 0 4px 4px 0;
+  height: 18px;
+  width: 18px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.warehouse-menu--close {
+  border: solid var(--text-color-dark);
+  background-color: transparent;
+  border-width: 0 4px 4px 0;
+  height: 18px;
+  width: 18px;
+  flex-direction: row;
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.warehouse-menu--list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  outline: none;
+  box-shadow: 2px 2px 6px;
+  background-color: solid #FFFF;
+  font-size: 24px;
+  position: absolute;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto;
+  width: 300px;
+  z-index: 1000;
+}
+
+.warehosue-menu--list-item {
+  text-align: center;
+  border: none;
+  background-color: #FFFF;
+  color: var(--text-color-dark);
+  width: 300px;
+}
+.warehosue-menu--list-item:hover {
+  transition: 0.2ms;
+  text-decoration: underline;
+}
+.warehosue-menu--list-item:focus {
+  text-decoration: underline;
 }
 
 .add-warehouse-button {
