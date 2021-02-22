@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import store from '../redux/store';
 import { getEditing } from '../redux/selectors';
 import { changeSelectedWarehouse } from '../redux/actions';
+import handleOutsideClick from '../../../common/handleOutsideClick';
 import AddWarehouseButton from './add-warehouse/addWarehouse';
 import './warehouseMenu.css';
 
 const WarehouseMenu = (prop) => {
   const [currentWarehouse, setCurrentWarehouse] = useState('All Warehouses');
   const [open, setOpen] = useState(false);
+  const ref = useRef();
+
+  // Close warehouse dropdown when user clicks outside of it
+  handleOutsideClick(ref, () => {
+    setOpen(false);
+  });
 
   // Handles opening and closing the dropdown whenever the button is pressed
   const handleArrowClick = () => {
@@ -72,7 +79,7 @@ const WarehouseMenu = (prop) => {
         selectedDivision={prop.selectedDivision}
       />
       )}
-      <div className="warehouse-menu-container">
+      <div ref={ref} className="warehouse-menu-container">
         <div className="warehouse-menu--top">
           {currentWarehouse}
           <button

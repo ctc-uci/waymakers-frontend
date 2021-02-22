@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import WarehouseMenu from './warehouseMenu';
-
+import handleOutsideClick from '../../../common/handleOutsideClick';
 import store from '../redux/store';
 import { changeSelectedDivision } from '../redux/actions';
 import { getDivisions, getSelectedDivisionID, getWarehouses } from '../redux/selectors';
@@ -11,6 +11,12 @@ import './divisionMenu.css';
 const DivisionMenu = (prop) => {
   const [currentDivision, setCurrentDivision] = useState('All Divisions');
   const [open, setOpen] = useState(false);
+  const ref = useRef();
+
+  // Close division dropdown when user clicks outside of it
+  handleOutsideClick(ref, () => {
+    setOpen(false);
+  });
 
   const handleArrowClick = () => {
     if (open) {
@@ -54,7 +60,7 @@ const DivisionMenu = (prop) => {
 
   return (
     <div className="menu-container">
-      <div className="division-menu-container">
+      <div ref={ref} className="division-menu-container">
         <div className="division-menu--top">
           {currentDivision}
           <button
