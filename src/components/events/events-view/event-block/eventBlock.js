@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Icon from 'react-icons/im';
 import * as IconAi from 'react-icons/ai';
+import * as IconGo from 'react-icons/go';
 
 import { connect } from 'react-redux';
 import { addEvent } from '../../redux/actions';
@@ -92,6 +93,7 @@ const EventBlock = ({ path, eventInfo, addNewEvent }) => {
 
   return (
     <div id="month-event-block">
+      <IconGo.GoPrimitiveDot color={eventInfo.borderColor} size={14} />
       <p id="monthViewEventTime">{`${convertedHour === 0 ? 12 : convertedHour}${minute === 0 ? '' : displayMinute}${hour < 13 ? 'a' : 'p'}`}</p>
       <p id="monthViewEventTitle">{eventInfo.event.title}</p>
     </div>
