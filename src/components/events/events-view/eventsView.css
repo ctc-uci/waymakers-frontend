@@ -24,9 +24,15 @@
     border: 0 !important;
     /* border-collapse: collapse !important; */
 }
-/* To make the calendar background light blue and horizontal border lines dark blue*/
-.fc-timegrid-slot {
-    background: var( --color-light-blue);
+
+/* Makes background color light blue (month view)*/
+.fc-daygrid-day-frame {
+    background: var( --color-light-blue) !important;
+}
+
+/* To make the calendar background light blue and horizontal border lines dark blue (week/day view)*/
+.fc-timegrid-slot-lane {
+    background: var( --color-light-blue) !important;
     border-color: var(--text-color-dark) !important;
 }
 
@@ -34,12 +40,12 @@
     border-top: 0 !important;
 }
 
-/* To make the time labels' backgrounds white */
+/* To make the time labels' backgrounds white (week/day view) */
 .fc-timegrid-slot-label-frame{
     background: white;
 }
 
-/* To make the time labels' backgrounds white */
+/* To make the time labels' backgrounds white (week/day view) */
 .fc-timegrid-slot-label {
     background: white;
 }
