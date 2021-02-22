@@ -9,7 +9,7 @@ import { getDivisions, getSelectedDivisionID, getWarehouses } from '../redux/sel
 import './divisionMenu.css';
 
 const DivisionMenu = (prop) => {
-  const [currentDivision, setCurrentDiviosn] = useState('All Divisions');
+  const [currentDivision, setCurrentDivision] = useState('All Divisions');
   const [open, setOpen] = useState(false);
 
   const handleArrowClick = () => {
@@ -22,7 +22,7 @@ const DivisionMenu = (prop) => {
 
   const handleDivisionClick = (e, divName) => {
     store.dispatch(changeSelectedDivision(parseInt(e.target.value, 10)));
-    setCurrentDiviosn(divName);
+    setCurrentDivision(divName);
     setOpen(false);
   };
 
