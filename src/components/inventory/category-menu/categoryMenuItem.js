@@ -24,8 +24,8 @@ const CategoryMenuItem = (props) => {
 
   // Updates selectedCategory in inventory.js, using function passed in
   const selCategory = () => {
-    const selectedCategoryID = (props.category.label === 'Show All Categories') ? null : props.category.id;
-    const selectedCategoryLabel = (props.category.label === 'Show All Categories') ? '' : props.category.label;
+    const selectedCategoryID = (props.category.label === 'All Categories') ? null : props.category.id;
+    const selectedCategoryLabel = (props.category.label === 'All Categories') ? '' : props.category.label;
     store.dispatch(changeSelectedCategory(selectedCategoryID, selectedCategoryLabel));
   };
   // Adds category ID to list of category IDs to be deleted if delete is toggled on;
@@ -54,7 +54,7 @@ const CategoryMenuItem = (props) => {
       </button>
     );
   };
-  return useSelector(getEditing) && props.category.label !== 'Show All Categories' ? delCategoryButton(toggleDelCategory) : selCategoryButton(selCategory);
+  return useSelector(getEditing) && props.category.label !== 'All Categories' ? delCategoryButton(toggleDelCategory) : selCategoryButton(selCategory);
 };
 
 export default CategoryMenuItem;
