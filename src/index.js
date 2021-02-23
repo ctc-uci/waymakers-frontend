@@ -10,6 +10,7 @@ import Register from './components/register/register';
 import LogIn from './components/login/login';
 import ManageUsers from './components/admin/manageusers/manageusers';
 import ManageDB from './components/admin/managedb/managedb';
+import QualificationLists from './components/admin/qualification-lists/qualificationLists';
 // import Profile from './components/profile/profile';
 import viewProfile from './templates/viewProfile';
 import editProfile from './templates/editProfile';
@@ -43,6 +44,7 @@ ReactDOM.render(
             <Switch>
               <ProtectedRoute path="/admin/users" component={ManageUsers} />
               <ProtectedRoute path="/admin/db" component={ManageDB} />
+              <ProtectedRoute path="/admin/qualificationLists" component={QualificationLists} />
             </Switch>
 
             <Switch>
