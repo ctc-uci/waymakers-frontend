@@ -1,38 +1,58 @@
 @import '../../../common/vars.css';
 
+#scroll-menu-container {
+    min-width: 0;
+}
+
+.horizontal-menu {
+    flex-direction: row;
+    height: 50px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.menu-wrapper {
+    height: inherit;
+}
+
+.scroll-menu-arrow {
+    padding-top: 12px;
+    text-align: center;
+}
+
 .arrow-prev {
-    margin-right: 1px;
+    width: 40px;
+    padding: 20px 20px 20px 20px;
+    background-image: url(images/inventoryArrowPrev.png);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-color: transparent;
+    border: none;
 }
 
 .arrow-next {
-    margin-left: 1px;
+    width: 40px;
+    padding: 20px 20px 20px 20px;
+    margin-left: 10px;
+    background-image: url(images/inventoryArrowNext.png);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-color: transparent;
+    border: none;
 }
 
 .menu-wrapper--inner {
     padding: 1.4px;
 }
 
-.scroll-menu-arrow {
-    font-weight: 600;
-    font-size: 250%;
-    color: var(--color-dark-blue)
-}
-
-#scroll-menu-container {
-    flex: 1 1 0;
-    min-width: 0;
-}
-
-.horizontal-menu {
-    height: max-content;
-}
-
 .category-button {
     padding: 0 40px;
     margin: 5px 10px;
-    width: inherit;
+    width: 227px;
+    height: 40px;
     font-family: "Assistant", Arial, Helvetica, sans-serif;
     font-weight: 400;
+    font-size: 20px;
     cursor: pointer;
     border: 3px solid var(--color-green);
     border-radius: 10px;
@@ -54,8 +74,11 @@
 .edit-category-button {
     padding: 0 40px;
     margin: 5px 10px;
+    width: 227px;
+    height: 40px;
     font-family: "Assistant", Arial, Helvetica, sans-serif;
     font-weight: 400;
+    font-size: 20px;
     cursor: pointer;
     border: 3px solid var(--color-green);
     border-radius: 10px;

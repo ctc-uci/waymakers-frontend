@@ -11,9 +11,9 @@ const axios = require('axios');
 
 const CategoryMenu = (prop) => {
   // Arrows for menu navigation
-  const Arrow = (text, className) => <div className={className}>{text}</div>;
-  const ArrowLeft = Arrow('< ', 'arrow-prev');
-  const ArrowRight = Arrow(' >', 'arrow-next');
+  const Arrow = (className) => <button type="button" aria-label="arrow" className={className} />;
+  const ArrowLeft = Arrow('arrow-prev');
+  const ArrowRight = Arrow('arrow-next');
   const [categories, setCategories] = useState([]);
   const [currentCategories, setCurrentCategories] = useState([0, 1, 2, 3]);
 
@@ -56,6 +56,8 @@ const CategoryMenu = (prop) => {
         arrowRight={ArrowRight}
         alignCenter={false}
         scrollBy={4}
+        dragging={false}
+        wheel={false}
       />
     </div>
   );
