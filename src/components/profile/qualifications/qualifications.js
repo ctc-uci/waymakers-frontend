@@ -1,45 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './qualifications.css';
 
-function Qualification({ complete, incomplete }) {
-  const rows = complete.map((task) => (
+function Qualification({ qualifications, isEditing }) {
+  const rows = qualifications.map((task) => (
     <tr>
-      <td>{task.question}</td>
-      <td>{task.response}</td>
+      <td>{task.qualification}</td>
+      <td>
+        <button type="button" className={isEditing ? 'btn btn-secondary btn-sm' : 'btn btn-success btn-sm'} disabled={isEditing}>Update</button>
+        {' '}
+      </td>
       <td>{task.date}</td>
       <td>{task.status}</td>
+      <td>{task.notes}</td>
     </tr>
   ));
 
-  const qualifications = incomplete.map((fileName) => (
-    <section className="container">
-      <p>
-        {fileName}
-        <button type="button" className="btn btn-success">Upload File</button>
-      </p>
-    </section>
-  ));
-
   return (
-    <div>
-      <h1>Qualifications</h1>
+    <div id="qual">
+      <h3>Qualifications Required</h3>
       <section>
-        <h2>Incomplete Qualifications</h2>
-        <div>
-          {qualifications}
-        </div>
-        <button type="button" className="btn btn-success">Submit Qualifications</button>
-      </section>
-      <section>
-        <h2>Complete Qualifications</h2>
-        <table className="table">
+        <table className="table table-striped">
           <thead>
             <tr>
-              <th>Question</th>
-              <th>Response</th>
+              <th>Qualification</th>
+              <th> </th>
               <th>Date Added</th>
               <th>Status</th>
+              <th>Notes</th>
             </tr>
           </thead>
           <tbody>
@@ -53,8 +42,8 @@ function Qualification({ complete, incomplete }) {
 }
 
 Qualification.propTypes = {
-  complete: PropTypes.arrayOf(Object).isRequired,
-  incomplete: PropTypes.arrayOf(String).isRequired,
+  qualifications: PropTypes.arrayOf(Object).isRequired,
+  isEditing: PropTypes.bool.isRequired,
 };
 
 export default Qualification;

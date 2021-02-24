@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import EditAbout from '../components/profile/editAbout/editAbout.js';
 import EditContact from '../components/profile/editContact/editContact.js';
-import EditAvailability from '../components/profile/editAvailability/editAvailability.js';
+import Qualification from '../components/profile/qualifications/qualifications';
 
 import profCircle from '../images/profCircle.png';
 
@@ -74,6 +74,30 @@ function editProfile() {
     setLoading(false);
   }, []);
 
+  const qualifications = [
+    {
+      qualification: 'Valid drivers license',
+      response: 'Yes',
+      date: '11/16/2020',
+      status: 'Qualified',
+      notes: 'note',
+    },
+    {
+      qualification: 'Completed live scan',
+      response: 'Yes',
+      date: '11/19/2020',
+      status: 'Qualified',
+      notes: 'note',
+    },
+    {
+      qualification: 'Attended the new volunteer orientation?',
+      response: 'Yes',
+      date: '11/16/2020',
+      status: 'Qualified',
+      notes: 'note',
+    },
+  ];
+
   // Use axios PUT request to send new info to backend api, but only after form is "submitted"
   const updateInfo = async () => {
     await axios.put(
@@ -98,8 +122,8 @@ function editProfile() {
 
   return (
     <div>
-      <div className="page-container">
-        <div className="profilePic">
+      <div className="pg-container">
+        <div className="profPic">
           <img src={profCircle} alt="" width="200" height="200" />
         </div>
         <div className="name">
@@ -119,7 +143,7 @@ function editProfile() {
               setStatus={setStatus}
             />
           </div>
-          <div className="contactCard">
+          <div className="cntctCard">
             <EditContact
               email={email}
               setEmail={setEmail}
@@ -129,8 +153,8 @@ function editProfile() {
           </div>
         </div>
         <div>
-          <div className="availCard">
-            <EditAvailability />
+          <div className="qualCard">
+            <Qualification qualifications={qualifications} isEditing />
           </div>
         </div>
       </div>

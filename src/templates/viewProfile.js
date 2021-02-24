@@ -4,20 +4,26 @@ import { useHistory } from 'react-router-dom';
 // import '../components/profile/profile.js';
 import axios from 'axios';
 
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
+
 import About from '../components/profile/about/About';
 import Contact from '../components/profile/contact/Contact';
-import Availability from '../components/profile/availability/Availability';
 
 import profCircle from '../images/profCircle.png';
 import Qualification from '../components/profile/qualifications/qualifications';
 
-function viewProfile() {
+require('dotenv').config();
+
+const viewProfile = (props) => {
   // Notes for Preston:
   //  - explain async better?
   //  - explain componentDidMount concept
   //  - explain extra parameter in useEffect
   //  - explain passing props
   //  - explain isLoading
+
+  const { cookies } = props;
   const history = useHistory();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -30,21 +36,24 @@ function viewProfile() {
   const [tier, setTier] = useState(0);
   const [status, setStatus] = useState('Volunteer');
 
-  const [availabilities, setAvailabilities] = useState([]);
+  const [qualificationName, setQualificationName] = useState('');
+  const [qualificationDateAdded, setQualificationDateAdded] = useState('');
+  const [qualificationStatus, setQualificationStatus] = useState('');
+  const [qualificationNote, setQualificationNote] = useState('');
 
   const [isLoading, setLoading] = useState(false);
 
   // Use axios GET request to retreive info to backend api
   useEffect(async () => {
     setLoading(true);
-
+    const userID = cookies.get('userId');
     const result = await axios.get(
-      'http://localhost:3001/accounts/4jkl5llkjljkfs3fsdcs        ', {
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
         withCredentials: true,
       },
     );
 
-    const { account, permissions, availability } = result.data;
+    const { account, permissions } = result.data;
     const {
       locationstreet, locationcity, locationstate, locationzip,
     } = account;
@@ -57,7 +66,22 @@ function viewProfile() {
     setBirthday(account.birthdate);
     setTier(account.tier);
     setStatus(permissions.permissions);
-    setAvailabilities(availability);
+
+    // get req for qualifications
+    // eslint-disable-next-line no-unused-vars
+    const qualificationResult = await axios.get(
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/qualifications/${userID}`, {
+        withCredentials: true,
+      },
+    );
+
+    const { qualificationData } = qualificationResult.data;
+    // not sure if backend tables have these names, and required setup
+    setQualificationName(qualificationData.name);
+    setQualificationDateAdded(qualificationData.dateadded);
+    setQualificationStatus(qualificationData.status);
+    setQualificationNote(qualificationData.note);
+
     setLoading(false);
   }, []);
 
@@ -66,28 +90,35 @@ function viewProfile() {
   }
   console.log('render'); // Remove this later
 
-  const complete = [
-    {
-      question: 'Did you upload valid driver\'s license?',
-      response: 'Yes',
-      date: '11/16/2020',
-      status: 'Qualified',
-    },
-    {
-      question: 'Have you completed your Live Scan?',
-      response: 'Yes',
-      date: '11/19/2020',
-      status: 'Qualified',
-    },
-    {
-      question: 'Did you attend the new volunteer orientation?',
-      response: 'Yes',
-      date: '11/16/2020',
-      status: 'Qualified',
-    },
+  const qualifications = [
+    qualificationName, qualificationDateAdded, qualificationStatus, qualificationNote,
   ];
-
-  const incomplete = ['Valid Driver\'s License', 'Confidentiality Agreement', 'Current Car Insurance', 'TSA Background Check'];
+  // const qualifications = [
+  //   {
+  //     qualification: 'Valid drivers license',
+  //     response: 'Yes',
+  //     date: '11/16/2020',
+  //     status: 'Qualified',
+  //     notes: 'note',
+  //   },
+  //   {
+  //     qualification: 'Completed live scan',
+  //     response: 'Yes',
+  //     date: '11/19/2020',
+  //     status: 'Qualified',
+  //     notes: 'note',
+  //   },
+  //   {
+  //     qualification: 'Attended the new volunteer orientation?',
+  //     response: 'Yes',
+  //     date: '11/16/2020',
+  //     status: 'Qualified',
+  //     notes: 'note',
+  //   },
+  // ];
+  // const incomplete = ['Valid Driver\'s License', 'Confidentiality Agreement',
+  // 'Current Car Insurance',
+  // 'TSA Background Check'];
   // Passing user info as props to About, Contact and (eventually) availability components
   // Also, remove the two buttons later
   return (
@@ -115,18 +146,17 @@ function viewProfile() {
           </div>
         </div>
         <div>
-          <div className="availCard">
-            <Availability availabilities={availabilities} />
-          </div>
-        </div>
-        <div>
           <div className="qualCard">
-            <Qualification complete={complete} incomplete={incomplete} />
+            <Qualification qualifications={qualifications} isEditing={false} />
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default viewProfile;
+viewProfile.propTypes = {
+  cookies: instanceOf(Cookies).isRequired,
+};
+
+export default withCookies(viewProfile);

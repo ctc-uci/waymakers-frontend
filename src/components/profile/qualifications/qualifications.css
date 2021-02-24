@@ -1,3 +1,23 @@
-body {
-    background-color: blue,
+#qual {
+    background-color: #F2FBFC;
+    box-shadow: 2px 2px 2px gray;
+    margin: 10px;
+    display: block;
+    justify-content: space-between;
+    min-width: 51em;
+    padding: 2em;
+    color: #336473;
+}
+.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th {
+    background-color: rgba(51, 100, 115, 0.37);
+}
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+    background-color:#F2FBFC;
+}
+
+.table-striped>thead>tr>th {
+    background-color: #336473;
+    color: white;
 }

@@ -1,20 +1,33 @@
 .name {
     text-align: center;
-    display: flex;   
-}
+    display: flex;
+  }
 
 .edit-save {
-    list-style: none;
-    float: right;
+  list-style: none;
 }
 
-.page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px;
+.pg-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
 }
 
 .abt-contact {
-    display: flex;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.editButton {
+  background-color: Transparent;
+  color: #003E53;
+  text-decoration: underline;
+  cursor: pointer;
+  border-color: Transparent;
+}
+
+.userName {
+  color: #003E53;
 }

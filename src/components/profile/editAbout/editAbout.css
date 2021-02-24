@@ -1,9 +1,14 @@
 .aboutCard {
-    margin: 25px;
-    padding: 20px;
-    max-width: 450px;
-    min-width: 300px;
-    min-height: 250px;
-    background-color: gray;
+    margin: 10px;
+    min-width: 25em;
+    min-height: 12em;
     text-align: left;
+    background-color: #F2FBFC;
+    color: #003E53;
+    box-shadow: 2px 2px 2px gray;
+    padding: 2em 2em;
+}
+
+img {
+    margin: 0px 15px 0px 15px;
 }
