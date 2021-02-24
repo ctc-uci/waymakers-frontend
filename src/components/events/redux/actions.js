@@ -8,10 +8,12 @@ const instance = axios.create({
 
 // Fetching events from server
 export const fetchEvents = () => async (dispatch) => {
+  console.log('HELLO');
   const url = 'events/';
   // TODO: Add filters for getting events based on division, type, user, etc.
   try {
     const response = await instance.get(url);
+    console.log('FETCHING EVENTS');
     dispatch({ type: 'events/eventsLoaded', payload: response.data });
     return null; // Need this so we exit async function
   } catch (err) {
