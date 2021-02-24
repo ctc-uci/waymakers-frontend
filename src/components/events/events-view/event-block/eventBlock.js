@@ -6,7 +6,8 @@ import * as IconGo from 'react-icons/go';
 
 import { connect } from 'react-redux';
 
-// import { deleteEvent } from '../../redux/actions';
+import { deleteEvent } from '../../redux/actions';
+import store from '../../redux/store';
 import trashcan from '../../../../images/trashcan.svg';
 
 import './eventBlock.css';
@@ -32,6 +33,7 @@ const EventBlock = ({
 
   const onDeleteClick = () => {
     console.log(eventInfo.event.id);
+    store.dispatch(deleteEvent(eventInfo.event.id));
   };
 
   const renderEventButton = () => {

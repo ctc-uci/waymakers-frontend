@@ -130,7 +130,7 @@ const EventsView = ({
         plugins={[timeGridPlugin, dayGridPlugin]}
         initialView="timeGridWeek"
         events={events}
-        eventClick={() => { console.log('who is joe'); }}
+        // eventClick={() => { console.log('who is joe'); }}
         contentHeight={450}
         ref={calendarEl}
         headerToolbar={{
