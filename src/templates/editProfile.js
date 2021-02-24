@@ -4,13 +4,16 @@ import { useHistory } from 'react-router-dom';
 import './editProfile.css';
 import axios from 'axios';
 
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
+
 import EditAbout from '../components/profile/editAbout/editAbout.js';
 import EditContact from '../components/profile/editContact/editContact.js';
 import Qualification from '../components/profile/qualifications/qualifications';
 
 import profCircle from '../images/profCircle.png';
 
-function editProfile() {
+const editProfile = (props) => {
   // Idea: we have states for each of the information fields we're allowed to change
   // Then, we have a handle function for each of those states that we pass down as props to
   // the edit components.
@@ -28,6 +31,7 @@ function editProfile() {
   // - How do we deal with bday since date format for PSQL is wack?
   //    - use JS date object?
 
+  const { cookies } = props;
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
 
@@ -41,20 +45,22 @@ function editProfile() {
 
   const [tier, setTier] = useState(3);
   const [status, setStatus] = useState('Volunteer');
+  const [qualificationsAll, setQualificationAll] = useState([]);
 
   const [isLoading, setLoading] = useState(false);
 
   const history = useHistory();
-  // const [availabilities, setAvailabilities] = useState([]);
 
   useEffect(async () => {
     setLoading(true);
+    const userID = cookies.get('userId');
     const result = await axios.get(
-      'http://localhost:3001/accounts/4jkl5llkjljkfs3fsdcs        ', {
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
         withCredentials: true,
       },
     );
-    const { account, permissions } = result.data; // deal with availability later
+
+    const { account, permissions } = result.data;
     const {
       locationstreet, locationcity, locationstate, locationzip,
     } = account;
@@ -70,33 +76,42 @@ function editProfile() {
     setBirthday(account.birthdate);
     setTier(account.tier);
     setStatus(permissions.permissions);
-    // setAvailabilities(availability);
+
+    const qualificationResult = await axios.get(
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/qualifications/user/${userID}`, {
+        withCredentials: true,
+      },
+    );
+
+    const qualificationData = qualificationResult.data;
+    setQualificationAll(qualificationData);
+
     setLoading(false);
   }, []);
 
-  const qualifications = [
-    {
-      qualification: 'Valid drivers license',
-      response: 'Yes',
-      date: '11/16/2020',
-      status: 'Qualified',
-      notes: 'note',
-    },
-    {
-      qualification: 'Completed live scan',
-      response: 'Yes',
-      date: '11/19/2020',
-      status: 'Qualified',
-      notes: 'note',
-    },
-    {
-      qualification: 'Attended the new volunteer orientation?',
-      response: 'Yes',
-      date: '11/16/2020',
-      status: 'Qualified',
-      notes: 'note',
-    },
-  ];
+  // const qualifications = [
+  //   {
+  //     qualification: 'Valid drivers license',
+  //     response: 'Yes',
+  //     date: '11/16/2020',
+  //     status: 'Qualified',
+  //     notes: 'note',
+  //   },
+  //   {
+  //     qualification: 'Completed live scan',
+  //     response: 'Yes',
+  //     date: '11/19/2020',
+  //     status: 'Qualified',
+  //     notes: 'note',
+  //   },
+  //   {
+  //     qualification: 'Attended the new volunteer orientation?',
+  //     response: 'Yes',
+  //     date: '11/16/2020',
+  //     status: 'Qualified',
+  //     notes: 'note',
+  //   },
+  // ];
 
   // Use axios PUT request to send new info to backend api, but only after form is "submitted"
   const updateInfo = async () => {
@@ -122,14 +137,15 @@ function editProfile() {
 
   return (
     <div>
+      {/* <pre>{JSON.stringify(qualificationsAll, null, 2) }</pre> */}
       <div className="pg-container">
         <div className="profPic">
-          <img src={profCircle} alt="" width="200" height="200" />
+          <img src={profCircle} alt="" width="150" height="150" />
         </div>
         <div className="name">
-          <h3>{`${firstname} ${lastname}`}</h3>
+          <h1>{`${firstname} ${lastname}`}</h1>
           <ul className="edit-save">
-            <button onClick={updateInfo} type="button">
+            <button className="editButton" onClick={updateInfo} type="button">
               Save
             </button>
           </ul>
@@ -154,12 +170,16 @@ function editProfile() {
         </div>
         <div>
           <div className="qualCard">
-            <Qualification qualifications={qualifications} isEditing />
+            <Qualification qualifications={qualificationsAll} isEditing />
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default editProfile;
+editProfile.propTypes = {
+  cookies: instanceOf(Cookies).isRequired,
+};
+
+export default withCookies(editProfile);

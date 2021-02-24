@@ -6,20 +6,23 @@ import './qualifications.css';
 function Qualification({ qualifications, isEditing }) {
   const rows = qualifications.map((task) => (
     <tr>
-      <td>{task.qualification}</td>
+      <td>{task.name}</td>
       <td>
-        <button type="button" className={isEditing ? 'btn btn-secondary btn-sm' : 'btn btn-success btn-sm'} disabled={isEditing}>Update</button>
+        <button type="button" className={isEditing ? 'updateBtn btn btn-secondary btn-sm rounded-pill' : 'updateBtn btn btn-success btn-sm rounded-pill'} disabled={isEditing}>Update</button>
         {' '}
       </td>
-      <td>{task.date}</td>
-      <td>{task.status}</td>
+      <td>{task.completion_timestamp.substring(0, 10)}</td>
+      <td>{task.completion_status}</td>
       <td>{task.notes}</td>
     </tr>
   ));
 
   return (
     <div id="qual">
-      <h3>Qualifications Required</h3>
+      <div className="d-flex flex-row justify-content-between align-items-center">
+        <h3 className="p-2">Qualifications Required</h3>
+        <button type="button" className="btn btn-success rounded-circle">?</button>
+      </div>
       <section>
         <table className="table table-striped">
           <thead>

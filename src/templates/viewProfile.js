@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 import './viewProfile.css';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -36,10 +38,7 @@ const viewProfile = (props) => {
   const [tier, setTier] = useState(0);
   const [status, setStatus] = useState('Volunteer');
 
-  const [qualificationName, setQualificationName] = useState('');
-  const [qualificationDateAdded, setQualificationDateAdded] = useState('');
-  const [qualificationStatus, setQualificationStatus] = useState('');
-  const [qualificationNote, setQualificationNote] = useState('');
+  const [qualificationAll, setQualificationAll] = useState([]);
 
   const [isLoading, setLoading] = useState(false);
 
@@ -68,19 +67,14 @@ const viewProfile = (props) => {
     setStatus(permissions.permissions);
 
     // get req for qualifications
-    // eslint-disable-next-line no-unused-vars
     const qualificationResult = await axios.get(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/qualifications/${userID}`, {
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/qualifications/user/${userID}`, {
         withCredentials: true,
       },
     );
 
-    const { qualificationData } = qualificationResult.data;
-    // not sure if backend tables have these names, and required setup
-    setQualificationName(qualificationData.name);
-    setQualificationDateAdded(qualificationData.dateadded);
-    setQualificationStatus(qualificationData.status);
-    setQualificationNote(qualificationData.note);
+    const qualificationData = qualificationResult.data;
+    setQualificationAll(qualificationData);
 
     setLoading(false);
   }, []);
@@ -90,47 +84,17 @@ const viewProfile = (props) => {
   }
   console.log('render'); // Remove this later
 
-  const qualifications = [
-    qualificationName, qualificationDateAdded, qualificationStatus, qualificationNote,
-  ];
-  // const qualifications = [
-  //   {
-  //     qualification: 'Valid drivers license',
-  //     response: 'Yes',
-  //     date: '11/16/2020',
-  //     status: 'Qualified',
-  //     notes: 'note',
-  //   },
-  //   {
-  //     qualification: 'Completed live scan',
-  //     response: 'Yes',
-  //     date: '11/19/2020',
-  //     status: 'Qualified',
-  //     notes: 'note',
-  //   },
-  //   {
-  //     qualification: 'Attended the new volunteer orientation?',
-  //     response: 'Yes',
-  //     date: '11/16/2020',
-  //     status: 'Qualified',
-  //     notes: 'note',
-  //   },
-  // ];
-  // const incomplete = ['Valid Driver\'s License', 'Confidentiality Agreement',
-  // 'Current Car Insurance',
-  // 'TSA Background Check'];
-  // Passing user info as props to About, Contact and (eventually) availability components
-  // Also, remove the two buttons later
   return (
     <div>
+      {/* <pre>{JSON.stringify(qualificationAll, null, 2) }</pre> */}
       <div className="page-container">
         <div className="profilePic">
-          <img src={profCircle} alt="" width="200" height="200" />
+          <img src={profCircle} alt="" width="150" height="150" />
         </div>
         <div className="name">
-          <button type="button" onClick={() => { setStatus('Volunteer'); }}>Change to volunteer</button>
+          {/* <button type="button" onClick={() => { setStatus('Volunteer'); }}>Change to volunteer</button> */}
           <h1 className="userName">{`${firstName} ${lastName}`}</h1>
-          <button type="button" onClick={() => { setStatus('Admin'); }}>Change to admin</button>
+          {/* <button type="button" onClick={() => { setStatus('Admin'); }}>Change to admin</button> */}
           <ul className="edit-save">
             <button className="editButton" type="button" onClick={() => { history.push('/editProfile'); }}>
               Edit
@@ -147,7 +111,7 @@ const viewProfile = (props) => {
         </div>
         <div>
           <div className="qualCard">
-            <Qualification qualifications={qualifications} isEditing={false} />
+            <Qualification qualifications={qualificationAll} isEditing={false} />
           </div>
         </div>
       </div>

@@ -21,3 +21,13 @@
     background-color: #336473;
     color: white;
 }
+
+.updateBtn {
+    padding: 3px 20px;
+}
+
+.rounded-circle {
+    width: 25px;
+    height: 25px;
+    padding: 4px;
+}
