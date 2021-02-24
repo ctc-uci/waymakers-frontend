@@ -23,6 +23,8 @@ export const getEventsForFullCalendar = (store) => {
     location: event.location,
     description: event.description,
     id: event.id,
+    eventLimit: event.eventLimit,
+    eventAttendance: event.eventAttendance,
   }));
 };
 
@@ -47,5 +49,7 @@ export const getUserEventsForFullCalendar = (store) => {
     location: event.location,
     description: event.description,
     id: event.id,
+    eventLimit: event.eventLimit,
+    eventAttendance: event.eventAttendance,
   }));
 };

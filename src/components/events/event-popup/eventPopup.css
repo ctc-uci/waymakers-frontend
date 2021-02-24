@@ -1,15 +1,222 @@
-.popup{
-    border: 1px;
-    z-index: 3;
-    background-color: #ffa29c;
-    color: black;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    padding: 2em;
-    width: 20em;
-    border-radius: 5px;
-    transform: translate(-50%, -50%);
-    margin: auto;
+@import '../../../common/vars.css';
 
+.popup {
+    position: absolute;
+    z-index: 3;
+
+    background: var(--color-dark-blue);
+
+    border: 0.5px solid #000000;
+    border-radius: 10px 10px 10px 10px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    max-width: 500px;
+}
+
+.popup .exit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    right: 0;
+
+    border: 0;
+    border-radius: 50%;
+    outline: 0;
+
+    cursor: pointer;
+
+    background: white;
+
+    margin-right: 1%;
+    margin-top: 1%;
+
+    width: 25px;
+    height: 25px;
+}
+
+.popup .exit-button .x-icon {
+    width: 15px;
+    height: 15px;
+}
+
+.popup .event-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(196, 196, 196, 0.75);
+
+    font-size: 1.5rem;
+
+    height: 150px;
+}
+
+.popup .event-info {
+    border-radius: 0px 0px 10px 10px;
+}
+
+.popup .event-info .popup-header {
+    font-weight: bold;
+
+    line-height: 1rem;;
+
+    overflow: wrap;
+
+    padding-left: 3.5%;
+    padding-right: 3.5%;
+    padding-top: 1%;
+
+    height: auto;
+}
+
+.popup .event-info .popup-header .event-time {
+    font-size: 1.2rem;
+
+    color: var(--color-light-orange);
+
+    padding: 0;
+    margin-bottom: 2%;
+}
+
+.popup .event-info .popup-header .event-name { 
+    font-size: 1.5rem;
+
+    color: var(--text-color-light);
+
+    white-space: normal;
+
+    line-height: 26px;
+    min-height: 55px;
+
+    margin: 0;
+    padding: 0;
+}
+
+.popup .event-info .details-section {
+    color: white;
+    background-color: var(--color-dark-blue);
+
+    padding-left: 3.5%;
+    padding-right: 3.5%;
+
+    margin-bottom: 2%;
+
+    height: auto;
+}
+
+.popup .event-info .details-section .details-title {
+    font-size: 1.5rem;
+
+    margin-top: 1%;
+    margin-bottom: 3%;
+}
+
+.popup .event-info .details-section .event-detail {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 1.5%;
+
+    height: 10%;
+}
+
+.popup .event-info .details-section .event-detail .event-detail-icon {
+    height: 23px;
+    width: 23px;
+}
+
+.popup .event-info .details-section .event-detail .event-detail-label {
+    font-size: 1.1rem;
+
+    padding-left: 2%;
+}
+
+.popup .event-info .event-description {
+    background-color: var(--color-dark-blue);
+
+    color: white;
+
+    font-size: 1.1rem;
+    text-align: left;
+
+    padding: 2% 11.5% 3.5% 11.5%;
+
+    height: auto;
+}
+
+.popup .event-info .multi-event-option {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 5%;
+    
+    height: 48px;
+}
+
+.popup .event-info .single-event-option {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 5%;
+    
+    height: 48px;
+}
+
+.popup .event-info .button {
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0px 2px #002835;
+
+    color: white;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+
+    background: var(--color-green);
+
+    height: 75%;
+    width: 41%;
+}
+
+.popup .event-info .add-intent-button {
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0px 2px #002835;
+
+    color: white;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+
+    background: var(--color-green);
+
+    height: 75%;
+    width: 75%;
+}
+
+.popup .event-info .confirm-button {
+    background: rgba(93, 154, 100, 0.8);
+}
+
+.popup .event-info .cancel-button {
+    background: #DA6153;
 }
