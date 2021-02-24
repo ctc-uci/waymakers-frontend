@@ -77,6 +77,14 @@
     margin-top: 3%;
 }
 
+#week-edit-event-block button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: transparent;
+    border: 0;
+}
+
 #week-edit-event-title {
     margin-left: 3%;
 }

@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Icon from 'react-icons/im';
+// import * as Icon from 'react-icons/im';
 import * as IconAi from 'react-icons/ai';
 import * as IconGo from 'react-icons/go';
 
 import { connect } from 'react-redux';
+
+// import { deleteEvent } from '../../redux/actions';
+import trashcan from '../../../../images/trashcan.svg';
 
 import './eventBlock.css';
 
@@ -27,12 +30,21 @@ const EventBlock = ({
     setShowPopup(true);
   };
 
+  const onDeleteClick = () => {
+    console.log(eventInfo.event.id);
+  };
+
   const renderEventButton = () => {
     if (isUserEvent) {
       const checkIcon = <IconAi.AiOutlineCheck size={10} color="black" />;
       return <button type="button">{checkIcon}</button>;
     }
     return <button type="button" onClick={(e) => { e.stopPropagation(); onAddButtonClick(); }}>+</button>;
+  };
+
+  const renderTrashButton = () => {
+    const trashIcon = <img className="trash-icon" src={trashcan} alt="trashcan" />;
+    return <button type="button" onClick={onDeleteClick}>{trashIcon}</button>;
   };
 
   // Renders diff blocks based on view and page/pathname
@@ -51,7 +63,7 @@ const EventBlock = ({
       case '/events':
         return (
           <div id="week-edit-event-block">
-            <Icon.ImBin id="trash-can" />
+            {renderTrashButton()}
             <p id="week-edit-event-title">{eventInfo.event.title}</p>
           </div>
         );
