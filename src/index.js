@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 
 import ProtectedRoute from './routes/ProtectedRoute';
-import Layout from './components/layout/layout';
+// import Layout from './components/layout/layout';
 import Dashboard from './components/dashboard/dashboard';
 import Register from './components/register/register';
 import LogIn from './components/login/login';
@@ -23,46 +23,46 @@ import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggr
 import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Layout />
+    {/* <Layout /> */}
     <CookiesProvider>
       <Router>
         <div className="App">
-          <div className="container">
-            <Switch>
-              <ProtectedRoute path="/" component={Dashboard} exact />
-              <Route path="/register" component={Register} />
-              <Route path="/login" component={LogIn} />
-              {/* <ProtectedRoute path="/profile" component={Profile} /> */}
-              <ProtectedRoute path="/profile" component={viewProfile} />
-              <ProtectedRoute path="/editProfile" component={editProfile} />
-            </Switch>
+          {/* <div className="container"> */}
+          <Switch>
+            <ProtectedRoute path="/" component={Dashboard} exact />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={LogIn} />
+            {/* <ProtectedRoute path="/profile" component={Profile} /> */}
+            <ProtectedRoute path="/profile" component={viewProfile} />
+            <ProtectedRoute path="/editProfile" component={editProfile} />
+          </Switch>
 
-            <Switch>
-              <ProtectedRoute path="/admin/users" component={ManageUsers} />
-              <ProtectedRoute path="/admin/db" component={ManageDB} />
-              <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
-              <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
-              <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
-            </Switch>
+          <Switch>
+            <ProtectedRoute path="/admin/users" component={ManageUsers} />
+            <ProtectedRoute path="/admin/db" component={ManageDB} />
+            <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
+            <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
+            <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
+          </Switch>
 
-            <Switch>
-              <ProtectedRoute path="/volunteer/hours" component={Hours} />
-              <ProtectedRoute path="/volunteer/tier" component={Tier} />
-              <ProtectedRoute path="/volunteer/forms" component={Forms} />
-            </Switch>
+          <Switch>
+            <ProtectedRoute path="/volunteer/hours" component={Hours} />
+            <ProtectedRoute path="/volunteer/tier" component={Tier} />
+            <ProtectedRoute path="/volunteer/forms" component={Forms} />
+          </Switch>
 
-            <Switch>
-              <ProtectedRoute path="/inventory" component={Inventory} />
-              <ProtectedRoute path="/reports" component={Reports} />
-              <ProtectedRoute path="/events/viewHours" component={viewHours} />
-              <ProtectedRoute path="/events" component={Events} />
-            </Switch>
-          </div>
+          <Switch>
+            <ProtectedRoute path="/inventory" component={Inventory} />
+            <ProtectedRoute path="/reports" component={Reports} />
+            <ProtectedRoute path="/events/viewHours" component={viewHours} />
+            <ProtectedRoute path="/events" component={Events} />
+          </Switch>
+          {/* </div> */}
         </div>
       </Router>
     </CookiesProvider>
