@@ -30,7 +30,7 @@ const EventBlock = ({
       const checkIcon = <IconAi.AiOutlineCheck size={10} color="black" />;
       return <button type="button">{checkIcon}</button>;
     }
-    return <button type="button" onClick={onAddButtonClick}>+</button>;
+    return <button type="button" onClick={(e) => { e.stopPropagation(); onAddButtonClick(); }}>+</button>;
   };
 
   // Renders diff blocks based on view and page/pathname

@@ -5,6 +5,7 @@
     flex-direction: row;
     justify-content: space-between;
     height: 100%;
+    z-index: 0;
 }
 
 #week-event-content{
@@ -37,6 +38,7 @@
     border: none;
     font-weight: bold;
     background-color: var(--color-light-blue);
+    z-index: 999;
 }
 
 #monthViewEventTitle {
