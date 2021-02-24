@@ -1,3 +1,7 @@
+*:focus {
+    outline: 0;
+}
+
 #week-event-block{
     color: var(--color-dark-light);
     font-weight: bold;

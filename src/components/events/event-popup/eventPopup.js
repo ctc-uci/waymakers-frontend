@@ -28,6 +28,7 @@ const monthList = [
 const EventPopup = ({
   event, onClose, canAdd, addEventToUserCalendar, cookies,
 }) => {
+  console.log(event);
   const startDate = new Date(event.start);
   const endDate = new Date(event.end);
 

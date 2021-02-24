@@ -54,7 +54,7 @@ const EventBlock = ({
     switch (path) {
       case '/volunteer/events':
         return (
-          <div id="week-event-block">
+          <div id="week-event-block" tabIndex={0} onClick={() => { console.log('joe mama'); }} onKeyDown={() => {}} role="button">
             <div id="week-event-content">
               <p>{eventInfo.event.title}</p>
               {renderEventButton()}

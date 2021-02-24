@@ -141,9 +141,6 @@ const EventsView = ({
         dayHeaderContent={renderHeader}
         eventContent={renderEventContent}
         allDaySlot={false}
-        slotMinTime="09:00:00"
-        slotMaxTime="21:00:00"
-        height="auto"
       />
     );
   };
