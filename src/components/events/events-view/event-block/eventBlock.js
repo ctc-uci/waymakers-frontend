@@ -13,7 +13,7 @@ import trashcan from '../../../../images/trashcan.svg';
 import './eventBlock.css';
 
 const EventBlock = ({
-  path, eventInfo, setShowPopup, setSelectedEvent,
+  path, eventInfo, setShowPopup, setSelectedEvent, setConfirmAddEvent,
 }) => {
   const eventTypeColors = {
     Volunteer: 'var(--color-golden-yellow)',
@@ -26,8 +26,15 @@ const EventBlock = ({
 
   // TODO: Figure out how to get this to trigger -- a diff click event for the cal triggers
   // before this one does
+  const onEventBlockClick = () => {
+    setSelectedEvent(eventInfo.event);
+    setConfirmAddEvent(false);
+    setShowPopup(true);
+  };
+
   const onAddButtonClick = () => {
     setSelectedEvent(eventInfo.event);
+    setConfirmAddEvent(true);
     setShowPopup(true);
   };
 
@@ -54,7 +61,7 @@ const EventBlock = ({
     switch (path) {
       case '/volunteer/events':
         return (
-          <div id="week-event-block" tabIndex={0} onClick={() => { console.log('joe mama'); }} onKeyDown={() => {}} role="button">
+          <div id="week-event-block" tabIndex={0} onClick={() => { onEventBlockClick(); }} onKeyDown={() => {}} role="button">
             <div id="week-event-content">
               <p>{eventInfo.event.title}</p>
               {renderEventButton()}
@@ -101,6 +108,7 @@ EventBlock.propTypes = {
   eventInfo: PropTypes.objectOf(PropTypes.any).isRequired,
   setShowPopup: PropTypes.func.isRequired,
   setSelectedEvent: PropTypes.func.isRequired,
+  setConfirmAddEvent: PropTypes.func.isRequired,
 };
 
 export default connect(null, {

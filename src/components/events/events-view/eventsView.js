@@ -30,6 +30,7 @@ const EventsView = ({
   const [selectedEvent, setSelectedEvent] = useState({});
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1); // stored as int
+  const [confirmAddEvent, setConfirmAddEvent] = useState(false);
   const [day, setDay] = useState(new Date().getDate());
   const [path] = useState(useLocation().pathname);
   const calendarEl = useRef(null);
@@ -69,6 +70,8 @@ const EventsView = ({
         showEditPopup={showEditPopup}
         path={path}
         showMoreEvents={showMoreEvents}
+        confirmAddEvent={confirmAddEvent}
+        setConfirmAddEvent={setConfirmAddEvent}
       />
     );
   }
@@ -86,6 +89,7 @@ const EventsView = ({
         eventInfo={eventInfo}
         setShowPopup={setShowPopup}
         setSelectedEvent={setSelectedEvent}
+        setConfirmAddEvent={setConfirmAddEvent}
       />
     );
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
@@ -26,13 +26,11 @@ const monthList = [
 // Additional props for edit event popup: showEditButton, onEditButtonClick,
 
 const EventPopup = ({
-  event, onClose, canAdd, addEventToUserCalendar, cookies,
+  event, onClose, canAdd, addEventToUserCalendar, cookies, confirmAddEvent, setConfirmAddEvent,
 }) => {
   console.log(event);
   const startDate = new Date(event.start);
   const endDate = new Date(event.end);
-
-  const [wantToAdd, setWantToAdd] = useState(false);
 
   const cancelButton = (
     <button
@@ -41,7 +39,7 @@ const EventPopup = ({
       aria-label="close popup"
       onClick={() => {
         onClose();
-        setWantToAdd(false);
+        setConfirmAddEvent(false);
       }}
     >
       Cancel
@@ -65,59 +63,78 @@ const EventPopup = ({
     onClose();
   };
 
-  const renderButtons = () => {
-    if (canAdd === true && event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
-      if (wantToAdd) {
-        return (
-          <div className="multi-event-option">
-            {cancelButton}
-            <button
-              className="button confirm-button"
-              type="button"
-              aria-label="confirm add event"
-              onClick={() => {
-                addEvent();
-                setWantToAdd(false);
-              }}
-            >
-              Confirm
-            </button>
-          </div>
-        );
-      }
-      return (
-        <div className="single-event-option">
-          <button
-            className="add-intent-button"
-            type="button"
-            aria-label="add to my events"
-            onClick={() => setWantToAdd(true)}
-          >
-            Add to My Events
-          </button>
-        </div>
-      );
-    }
-    return (
-      <div className="single-event-option">
-        {cancelButton}
-      </div>
-    );
-  };
+  // Rendered when + button clicked
+  const renderConfirmCancelButtons = () => (
+    <div className="multi-event-option">
+      {cancelButton}
+      <button
+        className="button confirm-button"
+        type="button"
+        aria-label="confirm add event"
+        onClick={() => {
+          addEvent();
+          setConfirmAddEvent(false);
+        }}
+      >
+        Confirm
+      </button>
+    </div>
+  );
 
-  // Renders edit button as needed
-  /* const renderEditButton = () => {
-    if (showEditButton === true) {
-      const switchToEditPopup = () => {
-        onClose();
-        onEditButtonClick();
-      };
-      return (
-  <button type="button" aria-label="edit event" onClick={switchToEditPopup}>Edit Event</button>
-      );
+  const renderAddEventButton = () => (
+    <div className="single-event-option">
+      <button
+        className="add-intent-button"
+        type="button"
+        aria-label="Add To My Events"
+        onClick={() => setConfirmAddEvent(true)}
+      >
+        Add to My Events
+      </button>
+    </div>
+  );
+
+  const renderAddMyHoursButton = () => (
+    <div className="single-event-option">
+      <button
+        className="add-intent-button"
+        type="button"
+        aria-label="Add to My Hours"
+        onClick={() => { console.log(`adding hours to ${event.id}`); }}
+      >
+        Add to My Hours
+      </button>
+    </div>
+  );
+
+  const renderRemoveFromMyEvent = () => (
+    <div className="single-event-option">
+      <button
+        className="add-intent-button"
+        type="button"
+        aria-label="Add to My Hours"
+        onClick={() => console.log(`removed event with id ${event.id}`)}
+      >
+        Remove From My Events
+      </button>
+    </div>
+  );
+
+  const renderButtons = () => {
+    if (canAdd === true) { // NOT a user event
+      if (event.extendedProps.eventAttendance < event.extendedProps.eventLimit && confirmAddEvent) {
+        // Confirm + Cancel button
+        return renderConfirmCancelButtons();
+      } // This is for a NON user event (MORE EVENT) when we click the reg block
+      return renderAddEventButton();
     }
-    return null;
-  }; */
+    const currentDate = new Date();
+    if (endDate < currentDate) {
+      return renderAddMyHoursButton();
+    }
+    // Future/Current Event
+    return renderRemoveFromMyEvent();
+  };
 
   return (
     <div className="popup">
@@ -189,6 +206,8 @@ EventPopup.propTypes = {
   canAdd: PropTypes.bool.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   addEventToUserCalendar: PropTypes.func.isRequired,
+  confirmAddEvent: PropTypes.bool.isRequired,
+  setConfirmAddEvent: PropTypes.func.isRequired,
   // showEditButton: PropTypes.bool,
   // onEditButtonClick: PropTypes.func,
 };

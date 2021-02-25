@@ -15,6 +15,8 @@ const CalendarPopup = ({
   showPopup,
   showEditPopup,
   showMoreEvents,
+  confirmAddEvent,
+  setConfirmAddEvent,
 }) => {
   // Volunteer Dashboard => AddPopup/EventPopup
   // Admin Aggregate Page => DialogueBox
@@ -32,6 +34,8 @@ const CalendarPopup = ({
                 event={selectedEvent}
                 onClose={() => setShowPopup(false)}
                 canAdd={found.length !== 1}
+                confirmAddEvent={confirmAddEvent}
+                setConfirmAddEvent={setConfirmAddEvent}
               />
             );
           case '/events':
@@ -108,6 +112,8 @@ CalendarPopup.propTypes = {
   showPopup: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
   showMoreEvents: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
+  confirmAddEvent: PropTypes.bool.isRequired,
+  setConfirmAddEvent: PropTypes.func.isRequired,
 };
 
 export default CalendarPopup;

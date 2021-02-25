@@ -43,6 +43,7 @@
     font-weight: bold;
     background-color: var(--color-light-blue);
     z-index: 999;
+    cursor: pointer;
 }
 
 #monthViewEventTitle {
