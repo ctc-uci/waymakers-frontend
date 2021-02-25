@@ -12,8 +12,8 @@ import { withCookies, Cookies } from 'react-cookie';
 import auth from '../../firebase/firebase';
 import EventList from '../../events/event-list/eventList';
 import './volunteerDashboard.css';
-import ViewAvailability from '../availability-component/viewAvailability/ViewAvailability';
-import EditAvailability from '../availability-component/editAvailability/EditAvailability';
+import ViewAvailability from '../availability-component/viewAvailability/viewAvailability';
+import EditAvailability from '../availability-component/editAvailability/editAvailability';
 
 const VolunteerDashboard = (props) => {
   const instance = axios.create({
@@ -52,7 +52,7 @@ const VolunteerDashboard = (props) => {
       let allEvents = await instance.get('events');
 
       if (allEvents.status === 200) {
-        allEvents = allEvents.data.slice(0, 3);
+        allEvents = allEvents.data.slice(0, 6);
         console.log(allEvents);
       }
       setMoreEvents(allEvents);
@@ -148,16 +148,18 @@ const VolunteerDashboard = (props) => {
         {availabilityMode === 'view' ? (
           <div className="availability-wrapper">
             <h5 className="availability-title">Availability for the Week</h5>
-            <div
-              className="editButton"
-              onClick={() => { setAvailabilityMode('edit'); }}
-              onKeyDown={() => { setAvailabilityMode('edit'); }}
-              role="button"
-              tabIndex={0}
-            >
-              Change Availability
+            <div className="availability-buttons-container">
+              <div
+                className="edit-button"
+                onClick={() => { setAvailabilityMode('edit'); }}
+                onKeyDown={() => { setAvailabilityMode('edit'); }}
+                role="button"
+                tabIndex={0}
+              >
+                Change Availability
+              </div>
+              <div className="help-popup">?</div>
             </div>
-            <p className="mode">View Mode</p>
             <ViewAvailability availabilities={availability} startWeek={startWeek} />
           </div>
         )
@@ -165,7 +167,7 @@ const VolunteerDashboard = (props) => {
             <div className="availability-wrapper">
               <h5 className="availability-title">Availability for the Week</h5>
               <div
-                className="saveButton"
+                className="save-button"
                 onClick={updateAvailability}
                 onKeyDown={updateAvailability}
                 role="button"
@@ -173,7 +175,6 @@ const VolunteerDashboard = (props) => {
               >
                 Save Changes
               </div>
-              <p className="mode">Edit Mode</p>
               <EditAvailability
                 availabilityTimes={availability}
                 setAvailabilityTimes={setAvailability}

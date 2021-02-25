@@ -9,10 +9,10 @@
   justify-content: space-between;
 }
 
-.warehouse-selector-title {
-  color: var(--text-color-dark);
-  margin: 0;
-  line-height: 1;
+.warehouse-selector {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .top-items-section {

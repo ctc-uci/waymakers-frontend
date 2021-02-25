@@ -13,7 +13,7 @@ const Event = ({
   const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(startDate);
   const startTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(startDate);
   const endTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(endDate);
-  const eventType = (event.eventType === 'Volunteer') ? 'volunteer-event' : 'outreach-event';
+  const eventType = `${event.eventType.toLowerCase()}-event`;
 
   return (
     <div className="event-list-container">

@@ -6,30 +6,26 @@ import { changeSelectedWarehouse } from '../redux/actions';
 import './warehouseMenu.css';
 
 const WarehouseMenu = (prop) => {
-  //  Returns a button for a single warehouse
-  const MenuItem = (warehouseID, warehouseLabel) => (
-    <label htmlFor={warehouseLabel} key={warehouseID}>
-      <input
-        id={warehouseID}
-        className="warehouse-radio-button"
-        type="radio"
-        name="warehouse"
-        value={warehouseID}
-        onChange={() => {
-          store.dispatch(changeSelectedWarehouse(parseInt(warehouseID, 10)));
-        }}
-      />
-      {warehouseLabel}
-    </label>
+  // Creating dropdown selector for warehouse menu
+  const Menu = (list) => (
+    <div className="warehouse-menu-container">
+      <select
+        name="category"
+        className={`warehouse-menu ${prop.dropdownType}`}
+        value={prop.selectedWarehouse}
+        onChange={(e) => { store.dispatch(changeSelectedWarehouse(parseInt(e.target.value, 10))); }}
+      >
+        {/* Creating dropdown menu items from warehouse list */}
+        {Object.entries(list)
+          .sort((a, b) => (a.id > b.id ? 1 : -1))
+          .map(([id, warehouse]) => (
+            <option key={id} value={id}>{warehouse.warehouse_name}</option>
+          ))}
+      </select>
+    </div>
   );
 
-  // Creating list of buttons for warehouse menu
-  const Menu = (list) => Object.entries(list)
-    .sort((a, b) => (a.id > b.id ? 1 : -1))
-    .map(([id, warehouse]) => (
-      MenuItem(id, warehouse.warehouse_name)));
-
-  const [menu, setMenu] = useState(Menu(prop.warehouseList, 0));
+  const [menu, setMenu] = useState(Menu(prop.warehouseList));
 
   // Updates menu when warehouseList changes
   useEffect(() => {
@@ -42,9 +38,9 @@ const WarehouseMenu = (prop) => {
   }, [prop.warehouseList]);
 
   return (
-    <form>
+    <div>
       {menu}
-    </form>
+    </div>
   );
 };
 

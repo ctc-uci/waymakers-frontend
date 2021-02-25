@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import WarehouseMenu from '../../inventory/division-menu/warehouseMenu';
+
 import './inventoryComponent.css';
 
 const axios = require('axios');
@@ -8,7 +10,9 @@ const axios = require('axios');
 const InventoryComponent = () => {
   const [topItems, setTopItems] = useState([]);
   // eslint-disable-next-line
-  const [currWarehouse, setCurrWarehouse] = useState('Warehouse 1');
+   const [warehouseList, setWarehouseList] = useState([]);
+  // eslint-disable-next-line
+  const [currWarehouse, setCurrWarehouse] = useState('');
 
   // Fetching top items from the server
   const getTopItems = async () => {
@@ -18,6 +22,20 @@ const InventoryComponent = () => {
         { withCredentials: true },
       );
       setTopItems(response.data);
+    } catch (err) {
+      // eslint-disable-next-line
+      console.error(err);
+    }
+  };
+
+  // Fetching warehouse names from the server
+  const getWarehouseList = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/warehouses`,
+        { withCredentials: true },
+      );
+      setWarehouseList(response.data);
     } catch (err) {
       // eslint-disable-next-line
       console.error(err);
@@ -45,12 +63,14 @@ const InventoryComponent = () => {
   // Get items on page load
   useEffect(() => {
     getTopItems();
+    getWarehouseList();
   }, []);
 
   return (
     <div className="inventory-component">
       <div className="warehouse-selector">
-        <h4 className="warehouse-selector-title">{currWarehouse}</h4>
+        {/* <h4 className="warehouse-selector-title">{currWarehouse}</h4> */}
+        <WarehouseMenu dropdownType="dashboard" warehouseList={[]} />
       </div>
       <div className="top-items-section">
         {topItems.map((item) => (

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import './EditAvailability.css';
+import './editAvailability.css';
 import ScheduleSelector from 'react-schedule-selector';
 
 // IF WE WANT TO TRY FULLCAL AGAIN:

@@ -88,14 +88,12 @@
     text-align: center;
 }
 
-.event-date {
+.upcoming-event-date {
     text-align: center;
-    /* font-size: 12px; */
 }
 
-.event-time {
+.upcoming-event-time {
     text-align: center;
-    /* font-size: 12px; */
 }
 
 .all-events-section {

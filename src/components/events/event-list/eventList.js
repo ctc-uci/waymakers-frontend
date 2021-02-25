@@ -36,7 +36,7 @@ const EventList = ({
       <div className="events-container">
         {renderEvents()}
         <div className="events-see-more">
-          <a className="see-more-link" href="/">see more</a>
+          <a className="see-more-link" href="/events">see more</a>
         </div>
       </div>
     </div>

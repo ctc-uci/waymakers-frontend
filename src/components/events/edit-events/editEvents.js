@@ -45,10 +45,10 @@ const EditEvents = () => {
         <p className="upcoming-event-name">
           {event.title}
         </p>
-        <div className="event-date">
+        <div className="upcoming-event-date">
           <p>{date}</p>
         </div>
-        <div className="event-time">
+        <div className="upcoming-event-time">
           <p>{`${startTime} - ${endTime}`}</p>
         </div>
       </div>
@@ -106,7 +106,7 @@ const EditEvents = () => {
       </div>
       <div className="all-events-section">
         <Link to="/events">
-          <button type="button" className="all-events-button">View All</button>
+          <button type="button" className="all-events-button">Edit Events</button>
         </Link>
       </div>
     </div>

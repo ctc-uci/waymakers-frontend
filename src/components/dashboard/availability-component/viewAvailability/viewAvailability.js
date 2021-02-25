@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import './ViewAvailability.css';
+import './viewAvailability.css';
 import ScheduleSelector from 'react-schedule-selector';
 
 function viewAvailability({ availabilities, startWeek }) {
