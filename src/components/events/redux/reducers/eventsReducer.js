@@ -2,6 +2,11 @@
 export const initialState = {
   eventsList: [], // List of event objects
   userEventsList: [],
+  showPopup: false,
+  month: new Date().getMonth() + 1,
+  year: new Date().getFullYear(),
+  day: new Date().getDate(),
+  selectedEvent: null,
 };
 
 // Handles the logic of updating the state
@@ -65,9 +70,6 @@ export default (state = initialState, action) => {
         userEventsList: action.payload,
       };
     }
-    default: {
-      return state;
-    }
 
     case 'events/userEventAdded': {
       // eslint-disable-next-line
@@ -80,6 +82,55 @@ export default (state = initialState, action) => {
         ...state,
         userEventsList: [...state.userEventsList, addedEvent],
       };
+    }
+
+    case 'events/showPopupModified': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/showPopupModified] Setting showPopup to ${action.payload}`);
+      return {
+        ...state,
+        showPopup: action.payload,
+      };
+    }
+
+    case 'events/daySelected': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/daySelected] Setting day to ${action.payload}`);
+      return {
+        ...state,
+        day: action.payload,
+      };
+    }
+
+    case 'events/monthSelected': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/monthSelected] Setting month to ${action.payload}`);
+      return {
+        ...state,
+        month: action.payload,
+      };
+    }
+
+    case 'events/yearSelected': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/yearSelected] Setting year to ${action.payload}`);
+      return {
+        ...state,
+        year: action.payload,
+      };
+    }
+
+    case 'events/eventSelected': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/eventSelected] Selecting event: ${action.payload}`);
+      return {
+        ...state,
+        selectedEvent: action.payload,
+      };
+    }
+
+    default: {
+      return state;
     }
   }
 };

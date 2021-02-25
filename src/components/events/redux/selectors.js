@@ -53,3 +53,9 @@ export const getUserEventsForFullCalendar = (store) => {
     eventAttendance: event.eventAttendance,
   }));
 };
+
+export const getShowPopup = (store) => store.events.showPopup;
+export const getMonth = (store) => store.events.month;
+export const getDay = (store) => store.events.day;
+export const getYear = (store) => store.events.year;
+export const getSelectedEvent = (store) => store.events.selectedEvent;

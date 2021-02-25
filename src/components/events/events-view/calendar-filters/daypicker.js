@@ -1,10 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const DayPicker = ({ month, year, onDayChange }) => {
+import {
+  getMonth,
+  getYear,
+} from '../../redux/selectors';
+
+import store from '../../redux/store';
+import { changeDay } from '../../redux/actions';
+
+const DayPicker = (props) => {
   const getFebDays = () => {
-    if (year % 4 === 0) {
-      if (year % 100 === 0 && year % 400 !== 0) {
+    if (props.year % 4 === 0) {
+      if (props.year % 100 === 0 && props.year % 400 !== 0) {
         return 28;
       }
       return 29;
@@ -27,8 +36,14 @@ const DayPicker = ({ month, year, onDayChange }) => {
     12: 30,
   };
 
+  const onDayChange = (newDay) => {
+    if (newDay !== '') {
+      store.dispatch(changeDay(newDay));
+    }
+  };
+
   const createOptionTags = () => {
-    const numDays = mapMonthToDays[month];
+    const numDays = mapMonthToDays[props.month];
     const dayOptionTags = [];
     for (let i = 1; i <= numDays; i += 1) {
       dayOptionTags.push(<option className="picker" value={i}>{i}</option>);
@@ -43,10 +58,14 @@ const DayPicker = ({ month, year, onDayChange }) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  month: getMonth(state),
+  year: getYear(state),
+});
+
 DayPicker.propTypes = {
   month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
-  onDayChange: PropTypes.func.isRequired,
 };
 
-export default DayPicker;
+export default connect(mapStateToProps, null)(DayPicker);

@@ -1,12 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
+import { useSelector } from 'react-redux';
 
 import DayPicker from './daypicker';
 import './calendarFilters.css';
 
+import store from '../../redux/store';
+import { changeMonth, changeYear } from '../../redux/actions';
+
+import {
+  getMonth,
+  getYear,
+} from '../../redux/selectors';
+
 const CalendarFilters = ({
-  month, year, setView, setDay, setMonth, setYear,
+  setView,
 }) => {
   const getCurrentYear = () => new Date().getFullYear();
   return (
@@ -20,25 +29,25 @@ const CalendarFilters = ({
         <MonthPicker
           defaultValue="Select Month"
           endYearGiven
-          year={year}
-          value={month - 1}
+          year={useSelector(getYear)}
+          value={useSelector(getMonth) - 1}
           onChange={(newMonth) => {
             if (newMonth !== '') {
-              setMonth(parseInt(newMonth, 10) + 1);
+              store.dispatch(changeMonth(parseInt(newMonth, 10) + 1));
             }
           }}
           id="month"
           name="month"
         />
-        <DayPicker month={month} year={year} onDayChange={(newDay) => setDay(newDay)} />
+        <DayPicker />
         <YearPicker
           defaultValue="Select Year"
           start={getCurrentYear() - 2}
           end={getCurrentYear() + 10}
-          value={year}
+          value={useSelector(getYear)}
           onChange={(newYear) => {
             if (newYear !== '') {
-              setYear(newYear);
+              store.dispatch(changeYear(newYear));
             }
           }}
           id="year"
@@ -50,12 +59,7 @@ const CalendarFilters = ({
 };
 
 CalendarFilters.propTypes = {
-  month: PropTypes.number.isRequired,
-  year: PropTypes.number.isRequired,
   setView: PropTypes.func.isRequired,
-  setDay: PropTypes.func.isRequired,
-  setMonth: PropTypes.func.isRequired,
-  setYear: PropTypes.func.isRequired,
 };
 
 export default CalendarFilters;

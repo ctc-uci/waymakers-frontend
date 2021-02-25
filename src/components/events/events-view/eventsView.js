@@ -13,7 +13,14 @@ import EventBlock from './event-block/eventBlock';
 import CalendarPopup from './calendar-popup/calendarPopup';
 import CalendarDayHeader from './calendar-day-header/calendarDayHeader';
 
-import { getEventsForFullCalendar, getUserEventsForFullCalendar } from '../redux/selectors';
+import {
+  getEventsForFullCalendar,
+  getUserEventsForFullCalendar,
+  getMonth,
+  getDay,
+  getYear,
+} from '../redux/selectors';
+
 import { fetchEvents, fetchUserEvents } from '../redux/actions';
 
 import './eventsView.css';
@@ -21,17 +28,14 @@ import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
 
 const EventsView = ({
-  getEvents, getUserEvents, cookies,
+  getEvents, getUserEvents, cookies, day, year, month,
 }) => {
   const [showMoreEvents, setShowMoreEvents] = useState(true);
   const [showMyEvents, setShowMyEvents] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
-  const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState(new Date().getMonth() + 1); // stored as int
   const [confirmAddEvent, setConfirmAddEvent] = useState(false);
-  const [day, setDay] = useState(new Date().getDate());
   const [path] = useState(useLocation().pathname);
   const calendarEl = useRef(null);
 
@@ -46,11 +50,11 @@ const EventsView = ({
   useEffect(() => {
     calendarEl.current.getApi().changeView('dayGridMonth', `${year}-${month < 10 ? '0' : ''}${month}-01`);
     calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
-  }, [year, month]);
+  }, [useSelector(getMonth), useSelector(getYear)]);
 
   useEffect(() => {
     calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
-  }, [day]);
+  }, [useSelector(getDay)]);
 
   const onEventClick = (event) => {
     setSelectedEvent(event.event);
@@ -169,12 +173,7 @@ const EventsView = ({
       <div id="top-of-calendar">
         {renderPopup()}
         <CalendarFilters
-          month={month}
-          year={year}
           setView={(view) => { calendarEl.current.getApi().changeView(view); }}
-          setDay={(value) => setDay(value)}
-          setMonth={(value) => setMonth(value)}
-          setYear={(value) => setYear(value)}
         />
         {renderCheckboxes()}
       </div>
@@ -189,9 +188,18 @@ EventsView.propTypes = {
   getEvents: PropTypes.func.isRequired,
   getUserEvents: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
+  month: PropTypes.number.isRequired,
+  year: PropTypes.number.isRequired,
+  day: PropTypes.number.isRequired,
 };
 
-export default withCookies(connect(null, {
+const mapStateToProps = (state) => ({
+  day: getDay(state),
+  month: getMonth(state),
+  year: getYear(state),
+});
+
+export default withCookies(connect(mapStateToProps, {
   getEvents: fetchEvents, // rename fetchEvents action
   getUserEvents: fetchUserEvents,
 })(EventsView));

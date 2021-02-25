@@ -99,3 +99,31 @@ export const addUserEvent = (userId, eventId) => async (dispatch) => {
     return err;
   }
 };
+
+// Dispatches actions to change selected division, and load connected warehouses
+export const setShowPopup = (newValue) => async (dispatch) => {
+  dispatch({ type: 'events/showPopupModified', payload: newValue });
+};
+
+export const changeDay = (newDay) => async (dispatch) => {
+  console.log('CHANGING DAY');
+  dispatch({ type: 'events/daySelected', payload: newDay });
+  // dispatch(fetchEvents());
+};
+
+export const changeMonth = (newMonth) => async (dispatch) => {
+  console.log('CHANGING MONTH');
+  console.log(newMonth);
+  dispatch({ type: 'events/monthSelected', payload: newMonth });
+  // dispatch(fetchEvents());
+};
+
+export const changeYear = (newYear) => async (dispatch) => {
+  console.log('CHANGING YEAR');
+  dispatch({ type: 'events/yearSelected', payload: newYear });
+  // dispatch(fetchEvents());
+};
+
+export const changeSelectedEvent = (event) => async (dispatch) => {
+  dispatch({ type: 'events/eventSelected', payload: event });
+};
