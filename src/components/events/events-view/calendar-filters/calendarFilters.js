@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 import { useSelector } from 'react-redux';
 
@@ -7,17 +6,18 @@ import DayPicker from './daypicker';
 import './calendarFilters.css';
 
 import store from '../../redux/store';
-import { changeMonth, changeYear } from '../../redux/actions';
+import { changeMonth, changeYear, changeView } from '../../redux/actions';
 
 import {
   getMonth,
   getYear,
 } from '../../redux/selectors';
 
-const CalendarFilters = ({
-  setView,
-}) => {
+const CalendarFilters = () => {
   const getCurrentYear = () => new Date().getFullYear();
+  const setView = (newView) => {
+    store.dispatch(changeView(newView));
+  };
   return (
     <div>
       <div id="event-date-picker">
@@ -56,10 +56,6 @@ const CalendarFilters = ({
       </div>
     </div>
   );
-};
-
-CalendarFilters.propTypes = {
-  setView: PropTypes.func.isRequired,
 };
 
 export default CalendarFilters;

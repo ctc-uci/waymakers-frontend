@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 
 import EventPopup from '../../event-popup/eventPopup';
 import HoursPopup from '../../hours-popup/hoursPopup';
@@ -10,13 +10,13 @@ import EditEventPopup from '../../edit-events/editEventPopup';
 import store from '../../redux/store';
 import {
   getShowPopup,
+  getSelectedEvent,
 } from '../../redux/selectors';
 
 import { setShowPopup } from '../../redux/actions';
 
 const CalendarPopup = ({
   userEvents,
-  selectedEvent,
   setShowEditPopup,
   path,
   showEditPopup,
@@ -32,7 +32,9 @@ const CalendarPopup = ({
   // Admin Aggregate Page => DialogueBox
   // Add/Modify/Remove Events Page => EditEventPopup
   function renderPopup() {
-    const found = userEvents.filter((event) => event.id === parseInt(selectedEvent.id, 10));
+    const selectedEventId = parseInt(useSelector(getSelectedEvent).id, 10);
+    const found = userEvents.filter((event) => event.id === selectedEventId);
+    const selectedEvent = useSelector(getSelectedEvent);
 
     if (useSelector(getShowPopup) || showEditPopup) {
       // Event is NOT on the user's calendar
@@ -115,7 +117,6 @@ const CalendarPopup = ({
 
 CalendarPopup.propTypes = {
   userEvents: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
-  selectedEvent: PropTypes.objectOf(PropTypes.any).isRequired,
   setShowEditPopup: PropTypes.func.isRequired,
   showEditPopup: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
@@ -124,4 +125,8 @@ CalendarPopup.propTypes = {
   setConfirmAddEvent: PropTypes.func.isRequired,
 };
 
-export default CalendarPopup;
+const mapStateToProps = (state) => ({
+  selectedEvent: getSelectedEvent(state),
+});
+
+export default connect(mapStateToProps, null)(CalendarPopup);

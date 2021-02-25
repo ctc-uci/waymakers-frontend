@@ -19,6 +19,7 @@ import {
   getMonth,
   getDay,
   getYear,
+  getView,
 } from '../redux/selectors';
 
 import { fetchEvents, fetchUserEvents } from '../redux/actions';
@@ -28,12 +29,11 @@ import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
 
 const EventsView = ({
-  getEvents, getUserEvents, cookies, day, year, month,
+  getEvents, getUserEvents, cookies, day, year, month, view,
 }) => {
   const [showMoreEvents, setShowMoreEvents] = useState(true);
   const [showMyEvents, setShowMyEvents] = useState(true);
   const [showEditPopup, setShowEditPopup] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState({});
   const [confirmAddEvent, setConfirmAddEvent] = useState(false);
   const [path] = useState(useLocation().pathname);
   const calendarEl = useRef(null);
@@ -55,12 +55,15 @@ const EventsView = ({
     calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
   }, [useSelector(getDay)]);
 
+  useEffect(() => {
+    calendarEl.current.getApi().changeView(view);
+  }, [useSelector(getView)]);
+
   function renderPopup() {
     const userEvents = useSelector(getUserEventsForFullCalendar);
     return (
       <CalendarPopup
         userEvents={userEvents}
-        selectedEvent={selectedEvent}
         setShowEditPopup={(value) => setShowEditPopup(value)}
         showEditPopup={showEditPopup}
         path={path}
@@ -82,7 +85,6 @@ const EventsView = ({
       <EventBlock
         path={path}
         eventInfo={eventInfo}
-        setSelectedEvent={setSelectedEvent}
         setConfirmAddEvent={setConfirmAddEvent}
       />
     );
@@ -128,7 +130,6 @@ const EventsView = ({
         plugins={[timeGridPlugin, dayGridPlugin]}
         initialView="timeGridWeek"
         events={events}
-        // eventClick={() => { console.log('who is joe'); }}
         contentHeight={450}
         ref={calendarEl}
         headerToolbar={{
@@ -162,9 +163,7 @@ const EventsView = ({
     <div>
       <div id="top-of-calendar">
         {renderPopup()}
-        <CalendarFilters
-          setView={(view) => { calendarEl.current.getApi().changeView(view); }}
-        />
+        <CalendarFilters />
         {renderCheckboxes()}
       </div>
       <div id="calendar">
@@ -181,12 +180,14 @@ EventsView.propTypes = {
   month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
   day: PropTypes.number.isRequired,
+  view: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   day: getDay(state),
   month: getMonth(state),
   year: getYear(state),
+  view: getView(state),
 });
 
 export default withCookies(connect(mapStateToProps, {

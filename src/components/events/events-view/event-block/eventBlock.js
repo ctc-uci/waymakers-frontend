@@ -6,13 +6,13 @@ import * as IconGo from 'react-icons/go';
 
 import store from '../../redux/store';
 
-import { deleteEvent, setShowPopup } from '../../redux/actions';
+import { deleteEvent, setShowPopup, changeSelectedEvent } from '../../redux/actions';
 import trashcan from '../../../../images/trashcan.svg';
 
 import './eventBlock.css';
 
 const EventBlock = ({
-  path, eventInfo, setSelectedEvent, setConfirmAddEvent,
+  path, eventInfo, setConfirmAddEvent,
 }) => {
   const eventTypeColors = {
     Volunteer: 'var(--color-golden-yellow)',
@@ -26,16 +26,19 @@ const EventBlock = ({
   const openPopup = () => {
     store.dispatch(setShowPopup(true));
   };
-  // TODO: Figure out how to get this to trigger -- a diff click event for the cal triggers
-  // before this one does
+
+  const setEvent = (selectedEvent) => {
+    store.dispatch(changeSelectedEvent(selectedEvent));
+  };
+
   const onEventBlockClick = () => {
-    setSelectedEvent(eventInfo.event);
+    setEvent(eventInfo.event);
     setConfirmAddEvent(false);
     openPopup();
   };
 
   const onAddButtonClick = () => {
-    setSelectedEvent(eventInfo.event);
+    setEvent(eventInfo.event);
     setConfirmAddEvent(true);
     openPopup();
   };
@@ -108,7 +111,6 @@ const EventBlock = ({
 EventBlock.propTypes = {
   path: PropTypes.string.isRequired,
   eventInfo: PropTypes.objectOf(PropTypes.any).isRequired,
-  setSelectedEvent: PropTypes.func.isRequired,
   setConfirmAddEvent: PropTypes.func.isRequired,
 };
 

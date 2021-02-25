@@ -6,7 +6,8 @@ export const initialState = {
   month: new Date().getMonth() + 1,
   year: new Date().getFullYear(),
   day: new Date().getDate(),
-  selectedEvent: null,
+  selectedEvent: {},
+  view: 'dayGridMonth',
 };
 
 // Handles the logic of updating the state
@@ -126,6 +127,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedEvent: action.payload,
+      };
+    }
+
+    case 'events/viewSelected': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/viewSelected] Selecting view: ${action.payload}`);
+      return {
+        ...state,
+        view: action.payload,
       };
     }
 
