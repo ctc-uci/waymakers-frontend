@@ -95,7 +95,7 @@ const EventBlock = ({
   const displayMinute = `:${minute < 10 ? '0' : ''}${minute}`;
 
   return (
-    <div id="month-event-block">
+    <div id="month-event-block" tabIndex={0} onClick={() => { onEventBlockClick(); }} onKeyDown={() => {}} role="button">
       <IconGo.GoPrimitiveDot color={eventInfo.borderColor} size={14} />
       <p id="monthViewEventTime">{`${convertedHour === 0 ? 12 : convertedHour}${minute === 0 ? '' : displayMinute}${hour < 13 ? 'a' : 'p'}`}</p>
       <p id="monthViewEventTitle">{eventInfo.event.title}</p>
