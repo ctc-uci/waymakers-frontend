@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Card, Button, Alert,
@@ -11,15 +11,16 @@ import InventoryComponent from '../inventory-component/inventoryComponent';
 import auth from '../../firebase/firebase';
 import './adminDashboard.css';
 
-import Header from '../../header/header';
-import Footer from '../../footer/footer';
+const axios = require('axios');
 
 const AdminDashboard = (props) => {
   const { cookies } = props;
   const history = useHistory();
   const [error, setError] = useState('');
   // eslint-disable-next-line
-  const [currDivision, setCurrDivision] = useState('Crisis Response Team');
+  const [divisionList, setDivisionList] = useState([]);
+  // eslint-disable-next-line
+  const [currDivision, setCurrDivision] = useState(2);
 
   async function logout() {
     try {
@@ -34,10 +35,45 @@ const AdminDashboard = (props) => {
     }
   }
 
+  // Fetching warehouse names from the server
+  const getDivisionList = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/divisions`,
+        { withCredentials: true },
+      );
+      setDivisionList(response.data);
+    } catch (err) {
+      // eslint-disable-next-line
+      console.error(err);
+    }
+  };
+
+  // Creating dropdown selector for warehouse menu
+  const Menu = () => (
+    <div className="division-section">
+      <select
+        name="division"
+        className="division-dropdown"
+        value={currDivision}
+        onChange={(e) => { setCurrDivision(parseInt(e.target.value, 10)); }}
+      >
+        {Object.entries(divisionList)
+          .sort((a, b) => (a.id > b.id ? 1 : -1))
+          .map(([id, division]) => (
+            <option key={id} value={id}>{division.div_name}</option>
+          ))}
+      </select>
+    </div>
+  );
+
+  // Get items on page load
+  useEffect(() => {
+    getDivisionList();
+  }, []);
+
   return (
     <div>
-      <Header />
-
       <div className="d-flex align-items-center justify-content-center">
         <div className="w-100 login-container">
           <Card className="w-100">
@@ -50,14 +86,15 @@ const AdminDashboard = (props) => {
         </div>
       </div>
       <div className="admin-components">
-        <div className="division-selector">
-          <h2 className="division-selector-title">{currDivision}</h2>
+        <div className="division-section">
+          {/* <h2 className="division-selector-title">{currDivision}</h2> */}
+          { Menu() }
         </div>
         <div className="admin-components-container">
           <div className="inventory-events-section">
             <div className="inventory-section">
               <h5 className="component-title">Inventory</h5>
-              <InventoryComponent />
+              <InventoryComponent division={2} />
             </div>
             <div className="upcoming-events-section">
               <h5 className="component-title">Events</h5>
@@ -74,8 +111,6 @@ const AdminDashboard = (props) => {
           <div className="availability-component" />
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
