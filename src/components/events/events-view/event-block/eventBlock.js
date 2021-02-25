@@ -4,16 +4,15 @@ import PropTypes from 'prop-types';
 import * as IconAi from 'react-icons/ai';
 import * as IconGo from 'react-icons/go';
 
-import { connect } from 'react-redux';
-
-import { deleteEvent } from '../../redux/actions';
 import store from '../../redux/store';
+
+import { deleteEvent, setShowPopup } from '../../redux/actions';
 import trashcan from '../../../../images/trashcan.svg';
 
 import './eventBlock.css';
 
 const EventBlock = ({
-  path, eventInfo, setShowPopup, setSelectedEvent, setConfirmAddEvent,
+  path, eventInfo, setSelectedEvent, setConfirmAddEvent,
 }) => {
   const eventTypeColors = {
     Volunteer: 'var(--color-golden-yellow)',
@@ -24,18 +23,21 @@ const EventBlock = ({
 
   const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
 
+  const openPopup = () => {
+    store.dispatch(setShowPopup(true));
+  };
   // TODO: Figure out how to get this to trigger -- a diff click event for the cal triggers
   // before this one does
   const onEventBlockClick = () => {
     setSelectedEvent(eventInfo.event);
     setConfirmAddEvent(false);
-    setShowPopup(true);
+    openPopup();
   };
 
   const onAddButtonClick = () => {
     setSelectedEvent(eventInfo.event);
     setConfirmAddEvent(true);
-    setShowPopup(true);
+    openPopup();
   };
 
   const onDeleteClick = () => {
@@ -106,10 +108,8 @@ const EventBlock = ({
 EventBlock.propTypes = {
   path: PropTypes.string.isRequired,
   eventInfo: PropTypes.objectOf(PropTypes.any).isRequired,
-  setShowPopup: PropTypes.func.isRequired,
   setSelectedEvent: PropTypes.func.isRequired,
   setConfirmAddEvent: PropTypes.func.isRequired,
 };
 
-export default connect(null, {
-})(EventBlock);
+export default EventBlock;

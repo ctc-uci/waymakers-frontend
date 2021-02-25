@@ -32,7 +32,6 @@ const EventsView = ({
 }) => {
   const [showMoreEvents, setShowMoreEvents] = useState(true);
   const [showMyEvents, setShowMyEvents] = useState(true);
-  const [showPopup, setShowPopup] = useState(false);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState({});
   const [confirmAddEvent, setConfirmAddEvent] = useState(false);
@@ -56,21 +55,13 @@ const EventsView = ({
     calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
   }, [useSelector(getDay)]);
 
-  const onEventClick = (event) => {
-    setSelectedEvent(event.event);
-    setShowPopup(!showPopup);
-  };
-
   function renderPopup() {
     const userEvents = useSelector(getUserEventsForFullCalendar);
-    console.log(onEventClick);
     return (
       <CalendarPopup
         userEvents={userEvents}
         selectedEvent={selectedEvent}
-        setShowPopup={(value) => setShowPopup(value)}
         setShowEditPopup={(value) => setShowEditPopup(value)}
-        showPopup={showPopup}
         showEditPopup={showEditPopup}
         path={path}
         showMoreEvents={showMoreEvents}
@@ -91,7 +82,6 @@ const EventsView = ({
       <EventBlock
         path={path}
         eventInfo={eventInfo}
-        setShowPopup={setShowPopup}
         setSelectedEvent={setSelectedEvent}
         setConfirmAddEvent={setConfirmAddEvent}
       />

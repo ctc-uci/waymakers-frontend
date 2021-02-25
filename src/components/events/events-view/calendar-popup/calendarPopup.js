@@ -1,30 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import EventPopup from '../../event-popup/eventPopup';
 import HoursPopup from '../../hours-popup/hoursPopup';
 import DialogueBox from '../../../admin/dialogue-box/dialogueBox';
 import EditEventPopup from '../../edit-events/editEventPopup';
 
+import store from '../../redux/store';
+import {
+  getShowPopup,
+} from '../../redux/selectors';
+
+import { setShowPopup } from '../../redux/actions';
+
 const CalendarPopup = ({
   userEvents,
   selectedEvent,
-  setShowPopup,
   setShowEditPopup,
   path,
-  showPopup,
   showEditPopup,
   showMoreEvents,
   confirmAddEvent,
   setConfirmAddEvent,
 }) => {
+  const onClosePopup = () => {
+    store.dispatch(setShowPopup(false));
+  };
+
   // Volunteer Dashboard => AddPopup/EventPopup
   // Admin Aggregate Page => DialogueBox
   // Add/Modify/Remove Events Page => EditEventPopup
   function renderPopup() {
     const found = userEvents.filter((event) => event.id === parseInt(selectedEvent.id, 10));
 
-    if (showPopup || showEditPopup) {
+    if (useSelector(getShowPopup) || showEditPopup) {
       // Event is NOT on the user's calendar
       if (showMoreEvents && found.length !== 1) {
         switch (path) {
@@ -32,7 +42,7 @@ const CalendarPopup = ({
             return (
               <EventPopup
                 event={selectedEvent}
-                onClose={() => setShowPopup(false)}
+                onClose={onClosePopup}
                 canAdd={found.length !== 1}
                 confirmAddEvent={confirmAddEvent}
                 setConfirmAddEvent={setConfirmAddEvent}
@@ -49,7 +59,7 @@ const CalendarPopup = ({
             }
             return (
               <EventPopup
-                onClose={() => setShowPopup(false)}
+                onClose={onClosePopup}
                 event={selectedEvent}
                 canAdd={false}
                 showEditButton
@@ -57,7 +67,7 @@ const CalendarPopup = ({
               />
             );
           case '/admin/aggregate':
-            return <DialogueBox onClose={() => setShowPopup(false)} event={selectedEvent} />;
+            return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
           default: break;
         }
       } else if (showMoreEvents) {
@@ -73,7 +83,7 @@ const CalendarPopup = ({
             }
             return (
               <EventPopup
-                onClose={() => setShowPopup(false)}
+                onClose={onClosePopup}
                 event={selectedEvent}
                 canAdd={false}
                 showEditButton
@@ -81,14 +91,14 @@ const CalendarPopup = ({
               />
             );
           case '/admin/aggregate':
-            return <DialogueBox onClose={() => setShowPopup(false)} event={selectedEvent} />;
+            return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
           default: break;
         }
       }
       // Event is on the user's calendar already
       return (
         <HoursPopup
-          onClose={() => setShowPopup(false)}
+          onClose={onClosePopup}
           event={selectedEvent}
         />
       );
@@ -106,10 +116,8 @@ const CalendarPopup = ({
 CalendarPopup.propTypes = {
   userEvents: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   selectedEvent: PropTypes.objectOf(PropTypes.any).isRequired,
-  setShowPopup: PropTypes.func.isRequired,
   setShowEditPopup: PropTypes.func.isRequired,
   showEditPopup: PropTypes.bool.isRequired,
-  showPopup: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
   showMoreEvents: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   confirmAddEvent: PropTypes.bool.isRequired,
