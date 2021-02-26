@@ -11,18 +11,16 @@ import store from '../../redux/store';
 import {
   getShowPopup,
   getSelectedEvent,
+  // getPopupType,
 } from '../../redux/selectors';
 
 import { setShowPopup } from '../../redux/actions';
 
 const CalendarPopup = ({
-  userEvents,
-  setShowEditPopup,
+  // setShowEditPopup,
   path,
-  showEditPopup,
-  showMoreEvents,
-  confirmAddEvent,
-  setConfirmAddEvent,
+  // showEditPopup,
+  // popupType,
 }) => {
   const onClosePopup = () => {
     store.dispatch(setShowPopup(false));
@@ -32,71 +30,63 @@ const CalendarPopup = ({
   // Admin Aggregate Page => DialogueBox
   // Add/Modify/Remove Events Page => EditEventPopup
   function renderPopup() {
-    const selectedEventId = parseInt(useSelector(getSelectedEvent).id, 10);
-    const found = userEvents.filter((event) => event.id === selectedEventId);
+    // const selectedEventId = parseInt(useSelector(getSelectedEvent).id, 10);
+    // const found = userEvents.filter((event) => event.id === selectedEventId);
     const selectedEvent = useSelector(getSelectedEvent);
 
-    if (useSelector(getShowPopup) || showEditPopup) {
+    if (useSelector(getShowPopup)) {
       // Event is NOT on the user's calendar
-      if (showMoreEvents && found.length !== 1) {
-        switch (path) {
-          case '/volunteer/events':
-            return (
-              <EventPopup
-                event={selectedEvent}
-                onClose={onClosePopup}
-                canAdd={found.length !== 1}
-                confirmAddEvent={confirmAddEvent}
-                setConfirmAddEvent={setConfirmAddEvent}
-              />
-            );
-          case '/events':
-            if (showEditPopup) {
-              return (
-                <EditEventPopup
-                  onClose={() => setShowEditPopup(false)}
-                  event={selectedEvent}
-                />
-              );
-            }
-            return (
-              <EventPopup
-                onClose={onClosePopup}
-                event={selectedEvent}
-                canAdd={false}
-                showEditButton
-                onEditButtonClick={() => setShowEditPopup(true)}
-              />
-            );
-          case '/admin/aggregate':
-            return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
-          default: break;
-        }
-      } else if (showMoreEvents) {
-        switch (path) {
-          case '/events':
-            if (showEditPopup) {
-              return (
-                <EditEventPopup
-                  onClose={() => setShowEditPopup(false)}
-                  event={selectedEvent}
-                />
-              );
-            }
-            return (
-              <EventPopup
-                onClose={onClosePopup}
-                event={selectedEvent}
-                canAdd={false}
-                showEditButton
-                onEditButtonClick={() => setShowEditPopup(true)}
-              />
-            );
-          case '/admin/aggregate':
-            return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
-          default: break;
-        }
+      switch (path) {
+        case '/volunteer/events':
+          return <EventPopup event={selectedEvent} />;
+        case '/events':
+          // if (popupType === 'EditEventsPopup') {
+          //   return (
+          //     <EditEventPopup
+          //       onClose={onClosePopup}
+          //       event={selectedEvent}
+          //     />
+          //   );
+          // }
+          return (
+            <EditEventPopup
+              onClose={onClosePopup}
+              event={selectedEvent}
+            />
+          );
+        case '/admin/aggregate':
+          return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
+        default: break;
       }
+      // } else if (showMoreEvents) {
+      //   switch (path) {
+      //     case '/events':
+      //       if (popupType === 'EditEventsPopup') {
+      //         return (
+      //           <EditEventPopup
+      //             onClose={onClosePopup}
+      //             event={selectedEvent}
+      //           />
+      //         );
+      //       }
+      //       return (
+      //         // TODO: Change this to render the view event info popup
+      //         // <EventPopup
+      //         //   event={selectedEvent}
+      //         //   canAdd={false}
+      //         //   showEditButton
+      //         //   onEditButtonClick={onClosePopup}
+      //         // />
+      //         <EditEventPopup
+      //           onClose={onClosePopup}
+      //           event={selectedEvent}
+      //         />
+      //       );
+      //     case '/admin/aggregate':
+      //       return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
+      //     default: break;
+      //   }
+      // }
       // Event is on the user's calendar already
       return (
         <HoursPopup
@@ -116,17 +106,19 @@ const CalendarPopup = ({
 };
 
 CalendarPopup.propTypes = {
-  userEvents: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
-  setShowEditPopup: PropTypes.func.isRequired,
-  showEditPopup: PropTypes.bool.isRequired,
+  // userEvents: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
+  // setShowEditPopup: PropTypes.func.isRequired,
+  // showEditPopup: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
-  showMoreEvents: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
-  confirmAddEvent: PropTypes.bool.isRequired,
-  setConfirmAddEvent: PropTypes.func.isRequired,
+  // showMoreEvents: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
+  // confirmAddEvent: PropTypes.bool.isRequired,
+  // setConfirmAddEvent: PropTypes.func.isRequired,
+  // popupType: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   selectedEvent: getSelectedEvent(state),
+  // popupType: getPopupType(state),
 });
 
 export default connect(mapStateToProps, null)(CalendarPopup);

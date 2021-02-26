@@ -1,4 +1,17 @@
 // Initial state populated with sample values
+
+/*
+Popup Types:
+ConfirmCancelPopUp
+AddEventPopup
+AddMyHoursPopup
+RemoveFromMyEventPopup
+EditEventsPopup
+ViewEventInfoPopup
+ModifyEventInfoForm
+CreateEventForm
+*/
+
 export const initialState = {
   eventsList: [], // List of event objects
   userEventsList: [],
@@ -8,6 +21,7 @@ export const initialState = {
   day: new Date().getDate(),
   selectedEvent: {},
   view: 'dayGridMonth',
+  popupType: '',
 };
 
 // Handles the logic of updating the state
@@ -136,6 +150,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         view: action.payload,
+      };
+    }
+
+    case 'events/popupTypeSelected': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/popupTypeSelected] Selecting popupType: ${action.payload}`);
+      return {
+        ...state,
+        popupType: action.payload,
       };
     }
 

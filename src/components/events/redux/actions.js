@@ -124,3 +124,7 @@ export const changeSelectedEvent = (event) => async (dispatch) => {
 export const changeView = (newView) => async (dispatch) => {
   dispatch({ type: 'events/viewSelected', payload: newView });
 };
+
+export const changePopupType = (newPopupType) => async (dispatch) => {
+  dispatch({ type: 'events/popupTypeSelected', payload: newPopupType });
+};

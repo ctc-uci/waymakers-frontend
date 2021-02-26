@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
-import { addUserEvent, fetchEvents } from '../redux/actions';
+import {
+  addUserEvent,
+  fetchEvents,
+  setShowPopup,
+  changePopupType,
+} from '../redux/actions';
+import { getPopupType } from '../redux/selectors';
 import store from '../redux/store';
 
 import './eventPopup.css';
@@ -23,12 +29,11 @@ const monthList = [
   'SEPT', 'OCT', 'NOV', 'DEC',
 ];
 
-// Additional props for edit event popup: showEditButton, onEditButtonClick,
+// Additional props for edit event popup:
 
 const EventPopup = ({
-  event, onClose, canAdd, addEventToUserCalendar, cookies, confirmAddEvent, setConfirmAddEvent,
+  event, addEventToUserCalendar, cookies, popupType,
 }) => {
-  console.log(event);
   const startDate = new Date(event.start);
   const endDate = new Date(event.end);
 
@@ -38,8 +43,7 @@ const EventPopup = ({
       type="button"
       aria-label="close popup"
       onClick={() => {
-        onClose();
-        setConfirmAddEvent(false);
+        store.dispatch(setShowPopup(false));
       }}
     >
       Cancel
@@ -60,24 +64,24 @@ const EventPopup = ({
       .then(() => {
         store.dispatch(fetchEvents());
       });
-    onClose();
+    store.dispatch(setShowPopup(false));
   };
 
   // Rendered when + button clicked
   const renderConfirmCancelButtons = () => (
     <div className="multi-event-option">
-      {cancelButton}
       <button
         className="button confirm-button"
         type="button"
         aria-label="confirm add event"
         onClick={() => {
           addEvent();
-          setConfirmAddEvent(false);
+          store.dispatch(setShowPopup(false));
         }}
       >
         Confirm
       </button>
+      {cancelButton}
     </div>
   );
 
@@ -87,7 +91,7 @@ const EventPopup = ({
         className="add-intent-button"
         type="button"
         aria-label="Add To My Events"
-        onClick={() => setConfirmAddEvent(true)}
+        onClick={() => store.dispatch(changePopupType('ConfirmCancelPopup'))}
       >
         Add to My Events
       </button>
@@ -121,19 +125,27 @@ const EventPopup = ({
   );
 
   const renderButtons = () => {
-    if (canAdd === true) { // NOT a user event
-      if (event.extendedProps.eventAttendance < event.extendedProps.eventLimit && confirmAddEvent) {
-        // Confirm + Cancel button
+    switch (popupType) {
+      case 'ConfirmCancelPopup':
+        if (event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
+          return renderConfirmCancelButtons();
+        }
+        return 'attendance is full';
+      case 'AddEventPopup':
+        return renderAddEventButton();
+      case 'AddMyHoursPopup':
+        return renderAddMyHoursButton();
+      // case 'ViewEventInfoPopup':
+      //   return '';
+      case 'RemoveFromMyEventPopup':
+        return renderRemoveFromMyEvent();
+      // case 'CreateEventForm':
+      //   return '';
+      // case 'ModifyEventInfoForm':
+      //   return '';
+      default:
         return renderConfirmCancelButtons();
-      } // This is for a NON user event (MORE EVENT) when we click the reg block
-      return renderAddEventButton();
     }
-    const currentDate = new Date();
-    if (endDate < currentDate) {
-      return renderAddMyHoursButton();
-    }
-    // Future/Current Event
-    return renderRemoveFromMyEvent();
   };
 
   return (
@@ -142,7 +154,7 @@ const EventPopup = ({
         className="exit-button"
         type="button"
         aria-label="close"
-        onClick={onClose}
+        onClick={() => { store.dispatch(setShowPopup(false)); }}
       >
         <img className="x-icon" src={cross} alt="close" />
       </button>
@@ -202,21 +214,15 @@ const EventPopup = ({
 
 EventPopup.propTypes = {
   event: PropTypes.objectOf(PropTypes.any).isRequired,
-  onClose: PropTypes.func.isRequired,
-  canAdd: PropTypes.bool.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   addEventToUserCalendar: PropTypes.func.isRequired,
-  confirmAddEvent: PropTypes.bool.isRequired,
-  setConfirmAddEvent: PropTypes.func.isRequired,
-  // showEditButton: PropTypes.bool,
-  // onEditButtonClick: PropTypes.func,
+  popupType: PropTypes.string.isRequired,
 };
 
-// EventPopup.defaultProps = {
-//   showEditButton: false,
-//   onEditButtonClick: null,
-// };
+const mapStateToProps = (state) => ({
+  popupType: getPopupType(state),
+});
 
-export default withCookies(connect(null, {
+export default withCookies(connect(mapStateToProps, {
   addEventToUserCalendar: addUserEvent,
 })(EventPopup));

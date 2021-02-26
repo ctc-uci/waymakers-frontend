@@ -79,7 +79,8 @@
 }
 
 #week-edit-event-block {
-    margin-top: 3%;
+    padding-top: 1%;
+    height: 100%;
 }
 
 #week-edit-event-block button {
@@ -90,6 +91,8 @@
     border: 0;
 }
 
-#week-edit-event-title {
-    margin-left: 3%;
+#week-edit-event-title, #week-event-title {
+    margin: 0;
+    padding-left: 3%;
+    padding-top: 3%;
 }
