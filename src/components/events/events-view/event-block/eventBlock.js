@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { useSelector } from 'react-redux';
-// import * as Icon from 'react-icons/im';
 import * as IconAi from 'react-icons/ai';
 import * as IconGo from 'react-icons/go';
 
 import store from '../../redux/store';
-// import {
-//   getUserEventsForFullCalendar,
-// } from '../../redux/selectors';
 
 import {
   deleteEvent,
@@ -47,8 +42,6 @@ const EventBlock = ({
   const onEventBlockClick = () => {
     setEvent(eventInfo.event);
     console.log(eventInfo);
-    // const userEvent = useSelector(getUserEventsForFullCalendar)
-    //   .filter((event) => event.id === eventInfo.event).length;
     if (isUserEvent) {
       if (eventInfo.isPast) {
         setEventPopupType('AddMyHoursPopup');
