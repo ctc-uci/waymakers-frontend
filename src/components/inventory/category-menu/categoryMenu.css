@@ -99,6 +99,7 @@
 .category-icon--delete {
     height: 30px;
     width: 30px;
+    margin-top: 3px;
     margin-left: 20px;
     background-image: url(images/deleteItem.png);
     background-repeat: no-repeat;
@@ -110,10 +111,15 @@
 .category-icon--undo {
     height: 30px;
     width: 30px;
+    margin-top: 7px;
     margin-left: 20px;
     background-image: url(images/undeleteItem.png);
     background-repeat: no-repeat;
     background-color: transparent;
     background-size: 20px;
     border: none;
+}
+
+.no-underline {
+    text-decoration: none;
 }

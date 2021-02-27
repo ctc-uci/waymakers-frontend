@@ -45,7 +45,8 @@ const CategoryMenuItem = (props) => {
       {props.category.label}
     </button>
   );
-  // A button that lets you choose which category to delete
+  // Select a category in edit mode.
+  // The icons are buttons that allow for the category to be deleted/undeleted
   const delCategoryButton = (onClickFunction) => {
     const label = deleted ? <strike>{props.category.label}</strike> : props.category.label;
     return (
