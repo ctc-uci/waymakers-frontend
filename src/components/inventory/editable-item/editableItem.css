@@ -4,12 +4,10 @@
     padding: 10px;
     min-width: 350px;
     max-width: 450px;
-    font-size: 18px;
 }
 
 .static-item-attribute {
     padding: 7px;
-    font-size: 18px;
     text-align: center;
 }
 
@@ -23,15 +21,14 @@
     min-height: 35px;
     width: max-content;
     color: var(--text-color-dark);
-    font-size: 18px;
     width: 90%;
     border: solid 2px var(--color-dark-blue);
+    padding-left: 1px;
 }
 
 .table-input {
     min-height: 35px;
     color: var(--text-color-dark);
-    font-size: 18px;
     width: 50%;
     border: solid 2px var(--color-dark-blue);
     text-align: center;
@@ -40,7 +37,6 @@
 .table-input-deleted{
     min-height: 35px;
     color: var(--text-color-dark);
-    font-size: 18px;
     width: 50%;
     border: solid 2px var(--color-dark-blue);
     text-align: center;
@@ -49,11 +45,11 @@
 
 .category-dropdown {
     min-height: 35px;
-    font-size: 18px;
     color: var(--text-color-dark);
     width: 75%;
     border: solid 2px var(--color-dark-blue);
     text-align-last: center;
+    margin-left: 12px;
 }
 
 #delete-wrapper {
@@ -68,7 +64,6 @@
     border: none;
     padding: 19px;
     text-align: right;
-    
 }
 
 .table-item-delete-button:hover{
@@ -126,4 +121,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 .deleted-item {
     text-decoration-color: var(--color-green);
+    height: 48px;
+    padding-top: 9px;
+}
+
+.deleted-item--name {
+    text-decoration-color: var(--color-green);
+    height: 48px;
+    margin-left: 3px;
 }

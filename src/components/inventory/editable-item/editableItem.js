@@ -130,7 +130,7 @@ const EditableItem = (props) => {
     // CSS class to indicate that value has been changed
     <tr className="edit-table-row">
       <td className="item-edit-name">
-        {deleted ? <strike className="deleted-item">{fieldState.name}</strike> : (
+        {deleted ? <strike className="deleted-item--name">{fieldState.name}</strike> : (
           <input
             name="name"
             type="text"
