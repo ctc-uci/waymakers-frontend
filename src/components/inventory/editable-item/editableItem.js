@@ -15,11 +15,12 @@ const getCategoryLabelFromID = (id) => {
 // Converts table rows into forms when in Edit mode
 const EditableItem = (props) => {
   // State variable for all editable fields
+  const originalCategory = props.item.category_id;
   const [fieldState, setFieldState] = useState({
     name: props.item.name,
     quantity: props.item.quantity,
     needed: props.item.needed,
-    category: props.item.category_id,
+    category: originalCategory,
   });
 
   // Used to update css class of unsaved edits
@@ -129,7 +130,7 @@ const EditableItem = (props) => {
     // CSS class to indicate that value has been changed
     <tr className="edit-table-row">
       <td className="item-edit-name">
-        {deleted ? <strike>{fieldState.name}</strike> : (
+        {deleted ? <strike className="deleted-item">{fieldState.name}</strike> : (
           <input
             name="name"
             type="text"
@@ -142,7 +143,7 @@ const EditableItem = (props) => {
       </td>
       <td className="item-qty-field">
         <div className="change-quantity-wrapper">
-          {deleted ? <strike>{fieldState.quantity}</strike> : (
+          {deleted ? <strike className="deleted-item">{fieldState.quantity}</strike> : (
             <div className="change-quantity-wrapper">
               <div className="minus-button-wrapper">
                 <button
@@ -182,7 +183,7 @@ const EditableItem = (props) => {
       </td>
       <td className="item-needed-field">
         <div className="change-quantity-wrapper">
-          {deleted ? <strike>{fieldState.needed}</strike> : (
+          {deleted ? <strike className="deleted-item">{fieldState.needed}</strike> : (
             <div className="change-quantity-wrapper">
               <div className="minus-button-wrapper">
                 <button
@@ -222,23 +223,34 @@ const EditableItem = (props) => {
       </td>
       <td className="item-cat-field">
         <div className="change-quantity-wrapper">
-          <select
-            id="categories"
-            name="category"
-            className="category-dropdown"
-            value={fieldState.category}
-            form={props.item.id}
-            onChange={handleChange}
-          >
-            <option value="">No category</option>
-            {/* Creating dropdown menu items from categories list */}
-            {/* category.label is displayed, but the value of the option will be the ID */}
-            {useSelector(getCategories)
-              .filter((cat) => cat.id > 0)
-              .map((cat) => (
-                <option key={props.item.id} value={cat.id}>{cat.label}</option>
-              ))}
-          </select>
+          {deleted
+            ? (
+              // Calling getCategory to ensure hook is always called so there is no rendering issue
+              <strike className="deleted-item">
+                {getCategoryLabelFromID(originalCategory)}
+              </strike>
+            )
+            : (
+              <div className="change-quantity-wrapper">
+                <select
+                  id="categories"
+                  name="category"
+                  className="category-dropdown"
+                  value={fieldState.category}
+                  form={props.item.id}
+                  onChange={handleChange}
+                >
+                  <option value="">No category</option>
+                  {/* Creating dropdown menu items from categories list */}
+                  {/* category.label is displayed, but the value of the option will be the ID */}
+                  {useSelector(getCategories)
+                    .filter((cat) => cat.id > 0)
+                    .map((cat) => (
+                      <option key={props.item.id} value={cat.id}>{cat.label}</option>
+                    ))}
+                </select>
+              </div>
+            )}
         </div>
       </td>
       <td>
