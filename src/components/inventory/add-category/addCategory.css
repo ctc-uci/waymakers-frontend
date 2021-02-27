@@ -2,7 +2,6 @@
 
 .add-category-button {
     float: left;
-    margin-right: 5px;
     background-color: var(--color-green);
     color: var(--text-color-light);
     font-size: 150%;
@@ -11,6 +10,7 @@
     border-radius: 50px;
     height: 40px;
     width: 40px;
+    margin-right: 20px;
 }
 
 .add-category-popup {

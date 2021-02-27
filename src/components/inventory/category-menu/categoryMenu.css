@@ -1,14 +1,17 @@
 @import '../../../common/vars.css';
 
 #scroll-menu-container {
-    min-width: 0;
+    width: 1100px;
+}
+
+.scroll-menu-container--no-edit {
+    margin-left: 40px;
 }
 
 .horizontal-menu {
-    flex-direction: row;
     height: 50px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .menu-wrapper {
