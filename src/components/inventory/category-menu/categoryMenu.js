@@ -15,6 +15,7 @@ const CategoryMenu = (prop) => {
 
   // We map our database's categories into a list of buttons
   return (
+    // Using a different className in edit mode to solve layout issues between edit & non-edit mode
     <div id="scroll-menu-container" className={!useSelector(getEditing) ? 'scroll-menu-container--no-edit' : null}>
       <ScrollMenu
         data={prop.categoryList.map((category) => (
