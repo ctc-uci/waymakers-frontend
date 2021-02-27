@@ -45,7 +45,7 @@ const WarehouseMenu = (prop) => {
           .map(([id, warehouse]) => (
             // MenuItem(id, warehouse.warehouse_name)));
             <button
-              className="warehosue-menu--list-item"
+              className="warehouse-menu--list-item"
               type="button"
               key={id}
               value={id}
@@ -71,15 +71,15 @@ const WarehouseMenu = (prop) => {
   }, [prop.warehouseList]);
 
   return (
-    <div>
-      {useSelector(getEditing)
-      && (
-      <AddWarehouseButton
-        divisionList={prop.divisionList}
-        selectedDivision={prop.selectedDivision}
-      />
-      )}
+    <div className="warehouse-container">
       <div ref={ref} className="warehouse-menu-container">
+        {useSelector(getEditing)
+        && (
+        <AddWarehouseButton
+          divisionList={prop.divisionList}
+          selectedDivision={prop.selectedDivision}
+        />
+        )}
         <div className="warehouse-menu--top">
           {currentWarehouse}
           <button
