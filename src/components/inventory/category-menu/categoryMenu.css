@@ -72,6 +72,10 @@
 }
 
 .edit-category-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
     padding: 0 40px;
     margin: 5px 10px;
     width: 227px;
@@ -90,4 +94,26 @@
     color: var(--text-color-light);
     background-color:var(--color-green);
     transition: 0.2s
+}
+
+.category-icon--delete {
+    height: 30px;
+    width: 30px;
+    margin-left: 20px;
+    background-image: url(images/deleteItem.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 20px;
+    border: none;
+}
+
+.category-icon--undo {
+    height: 30px;
+    width: 30px;
+    margin-left: 20px;
+    background-image: url(images/undeleteItem.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 20px;
+    border: none;
 }
