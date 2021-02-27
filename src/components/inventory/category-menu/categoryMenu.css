@@ -53,7 +53,7 @@
     margin: 5px 10px;
     width: 227px;
     height: 40px;
-    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-family: var(font-family);
     font-weight: 400;
     font-size: 20px;
     cursor: pointer;
@@ -83,7 +83,7 @@
     margin: 5px 10px;
     width: 227px;
     height: 40px;
-    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-family: var(font-family);
     font-weight: 400;
     font-size: 20px;
     cursor: pointer;

@@ -7,7 +7,7 @@
     margin: 0 auto;
     padding-bottom: 10px;
     width: 550px;
-    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-family: var(font-family);
     color: var(--text-color-dark);
 }
 

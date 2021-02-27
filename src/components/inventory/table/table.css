@@ -1,3 +1,5 @@
+@import '../../../common/vars.css';
+
 .items-table {
     width: 100%;
     table-layout: fixed;
@@ -9,7 +11,7 @@
 
 .items-table thead tr {
     padding: 12px;
-    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-family: var(font-family);
     font-size: 20px;
     color: var(--text-color-dark);
 }

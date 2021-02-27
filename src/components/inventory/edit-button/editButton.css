@@ -13,10 +13,8 @@
 }
 
 .edit-button-wrapper {
-    align-self: flex-start;
     display: flex;
     flex-direction: row;
-    align-self: flex-start;
     width: 115px;
     margin-left: 1150px;
     position: absolute;

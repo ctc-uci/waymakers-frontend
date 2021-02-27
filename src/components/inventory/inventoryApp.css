@@ -1,3 +1,5 @@
+@import '../../common/vars.css';
+
 .inventory {
     display: flex;
     flex-direction: column;
@@ -12,7 +14,7 @@
 
 .current-category-label {
     display: flex;
-    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-family: var(font-family);
     color: var(--text-color-dark);
     font-weight: 600;
     font-size: 40px;
