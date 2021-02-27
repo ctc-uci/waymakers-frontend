@@ -54,16 +54,16 @@ const InventoryApp = () => {
   ]);
   return (
     <div className="inventory">
-      <div id="inventory-top">
+      <div className="inventory-top">
         <EditButton />
         <DivisionMenu />
       </div>
       <SearchItem />
-      <div id="category-container">
+      <div className="category-container">
         {useSelector(getEditing) && <AddCategoryButton />}
         <CategoryMenu />
       </div>
-      <div id="table-header-container">
+      <div className="table-header-container">
         <CurrentCategoryLabel />
         {useSelector(getEditing) && <AddItemModal />}
       </div>

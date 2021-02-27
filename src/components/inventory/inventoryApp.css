@@ -5,7 +5,7 @@
     flex-direction: column;
 }
 
-#inventory-top {
+.inventory-top {
     display: flex;
     justify-content: center;
     flex-direction: row-reverse;
@@ -20,7 +20,7 @@
     font-size: 40px;
 }
 
-#category-container {
+.category-container {
     align-self: flex-end;
     display: flex;
     flex-direction: row;
@@ -28,7 +28,7 @@
     min-width: 1140px;
 }
 
-#table-header-container {
+.table-header-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -41,7 +41,7 @@ const AddWarehouseButton = (prop) => {
           <form className="add-warehouse-form" onSubmit={handleOnSubmit}>
             <input
               type="text"
-              id="add-warehouse-input"
+              className="add-warehouse-input"
               name="add-warehouse-input"
               placeholder="Warehouse Name"
               onChange={(e) => setWarehouse(e.target.value)}
@@ -61,7 +61,7 @@ const AddWarehouseButton = (prop) => {
                   id > -1 && <option key={id} value={id}>{division.div_name}</option>
                 ))}
             </select>
-            <button type="submit" id="submit-button">Add Warehouse</button>
+            <button type="submit" className="submit-button">Add Warehouse</button>
           </form>
         </Modal>
       </>

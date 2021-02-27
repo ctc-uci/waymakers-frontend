@@ -32,12 +32,12 @@ const AddCategoryButton = () => {
           <form className="add-category-form" onSubmit={handleOnSubmit}>
             <input
               type="text"
-              id="add-category-input"
+              className="add-category-input"
               name="add-category-input"
               placeholder="Category Name"
               onChange={(e) => setLabel(e.target.value)}
             />
-            <button type="submit" id="submit-button">Add Category</button>
+            <button type="submit" className="submit-button">Add Category</button>
           </form>
         </Modal>
       </>
