@@ -6,7 +6,7 @@
     top: 23%;
     background: none;
     text-decoration: underline;
-    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-family: var(font-family);
     font-size: larger;
     color: var(--text-color-dark);
     font-weight: bold;
