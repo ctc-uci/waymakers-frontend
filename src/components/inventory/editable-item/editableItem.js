@@ -117,13 +117,7 @@ const EditableItem = (props) => {
       <td className="static-item-attribute">{getCategoryLabelFromID(fieldState.category)}</td>
     </tr>
   );
-  // For displaying the different tags depending on whether the item has been deleted or not.
-  // const deletedItem() {
-  //   return <h1>Welcome back!</h1>;
-  // }
-  // const nonDeletedItem(props) {
-  //   return <h1>Please sign up.</h1>;
-  // }
+
   // Form is created in first column of each row, then each
   // column has an input that uses that form
   const formItem = (
