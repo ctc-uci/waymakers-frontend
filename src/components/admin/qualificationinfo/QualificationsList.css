@@ -1,0 +1,12 @@
+.circle {
+  height: 30px;
+  width: 30px;
+  background-color: #336473;
+  border-radius: 70%;
+  display: inline-block;
+}
+
+.title {
+    color: #336473;
+    font-weight: 1000;
+}
