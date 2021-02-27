@@ -54,8 +54,10 @@ const InventoryApp = () => {
   ]);
   return (
     <div className="inventory">
-      <EditButton />
-      <DivisionMenu />
+      <div id="inventory-top">
+        <EditButton />
+        <DivisionMenu />
+      </div>
       <SearchItem />
       <div id="category-container">
         {useSelector(getEditing) && <AddCategoryButton />}

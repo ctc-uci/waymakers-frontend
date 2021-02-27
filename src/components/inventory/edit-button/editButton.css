@@ -2,7 +2,6 @@
 
 .edit-button {
     border: none;
-    float: right;
     right: 20%;
     top: 23%;
     background: none;
@@ -14,7 +13,11 @@
 }
 
 .edit-button-wrapper {
+    align-self: flex-start;
     display: flex;
     flex-direction: row;
-    float: right;
+    align-self: flex-start;
+    width: 115px;
+    margin-left: 1150px;
+    position: absolute;
 }

@@ -29,9 +29,11 @@ const EditButton = () => {
   );
 
   const editButton = (
-    <button type="button" id="start-edit" className="edit-button" onClick={handleClick}>
-      Edit
-    </button>
+    <div className="edit-button-wrapper">
+      <button type="button" id="start-edit" className="edit-button" onClick={handleClick}>
+        Edit
+      </button>
+    </div>
   );
 
   return useSelector(getEditing) ? editButtonPair : editButton;
