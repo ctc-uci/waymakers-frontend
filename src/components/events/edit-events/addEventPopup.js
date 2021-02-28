@@ -20,6 +20,7 @@ const AddEventPopup = ({ onClose, addNewEvent }) => {
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const [eventType, setEventType] = useState('Volunteer');
+  const [eventLimit, setEventLimit] = useState(0);
   const [division, setDivision] = useState('Crisis-Response-Team');
 
   // TODO: Import DateTime picker component since datetimelocal not on safari
@@ -35,6 +36,7 @@ const AddEventPopup = ({ onClose, addNewEvent }) => {
       division: division.replace(/-/g, ' '),
       startTime: new Date(startTime),
       endTime: new Date(endTime),
+      eventLimit,
       isAllDay: false, // default to false right now
     };
 
@@ -50,7 +52,9 @@ const AddEventPopup = ({ onClose, addNewEvent }) => {
           Title:
           <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
         </label>
+
         <br />
+
         <label htmlFor="event-type">
           Event Type:
           <br />
@@ -59,7 +63,14 @@ const AddEventPopup = ({ onClose, addNewEvent }) => {
             <option value="Outreach">Outreach</option>
           </select>
         </label>
+
         <br />
+
+        <label htmlFor="event-limit">
+          Limit:
+          <br />
+          <input id="event-limit" type="number" value={eventLimit} onChange={(e) => setEventLimit(e.target.value)} required />
+        </label>
 
         <label htmlFor="division">
           Division:
