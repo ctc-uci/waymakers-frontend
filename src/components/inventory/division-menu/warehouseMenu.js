@@ -17,6 +17,20 @@ const WarehouseMenu = (prop) => {
     setOpen(false);
   });
 
+  // After 'All Warehouses' is deselected, if a user switches to a new division
+  // and the current warehouse is not in that division, the menu switches to the
+  // first warehouse in that division
+  useEffect(() => {
+    if (!(currentWarehouse in Object.keys(prop.warehouseList)) && currentWarehouse !== 'All Warehouses') {
+      if (Object.keys(prop.warehouseList).length > 0) {
+        const wlKeys = Object.keys(prop.warehouseList);
+        setCurrentWarehouse(prop.warehouseList[wlKeys[wlKeys.length - 1]].warehouse_name);
+      } else {
+        setCurrentWarehouse('No warehouses');
+      }
+    }
+  }, [prop.warehouseList]);
+
   // Handles opening and closing the dropdown whenever the button is pressed
   const handleArrowClick = () => {
     if (open) {
@@ -32,15 +46,27 @@ const WarehouseMenu = (prop) => {
     setOpen(false);
   };
 
-  // Creating dropdown selector for warehouse menu
-  const Menu = (list) => (
-    <div>
-      <div
-        name="category"
-        className="warehouse-menu--list"
-      >
-        {/* Creating dropdown menu items from warehouse list */}
-        {Object.entries(list)
+  // "No warehouses for this division" is shown when the user accesses
+  // a division with no existing warehouses
+  const NoWarehousesOption = () => (
+    <button
+      className="warehouse-menu--no-warehouses"
+      type="button"
+      label="No warehouse"
+    >
+      No warehouses for this division
+    </button>
+  );
+
+  // Renders the warehouse menu for a division
+  const renderWarehouseList = (list) => (
+    <div
+      name="category"
+      className="warehouse-menu--list"
+    >
+      {/* Creating dropdown menu items from warehouse list */}
+      {Object.keys(list).length > 0
+        ? (Object.entries(list)
           .sort((a, b) => (a.id > b.id ? 1 : -1))
           .map(([id, warehouse]) => (
             // MenuItem(id, warehouse.warehouse_name)));
@@ -53,22 +79,10 @@ const WarehouseMenu = (prop) => {
             >
               {warehouse.warehouse_name}
             </button>
-          ))}
-      </div>
+          )))
+        : <NoWarehousesOption />}
     </div>
   );
-
-  const [menu, setMenu] = useState(Menu(prop.warehouseList, 0));
-
-  // Updates menu when warehouseList changes
-  useEffect(() => {
-    setMenu(
-      Menu({
-        '-1': { id: -1, warehouse_name: 'All Warehouses' },
-        ...prop.warehouseList,
-      }),
-    );
-  }, [prop.warehouseList]);
 
   return (
     <div className="warehouse-container">
@@ -89,7 +103,7 @@ const WarehouseMenu = (prop) => {
             className={open ? 'warehouse-menu--close' : 'warehouse-menu--open'}
           />
         </div>
-        {open && menu}
+        {open && renderWarehouseList(prop.warehouseList)}
       </div>
     </div>
   );
