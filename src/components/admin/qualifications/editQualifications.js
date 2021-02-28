@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import EditQualificationsRow from './editQualificationsRow';
 
 import './editQualifications.css';
 
 const axios = require('axios');
 
 const EditQualifications = () => {
-  const [qualificationLists, setQualificationLists] = useState([]);
+  const [qualifications, setQualifications] = useState([]);
 
-  // Fetching qualificationLists from the server
-  const getQualificationLists = async () => {
+  // Fetching qualifications from the server
+  const getQualifications = async () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/qualifications`,
         { withCredentials: true },
       );
-      setQualificationLists(response.data);
+      setQualifications(response.data);
     } catch (err) {
       // eslint-disable-next-line
       console.error(err);
@@ -23,13 +24,32 @@ const EditQualifications = () => {
 
   // Get qualificationsLists on page load
   useEffect(() => {
-    getQualificationLists();
+    getQualifications();
   }, []);
 
   return (
     <div>
-      <h1>EditQualifications</h1>
-      <pre>{JSON.stringify(qualificationLists, null, 2) }</pre>
+      <h1>List of Qualifications</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Qualification</th>
+            <th>About/Description</th>
+            <th> </th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.values(qualifications)
+            .sort((a, b) => (a.id > b.id ? 1 : -1))
+            .map((qualification) => (
+              <EditQualificationsRow
+                qualification={qualification}
+              />
+            ))}
+        </tbody>
+      </table>
+      {/* <pre>{JSON.stringify(qualifications, null, 2) }</pre> */}
     </div>
   );
 };
