@@ -2,6 +2,7 @@
 
 .items-table-wrapper {
     align-self: center;
+    width: 80%;
 }
 
 .items-table {
@@ -16,7 +17,6 @@
 
 .items-table thead tr {
     padding: 12px;
-    font-family: var(font-family);
     font-size: 20px;
     color: var(--text-color-dark);
 }
@@ -29,16 +29,22 @@
 
 .th-name {
     width: 45%;
-    padding-left: 1%;
+    padding-left: 3%;
+    text-align: left;
+    border-bottom: solid 1px var(--color-dark-blue);
+    padding-bottom: 5px;
 }
 
 .th-quantity {
     width: 15%;
     text-align: center;
+    border-bottom: solid 1px var(--color-dark-blue);
+    padding-bottom: 5px;
 }
 
 .th-category {
     width: 20%;
     text-align: center;
-    
+    border-bottom: solid 1px var(--color-dark-blue);
+    padding-bottom: 5px;
 }
