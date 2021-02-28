@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import './qualificationLists.css';
+import './editQualifications.css';
 
 const axios = require('axios');
 
-const QualificationLists = () => {
+const EditQualifications = () => {
   const [qualificationLists, setQualificationLists] = useState([]);
 
   // Fetching qualificationLists from the server
@@ -28,10 +28,10 @@ const QualificationLists = () => {
 
   return (
     <div>
-      <h1>QualificationLists</h1>
+      <h1>EditQualifications</h1>
       <pre>{JSON.stringify(qualificationLists, null, 2) }</pre>
     </div>
   );
 };
 
-export default QualificationLists;
+export default EditQualifications;
