@@ -26,6 +26,8 @@
     width: 90%;
     border: solid 2px var(--color-dark-blue);
     padding-left: 1px;
+    color: var(--text-color-dark);
+    font-size: 20px;
 }
 
 .table-input {
@@ -34,6 +36,8 @@
     width: 50%;
     border: solid 2px var(--color-dark-blue);
     text-align: center;
+    color: var(--text-color-dark);
+    font-size: 20px;
 }
 
 .change-quantity-wrapper {
@@ -74,10 +78,12 @@ input[type=number]::-webkit-outer-spin-button {
 .category-dropdown {
     min-height: 35px;
     color: var(--text-color-dark);
-    width: 75%;
+    width: 100%;
     border: solid 2px var(--color-dark-blue);
     text-align-last: center;
     margin-left: 12px;
+    color: var(--text-color-dark);
+    font-size: 20px
 }
 
 #delete-wrapper {

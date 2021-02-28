@@ -53,21 +53,25 @@ const InventoryApp = () => {
     useSelector(getSelectedWarehouseID),
   ]);
   return (
-    <div className="inventory">
-      <div className="inventory-top">
-        <EditButton />
-        <DivisionMenu />
+    <div className="inventory-container">
+      <div className="inventory">
+        <div className="inventory-top">
+          <EditButton />
+          <DivisionMenu />
+        </div>
+        <SearchItem />
+        <div className="category-container">
+          {useSelector(getEditing) && <AddCategoryButton />}
+          <CategoryMenu />
+        </div>
+        <div className="table-header-container">
+          <CurrentCategoryLabel />
+          {useSelector(getEditing) && <AddItemModal />}
+        </div>
+        <div className="table-container">
+          <Table />
+        </div>
       </div>
-      <SearchItem />
-      <div className="category-container">
-        {useSelector(getEditing) && <AddCategoryButton />}
-        <CategoryMenu />
-      </div>
-      <div className="table-header-container">
-        <CurrentCategoryLabel />
-        {useSelector(getEditing) && <AddItemModal />}
-      </div>
-      <Table />
     </div>
   );
 };

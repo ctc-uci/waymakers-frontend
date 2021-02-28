@@ -1,15 +1,11 @@
 @import '../../../common/vars.css';
 
-#scroll-menu-container {
-    width: 1100px;
-}
-
-.scroll-menu-container--no-edit {
-    margin-left: 40px;
+.scroll-menu-container {
+    align-self: center;
+    width: 79%;
 }
 
 .horizontal-menu {
-    height: 50px;
     margin-top: 15px;
     margin-bottom: 15px;
 }
@@ -32,11 +28,11 @@
 .arrow-next {
     width: 40px;
     padding: 20px 20px 20px 20px;
-    margin-left: 10px;
     background-image: url(images/inventoryArrowNext.png);
     background-repeat: no-repeat;
     background-size: 30px;
     background-color: transparent;
+    background-position: top right;
     border: none;
 }
 
@@ -47,16 +43,18 @@
 .category-button {
     padding: 0 40px;
     margin: 5px 10px;
-    width: 227px;
-    height: 40px;
-    font-family: var(font-family);
+    width: 220px;
+    height: 42px;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
     border: 3px solid var(--color-green);
     border-radius: 10px;
     color: var(--color-green);
     background-color: white;
+    text-decoration: none;
+    
 }
 
 .category-button:hover {
@@ -68,6 +66,7 @@
 .category-button:focus {
     color: var(--text-color-light);
     background-color:var(--color-green);
+    outline: none;
 }
 
 .edit-category-button {
@@ -77,22 +76,23 @@
     justify-content: flex-end;
     padding: 0 40px;
     margin: 5px 10px;
-    width: 227px;
-    height: 40px;
-    font-family: var(font-family);
+    width: 220px;
+    height: 42px;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
     border: 3px solid var(--color-green);
     border-radius: 10px;
     color: var(--color-green);
     background-color: white;
+    outline: none;
 }
 
 .edit-category-button:hover {
     color: var(--text-color-light);
     background-color:var(--color-green);
-    transition: 0.2s
+    transition: 0.2s;
 }
 
 .category-icon--delete {

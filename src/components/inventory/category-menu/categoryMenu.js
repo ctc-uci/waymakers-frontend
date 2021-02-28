@@ -1,5 +1,5 @@
 import { React } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import CategoryMenuItem from './categoryMenuItem';
 import { getCategories, getEditing } from '../redux/selectors';
@@ -16,7 +16,7 @@ const CategoryMenu = (prop) => {
   // We map our database's categories into a list of buttons
   return (
     // Using a different className in edit mode to solve layout issues between edit & non-edit mode
-    <div id="scroll-menu-container" className={!useSelector(getEditing) ? 'scroll-menu-container--no-edit' : null}>
+    <div className="scroll-menu-container">
       <ScrollMenu
         data={prop.categoryList.map((category) => (
           <CategoryMenuItem

@@ -1,5 +1,5 @@
 .item-search {
-    width: 100%;
+    width: 70%;
     height: 40px;
     text-align: left;
     padding-left: 15px;
@@ -7,5 +7,12 @@
     border: 0px;
     border-radius: 3px;
     font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-size: 18px;
     color: #000;
+}
+
+.search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }

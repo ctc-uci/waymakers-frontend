@@ -1,11 +1,16 @@
 @import '../../../common/vars.css';
 
+.items-table-wrapper {
+    align-self: center;
+}
+
 .items-table {
     width: 100%;
     table-layout: fixed;
 }
 
 .items-table thead {
+    align-self: center;
     border-bottom: solid 1px var(--color-dark-blue);
 }
 
@@ -35,4 +40,5 @@
 .th-category {
     width: 20%;
     text-align: center;
+    
 }

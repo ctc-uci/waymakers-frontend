@@ -9,7 +9,7 @@ import './table.css';
 
 // This is where we display the items in the database
 const Table = (items) => (
-  <div>
+  <div className="items-table-wrapper">
     <table className="items-table">
       <thead>
         <tr>

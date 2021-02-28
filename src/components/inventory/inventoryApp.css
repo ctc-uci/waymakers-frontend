@@ -1,8 +1,15 @@
 @import '../../common/vars.css';
 
+.inventory-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .inventory {
     display: flex;
     flex-direction: column;
+    width: 90%;
 }
 
 .inventory-top {
@@ -13,7 +20,7 @@
 }
 
 .current-category-label {
-    display: flex;
+    align-self: flex-start;
     font-family: var(font-family);
     color: var(--text-color-dark);
     font-weight: 600;
@@ -21,9 +28,10 @@
 }
 
 .category-container {
-    align-self: flex-end;
+    align-self: space-around;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     min-width: 1140px;
 }
