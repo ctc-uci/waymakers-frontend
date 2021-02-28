@@ -20,3 +20,12 @@
   background-color: #336473;
   color: white;
 }
+
+#add-qualification-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label, .form-textarea, .form-input {
+  display:block;
+}

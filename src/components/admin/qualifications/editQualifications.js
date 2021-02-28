@@ -1,32 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import Modal from 'react-modal';
 import EditQualificationsRow from './editQualificationsRow';
+import AddQualificationModal from './addQualificationModal';
 
 import './editQualifications.css';
 
 const axios = require('axios');
-
-const AddQualificationModal = ({ modalOpen, setModalOpen }) => (
-  <div>
-    <Modal
-      className="add-item-modal-content"
-      overlayClassName="add-item-modal-overlay"
-      isOpen={modalOpen}
-      onRequestClose={() => setModalOpen(false)}
-    >
-      <button type="button" onClick={() => setModalOpen(false)}>X</button>
-      <div>
-        Text Here
-      </div>
-    </Modal>
-  </div>
-);
-
-AddQualificationModal.propTypes = {
-  modalOpen: PropTypes.bool.isRequired,
-  setModalOpen: PropTypes.func.isRequired,
-};
 
 const EditQualifications = () => {
   const [qualifications, setQualifications] = useState([]);
