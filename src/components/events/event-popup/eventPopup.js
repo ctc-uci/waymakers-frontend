@@ -105,7 +105,7 @@ const EventPopup = ({
         className="add-intent-button"
         type="button"
         aria-label="Add to My Hours"
-        onClick={() => { console.log(`adding hours to ${event.id}`); }}
+        onClick={() => { store.dispatch(changePopupType('LogHoursForm')); }}
       >
         Add to My Hours
       </button>
@@ -116,7 +116,7 @@ const EventPopup = ({
   const renderRemoveFromMyEvent = () => (
     <div className="single-event-option">
       <button
-        className="add-intent-button"
+        className="remove-intent-button"
         type="button"
         aria-label="Add to My Hours"
         onClick={() => console.log(`removed event with id ${event.id}`)}

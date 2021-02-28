@@ -10,6 +10,7 @@ EditEventsPopup
 ViewEventInfoPopup
 ModifyEventInfoForm
 CreateEventForm
+LogHoursForm
 */
 
 export const initialState = {

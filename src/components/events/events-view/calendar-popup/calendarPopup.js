@@ -11,6 +11,7 @@ import store from '../../redux/store';
 import {
   getShowPopup,
   getSelectedEvent,
+  getPopupType,
 } from '../../redux/selectors';
 
 import { setShowPopup } from '../../redux/actions';
@@ -27,11 +28,21 @@ const CalendarPopup = ({
   // Add/Modify/Remove Events Page => EditEventPopup
   function renderPopup() {
     const selectedEvent = useSelector(getSelectedEvent);
-
+    const popupType = useSelector(getPopupType);
     if (useSelector(getShowPopup)) {
       // Event is NOT on the user's calendar
       switch (path) {
         case '/volunteer/events':
+          // Event is on the user's calendar already
+          if (popupType === 'LogHoursForm') {
+            console.log('joe');
+            return (
+              <HoursPopup
+                onClose={onClosePopup}
+                event={selectedEvent}
+              />
+            );
+          }
           return <EventPopup event={selectedEvent} />;
         case '/events':
         // TODO: Add View Event Info Popup here when it is created
@@ -53,14 +64,6 @@ const CalendarPopup = ({
           return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
         default: break;
       }
-
-      // Event is on the user's calendar already
-      return (
-        <HoursPopup
-          onClose={onClosePopup}
-          event={selectedEvent}
-        />
-      );
     }
     return null;
   }
