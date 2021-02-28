@@ -28,11 +28,15 @@ const EditQualifications = () => {
   }, []);
 
   return (
-    <div>
-      <h1>List of Qualifications</h1>
-      <table>
+    <div id="edit-qualifications">
+      <div className="d-flex flex-row justify-content-between align-items-center">
+        <h3 className="p-2">List of Qualifications</h3>
+        <button type="button" className="btn btn-success rounded-pill">Add Qualification</button>
+      </div>
+      <table className="table table-striped">
         <thead>
           <tr>
+            <th>Tier</th>
             <th>Qualification</th>
             <th>About/Description</th>
             <th> </th>
@@ -49,7 +53,7 @@ const EditQualifications = () => {
             ))}
         </tbody>
       </table>
-      {/* <pre>{JSON.stringify(qualifications, null, 2) }</pre> */}
+      <pre>{JSON.stringify(qualifications, null, 2) }</pre>
     </div>
   );
 };
