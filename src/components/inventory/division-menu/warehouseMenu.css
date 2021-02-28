@@ -85,6 +85,18 @@
   text-decoration: underline;
 }
 
+.warehouse-menu--no-warehouses {
+  display: flex;
+  align-items: flex-start;
+  text-align: center;
+  border: none;
+  background-color: #FFFF;
+  color: var(--text-color-dark);
+  width: inherit;
+  font-size: 32px;
+  font-weight: 700;
+}
+
 .warehoue-menu--list-item:focus {
   text-decoration: underline;
 }
