@@ -1,17 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './editQualifications.css';
 
-const EditQualificationsRow = (qualification) => (
+const EditQualificationsRow = ({ qualification }) => (
   <tr>
     <td>
-      {qualification.qualification.volunteer_tier}
+      {qualification.volunteer_tier}
     </td>
     <td>
-      {qualification.qualification.qualification_name}
+      {qualification.qualification_name}
     </td>
     <td>
-      {qualification.qualification.qualification_description}
+      {qualification.qualification_description}
     </td>
     <td>
       <button type="button" className="btn btn-success rounded-pill">Update</button>
@@ -21,5 +22,9 @@ const EditQualificationsRow = (qualification) => (
     </td>
   </tr>
 );
+
+EditQualificationsRow.propTypes = {
+  qualification: PropTypes.oneOfType([PropTypes.object]).isRequired.isRequired,
+};
 
 export default EditQualificationsRow;
