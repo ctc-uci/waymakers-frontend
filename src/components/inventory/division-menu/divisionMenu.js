@@ -43,6 +43,7 @@ const DivisionMenu = (prop) => {
         {/* division.div_name is displayed, but the value of the option will be the ID */}
         {Object.entries(list)
           .sort((a, b) => (a.id > b.id ? 1 : -1))
+          .filter((div) => div[1].div_name !== 'All Divisions')
           .map(([id, division]) => (
             <button
               type="button"
