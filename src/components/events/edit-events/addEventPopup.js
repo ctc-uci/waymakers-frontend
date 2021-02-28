@@ -39,7 +39,7 @@ const AddEventPopup = ({ onClose, addNewEvent }) => {
       eventLimit,
       isAllDay: false, // default to false right now
     };
-
+    console.log(newEvent);
     addNewEvent(newEvent);
     onClose();
   };

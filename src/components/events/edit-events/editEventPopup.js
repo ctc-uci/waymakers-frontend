@@ -12,6 +12,7 @@ import { editEvent } from '../redux/actions';
 // Configured to use the FullCalendar EventAPI object fields only
 // Might want to write a function to convert back and forth for consistency
 const EditEventPopup = ({ event, onClose, updateEvent }) => {
+  console.log(event.extendedProps);
   const [title, setTitle] = useState(event.title);
   const [startTime, setStartDate] = useState(new Date(event.start));
   const [endTime, setEndDate] = useState(new Date(event.end));
@@ -19,6 +20,7 @@ const EditEventPopup = ({ event, onClose, updateEvent }) => {
   const [description, setDescription] = useState(event.extendedProps.description);
   const [eventType, setEventType] = useState(event.extendedProps.eventType);
   const [division, setDivision] = useState(event.extendedProps.division.replace(/\s+/g, '-'));
+  const [eventLimit, setEventLimit] = useState(event.extendedProps.eventLimit);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -30,11 +32,12 @@ const EditEventPopup = ({ event, onClose, updateEvent }) => {
       eventLocation: location,
       eventDescription: description,
       division: division.replace(/-/g, ' '),
+      eventLimit,
       startTime: new Date(startTime),
       endTime: new Date(endTime),
       isAllDay: false, // default to false right now
     };
-
+    console.log(editedEvent);
     updateEvent(event.id, editedEvent);
     onClose();
   };
@@ -58,6 +61,12 @@ const EditEventPopup = ({ event, onClose, updateEvent }) => {
           </select>
         </label>
         <br />
+
+        <label htmlFor="event-limit">
+          Limit:
+          <br />
+          <input id="event-limit" type="number" value={eventLimit} onChange={(e) => setEventLimit(e.target.value)} required />
+        </label>
 
         <label htmlFor="division">
           Division:
