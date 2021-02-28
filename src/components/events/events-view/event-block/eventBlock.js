@@ -86,6 +86,7 @@ const EventBlock = ({
     return <button type="button" onClick={(e) => { onAddButtonClick(e); }}>+</button>;
   };
 
+  // TODO: Add delete confirmation before deleting event
   const renderTrashButton = () => {
     const trashIcon = <img className="trash-icon" src={trashcan} alt="trashcan" />;
     return <button type="button" onClick={onDeleteClick}>{trashIcon}</button>;

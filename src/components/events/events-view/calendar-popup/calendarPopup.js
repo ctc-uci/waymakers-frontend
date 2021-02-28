@@ -53,7 +53,7 @@ const CalendarPopup = ({
           return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
         default: break;
       }
-      
+
       // Event is on the user's calendar already
       return (
         <HoursPopup

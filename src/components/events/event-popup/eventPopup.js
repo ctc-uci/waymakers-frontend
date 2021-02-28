@@ -98,6 +98,7 @@ const EventPopup = ({
     </div>
   );
 
+  // TODO: Add functionality for add to my hours button click
   const renderAddMyHoursButton = () => (
     <div className="single-event-option">
       <button
@@ -111,6 +112,7 @@ const EventPopup = ({
     </div>
   );
 
+  // TODO: Add functionality for remove from my events button click
   const renderRemoveFromMyEvent = () => (
     <div className="single-event-option">
       <button
