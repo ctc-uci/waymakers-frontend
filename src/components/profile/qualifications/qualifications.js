@@ -6,14 +6,14 @@ import './qualifications.css';
 function Qualification({ qualifications, isEditing }) {
   const rows = qualifications.map((task) => (
     <tr>
-      <td>{task.name}</td>
+      <td>{task.qualification_name ? task.qualification_name : ''}</td>
       <td>
         <button type="button" className={isEditing ? 'updateBtn btn btn-secondary btn-sm rounded-pill' : 'updateBtn btn btn-success btn-sm rounded-pill'} disabled={isEditing}>Update</button>
         {' '}
       </td>
-      <td>{task.completion_timestamp.substring(0, 10)}</td>
-      <td>{task.completion_status}</td>
-      <td>{task.notes}</td>
+      <td>{task.completion_timestamp ? task.completion_timestamp.substring(0, 10) : ''}</td>
+      <td>{task.completion_status ? task.completion_status : ''}</td>
+      <td>{task.notes ? task.notes : ''}</td>
     </tr>
   ));
 
