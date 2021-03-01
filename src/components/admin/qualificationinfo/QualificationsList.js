@@ -46,7 +46,7 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
           </tbody>
         </table>
       </section>
-      <QualPopup trigger={qualPopup} setTrigger={setQualPopup} qualifications={qualifications} firstName="Kevin" lastName="Durant" />
+      {title === 'List of Volunteers Who Need Qualifications Reviewed' ? <QualPopup trigger={qualPopup} setTrigger={setQualPopup} qualifications={qualifications} firstName="Kevin" lastName="Durant" /> : <p> </p>}
     </div>
   );
 };
