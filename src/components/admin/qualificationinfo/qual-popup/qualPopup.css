@@ -1,0 +1,40 @@
+.popup {
+    position: fixed;
+    width: 50%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    background-color: #003E53;
+    border-radius: 5px;
+}
+
+.popup-inner { 
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-btn {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+}
+
+.popup-title {
+    color: white;
+    font-weight: bold;
+}
+
+.qual-name {
+    color: white;
+}
+
+.table {
+    border-bottom: solid 1px white;
+}
+
+.reject {
+    margin-right: 10px;
+}

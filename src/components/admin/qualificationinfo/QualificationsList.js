@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './QualificationsList.css';
+import QualPopup from './qual-popup/qualPopup';
 
 const QualificationsList = ({ volunteers, title, buttonText }) => {
+  const [qualPopup, setQualPopup] = useState(false);
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
+
+  const qualifications = [
+    {
+      name: 'Valid Driver\'s License',
+    },
+    {
+      name: '8-Hour New Volunteer Orientation',
+    },
+  ];
+
   const rows = volunteers.map((volunteer) => (
     <tr>
       <td>
@@ -10,7 +24,7 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
       </td>
       <td>{volunteer.name}</td>
       <td>
-        <button type="button" className="updateBtn btn btn-success btn-sm rounded-pill">{buttonText}</button>
+        <button type="button" onClick={() => setQualPopup(true)} className="updateBtn btn btn-success btn-sm rounded-pill">{buttonText}</button>
         {' '}
       </td>
     </tr>
@@ -32,6 +46,7 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
           </tbody>
         </table>
       </section>
+      <QualPopup trigger={qualPopup} setTrigger={setQualPopup} qualifications={qualifications} firstName="Kevin" lastName="Durant" />
     </div>
   );
 };
