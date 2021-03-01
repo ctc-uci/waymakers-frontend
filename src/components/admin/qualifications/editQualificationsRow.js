@@ -24,7 +24,7 @@ const EditQualificationsRow = ({ qualification }) => (
 );
 
 EditQualificationsRow.propTypes = {
-  qualification: PropTypes.oneOfType([PropTypes.object]).isRequired.isRequired,
+  qualification: PropTypes.oneOfType([PropTypes.object]).isRequired,
 };
 
 export default EditQualificationsRow;

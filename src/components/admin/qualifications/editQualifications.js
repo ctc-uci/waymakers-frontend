@@ -53,6 +53,7 @@ const EditQualifications = () => {
           {Object.values(qualifications)
             .map((qualification) => (
               <EditQualificationsRow
+                key={qualification.id}
                 qualification={qualification}
               />
             ))}

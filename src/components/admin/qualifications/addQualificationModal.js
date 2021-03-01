@@ -2,13 +2,30 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
+const axios = require('axios');
+
 const AddQualificationModal = ({ modalOpen, setModalOpen }) => {
   // State variable for all editable fields
   const [name, setName] = useState('');
+  const [volunteerTier, setVolunteerTier] = useState();
   const [description, setDescription] = useState('');
 
-  const handleSubmit = () => {
-    console.log('Submitting');
+  const handleSubmit = async () => {
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/qualifications`,
+        {
+          name,
+          description,
+          volunteer_tier: volunteerTier,
+        },
+        { withCredentials: true },
+      );
+    } catch (err) {
+      // eslint-disable-next-line
+      console.error(err);
+    }
+    setModalOpen(false);
   };
 
   return (
@@ -33,6 +50,16 @@ const AddQualificationModal = ({ modalOpen, setModalOpen }) => {
                 className="form-input"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </label>
+            <label htmlFor="tier" className="form-label">
+              Tier:
+              <input
+                id="tier"
+                type="number"
+                className="form-input"
+                value={volunteerTier}
+                onChange={(e) => setVolunteerTier(e.target.value)}
               />
             </label>
             <label htmlFor="description">
