@@ -1,31 +1,86 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import WarehouseMenu from './warehouseMenu';
-
+import handleOutsideClick from '../../../common/handleOutsideClick';
 import store from '../redux/store';
 import { changeSelectedDivision } from '../redux/actions';
 import { getDivisions, getSelectedDivisionID, getWarehouses } from '../redux/selectors';
 
-const DivisionMenu = (prop) => (
-  <div>
-    <select
-      id="categories"
-      name="category"
-      className="form-control"
-      value={prop.selectedDivision}
-      onChange={(e) => { store.dispatch(changeSelectedDivision(parseInt(e.target.value, 10))); }}
-    >
-      {/* Creating dropdown menu items from divisions list */}
-      {/* division.div_name is displayed, but the value of the option will be the ID */}
-      {Object.entries(prop.divisionList)
-        .sort((a, b) => (a.id > b.id ? 1 : -1))
-        .map(([id, division]) => (
-          <option key={id} value={id}>{division.div_name}</option>
-        ))}
-    </select>
-    <WarehouseMenu warehouseList={prop.warehouseList} />
-  </div>
-);
+import './divisionMenu.css';
+
+const DivisionMenu = (prop) => {
+  const [currentDivision, setCurrentDivision] = useState('All Divisions');
+  const [open, setOpen] = useState(false);
+  const ref = useRef();
+
+  // Close division dropdown when user clicks outside of it
+  handleOutsideClick(ref, () => {
+    setOpen(false);
+  });
+
+  const handleArrowClick = () => {
+    if (open) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  };
+
+  const handleDivisionClick = (e, divName) => {
+    store.dispatch(changeSelectedDivision(parseInt(e.target.value, 10)));
+    setCurrentDivision(divName);
+    setOpen(false);
+  };
+
+  const menu = (list) => (
+    <div>
+      <div
+        name="category"
+        className="division-menu--list"
+        value={prop.selectedDivision}
+      >
+        {/* Creating dropdown menu items from divisions list */}
+        {/* division.div_name is displayed, but the value of the option will be the ID */}
+        {Object.entries(list)
+          .sort((a, b) => (a.id > b.id ? 1 : -1))
+          .filter((div) => div[1].div_name !== 'All Divisions')
+          .map(([id, division]) => (
+            <button
+              type="button"
+              key={id}
+              value={id}
+              className="division-menu--list-item"
+              onClick={(e) => handleDivisionClick(e, division.div_name)}
+            >
+              {division.div_name}
+            </button>
+          ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="menu-container">
+      <div ref={ref} className="division-menu-container">
+        <div className="division-menu--top">
+          {currentDivision}
+          <button
+            type="button"
+            aria-label="arrow"
+            onClick={handleArrowClick}
+            className={open ? 'division-menu--close' : 'division-menu--open'}
+          />
+        </div>
+        {open && menu(prop.divisionList)}
+      </div>
+      <WarehouseMenu
+        warehouseList={prop.warehouseList}
+        divisionList={prop.divisionList}
+        selectedDivision={prop.selectedDivision}
+      />
+    </div>
+  );
+};
 
 // Connecting component props to redux state
 const mapStateToProps = (state) => ({
