@@ -1,0 +1,50 @@
+@import '../../../common/vars.css';
+
+.items-table-wrapper {
+    align-self: center;
+    width: 80%;
+}
+
+.items-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.items-table thead {
+    align-self: center;
+    border-bottom: solid 1px var(--color-dark-blue);
+}
+
+.items-table thead tr {
+    padding: 12px;
+    font-size: 20px;
+    color: var(--text-color-dark);
+}
+
+.items-table tbody {
+    border-collapse: separate;
+    color: var(--text-color-dark);
+    font-size: 20px;
+}
+
+.th-name {
+    width: 45%;
+    padding-left: 3%;
+    text-align: left;
+    border-bottom: solid 1px var(--color-dark-blue);
+    padding-bottom: 5px;
+}
+
+.th-quantity {
+    width: 15%;
+    text-align: center;
+    border-bottom: solid 1px var(--color-dark-blue);
+    padding-bottom: 5px;
+}
+
+.th-category {
+    width: 20%;
+    text-align: center;
+    border-bottom: solid 1px var(--color-dark-blue);
+    padding-bottom: 5px;
+}

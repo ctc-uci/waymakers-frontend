@@ -1,0 +1,134 @@
+@import '../../../common/vars.css';
+
+.scroll-menu-container {
+    align-self: center;
+    width: 86%;
+}
+
+#scroll-menu-container--edit {
+    padding-right: 3.3%;
+}
+
+.horizontal-menu {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.scroll-menu-arrow {
+    padding-top: 12px;
+    text-align: center;
+}
+
+.arrow-prev {
+    width: 40px;
+    padding: 20px 20px 20px 20px;
+    background-image: url(images/inventoryArrowPrev.png);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.arrow-next {
+    width: 40px;
+    padding: 20px 20px 20px 20px;
+    background-image: url(images/inventoryArrowNext.png);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-color: transparent;
+    background-position: top right;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-wrapper--inner {
+    padding: 1.4px;
+}
+
+.category-button {
+    padding: 0 40px;
+    margin: 5px 10px;
+    width: 220px;
+    height: 42px;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    cursor: pointer;
+    border: 3px solid var(--color-green);
+    border-radius: 10px;
+    color: var(--color-green);
+    background-color: white;
+}
+
+.active {
+    text-decoration: none;
+}
+
+.category-button:hover {
+    color: var(--text-color-light);
+    background-color:var(--color-green);
+    transition: 0.2s
+}
+
+.category-button:focus {
+    color: var(--text-color-light);
+    background-color:var(--color-green);
+    outline: none;
+}
+
+.category-button--edit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 10px;
+    padding-left: 27.8%;
+    width: 220px;
+    height: 42px;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    cursor: pointer;
+    border: 3px solid var(--color-green);
+    border-radius: 10px;
+    color: var(--color-green);
+    background-color: white;
+    outline: none;
+}
+
+.category-button--edit:hover {
+    color: var(--text-color-light);
+    background-color:var(--color-green);
+    transition: 0.2s;
+}
+
+.category-icon--delete {
+    height: 30px;
+    width: 30px;
+    background-image: url(images/deleteItem.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 20px;
+    background-position: center;
+    border: none;
+    margin: 15px;
+    cursor: pointer;
+}
+
+.category-icon--undo {
+    height: 30px;
+    width: 30px;
+    background-image: url(images/undeleteItem.png);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 20px;
+    background-position: center;
+    border: none;
+    margin: 15px;
+    cursor: pointer;
+}
+
+.no-underline {
+    text-decoration: none;
+}

@@ -5,15 +5,19 @@ import store from '../redux/store';
 import { searchItems } from '../redux/actions';
 import { getSearchTerm } from '../redux/selectors';
 
+import './searchItem.css';
+
 // This is a search bar that lets us search for items
 const SearchItem = (prop) => (
-  <input
-    type="text"
-    className="form-control"
-    placeholder="Search for an item..."
-    value={prop.searchSubstring}
-    onChange={(e) => store.dispatch(searchItems(e.target.value))}
-  />
+  <div className="search-container">
+    <input
+      type="text"
+      className="item-search"
+      placeholder="Search for an item..."
+      value={prop.searchSubstring}
+      onChange={(e) => store.dispatch(searchItems(e.target.value))}
+    />
+  </div>
 );
 
 // Connecting component props to redux state

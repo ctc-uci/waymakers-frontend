@@ -119,6 +119,12 @@ export const deleteItem = (id) => ({
   payload: { id },
 });
 
+// Creates a edits/revertItemDelete action
+export const undeleteItem = (id) => ({
+  type: 'edits/revertItemDelete',
+  payload: { id },
+});
+
 // Creates a edits/addItemEdit action
 // newValues must be an object
 export const editItem = (id, newValues) => ({
@@ -140,6 +146,11 @@ export const addCategory = (newCategory) => async (dispatch) => {
 // Creates a edits/addItemDelete action
 export const deleteCategory = (id) => ({
   type: 'edits/addCategoryDelete',
+  payload: { id },
+});
+
+export const undeleteCategory = (id) => ({
+  type: 'edits/revertCategoryDelete',
   payload: { id },
 });
 

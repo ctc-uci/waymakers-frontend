@@ -1,19 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import EditableItem from '../editable-item/editableItem';
-
 import { getItems } from '../redux/selectors';
+
+import './table.css';
+
+// TO DO: prevent table columns from changing size when searching for items
 
 // This is where we display the items in the database
 const Table = (items) => (
-  <div className="table">
-    <table className="table mt-3 text-center">
+  <div className="items-table-wrapper">
+    <table className="items-table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>In stock</th>
-          <th>Number needed</th>
-          <th>Category</th>
+          <th className="th-name">Name</th>
+          <th className="th-quantity">In Stock</th>
+          <th className="th-quantity"> # Needed</th>
+          <th className="th-category">Category</th>
+          <th className="th-blank" aria-label="blank" />
         </tr>
       </thead>
       <tbody>
