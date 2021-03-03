@@ -6,3 +6,9 @@ rules:
       - "off"
    linebreak-style:
       - "off"
+
+overrides:
+   - files: "handleOutsideClick.js"
+     rules:
+       no-undef: 
+         - "off"

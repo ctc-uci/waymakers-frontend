@@ -66,7 +66,7 @@ const EditableItem = (props) => {
 
     setFieldState((prevState) => ({
       ...prevState,
-      [name]: prevState.[name] + 1,
+      [name]: Number(prevState[name]) + 1,
     }));
   };
 
@@ -78,7 +78,7 @@ const EditableItem = (props) => {
 
     setFieldState((prevState) => ({
       ...prevState,
-      [name]: prevState.[name] - 1,
+      [name]: prevState[name] - 1 >= 0 ? Number(prevState[name] - 1) : Number(prevState[name]),
     }));
   };
 
