@@ -1,0 +1,7 @@
+.volunteer-event-aggregatePage {
+    margin: 0% 10% 5% 10%;
+}
+
+.volunteer-event-aggregatePage .title {
+    color: var(--color-dark-blue);
+}

@@ -5,6 +5,7 @@
 
     --text-color-dark: #003E53;
     --text-color-light: #F9F9F9;
+    --text-color-dark-green: #48674C;
 
     --color-dark-blue: #003E53;
     --color-dark-orange: #DC624E;
@@ -12,5 +13,9 @@
     --color-dark-purple: #5A4ABC;
     --color-light-purple: #AD90FF;
     --color-light-green: #0CA27E;
+    --color-pastel-green: #C8DCCC;
     --color-green: #5D9A64;
+    --color-light-blue: #F2FBFC;
+    --color-golden-yellow: #EFB442;
+    --color-pink: #FFAECB;
 }

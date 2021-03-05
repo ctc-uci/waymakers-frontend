@@ -1,0 +1,22 @@
+#event-date-picker {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1em;
+}
+
+.picker, #month, #year {
+    background-color: var(--color-green);
+    color: var(--text-color-light);
+    outline: none;
+    border-radius: 8px;
+    margin-left: 10px;
+    padding: 0.25em;
+    border: none;
+    cursor: pointer;
+}
+
+.view-picker {
+    background: var(--color-pastel-green);
+    color: var(--text-color-dark-green);
+    border: none;
+}

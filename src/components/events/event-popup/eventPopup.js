@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
-import { addUserEvent, fetchEvents } from '../redux/actions';
+import {
+  addUserEvent,
+  removeUserEvent,
+  fetchEvents,
+  setShowPopup,
+  changePopupType,
+} from '../redux/actions';
+import { getPopupType } from '../redux/selectors';
 import store from '../redux/store';
 
 import './eventPopup.css';
@@ -25,12 +32,10 @@ const monthList = [
 
 // TODO: Scale eventPopup based on viewport height
 const EventPopup = ({
-  event, onClose, canAdd, addEventToUserCalendar, cookies,
+  event, addEventToUserCalendar, removeEventFromUserCalendar, cookies, popupType,
 }) => {
   const startDate = new Date(event.start);
   const endDate = new Date(event.end);
-
-  const [wantToAdd, setWantToAdd] = useState(false);
 
   const cancelButton = (
     <button
@@ -38,8 +43,7 @@ const EventPopup = ({
       type="button"
       aria-label="close popup"
       onClick={() => {
-        onClose();
-        setWantToAdd(false);
+        store.dispatch(setShowPopup(false));
       }}
     >
       Cancel
@@ -47,12 +51,14 @@ const EventPopup = ({
   );
 
   const prettifyDate = () => {
-    const startTime = `${dayList[startDate.getDay()]} ${monthList[startDate.getMonth()]} ${startDate.getDate()} ${startDate.getFullYear()} ${startDate.toLocaleTimeString().slice(0, -6)} PM`;
+    const startMeridiem = startDate.getHours() < 12 ? 'AM' : 'PM';
+    const endMeridiem = endDate.getHours() < 12 ? 'AM' : 'PM';
+    const startTime = `${dayList[startDate.getDay()]} ${monthList[startDate.getMonth()]} ${startDate.getDate()} ${startDate.getFullYear()} ${startDate.toLocaleTimeString().slice(0, -6)} ${startMeridiem}`;
     const endTime = `\n${dayList[endDate.getDay()]} ${monthList[endDate.getMonth()]} ${endDate.getDate()} ${endDate.getFullYear()}`;
     const differentDays = startDate.getFullYear() !== endDate.getFullYear()
                           || startDate.getMonth() !== endDate.getMonth()
                           || startDate.getDate() !== endDate.getDate();
-    return `${startTime} - ${differentDays ? endTime : ''} ${endDate.toLocaleTimeString().slice(0, -6)} PM`;
+    return `${startTime} - ${differentDays ? endTime : ''} ${endDate.toLocaleTimeString().slice(0, -6)} ${endMeridiem}`;
   };
 
   const addEvent = () => {
@@ -60,47 +66,117 @@ const EventPopup = ({
       .then(() => {
         store.dispatch(fetchEvents());
       });
-    onClose();
+    store.dispatch(setShowPopup(false));
   };
 
+  const removeEvent = () => {
+    removeEventFromUserCalendar(cookies.cookies.userId, event.id)
+      .then(() => {
+        store.dispatch(fetchEvents());
+      });
+    store.dispatch(setShowPopup(false));
+  };
+
+  // Rendered when + button clicked
+  const renderConfirmCancelButtons = () => (
+    <div className="multi-event-option">
+      <button
+        className="button confirm-button"
+        type="button"
+        aria-label="confirm add event"
+        onClick={() => {
+          addEvent();
+        }}
+      >
+        Confirm
+      </button>
+      {cancelButton}
+    </div>
+  );
+
+  const renderAddEventButton = () => (
+    <div className="single-event-option">
+      <button
+        className="add-intent-button"
+        type="button"
+        aria-label="Add To My Events"
+        onClick={() => {
+          store.dispatch(changePopupType('ConfirmCancelPopup'));
+        }}
+      >
+        Add to My Events
+      </button>
+    </div>
+  );
+
+  const renderAddMyHoursButton = () => (
+    <div className="single-event-option">
+      <button
+        className="add-intent-button"
+        type="button"
+        aria-label="Add to My Hours"
+        onClick={() => store.dispatch(changePopupType('LogHoursForm'))}
+      >
+        Add to My Hours
+      </button>
+    </div>
+  );
+
+  const renderRemoveFromMyEvent = () => (
+    <div className="single-event-option">
+      <button
+        className="remove-intent-button"
+        type="button"
+        aria-label="Remove From My events"
+        onClick={() => {
+          removeEvent();
+        }}
+      >
+        Remove From My Events
+      </button>
+    </div>
+  );
+
+  const renderEventFullButton = () => (
+    <div className="single-event-option">
+      <button
+        className="event-full-button"
+        type="button"
+        aria-label="Event is full"
+        onClick={() => {
+          store.dispatch(setShowPopup(false));
+        }}
+      >
+        Event is Full
+      </button>
+    </div>
+  );
+
   const renderButtons = () => {
-    if (canAdd === true && event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
-      if (wantToAdd) {
-        return (
-          <div className="multi-event-option">
-            {cancelButton}
-            <button
-              className="button confirm-button"
-              type="button"
-              aria-label="confirm add event"
-              onClick={() => {
-                addEvent();
-                setWantToAdd(false);
-              }}
-            >
-              Confirm
-            </button>
-          </div>
-        );
-      }
-      return (
-        <div className="single-event-option">
-          <button
-            className="add-intent-button"
-            type="button"
-            aria-label="add to my events"
-            onClick={() => setWantToAdd(true)}
-          >
-            Add to My Events
-          </button>
-        </div>
-      );
+    switch (popupType) {
+      case 'ConfirmCancelPopup':
+        if (event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
+          return renderConfirmCancelButtons();
+        }
+        return renderEventFullButton();
+      case 'AddEventPopup':
+        if (event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
+          return renderAddEventButton();
+        }
+        return renderEventFullButton();
+      case 'AddMyHoursPopup':
+        return renderAddMyHoursButton();
+      // case 'ViewEventInfoPopup':
+      //   return '';
+      case 'RemoveFromMyEventPopup':
+        return renderRemoveFromMyEvent();
+      // case 'CreateEventForm':
+      //   return '';
+      // case 'ModifyEventInfoForm':
+      //   return '';
+      default:
+        return renderConfirmCancelButtons();
     }
-    return (
-      <div className="single-event-option">
-        {cancelButton}
-      </div>
-    );
   };
 
   return (
@@ -109,7 +185,7 @@ const EventPopup = ({
         className="exit-button"
         type="button"
         aria-label="close"
-        onClick={onClose}
+        onClick={() => { store.dispatch(setShowPopup(false)); }}
       >
         <img className="x-icon" src={cross} alt="close" />
       </button>
@@ -148,19 +224,6 @@ const EventPopup = ({
         <div className="event-description">
           <p>{event.extendedProps.description}</p>
         </div>
-        {/* <div className="event-description">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Sed faucibus iaculis risus a fermentum. Praesent tristique mollis facilisis.
-            Curabitur dapibus nisl eget lacinia tincidunt. Etiam laoreet ultricies risus.
-            Suspendisse turpis risus, vulputate eget tristique vitae, lobortis ac eros.
-            Mauris id turpis ullamcorper, maximus nisl luctus, volutpat orci. Sed pharetra,
-            eros vitae posuere fringilla, arcu nibh tempor eros, id sodales orci turpis sed libero.
-            Aliquam ultrices sollicitudin risus, vitae maximus ante accumsan nec.
-            Curabitur molestie diam ut nulla ullamcorper suscipit id eu mauris.
-            Proin id pulvinar neque. Phasellus sollicitudin consequat ornare.
-          </p>
-        </div> */}
         {renderButtons()}
       </div>
     </div>
@@ -168,13 +231,18 @@ const EventPopup = ({
 };
 
 EventPopup.propTypes = {
-  event: PropTypes.objectOf(PropTypes.string).isRequired,
-  onClose: PropTypes.func.isRequired,
-  canAdd: PropTypes.bool.isRequired,
+  event: PropTypes.objectOf(PropTypes.any).isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   addEventToUserCalendar: PropTypes.func.isRequired,
+  removeEventFromUserCalendar: PropTypes.func.isRequired,
+  popupType: PropTypes.string.isRequired,
 };
 
-export default withCookies(connect(null, {
+const mapStateToProps = (state) => ({
+  popupType: getPopupType(state),
+});
+
+export default withCookies(connect(mapStateToProps, {
   addEventToUserCalendar: addUserEvent,
+  removeEventFromUserCalendar: removeUserEvent,
 })(EventPopup));
