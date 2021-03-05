@@ -1,34 +1,80 @@
-.eventContainer {
-    background-color: lightgrey;
-    border: none;
-    padding: 20px;
-    margin: 10px;
-    font-size: 11px;
-    max-width: 180px;
+.event-list-container {
+    display: flex;
 }
 
-.actionButton {
-    width: 30%;
-    padding-left: 2.5%;
-    padding-right: 2.5%;
+.event-container {
+    display: flex;
+    color: var(--text-color-light);
+    padding: 15px 20px;
+    align-items: center;
+    flex: 1 1 98%;
 }
 
-.eventName {
-    text-emphasis: bold;
-    font-size: 10px;
+.more-events {
+    background-color: var(--color-dark-blue);
 }
 
-.condensedEventDetails {
-    width: 60%;
-    border: 1px black;
-    padding-left: 10%;
-    padding-right: 10%;
+.my-events {
+    background-color: var(--color-teal);
 }
 
-.arrowContainer {
-    width: 15%;
-    border-radius: 7.5%;
-    border: 1px black;
-    padding-left: 2.5%;
-    padding-right: 2.5%;
+.event-button {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    min-width: 40px;
+    margin-right: 10px;
+    background-color: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.event-button:hover {
+    background-color: lightblue;
+}
+
+.event-date-section {
+    margin: auto 10px;
+}
+
+.event-info-section {
+    margin: auto 10px;
+}
+
+.event-day {
+    font-weight: bolder;
+    margin: 0;
+}
+
+.event-month {
+    margin: 0;
+}
+
+.event-title {
+    font-weight: bolder;
+    margin: 0;
+}
+
+.event-time {
+    margin: 0;
+}
+
+.volunteer-event {
+    min-height: 100%;
+    background-color: var(--color-yellow);
+    flex: 1 0 2%;
+}
+
+.outreach-event {
+    min-height: 100%;
+    background-color: var(--color-light-pink);
+    flex: 1 0 2%;
+}
+
+.other-event {
+    min-height: 100%;
+    background-color: var(--color-lavender);
+    flex: 1 0 2%;
 }

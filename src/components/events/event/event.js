@@ -1,28 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './event.css';
-import '../edit-events/editEvents.css';
+// import '../edit-events/editEvents.css';
 
-const Event = ({ event, onEditEventClick }) => {
+const Event = ({
+  event, listType, index, onEventButtonClick,
+}) => {
   // Date formatting
-  const startTime = new Date(event.startTime).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
-  const endTime = new Date(event.endTime).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
+  const startDate = new Date(event.startTime);
+  const endDate = new Date(event.endTime);
+  const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(startDate);
+  const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(startDate);
+  const startTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(startDate);
+  const endTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(endDate);
+  const eventType = `${event.eventType.toLowerCase()}-event`;
 
   return (
-    <div className="eventContainer">
-      <h4>{event.title}</h4>
-      <p>{`Start: ${startTime}`}</p>
-      <p>{`End: ${endTime}`}</p>
-      <p>{`Location: ${event.location}`}</p>
-      <p>{`Details: ${event.description}`}</p>
-      <button className="all-events edit-event-button" type="button" onClick={() => onEditEventClick(event)}>Edit Event</button>
+    <div className="event-list-container">
+      <div className={`event-container ${listType}`}>
+        <div
+          className="event-button"
+          onClick={() => onEventButtonClick(listType, index)}
+          onKeyDown={() => onEventButtonClick(listType, index)}
+          role="button"
+          tabIndex={index}
+        >
+          <p>{listType === 'more-events' ? '+' : '✓'}</p>
+        </div>
+        <div className="event-date-section">
+          <h3 className="event-day">{day}</h3>
+          <p className="event-month">{month}</p>
+        </div>
+        <div className="event-info-section">
+          <h3 className="event-title">{event.title}</h3>
+          <p className="event-time">{`${startTime} - ${endTime}`}</p>
+        </div>
+      </div>
+      <div className={`${eventType}`} />
     </div>
   );
 };
 
 Event.propTypes = {
   event: PropTypes.objectOf(String).isRequired,
-  onEditEventClick: PropTypes.func.isRequired,
+  listType: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  onEventButtonClick: PropTypes.func.isRequired,
 };
 
 export default Event;

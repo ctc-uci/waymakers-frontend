@@ -68,6 +68,7 @@ export const fetchWarehouses = (division = -1) => async (dispatch) => {
   };
   try {
     const response = await instance.get('warehouses', paramsQuery);
+    console.log(response.data);
     // Converting array of objects into an associative array
     const warehouses = response.data.reduce(
       (obj, item) => Object.assign(obj, { [item.id]: item }), {},

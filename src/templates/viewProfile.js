@@ -9,7 +9,7 @@ import { withCookies, Cookies } from 'react-cookie';
 
 import About from '../components/profile/about/About';
 import Contact from '../components/profile/contact/Contact';
-import Availability from '../components/profile/availability/Availability';
+import viewAvailability from '../components/dashboard/availability-component/viewAvailability/viewAvailability';
 
 import profCircle from '../images/profCircle.png';
 
@@ -135,7 +135,7 @@ const viewProfile = (props) => {
           </div>
         </div>
         <div>
-          <Availability availabilities={availability} startWeek={startWeek} />
+          <viewAvailability availabilities={availability} startWeek={startWeek} />
         </div>
       </div>
     </div>
