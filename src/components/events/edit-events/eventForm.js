@@ -1,21 +1,179 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Datetime from 'react-datetime';
+import { useSelector } from 'react-redux';
+import {
+  setShowPopup,
+  addEvent,
+  changePopupType,
+  editEvent,
+} from '../redux/actions';
+import { getPopupType, getSelectedEvent } from '../redux/selectors';
+import store from '../redux/store';
+
+import './eventForm.css';
+
+// const POPUP_TYPE= Object.freeze({
+//     ADD_EVENT,
+//     MODIFY_EVENT,
+//     EDIT_EVENT
+// })
 
 const EventForm = () => {
+//   const event = useSelector(getSelectedEvent);
 
-    const [title, setTitle] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [endTime, setEndTime] = useState('');
-    const [location, setLocation] = useState('');
-    const [description, setDescription] = useState('');
-    const [eventType, setEventType] = useState('Volunteer');
-    const [eventLimit, setEventLimit] = useState(0);
-    const [division, setDivision] = useState('Crisis-Response-Team');
+  const [title, setTitle] = useState('');
+  //   const [startTime, setStartTime] = useState(new Date(event.start));
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [location, setLocation] = useState('');
+  const [description, setDescription] = useState('');
+  const [eventType, setEventType] = useState('Volunteer');
+  const [eventLimit, setEventLimit] = useState(0);
+  const [division, setDivision] = useState('Crisis-Response-Team');
 
-    return (
+  // const [title, setTitle] = useState(event.title);
+  // const [startTime, setStartDate] = useState(new Date(event.start));
+  // const [endTime, setEndDate] = useState(new Date(event.end));
+  // const [location, setLocation] = useState(event.extendedProps.location);
+  // const [description, setDescription] = useState(event.extendedProps.description);
+  // const [eventType, setEventType] = useState(event.extendedProps.eventType);
+  // const [division, setDivision] = useState(event.extendedProps.division.replace(/\s+/g, '-'));
+  // const [eventLimit, setEventLimit] = useState(event.extendedProps.eventLimit);
+  // data initalize depdning on redux form ttype??
+  const event = useSelector(getSelectedEvent);
+  const popupType = useSelector(getPopupType);
+
+  useEffect(() => {
+    switch (popupType) {
+    // View Event Info
+      case 'AddEventForm':
+        setTitle('');
+        setStartTime('');
+        setEndTime('');
+        setLocation('');
+        setDescription('');
+        setEventType('');
+        setEventLimit('');
+        setDivision('');
+        break;
+      default:
+        setTitle(event.title);
+        setStartTime(new Date(event.start));
+        setEndTime(new Date(event.end));
+        setLocation(event.extendedProps.location);
+        setDescription(event.extendedProps.description);
+        setEventType(event.extendedProps.eventType);
+        setDivision(event.extendedProps.division.replace(/\s+/g, '-'));
+        setEventLimit(event.extendedProps.eventLimit);
+    }
+  }, [popupType]);
+
+  const closePopup = () => {
+    store.dispatch(setShowPopup(false));
+  };
+
+  const CancelButton = () => (
+    <button
+      className="button cancel-button"
+      type="button"
+      aria-label="close popup"
+      onClick={closePopup}
+    >
+      Cancel
+    </button>
+  );
+
+  const onSubmitAddEvent = async (e) => {
+    e.preventDefault();
+    const newEvent = {
+      eventName: title,
+      eventType,
+      eventLocation: location,
+      eventDescription: description,
+      division: division.replace(/-/g, ' '),
+      startTime: new Date(startTime),
+      endTime: new Date(endTime),
+      eventLimit,
+      isAllDay: false, // default to false right now
+    };
+    store.dispatch(addEvent(newEvent));
+    closePopup();
+  };
+
+  const onSubmitModifyEvent = async (e) => {
+    e.preventDefault();
+
+    const editedEvent = {
+      eventId: event.id,
+      eventName: title,
+      eventType,
+      eventLocation: location,
+      eventDescription: description,
+      division: division.replace(/-/g, ' '),
+      eventLimit,
+      startTime: new Date(startTime),
+      endTime: new Date(endTime),
+      isAllDay: false, // default to false right now
+    };
+    store.dispatch(editEvent(event.id, editedEvent));
+    closePopup();
+  };
+
+  // Render form title
+  const FormTitle = () => {
+    switch (useSelector(getPopupType)) {
+      case 'AddEventForm':
+        return (
+          <div className="form-title-container">
+            <h2>Add Event Information</h2>
+          </div>
+        );
+      case 'ViewEventInfoPopup':
+        return (
+          <>
+            <h2>View Event Information</h2>
+            <button type="button" onClick={() => store.dispatch(changePopupType('ModifyEventForm'))}>Edit Button</button>
+          </>
+        );
+      case 'ModifyEventForm':
+        return <h2>Edit Event Information </h2>;
+      default:
+        console.log('No matching Popup Tye');
+        return <h2>No type</h2>;
+    }
+  };
+
+  // Render buttons at the bottom of the Add/Modify/View event form
+  const BottomButtons = () => {
+    switch (useSelector(getPopupType)) {
+      case 'AddEventForm':
+        return (
+          <>
+            <button type="submit" onClick={(e) => onSubmitAddEvent(e)}>Submit</button>
+            <br />
+            <CancelButton />
+          </>
+        );
+      case 'ViewEventInfoPopup':
+        return CancelButton();
+      case 'ModifyEventForm':
+        return (
+          <>
+            <button type="submit" onClick={(e) => onSubmitModifyEvent(e)}>Save</button>
+            <button type="submit" onClick={() => {}}>Duplicate</button>
+            <button type="submit" onClick={onSubmitAddEvent}>Delete</button>
+          </>
+        );
+      default:
+        console.log('No matching Popup Tye');
+        return CancelButton();
+    }
+  };
+
+  return (
     <div className="popup">
-      <h2>Add Event</h2>
-      <form onSubmit={onSubmit}>
+      <FormTitle />
+      <form onSubmit={closePopup}>
         <label htmlFor="title">
           Title:
           <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
@@ -26,7 +184,7 @@ const EventForm = () => {
         <label htmlFor="event-type">
           Event Type:
           <br />
-          <select id="event-type" name="eventType" onChange={(e) => setEventType(e.target.value)}>
+          <select id="event-type" name="eventType" value={eventType} onChange={(e) => setEventType(e.target.value)}>
             <option value="Volunteer">Volunteer</option>
             <option value="Outreach">Outreach</option>
           </select>
@@ -52,7 +210,7 @@ const EventForm = () => {
 
         <div>Start Time</div>
         <Datetime
-          initialValue={new Date(startTime)}
+          value={new Date(startTime)}
           id="start-date"
           onChange={(e) => setStartTime(e.toString().substring(0, e.toString().length - 8))}
           required
@@ -60,7 +218,7 @@ const EventForm = () => {
         <br />
         <div>End Time</div>
         <Datetime
-          initialValue={new Date(endTime)}
+          value={new Date(endTime)}
           id="end-date"
           onChange={(e) => setEndTime(e.toString().substring(0, e.toString().length - 8))}
           required
@@ -76,11 +234,10 @@ const EventForm = () => {
           <input id="details" type="text" value={description} onChange={(e) => setDescription(e.target.value)} required />
         </label>
         <br />
-        <input type="submit" value="Save" />
+        <BottomButtons />
       </form>
-      <button type="button" onClick={onClose}>Cancel</button>
     </div>
-    );
+  );
 };
 
 export default EventForm;
