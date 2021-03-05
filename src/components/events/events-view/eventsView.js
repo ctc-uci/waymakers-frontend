@@ -157,7 +157,7 @@ const EventsView = ({
         />
       );
     }
-    return <EventList events={listEvents} title="My Events" listType="my-events" onEventButtonClick={() => console.log('hi')} />;
+    return <EventList events={listEvents} title="My Events" listType="all" onEventButtonClick={() => console.log('hi')} />;
   };
 
   const renderCheckboxes = () => {

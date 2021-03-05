@@ -1,8 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 // import "./events.css";
 import PropTypes from 'prop-types';
 import Event from '../event/event';
 import './eventList.css';
+
+import { getUserEvents } from '../redux/selectors';
 
 // events = Array of objects with event details
 /*
@@ -19,16 +22,34 @@ const EventList = ({
 }) => {
   // render Event components based on events prop
 
-  const renderEvents = () => events.map((event, index) => (
-    <div className="event-div">
-      <Event
-        event={event}
-        listType={listType}
-        index={index}
-        onEventButtonClick={onEventButtonClick}
-      />
-    </div>
-  ));
+  const userEvents = useSelector(getUserEvents);
+
+  const renderEvents = () => (
+    events.map((event, index) => {
+      let eventType = listType;
+      // Check if a specific event is a user event or more event
+      const eventId = event.id;
+      if (listType === 'all') {
+        userEvents.forEach((e) => {
+          if (e.id === eventId) {
+            eventType = 'my-events';
+          }
+        });
+        if (eventType !== 'my-events') {
+          eventType = 'more-events';
+        }
+      }
+      return (
+        <div className="event-div">
+          <Event
+            event={event}
+            listType={eventType}
+            index={index}
+            onEventButtonClick={onEventButtonClick}
+          />
+        </div>
+      );
+    }));
 
   return (
     <div className="event-list">
