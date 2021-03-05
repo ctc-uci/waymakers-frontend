@@ -16,6 +16,7 @@ import EventList from '../event-list/eventList';
 
 import {
   getEvents,
+  getUserEvents,
   getEventsForFullCalendar,
   getUserEventsForFullCalendar,
   getMonth,
@@ -99,9 +100,17 @@ const EventsView = ({
   }
 
   // Returns events based on filters, also adds properties for styling
-  const filterEvents = () => {
-    const userEvents = useSelector(getUserEventsForFullCalendar);
-    const allEvents = useSelector(getEventsForFullCalendar);
+  const filterEvents = (display) => {
+    let userEvents;
+    let allEvents;
+    if (display === 'cal') {
+      userEvents = useSelector(getUserEventsForFullCalendar);
+      allEvents = useSelector(getEventsForFullCalendar);
+    } else {
+      userEvents = useSelector(getUserEvents);
+      allEvents = useSelector(getEvents);
+    }
+
     const userEventIds = userEvents.map((event) => event.id);
     let events;
     if (showMyEvents && !showMoreEvents) { // Only My Events checked off
@@ -131,10 +140,8 @@ const EventsView = ({
   };
 
   const getCalendar = () => {
-    const calendarEvents = filterEvents();
-    const listEvents = useSelector(getEvents);
-    console.log(listEvents);
     if (view !== 'timeGridDay') {
+      const calendarEvents = filterEvents('cal');
       return (
         <FullCalendar
           plugins={[timeGridPlugin, dayGridPlugin]}
@@ -157,7 +164,18 @@ const EventsView = ({
         />
       );
     }
-    return <EventList events={listEvents} title="My Events" listType="all" onEventButtonClick={() => console.log('hi')} />;
+
+    let filter;
+    const events = filterEvents('list');
+    if (showMoreEvents && showMyEvents) {
+      filter = 'all';
+    } else {
+      filter = showMoreEvents ? 'more-events' : 'my-events';
+    }
+
+    // TODO: ADD FILTER FOR DAY
+    // TODO: Add arrows to change day
+    return <EventList events={events} title="My Events" listType={filter} onEventButtonClick={() => console.log('hi')} />;
   };
 
   const renderCheckboxes = () => {

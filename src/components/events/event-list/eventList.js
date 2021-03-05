@@ -23,6 +23,7 @@ const EventList = ({
   // render Event components based on events prop
 
   const userEvents = useSelector(getUserEvents);
+  console.log(userEvents);
 
   const renderEvents = () => (
     events.map((event, index) => {

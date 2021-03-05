@@ -6,11 +6,13 @@ import {
 import {
   startOfWeek, add, getHours, getDay,
 } from 'date-fns';
+import { Provider } from 'react-redux';
 import axios from 'axios';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import auth from '../../firebase/firebase';
 import EventList from '../../events/event-list/eventList';
+import store from '../../events/redux/store';
 import './volunteerDashboard.css';
 import ViewAvailability from '../availability-component/viewAvailability/viewAvailability';
 import EditAvailability from '../availability-component/editAvailability/editAvailability';
@@ -223,43 +225,45 @@ const VolunteerDashboard = (props) => {
   }
 
   return (
-    <div>
-      <div className="d-flex align-items-center justify-content-center">
-        <div className="w-100 login-container">
-          <Card className="w-100">
-            <Card.Body>
-              <h2 className="text-center mb-4">Volunteer Dashboard</h2>
-              {error && <Alert variant="danger">{error}</Alert>}
-              <Button onClick={logout} to="/login" className="w-100" type="submit" variant="primary">Log Out</Button>
-            </Card.Body>
-          </Card>
+    <Provider store={store}>
+      <div>
+        <div className="d-flex align-items-center justify-content-center">
+          <div className="w-100 login-container">
+            <Card className="w-100">
+              <Card.Body>
+                <h2 className="text-center mb-4">Volunteer Dashboard</h2>
+                {error && <Alert variant="danger">{error}</Alert>}
+                <Button onClick={logout} to="/login" className="w-100" type="submit" variant="primary">Log Out</Button>
+              </Card.Body>
+            </Card>
+          </div>
+        </div>
+        <div className="my-stats-section">
+          <h5 className="my-stats-title">My Stats</h5>
+          <div className="filler" />
+        </div>
+        <div className="events-section">
+          <div className="event-list-component">
+            <EventList events={moreEvents} title="More Events" listType="more-events" onEventButtonClick={onEventButtonClick} />
+          </div>
+          <div className="event-list-component">
+            <EventList events={myEvents} title="My Events" listType="my-events" onEventButtonClick={onEventButtonClick} />
+          </div>
+        </div>
+        <div className="key-section">
+          <p className="key-text">Key</p>
+          <div className="volunteer-event-square" />
+          <p className="volunteer-event-text">Volunteer Event</p>
+          <div className="outreach-event-square" />
+          <p className="outreach-event-text">Outreach Event</p>
+          <div className="other-event-square" />
+          <p className="other-event-text">Other Event</p>
+        </div>
+        <div className="availability-section">
+          {renderAvailability()}
         </div>
       </div>
-      <div className="my-stats-section">
-        <h5 className="my-stats-title">My Stats</h5>
-        <div className="filler" />
-      </div>
-      <div className="events-section">
-        <div className="event-list-component">
-          <EventList events={moreEvents} title="More Events" listType="more-events" onEventButtonClick={onEventButtonClick} />
-        </div>
-        <div className="event-list-component">
-          <EventList events={myEvents} title="My Events" listType="my-events" onEventButtonClick={onEventButtonClick} />
-        </div>
-      </div>
-      <div className="key-section">
-        <p className="key-text">Key</p>
-        <div className="volunteer-event-square" />
-        <p className="volunteer-event-text">Volunteer Event</p>
-        <div className="outreach-event-square" />
-        <p className="outreach-event-text">Outreach Event</p>
-        <div className="other-event-square" />
-        <p className="other-event-text">Other Event</p>
-      </div>
-      <div className="availability-section">
-        {renderAvailability()}
-      </div>
-    </div>
+    </Provider>
   );
 };
 
