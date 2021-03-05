@@ -1,0 +1,75 @@
+@import '../../../common/vars.css';
+
+/* #legend {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 80%;
+    margin-left: 1em;
+    margin-top: 2%;
+}
+
+.legend-item {
+    display: flex;
+    flex-direction: row;
+    margin-left: 4em;
+}
+
+.event-type {
+    padding-left: 0.6em;
+}
+
+#legend-title {
+    font-size: 1em;
+    font-weight: bold;
+    display: inline;
+}
+ */
+
+ .key-section {
+    display: flex;
+    width: 85%;
+    /* margin: 20px auto auto auto; */
+    padding: 15px 20px;
+}
+
+.key-text {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0 10px 0 0;
+}
+.volunteer-event-square {
+    background-color: var(--color-golden-yellow);
+    width: 25px;
+    height: 25px;
+    margin: 0 10px 0 25px;
+}
+
+.volunteer-event-text {
+    font-size: 1.3rem;
+    margin: 0 10px 0 0;
+}
+
+.outreach-event-square {
+    background-color: var(--color-pink);
+    width: 25px;
+    height: 25px;
+    margin: 0 10px 0 25px;
+}
+
+.outreach-event-text {
+    font-size: 1.3rem;
+    margin: 0 10px 0 0;
+}
+
+.other-event-square {
+    background-color: var(--color-light-purple);
+    width: 25px;
+    height: 25px;
+    margin: 0 10px 0 25px;
+}
+
+.other-event-text {
+    font-size: 1.3rem;
+    margin: 0 10px 0 0;
+}

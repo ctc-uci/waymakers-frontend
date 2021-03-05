@@ -1,11 +1,47 @@
-#dialogue-box{
-    border: solid;
-    padding: 1em;
-    
+#dialogue-box {
+    background-color: var(--text-color-dark);
+    color: var(--text-color-light);
+    border: 5px solid #E4F5F8;
+    box-sizing: border-box;
+    box-shadow: 3px 3px 5px lightgray;
+    border-width: 5px;
+    z-index: 3;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    padding: 2em;
+    width: 40em;
+    transform: translate(-50%, -50%);
+    margin: auto;
 }
 
 
-#view-data-button{
+#view-data-button {
+    display: flex;
+    justify-content: center;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 10px;
+    background-color: var(--color-green);
+    color: var(--text-color-light);
+    border: none;
+    padding-right: 2em;
+    padding-left: 2em;
+
+}
+
+#close-button {
+    float: right;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    color: white;
+}
+
+#event-type {
+    float: right;
+    margin-right: 2%;
 }

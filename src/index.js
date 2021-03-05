@@ -22,6 +22,7 @@ import Events from './components/events/events';
 import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggregate-page/volunteerEventAggregatePage';
 import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
+import VolunteerEvents from './components/dashboard/volunteer-events/volunteerEvents';
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
@@ -51,6 +52,7 @@ ReactDOM.render(
           </Switch>
 
           <Switch>
+            <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
             <ProtectedRoute path="/volunteer/hours" component={Hours} />
             <ProtectedRoute path="/volunteer/tier" component={Tier} />
             <ProtectedRoute path="/volunteer/forms" component={Forms} />

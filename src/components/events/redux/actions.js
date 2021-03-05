@@ -8,12 +8,10 @@ const instance = axios.create({
 
 // Fetching events from server
 export const fetchEvents = () => async (dispatch) => {
-  console.log('HELLO');
   const url = 'events/';
   // TODO: Add filters for getting events based on division, type, user, etc.
   try {
     const response = await instance.get(url);
-    console.log('FETCHING EVENTS');
     dispatch({ type: 'events/eventsLoaded', payload: response.data });
     return null; // Need this so we exit async function
   } catch (err) {
@@ -58,7 +56,7 @@ export const editEvent = (eventId, updatedEvent) => async (dispatch) => {
   try {
     const response = await instance.put(`events/${eventId}`, updatedEvent);
     if (response.status === 200) {
-      dispatch({ type: 'events/eventEdit', payload: response.data });
+      dispatch({ type: 'events/eventEdited', payload: response.data });
     }
     return null;
   } catch (err) {
@@ -69,7 +67,6 @@ export const editEvent = (eventId, updatedEvent) => async (dispatch) => {
 };
 
 // User Events
-
 export const fetchUserEvents = (userId) => async (dispatch) => {
   try {
     const response = await instance.get(`userEvent/${userId}`);
@@ -99,4 +96,50 @@ export const addUserEvent = (userId, eventId) => async (dispatch) => {
     console.error(err);
     return err;
   }
+};
+
+// Removes an events/eventRemoved action
+export const removeUserEvent = (userId, eventId) => async (dispatch) => {
+  try {
+    const response = await instance.delete('userEvent/remove', { data: { userId, eventId } });
+    console.log(response.status);
+    if (response.status === 200) {
+      dispatch({ type: 'events/userEventRemoved', payload: response.data });
+    }
+    return null;
+  } catch (err) {
+    console.log('Error while removing event from your calendar.');
+    // eslint-disable-next-line
+    console.error(err);
+    return err;
+  }
+};
+
+// Dispatches actions to change selected division, and load connected warehouses
+export const setShowPopup = (newValue) => async (dispatch) => {
+  dispatch({ type: 'events/showPopupModified', payload: newValue });
+};
+
+export const changeDay = (newDay) => async (dispatch) => {
+  dispatch({ type: 'events/daySelected', payload: newDay });
+};
+
+export const changeMonth = (newMonth) => async (dispatch) => {
+  dispatch({ type: 'events/monthSelected', payload: newMonth });
+};
+
+export const changeYear = (newYear) => async (dispatch) => {
+  dispatch({ type: 'events/yearSelected', payload: newYear });
+};
+
+export const changeSelectedEvent = (event) => async (dispatch) => {
+  dispatch({ type: 'events/eventSelected', payload: event });
+};
+
+export const changeView = (newView) => async (dispatch) => {
+  dispatch({ type: 'events/viewSelected', payload: newView });
+};
+
+export const changePopupType = (newPopupType) => async (dispatch) => {
+  dispatch({ type: 'events/popupTypeSelected', payload: newPopupType });
 };
