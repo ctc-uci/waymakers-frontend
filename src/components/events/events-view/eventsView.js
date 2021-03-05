@@ -12,8 +12,10 @@ import CalendarFilters from './calendar-filters/calendarFilters';
 import EventBlock from './event-block/eventBlock';
 import CalendarPopup from './calendar-popup/calendarPopup';
 import CalendarDayHeader from './calendar-day-header/calendarDayHeader';
+import EventList from '../event-list/eventList';
 
 import {
+  getEvents,
   getEventsForFullCalendar,
   getUserEventsForFullCalendar,
   getMonth,
@@ -29,7 +31,7 @@ import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
 
 const EventsView = ({
-  getEvents, getUserEvents, cookies, day, year, month, view,
+  loadEvents, loadUserEvents, cookies, day, year, month, view,
 }) => {
   const [showMoreEvents, setShowMoreEvents] = useState(true);
   const [showMyEvents, setShowMyEvents] = useState(true);
@@ -40,23 +42,29 @@ const EventsView = ({
 
   useEffect(() => {
     (async () => {
-      await getEvents();
-      await getUserEvents(cookies.cookies.userId);
+      await loadEvents();
+      await loadUserEvents(cookies.cookies.userId);
     })();
   }, []);
 
   // Update calendar
   useEffect(() => {
-    calendarEl.current.getApi().changeView('dayGridMonth', `${year}-${month < 10 ? '0' : ''}${month}-01`);
-    calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
+    if (view !== 'timeGridDay') {
+      calendarEl.current.getApi().changeView('dayGridMonth', `${year}-${month < 10 ? '0' : ''}${month}-01`);
+      calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
+    }
   }, [useSelector(getMonth), useSelector(getYear)]);
 
   useEffect(() => {
-    calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
+    if (view !== 'timeGridDay') {
+      calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
+    }
   }, [useSelector(getDay)]);
 
   useEffect(() => {
-    calendarEl.current.getApi().changeView(view);
+    if (view !== 'timeGridDay') {
+      calendarEl.current.getApi().changeView(view);
+    }
   }, [useSelector(getView)]);
 
   function renderPopup() {
@@ -123,29 +131,33 @@ const EventsView = ({
   };
 
   const getCalendar = () => {
-    const events = filterEvents();
-
-    return (
-      <FullCalendar
-        plugins={[timeGridPlugin, dayGridPlugin]}
-        initialView="timeGridWeek"
-        events={events}
-        // contentHeight="auto"
-        contentHeight={1000}
-        expandRows="true"
-        ref={calendarEl}
-        headerToolbar={{
-          left: 'title',
-          center: '',
-          right: '',
-        }}
-        dayHeaderContent={renderHeader}
-        eventContent={renderEventContent}
-        allDaySlot={false}
-        // height="auto"
-        slotDuration="00:60:00"
-      />
-    );
+    const calendarEvents = filterEvents();
+    const listEvents = useSelector(getEvents);
+    console.log(listEvents);
+    if (view !== 'timeGridDay') {
+      return (
+        <FullCalendar
+          plugins={[timeGridPlugin, dayGridPlugin]}
+          initialView="timeGridWeek"
+          events={calendarEvents}
+          // contentHeight="auto"
+          contentHeight={1000}
+          expandRows="true"
+          ref={calendarEl}
+          headerToolbar={{
+            left: 'title',
+            center: '',
+            right: '',
+          }}
+          dayHeaderContent={renderHeader}
+          eventContent={renderEventContent}
+          allDaySlot={false}
+          // height="auto"
+          slotDuration="00:60:00"
+        />
+      );
+    }
+    return <EventList events={listEvents} title="My Events" listType="my-events" onEventButtonClick={() => console.log('hi')} />;
   };
 
   const renderCheckboxes = () => {
@@ -178,8 +190,8 @@ const EventsView = ({
 };
 
 EventsView.propTypes = {
-  getEvents: PropTypes.func.isRequired,
-  getUserEvents: PropTypes.func.isRequired,
+  loadEvents: PropTypes.func.isRequired,
+  loadUserEvents: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
@@ -195,6 +207,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default withCookies(connect(mapStateToProps, {
-  getEvents: fetchEvents, // rename fetchEvents action
-  getUserEvents: fetchUserEvents,
+  loadEvents: fetchEvents, // rename fetchEvents action
+  loadUserEvents: fetchUserEvents,
 })(EventsView));
