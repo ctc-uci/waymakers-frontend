@@ -1,17 +1,22 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import { React, useState } from 'react';
 import PropTypes from 'prop-types';
 import './qualPopup.css';
+import ApproveQual from '../approve-qual/approveQual';
+import RejectQual from '../reject-qual/rejectQual';
 
 const QualPopup = ({
   trigger, setTrigger, qualifications, firstName, lastName,
 }) => {
+  const [approvePopup, setApprovePopup] = useState(false);
+  const [rejectPopup, setRejectPopup] = useState(false);
+
   const rows = qualifications.map((qualification) => (
     <tr>
       <td className="qual-name">{qualification.name}</td>
       <td>
-        <button type="button" className="btn btn-danger btn-sm rounded-pill reject">Reject</button>
-        <button type="button" className="btn btn-success btn-sm rounded-pill approve">Approve</button>
+        <button type="button" onClick={() => setRejectPopup(true)} className="btn btn-danger btn-sm rounded-pill reject">Reject</button>
+        <button type="button" onClick={() => setApprovePopup(true)} className="btn btn-success btn-sm rounded-pill approve">Approve</button>
       </td>
     </tr>
   ));
@@ -35,6 +40,8 @@ const QualPopup = ({
               </tbody>
             </table>
           </section>
+          <ApproveQual toggle={approvePopup} setToggle={setApprovePopup} />
+          <RejectQual reject={rejectPopup} setReject={setRejectPopup} />
         </div>
       </div>
     );

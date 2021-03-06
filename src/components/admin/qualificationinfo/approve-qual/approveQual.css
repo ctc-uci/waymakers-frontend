@@ -1,0 +1,26 @@
+.approvePopup {
+    position: fixed;
+    width: 30%;
+    height: 30%;
+    background-color: #A7C9E1;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.approvePopup-inner {
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-question {
+    color: #003E53;
+    font-weight: bold;
+}
