@@ -15,10 +15,10 @@ const EditQualificationsRow = ({ qualification }) => (
       {qualification.qualification_description}
     </td>
     <td>
-      <button type="button" className="btn btn-success rounded-pill">Update</button>
+      <button type="button" className="green-button">Update</button>
     </td>
     <td>
-      <button type="button" className="btn btn-danger rounded-pill">Remove</button>
+      <button type="button" className="red-button">Remove</button>
     </td>
   </tr>
 );

@@ -1,11 +1,41 @@
 #edit-qualifications {
-  background-color: #F2FBFC;
-  box-shadow: 2px 2px 2px gray;
   margin: 10px;
   display: block;
   justify-content: space-between;
   min-width: 51em;
   padding: 2em;
+}
+#edit-qualifications .green-button {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: var(--color-green);
+  border: none;
+  border-radius: 25px;
+  padding: 0.1em 1.5em;
+}
+#edit-qualifications .red-button {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: var(--color-orange);
+  border: none;
+  border-radius: 25px;
+  padding: 0.1em 1.5em;
+}
+#edit-qualifications #table-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5em;
+}
+/* #edit-qualifications .table-title {
+} */
+#edit-qualifications #table-wrapper {
+  padding: 1em 1em 2em;
+  background-color: #F2FBFC;
+  box-shadow: 2px 2px 2px gray;
   color: #336473;
 }
 .table-striped>tbody>tr:nth-child(even)>td, 
@@ -26,6 +56,6 @@
   flex-direction: column;
 }
 
-.form-label, .form-textarea, .form-input {
+#edit-qualifications .form-label, .form-textarea, .form-input {
   display:block;
 }

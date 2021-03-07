@@ -31,40 +31,42 @@ const EditQualifications = () => {
 
   return (
     <div id="edit-qualifications">
-      <div className="d-flex flex-row justify-content-between align-items-center">
-        <h3 className="p-2"><b>List of Qualifications</b></h3>
-        <button type="button" className="btn btn-success rounded-pill" onClick={() => setModalOpen(true)}>Add Qualification</button>
+      <div id="table-header">
+        <h3><b>List of Qualifications</b></h3>
+        <button type="button" className="green-button" onClick={() => setModalOpen(true)}>Add Qualification</button>
       </div>
       <AddQualificationModal
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
       />
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Tier</th>
-            <th>Qualification</th>
-            <th>About/Description</th>
-            <th> </th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.values(qualifications)
-            .map((qualification) => (
-              <EditQualificationsRow
-                key={qualification.id}
-                qualification={qualification}
-              />
-            ))}
-        </tbody>
-      </table>
-      <b>
-        Total Qualifications:
-        {' '}
-        {Object.keys(qualifications).length}
-      </b>
-      {/* <pre>{JSON.stringify(qualifications, null, 2) }</pre> */}
+      <div id="table-wrapper">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Qualification</th>
+              <th>About/Description</th>
+              <th> </th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.values(qualifications)
+              .map((qualification) => (
+                <EditQualificationsRow
+                  key={qualification.id}
+                  qualification={qualification}
+                />
+              ))}
+          </tbody>
+        </table>
+        <b>
+          Total Qualifications:
+          {' '}
+          {Object.keys(qualifications).length}
+        </b>
+        {/* <pre>{JSON.stringify(qualifications, null, 2) }</pre> */}
+      </div>
     </div>
   );
 };
