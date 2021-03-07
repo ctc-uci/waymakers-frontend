@@ -112,6 +112,7 @@ const EventsView = ({
     }
 
     const userEventIds = userEvents.map((event) => event.id);
+    console.log(userEvents);
     let events;
     if (showMyEvents && !showMoreEvents) { // Only My Events checked off
       events = userEvents;
@@ -136,6 +137,7 @@ const EventsView = ({
       }
       return newEvent;
     });
+    console.log(events);
     return events;
   };
 
@@ -167,7 +169,7 @@ const EventsView = ({
 
     let filter;
     const events = filterEvents('list');
-    if (showMoreEvents && showMyEvents) {
+    if ((showMoreEvents && showMyEvents) || (!showMoreEvents && !showMyEvents)) {
       filter = 'all';
     } else {
       filter = showMoreEvents ? 'more-events' : 'my-events';

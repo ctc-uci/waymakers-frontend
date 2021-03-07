@@ -24,7 +24,7 @@ const EventList = ({
 
   const userEvents = useSelector(getUserEvents);
   console.log(userEvents);
-
+  console.log(events);
   const renderEvents = () => (
     events.map((event, index) => {
       let eventType = listType;
@@ -58,7 +58,7 @@ const EventList = ({
       <div className="events-container">
         {renderEvents()}
         <div className="events-see-more">
-          <a className="see-more-link" href="/events">see more</a>
+          <a className="see-more-link" href="/volunteer/events">see more</a>
         </div>
       </div>
     </div>
