@@ -18,13 +18,9 @@ const InventoryComponent = ({ division }) => {
   // Fetching top items from the server
   const getTopItems = async () => {
     try {
-      // const response = await axios.get(
-      //   `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inventory/top?warehouse=
-      // ${warehouseIDMap[warehouseName]}`,
-      //   { withCredentials: true },
-      // );
+      console.log(warehouseName, warehouseIDMap[warehouseName]);
       const response = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inventory/top`,
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inventory/top?warehouse=${warehouseIDMap[warehouseName]}`,
         { withCredentials: true },
       );
       setTopItems(response.data);
@@ -83,7 +79,7 @@ const InventoryComponent = ({ division }) => {
         value={warehouseIndex - 1}
         onChange={(e) => {
           setWarehouseIndex(parseInt(e.target.value, 10) + 1);
-          setWarehouseName(warehouseList[parseInt(e.target.value, 10)]);
+          setWarehouseName(warehouseList[parseInt(e.target.value, 10)].warehouse_name);
         }}
       >
         {Object.entries(warehouseList)
@@ -101,8 +97,11 @@ const InventoryComponent = ({ division }) => {
 
   // Get items on page load
   useEffect(() => {
-    getTopItems();
-  }, [warehouseIDMap]);
+    if (warehouseName) {
+      console.log(warehouseName, warehouseIDMap[warehouseName]);
+      getTopItems();
+    }
+  }, [warehouseName]);
 
   return (
     <div className="inventory-component">

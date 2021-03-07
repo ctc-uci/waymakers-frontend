@@ -99,7 +99,7 @@ const EditEvents = () => {
     // </div>
     <div className="upcoming-events-component">
       <h4 className="upcoming-events-title">Upcoming Events</h4>
-      <div className="upcoming-events-sectionn">
+      <div className="upcoming-event-cards">
         {events.map((item) => (
           renderEvent(item)
         ))}
