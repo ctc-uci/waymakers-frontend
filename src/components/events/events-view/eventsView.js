@@ -13,6 +13,7 @@ import EventBlock from './event-block/eventBlock';
 import CalendarPopup from './calendar-popup/calendarPopup';
 import CalendarDayHeader from './calendar-day-header/calendarDayHeader';
 import EventList from '../event-list/eventList';
+import EventLegend from '../../dashboard/event-legend/eventLegend';
 
 import {
   getEvents,
@@ -177,7 +178,7 @@ const EventsView = ({
 
     // TODO: ADD FILTER FOR DAY
     // TODO: Add arrows to change day
-    return <EventList events={events} title="My Events" listType={filter} onEventButtonClick={() => console.log('hi')} />;
+    return <EventList events={events} title="" listType={filter} onEventButtonClick={() => console.log('hi')} />;
   };
 
   const renderCheckboxes = () => {
@@ -195,6 +196,16 @@ const EventsView = ({
     return null;
   };
 
+  const renderEventLegend = () => {
+    const pathName = useLocation().pathname;
+    if (pathName === '/volunteer/events' && view !== 'timeGridDay') {
+      return (
+        <EventLegend />
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="events-view">
       <div id="top-of-calendar">
@@ -205,6 +216,7 @@ const EventsView = ({
       <div id="calendar">
         {getCalendar()}
       </div>
+      {renderEventLegend()}
     </div>
   );
 };

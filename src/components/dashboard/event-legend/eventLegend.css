@@ -26,10 +26,11 @@
 }
  */
 
- .key-section {
+ .legend-key-section {
     display: flex;
     width: 85%;
     /* margin: 20px auto auto auto; */
+    margin-left: 0px;
     padding: 15px 20px;
 }
 

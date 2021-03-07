@@ -35,6 +35,10 @@
     background-color: lightblue;
 }
 
+.event-button-symbol {
+    margin-top: 0px;
+}
+
 .event-date-section {
     margin: auto 10px;
 }

@@ -1,9 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+
 // import "./events.css";
 import PropTypes from 'prop-types';
 import Event from '../event/event';
 import './eventList.css';
+import EventLegend from '../../dashboard/event-legend/eventLegend';
 
 import { getUserEvents } from '../redux/selectors';
 
@@ -23,8 +26,8 @@ const EventList = ({
   // render Event components based on events prop
 
   const userEvents = useSelector(getUserEvents);
-  console.log(userEvents);
-  console.log(events);
+  const onDashboard = useLocation().pathname === '/';
+
   const renderEvents = () => (
     events.map((event, index) => {
       let eventType = listType;
@@ -52,14 +55,29 @@ const EventList = ({
       );
     }));
 
+  const renderSeeMore = () => {
+    console.log('hi');
+    return (
+      <div className="events-see-more">
+        <a className="see-more-link" href="/volunteer/events">see more</a>
+      </div>
+    );
+  };
+
+  const renderEventLegend = () => {
+    console.log('hi');
+    return (
+      <EventLegend />
+    );
+  };
+
   return (
     <div className="event-list">
+      {!onDashboard && renderEventLegend()}
       <h5 className="event-list-title">{ title }</h5>
       <div className="events-container">
         {renderEvents()}
-        <div className="events-see-more">
-          <a className="see-more-link" href="/volunteer/events">see more</a>
-        </div>
+        {onDashboard && renderSeeMore()}
       </div>
     </div>
   );

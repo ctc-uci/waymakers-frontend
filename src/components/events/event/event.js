@@ -25,7 +25,7 @@ const Event = ({
           role="button"
           tabIndex={index}
         >
-          <p>{listType === 'more-events' ? '+' : '✓'}</p>
+          <p className="event-button-symbol">{listType === 'more-events' ? '+' : '✓'}</p>
         </div>
         <div className="event-date-section">
           <h3 className="event-day">{day}</h3>

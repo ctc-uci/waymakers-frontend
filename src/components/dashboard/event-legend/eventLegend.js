@@ -18,7 +18,7 @@ const EventLegend = () => (
   //     <p className="event-type">Other Event</p>
   //   </div>
   // </div>
-  <div className="key-section">
+  <div className="legend-key-section">
     <p className="key-text">Key</p>
     <div className="volunteer-event-square" />
     <p className="volunteer-event-text">Volunteer Event</p>
