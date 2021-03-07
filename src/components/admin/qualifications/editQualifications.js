@@ -40,7 +40,7 @@ const EditQualifications = () => {
         setModalOpen={setModalOpen}
       />
       <div id="table-wrapper">
-        <table className="table table-striped">
+        <table className="qualifications-table">
           <thead>
             <tr>
               <th>Tier</th>

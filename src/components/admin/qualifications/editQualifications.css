@@ -24,6 +24,7 @@
   padding: 0.1em 1.5em;
 }
 #edit-qualifications #table-header {
+  color: var(--text-color-dark);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -36,19 +37,27 @@
   padding: 1em 1em 2em;
   background-color: #F2FBFC;
   box-shadow: 2px 2px 2px gray;
-  color: #336473;
 }
-.table-striped>tbody>tr:nth-child(even)>td, 
-.table-striped>tbody>tr:nth-child(even)>th {
-  background-color: rgba(51, 100, 115, 0.37);
+
+#edit-qualifications .qualifications-table {
+  width: 100%;
+  table-layout: fixed;
+  margin-bottom: 1em;
 }
-.table-striped>tbody>tr:nth-child(odd)>td, 
-.table-striped>tbody>tr:nth-child(odd)>th {
-  background-color:#F2FBFC;
-}
-.table-striped>thead>tr>th {
-  background-color: #336473;
+#edit-qualifications .qualifications-table thead {
+  font-size: 20px;
+  align-self: center;
+  background-color: var(--color-dark-teal);
   color: white;
+}
+#edit-qualifications .qualifications-table tbody {
+  border-collapse: separate;
+}
+#edit-qualifications .qualifications-table tbody>tr>td {
+  padding: 0.5em 0.5em;
+}
+#edit-qualifications .qualifications-table tbody>tr:nth-child(even)>td {
+  background-color: rgba(51, 100, 115, 0.37);
 }
 
 #add-qualification-form {
