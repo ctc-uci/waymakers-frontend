@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
 import './inventoryComponent.css';
 
 const axios = require('axios');
 
-const InventoryComponent = (division) => {
+const InventoryComponent = ({ division }) => {
   const [topItems, setTopItems] = useState([]);
-  // eslint-disable-next-line
   const [warehouseList, setWarehouseList] = useState([]);
-  // eslint-disable-next-line
-  const [currWarehouse, setCurrWarehouse] = useState(0);
+  const [warehouseIndex, setWarehouseIndex] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [warehouseIDMap, setWarehouseIDMap] = useState({});
+  // eslint-disable-next-line no-unused-vars
+  const [warehouseName, setWarehouseName] = useState('');
 
   // Fetching top items from the server
   const getTopItems = async () => {
     try {
+      // const response = await axios.get(
+      //   `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inventory/top?warehouse=
+      // ${warehouseIDMap[warehouseName]}`,
+      //   { withCredentials: true },
+      // );
       const response = await axios.get(
         `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inventory/top`,
         { withCredentials: true },
@@ -48,10 +56,18 @@ const InventoryComponent = (division) => {
   const getWarehouseList = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/warehouses?division=${JSON.stringify(division)}`,
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/warehouses?division=${division}`,
         { withCredentials: true },
       );
       setWarehouseList(response.data);
+
+      const warehouseMap = {};
+
+      response.data.forEach((warehouse) => {
+        warehouseMap[warehouse.warehouse_name] = warehouse.id;
+      });
+
+      setWarehouseIDMap(warehouseMap);
     } catch (err) {
       // eslint-disable-next-line
       console.error(err);
@@ -64,11 +80,13 @@ const InventoryComponent = (division) => {
       <select
         name="warehouses"
         className="warehouse-dropdown"
-        value={currWarehouse}
-        onChange={(e) => { setCurrWarehouse(parseInt(e.target.value, 10)); }}
+        value={warehouseIndex - 1}
+        onChange={(e) => {
+          setWarehouseIndex(parseInt(e.target.value, 10) + 1);
+          setWarehouseName(warehouseList[parseInt(e.target.value, 10)]);
+        }}
       >
         {Object.entries(warehouseList)
-          .sort((a, b) => (a.id > b.id ? 1 : -1))
           .map(([id, warehouse]) => (
             <option key={id} value={id}>{warehouse.warehouse_name}</option>
           ))}
@@ -76,15 +94,15 @@ const InventoryComponent = (division) => {
     </div>
   );
 
-  // Get items on page load
-  useEffect(() => {
-    getTopItems();
-  }, []);
-
   // Get warehouses when division is updated
   useEffect(() => {
     getWarehouseList();
   }, [division]);
+
+  // Get items on page load
+  useEffect(() => {
+    getTopItems();
+  }, [warehouseIDMap]);
 
   return (
     <div className="inventory-component">
@@ -101,6 +119,10 @@ const InventoryComponent = (division) => {
       </div>
     </div>
   );
+};
+
+InventoryComponent.propTypes = {
+  division: PropTypes.number.isRequired,
 };
 
 export default InventoryComponent;

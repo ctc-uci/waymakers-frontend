@@ -17,10 +17,8 @@ const AdminDashboard = (props) => {
   const { cookies } = props;
   const history = useHistory();
   const [error, setError] = useState('');
-  // eslint-disable-next-line
   const [divisionList, setDivisionList] = useState([]);
-  // eslint-disable-next-line
-  const [currDivision, setCurrDivision] = useState(2);
+  const [currDivision, setCurrDivision] = useState(1);
 
   async function logout() {
     try {
@@ -49,14 +47,16 @@ const AdminDashboard = (props) => {
     }
   };
 
-  // Creating dropdown selector for warehouse menu
+  // Creating dropdown selector for division menu
   const Menu = () => (
     <div className="division-section">
       <select
         name="division"
         className="division-dropdown"
-        value={currDivision}
-        onChange={(e) => { setCurrDivision(parseInt(e.target.value, 10)); }}
+        value={currDivision - 1}
+        onChange={(e) => {
+          setCurrDivision(parseInt(e.target.value, 10) + 1);
+        }}
       >
         {Object.entries(divisionList)
           .sort((a, b) => (a.id > b.id ? 1 : -1))
@@ -87,14 +87,13 @@ const AdminDashboard = (props) => {
       </div>
       <div className="admin-components">
         <div className="division-section">
-          {/* <h2 className="division-selector-title">{currDivision}</h2> */}
           { Menu() }
         </div>
         <div className="admin-components-container">
           <div className="inventory-events-section">
             <div className="inventory-section">
               <h5 className="component-title">Inventory</h5>
-              <InventoryComponent division={2} />
+              <InventoryComponent division={currDivision} />
             </div>
             <div className="upcoming-events-section">
               <h5 className="component-title">Events</h5>
