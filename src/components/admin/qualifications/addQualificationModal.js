@@ -17,7 +17,7 @@ const AddQualificationModal = ({ modalOpen, setModalOpen }) => {
         {
           name,
           description,
-          volunteer_tier: volunteerTier,
+          volunteerTier,
         },
         { withCredentials: true },
       );
