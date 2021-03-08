@@ -20,10 +20,12 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
   const rows = volunteers.map((volunteer) => (
     <tr>
       <td>
-        <span className="circle" />
+        <div className="d-flex flex-row align-top">
+          <span className="circle p-2" />
+          <div className="volunteer p-2">{volunteer.name}</div>
+        </div>
       </td>
-      <td>{volunteer.name}</td>
-      <td>
+      <td className="text-right">
         <button type="button" onClick={() => setQualPopup(true)} className="updateBtn btn btn-success btn-sm rounded-pill">{buttonText}</button>
         {' '}
       </td>
@@ -37,7 +39,6 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
           <thead>
             <tr>
               <th>Name</th>
-              <th> </th>
               <th> </th>
             </tr>
           </thead>
