@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 
+import Test from './.harrison-sandbox/Test';
 import ProtectedRoute from './routes/ProtectedRoute';
 // import Layout from './components/layout/layout';
 import Dashboard from './components/dashboard/dashboard';
@@ -34,6 +35,9 @@ ReactDOM.render(
       <Router>
         <div className="App">
           {/* <div className="container"> */}
+
+          <Route path="/sandbox" component={Test} />
+
           <Switch>
             <ProtectedRoute path="/" component={Dashboard} exact />
             <Route path="/register" component={Register} />
