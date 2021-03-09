@@ -1,0 +1,18 @@
+.light-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(0.5px);
+    background-color:rgba(231, 231, 231, 0.5)
+}
+
+.light-modal-container{ 
+    border-style: solid;
+    border-width: 1px;
+    background: #A7C9E1;
+}
