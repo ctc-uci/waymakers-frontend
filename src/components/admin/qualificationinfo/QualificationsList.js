@@ -22,7 +22,7 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
       <td>
         <div className="d-flex flex-row align-top">
           <span className="circle p-2" />
-          <div className="volunteer p-2">{volunteer.name}</div>
+          <div className="volunteer p-2">{volunteer.firstname.concat(' ').concat(volunteer.lastname)}</div>
         </div>
       </td>
       <td className="text-right">
