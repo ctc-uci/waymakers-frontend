@@ -6,7 +6,7 @@ import EventPopup from '../../event-popup/eventPopup';
 import HoursPopup from '../../hours-popup/hoursPopup';
 import DialogueBox from '../../../admin/dialogue-box/dialogueBox';
 // import EditEventPopup from '../../edit-events/editEventPopup';
-import EventForm from '../../edit-events/eventForm';
+import EventForm from '../../edit-events/newEventForm';
 
 import store from '../../redux/store';
 import {
