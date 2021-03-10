@@ -17,7 +17,7 @@ import {
 import { setShowPopup } from '../../redux/actions';
 
 const CalendarPopup = ({
-  path,
+  page,
 }) => {
   const onClosePopup = () => {
     store.dispatch(setShowPopup(false));
@@ -31,8 +31,8 @@ const CalendarPopup = ({
     const popupType = useSelector(getPopupType);
     if (useSelector(getShowPopup)) {
       // Event is NOT on the user's calendar
-      switch (path) {
-        case '/volunteer/events':
+      switch (page) {
+        case 'volunteerDashboard':
           // Event is on the user's calendar already
           if (popupType === 'LogHoursForm') {
             console.log('joe');
@@ -44,7 +44,7 @@ const CalendarPopup = ({
             );
           }
           return <EventPopup event={selectedEvent} />;
-        case '/events':
+        case 'addModifyDeleteEventsPage':
         // TODO: Add View Event Info Popup here when it is created
         // if (popupType === 'EditEventsPopup') {
           //   return (
@@ -60,7 +60,7 @@ const CalendarPopup = ({
               event={selectedEvent}
             />
           );
-        case '/admin/aggregate':
+        case 'aggregatePage':
           return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
         default: break;
       }
@@ -76,7 +76,7 @@ const CalendarPopup = ({
 };
 
 CalendarPopup.propTypes = {
-  path: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

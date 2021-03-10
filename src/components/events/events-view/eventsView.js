@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { useSelector, connect } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -33,13 +33,12 @@ import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
 
 const EventsView = ({
-  loadEvents, loadUserEvents, cookies, day, year, month, view,
+  loadEvents, loadUserEvents, cookies, day, year, month, view, page,
 }) => {
   const [showMoreEvents, setShowMoreEvents] = useState(true);
   const [showMyEvents, setShowMyEvents] = useState(true);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [confirmAddEvent, setConfirmAddEvent] = useState(false);
-  const [path] = useState(useLocation().pathname);
   const calendarEl = useRef(null);
 
   useEffect(() => {
@@ -76,7 +75,7 @@ const EventsView = ({
         userEvents={userEvents}
         setShowEditPopup={(value) => setShowEditPopup(value)}
         showEditPopup={showEditPopup}
-        path={path}
+        page={page}
         showMoreEvents={showMoreEvents}
         confirmAddEvent={confirmAddEvent}
         setConfirmAddEvent={setConfirmAddEvent}
@@ -93,7 +92,7 @@ const EventsView = ({
   function renderEventContent(eventInfo) {
     return (
       <EventBlock
-        path={path}
+        page={page}
         eventInfo={eventInfo}
         setConfirmAddEvent={setConfirmAddEvent}
       />
@@ -129,7 +128,7 @@ const EventsView = ({
       newEvent.textColor = 'var(--text-color-light)';
       newEvent.eventBorderColor = 'transparent';
 
-      if (path === '/volunteer/events' && userEventIds.includes(newEvent.id)) {
+      if (page === 'volunteerDashboard' && userEventIds.includes(newEvent.id)) {
         newEvent.backgroundColor = 'var(--color-light-green)';
         newEvent.borderColor = 'var(--color-light-green)';
       } else {
@@ -182,8 +181,7 @@ const EventsView = ({
   };
 
   const renderCheckboxes = () => {
-    const pathName = useLocation().pathname;
-    if (pathName === '/volunteer/events') {
+    if (page === 'volunteerDashboard') {
       return (
         <EventCheckBoxes
           showMyEvents={showMyEvents}
@@ -197,8 +195,7 @@ const EventsView = ({
   };
 
   const renderEventLegend = () => {
-    const pathName = useLocation().pathname;
-    if (pathName === '/volunteer/events' && view !== 'timeGridDay') {
+    if (page === 'volunteerDashboard' && view !== 'timeGridDay') {
       return (
         <EventLegend />
       );
@@ -229,6 +226,7 @@ EventsView.propTypes = {
   year: PropTypes.number.isRequired,
   day: PropTypes.number.isRequired,
   view: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

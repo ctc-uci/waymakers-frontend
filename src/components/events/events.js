@@ -16,7 +16,7 @@ const Events = () => {
         <h1 className="title">Select Event to View/Edit Information</h1>
         <button type="button" className="add-button" onClick={() => setShowAddPopup(true)}>Add Events</button>
         {showAddPopup && <AddEventPopup onClose={() => setShowAddPopup(false)} />}
-        <EventsView />
+        <EventsView page="addModifyDeleteEventsPage" />
       </div>
     </Provider>
   );
