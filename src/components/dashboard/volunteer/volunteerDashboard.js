@@ -25,6 +25,8 @@ const VolunteerDashboard = (props) => {
   const [moreEvents, setMoreEvents] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [availability, setAvailability] = useState([]);
+  const [allAvailability, setAllAvailability] = useState([]);
+  const [freqMap, setfreqMap] = useState(new Map());
   const [availabilityMode, setAvailabilityMode] = useState('view');
   const history = useHistory();
   const [error, setError] = useState('');
@@ -98,11 +100,40 @@ const VolunteerDashboard = (props) => {
         },
       );
 
+      const allAvailabilityResult = await axios.get(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/all`, {
+          withCredentials: true,
+        },
+      );
+
+      // handling one user's availability
       const { userAvailability } = availabilityResult.data;
-
+      // console.log('userAvailability', userAvailability);
       const dateList = userAvailability.map((dateString) => (stringToDate(dateString)));
-
       setAvailability(dateList);
+
+      // handling all users' availability
+      let { usersAvailability } = allAvailabilityResult.data;
+
+      const frequencyMap = new Map();
+
+      usersAvailability = usersAvailability.map((dateString) => {
+        const {
+          dayofweek, starttime, count,
+        } = dateString;
+
+        const parsedDate = stringToDate({ dayofweek, starttime });
+        frequencyMap.set(JSON.stringify(parsedDate), Number(count));
+
+        return {
+          date: parsedDate,
+          freq: Number(count),
+        };
+      });
+      setAllAvailability(usersAvailability);
+      console.log('frequencyMap', frequencyMap);
+      setfreqMap(frequencyMap);
+      // console.log('usersAvailability', usersAvailability);
     } catch (e) {
       // eslint-disable-next-line
       console.log('Error while getting availability from the backend!');
@@ -141,8 +172,11 @@ const VolunteerDashboard = (props) => {
 
   function renderAvailability() {
     // console.log(availabilityViewMode);
-    console.log(`rendering availability in ${availabilityMode} mode`);
-    console.log('availability:', availability);
+    // console.log(`rendering availability in ${availabilityMode} mode`);
+    // console.log('availability:', availability);
+
+    console.log('allAvailability', allAvailability);
+    console.log('freqMap state', freqMap);
     return (
       <div>
         {availabilityMode === 'view' ? (
@@ -161,6 +195,14 @@ const VolunteerDashboard = (props) => {
               <div className="help-popup">?</div>
             </div>
             <ViewAvailability availabilities={availability} startWeek={startWeek} />
+            {/* <ViewAvailability
+              availabilities={availability}
+              startWeek={startWeek}
+              showAdmin
+              allAvailability={allAvailability}
+              freqMap={freqMap}
+              maxFreq={Math.max(...allAvailability.map((el) => el.freq), 0)}
+            /> */}
           </div>
         )
           : (

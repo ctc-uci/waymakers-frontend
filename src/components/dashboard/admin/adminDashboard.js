@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Card, Button, Alert,
 } from 'react-bootstrap';
-
+import {
+  startOfWeek, add, getHours, getDay,
+} from 'date-fns';
+import axios from 'axios';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import EditEvents from '../../events/edit-events/editEvents';
@@ -11,15 +14,25 @@ import InventoryComponent from '../inventory-component/inventoryComponent';
 import auth from '../../firebase/firebase';
 import './adminDashboard.css';
 
+import ViewAvailability from '../availability-component/viewAvailability/viewAvailability';
+import EditAvailability from '../availability-component/editAvailability/editAvailability';
+import AdminAvailability from '../availability-component/adminAvailability/adminAvailability';
+
 import Header from '../../header/header';
 import Footer from '../../footer/footer';
 
 const AdminDashboard = (props) => {
+  const startWeek = startOfWeek(new Date());
+
   const { cookies } = props;
   const history = useHistory();
+  const [availability, setAvailability] = useState([]);
+  const [allAvailability, setAllAvailability] = useState([]);
+  const [freqMap, setfreqMap] = useState(new Map());
+  const [availabilityMode, setAvailabilityMode] = useState('view');
   const [error, setError] = useState('');
   // eslint-disable-next-line
-  const [currDivision, setCurrDivision] = useState('Crisis Response Team');
+    const [isLoading, setLoading] = useState(false);
 
   async function logout() {
     try {
@@ -33,6 +46,181 @@ const AdminDashboard = (props) => {
       setError(err.message);
     }
   }
+
+  const stringToDate = (dateString) => {
+    const {
+      dayofweek, starttime,
+    } = dateString;
+
+    const splitTime = String(starttime).split(':');
+    const date = add(startWeek, {
+      years: 0,
+      months: 0,
+      weeks: 0,
+      days: dayofweek,
+      hours: splitTime[0],
+      minutes: 0,
+      seconds: 0,
+    });
+
+    return date;
+  };
+
+  const parseDate = (date) => {
+    const hours = getHours(date);
+    return [getDay(date), `${hours}:00:00`];
+  };
+
+  async function getAvailability() {
+    try {
+      console.log('getting availability');
+      const userID = cookies.get('userId');
+
+      const availabilityResult = await axios.get(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
+          withCredentials: true,
+        },
+      );
+
+      const allAvailabilityResult = await axios.get(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/all`, {
+          withCredentials: true,
+        },
+      );
+
+      // handling one user's availability
+      const { userAvailability } = availabilityResult.data;
+      // console.log('userAvailability', userAvailability);
+      const dateList = userAvailability.map((dateString) => (stringToDate(dateString)));
+      setAvailability(dateList);
+
+      // handling all users' availability
+      let { usersAvailability } = allAvailabilityResult.data;
+
+      const frequencyMap = new Map();
+
+      usersAvailability = usersAvailability.map((dateString) => {
+        const {
+          dayofweek, starttime, count,
+        } = dateString;
+
+        const parsedDate = stringToDate({ dayofweek, starttime });
+        frequencyMap.set(JSON.stringify(parsedDate), Number(count));
+
+        return {
+          date: parsedDate,
+          freq: Number(count),
+        };
+      });
+      setAllAvailability(usersAvailability);
+      console.log('frequencyMap', frequencyMap);
+      setfreqMap(frequencyMap);
+      // console.log('usersAvailability', usersAvailability);
+    } catch (e) {
+      // eslint-disable-next-line
+      console.log('Error while getting availability from the backend!');
+    }
+  }
+
+  async function updateAvailability() {
+    const dateList = availability.map((date) => (parseDate(date)));
+    console.log('about to post dateList to POST route');
+    const seen = new Set();
+
+    const filteredDates = dateList.filter((date) => {
+      const duplicate = seen.has(date.toString());
+      seen.add(date.toString());
+      return !duplicate;
+    });
+
+    const userID = cookies.get('userId');
+
+    console.log('dateList to POST:', filteredDates);
+
+    console.log('POST route called');
+
+    await axios.post(
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
+        dates: filteredDates,
+      }, {
+        withCredentials: true,
+      },
+    );
+
+    console.log('post complete');
+
+    setAvailabilityMode('view');
+  }
+
+  function renderAvailability() {
+    // console.log(availabilityViewMode);
+    // console.log(`rendering availability in ${availabilityMode} mode`);
+    // console.log('availability:', availability);
+
+    console.log('allAvailability', allAvailability);
+    console.log('freqMap state', freqMap);
+    return (
+      <div>
+        {availabilityMode === 'view' ? (
+          <div className="availability-wrapper">
+            <h5 className="availability-title">Availability for the Week</h5>
+            <div className="availability-buttons-container">
+              <div
+                className="edit-button"
+                onClick={() => { setAvailabilityMode('edit'); }}
+                onKeyDown={() => { setAvailabilityMode('edit'); }}
+                role="button"
+                tabIndex={0}
+              >
+                Change Availability
+              </div>
+              <div className="help-popup">?</div>
+            </div>
+            <ViewAvailability availabilities={availability} startWeek={startWeek} />
+            {/* <ViewAvailability
+              availabilities={availability}
+              startWeek={startWeek}
+              showAdmin
+              allAvailability={allAvailability}
+              freqMap={freqMap}
+              maxFreq={Math.max(...allAvailability.map((el) => el.freq), 0)}
+            /> */}
+            <AdminAvailability
+              startWeek={startWeek}
+              allAvailability={allAvailability}
+              freqMap={freqMap}
+              maxFreq={Math.max(...allAvailability.map((el) => el.freq), 0)}
+            />
+          </div>
+        )
+          : (
+            <div className="availability-wrapper">
+              <h5 className="availability-title">Availability for the Week</h5>
+              <div
+                className="save-button"
+                onClick={updateAvailability}
+                onKeyDown={updateAvailability}
+                role="button"
+                tabIndex={0}
+              >
+                Save Changes
+              </div>
+              <EditAvailability
+                availabilityTimes={availability}
+                setAvailabilityTimes={setAvailability}
+                startWeek={startWeek}
+              />
+            </div>
+          )}
+      </div>
+    );
+  }
+
+  useEffect(async () => {
+    setLoading(true);
+    getAvailability();
+    setLoading(false);
+  }, []);
 
   return (
     <div>
@@ -51,7 +239,7 @@ const AdminDashboard = (props) => {
       </div>
       <div className="admin-components">
         <div className="division-selector">
-          <h2 className="division-selector-title">{currDivision}</h2>
+          <h2 className="division-selector-title">Crisis Response Team</h2>
         </div>
         <div className="admin-components-container">
           <div className="inventory-events-section">
@@ -70,8 +258,7 @@ const AdminDashboard = (props) => {
           </div>
         </div>
         <div className="availability-section">
-          <h5 className="component-title">Volunteer On-Call Availability</h5>
-          <div className="availability-component" />
+          {renderAvailability()}
         </div>
       </div>
 

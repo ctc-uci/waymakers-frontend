@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import './viewAvailability.css';
+import './adminAvailability.css';
 import ScheduleSelector from 'react-schedule-selector';
 
-function viewAvailability({
-  availabilities, startWeek, showAdmin, allAvailability, freqMap, maxFreq,
+function AdminAvailability({
+  startWeek, allAvailability, freqMap, maxFreq,
 }) {
   const handleChange = () => {
     console.log('');
@@ -32,46 +32,28 @@ function viewAvailability({
       </div>
     );
   }
-
-  if (showAdmin) {
-    return (
-      <div>
-        <div className="viewAvailCard">
-          <ScheduleSelector
-            selection={allAvailability}
-            selectionScheme="square"
-            startDate={startWeek}
-            numDays={7}
-            minTime={7}
-            maxTime={19}
-            hourlyChunks={1}
-            dateFormat="ddd"
-            onChange={handleChange}
-            renderDateCell={renderCell}
-          />
-        </div>
-        <div>
-          <p>Names</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="viewAvailCard">
-      <ScheduleSelector
-        selection={availabilities}
-        selectionScheme="square"
-        startDate={startWeek}
-        numDays={7}
-        minTime={7}
-        maxTime={19}
-        hourlyChunks={1}
-        dateFormat="ddd"
-        onChange={handleChange}
-      />
+    <div>
+      <div className="adminAvailCard">
+        <h5 className="availability-title">Availability for the Week</h5>
+        <ScheduleSelector
+          selection={allAvailability}
+          selectionScheme="square"
+          startDate={startWeek}
+          numDays={7}
+          minTime={7}
+          maxTime={19}
+          hourlyChunks={1}
+          dateFormat="ddd"
+          onChange={handleChange}
+          renderDateCell={renderCell}
+        />
+      </div>
+      <div>
+        <p>Names</p>
+      </div>
     </div>
   );
 }
 
-export default viewAvailability;
+export default AdminAvailability;
