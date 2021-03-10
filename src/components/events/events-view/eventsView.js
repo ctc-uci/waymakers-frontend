@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { useSelector, connect } from 'react-redux';
-// import { useLocation } from 'react-router-dom';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -14,6 +13,7 @@ import CalendarPopup from './calendar-popup/calendarPopup';
 import CalendarDayHeader from './calendar-day-header/calendarDayHeader';
 import EventList from '../event-list/eventList';
 import EventLegend from '../../dashboard/event-legend/eventLegend';
+import store from '../redux/store';
 
 import {
   getEvents,
@@ -26,7 +26,13 @@ import {
   getView,
 } from '../redux/selectors';
 
-import { fetchEvents, fetchUserEvents } from '../redux/actions';
+import {
+  changeDay,
+  changeMonth,
+  changeYear,
+  fetchEvents,
+  fetchUserEvents,
+} from '../redux/actions';
 
 import './eventsView.css';
 import '@fullcalendar/daygrid/main.css';
@@ -89,6 +95,39 @@ const EventsView = ({
     return <CalendarDayHeader goToPrev={goToPrev} goToNext={goToNext} dayInfo={dayInfo} />;
   };
 
+  const renderDayViewHeader = () => {
+    // Get previous and next dates
+    const currentDate = new Date(year, month - 1, day);
+    const nextDate = new Date(currentDate);
+    nextDate.setDate(currentDate.getDate() + 1);
+    const prevDate = new Date(currentDate);
+    prevDate.setDate(currentDate.getDate() - 1);
+
+    // Create functions for previous and next arrows
+    const goToPrev = () => {
+      store.dispatch(changeDay(prevDate.getDate()));
+      store.dispatch(changeMonth(prevDate.getMonth() + 1));
+      store.dispatch(changeYear(prevDate.getFullYear()));
+    };
+    const goToNext = () => {
+      store.dispatch(changeDay(nextDate.getDate()));
+      store.dispatch(changeMonth(nextDate.getMonth() + 1));
+      store.dispatch(changeYear(nextDate.getFullYear()));
+    };
+
+    const dayInfo = {
+      view: { type: view },
+      text: currentDate.toLocaleString('en-US', { month: 'long', year: 'numeric', day: 'numeric' }),
+    };
+    return (
+      <CalendarDayHeader
+        goToPrev={goToPrev}
+        goToNext={goToNext}
+        dayInfo={dayInfo}
+      />
+    );
+  };
+
   function renderEventContent(eventInfo) {
     return (
       <EventBlock
@@ -98,6 +137,14 @@ const EventsView = ({
       />
     );
   }
+
+  const isOnCurrentDay = (event) => {
+    const startDate = new Date(event.startTime);
+    if (view === 'timeGridDay' && startDate.getDate() === day && (startDate.getMonth() + 1) === month && startDate.getFullYear() === year) {
+      return true;
+    }
+    return false;
+  };
 
   // Returns events based on filters, also adds properties for styling
   const filterEvents = (display) => {
@@ -112,14 +159,18 @@ const EventsView = ({
     }
 
     const userEventIds = userEvents.map((event) => event.id);
-    console.log(userEvents);
     let events;
     if (showMyEvents && !showMoreEvents) { // Only My Events checked off
       events = userEvents;
     } else if (!showMyEvents && showMoreEvents) { // Only More Events checked off
-      events = allEvents.filter((event) => !userEventIds.includes(event.id));
+      events = allEvents.filter((event) => (
+        isOnCurrentDay(event) && !userEventIds.includes(event.id)));
     } else { // Both My Events and More Events checked
       events = allEvents;
+    }
+
+    if (view === 'timeGridDay' && page === 'volunteerDashboard') {
+      events = events.filter((event) => isOnCurrentDay(event));
     }
 
     // Add properties to render styled event blocks
@@ -137,7 +188,6 @@ const EventsView = ({
       }
       return newEvent;
     });
-    console.log(events);
     return events;
   };
 
@@ -211,6 +261,7 @@ const EventsView = ({
         {renderCheckboxes()}
       </div>
       <div id="calendar">
+        {view === 'timeGridDay' && renderDayViewHeader()}
         {getCalendar()}
       </div>
       {renderEventLegend()}
