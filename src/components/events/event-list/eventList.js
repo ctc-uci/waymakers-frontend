@@ -21,7 +21,7 @@ import { getUserEvents } from '../redux/selectors';
 }
 */
 const EventList = ({
-  events, title, listType, onEventButtonClick,
+  events, title, listType, onEventButtonClick, page,
 }) => {
   // render Event components based on events prop
 
@@ -65,10 +65,12 @@ const EventList = ({
   };
 
   const renderEventLegend = () => {
-    console.log('hi');
-    return (
-      <EventLegend />
-    );
+    if (page === 'volunteerDashboard') {
+      return (
+        <EventLegend />
+      );
+    }
+    return null;
   };
 
   return (
@@ -88,6 +90,7 @@ EventList.propTypes = {
   title: PropTypes.string,
   listType: PropTypes.string.isRequired,
   onEventButtonClick: PropTypes.func.isRequired,
+  page: PropTypes.string.isRequired,
 };
 
 EventList.defaultProps = {

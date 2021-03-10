@@ -169,7 +169,7 @@ const EventsView = ({
       events = allEvents;
     }
 
-    if (view === 'timeGridDay' && page === 'volunteerDashboard') {
+    if (view === 'timeGridDay') {
       events = events.filter((event) => isOnCurrentDay(event));
     }
 
@@ -227,7 +227,7 @@ const EventsView = ({
 
     // TODO: ADD FILTER FOR DAY
     // TODO: Add arrows to change day
-    return <EventList events={events} title="" listType={filter} onEventButtonClick={() => console.log('hi')} />;
+    return <EventList events={events} title="" listType={filter} page={page} onEventButtonClick={() => console.log('hi')} />;
   };
 
   const renderCheckboxes = () => {
