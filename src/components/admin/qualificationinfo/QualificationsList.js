@@ -24,13 +24,13 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
   const rows = volunteers.map((volunteer) => (
     <tr>
       <td>
-        <div className="d-flex flex-row align-top">
-          <span className="circle p-2" />
-          <div className="volunteer p-2">{volunteer.firstname.concat(' ').concat(volunteer.lastname)}</div>
+        <div>
+          <span className="circle" />
+          <div className="volunteer">{volunteer.firstname.concat(' ').concat(volunteer.lastname)}</div>
         </div>
       </td>
-      <td className="text-right">
-        <button type="button" onClick={() => setQualModalIsOpen(true)} className="updateBtn btn btn-success btn-sm rounded-pill">{buttonText}</button>
+      <td>
+        <button className="green-button" type="button" onClick={() => setQualModalIsOpen(true)}>{buttonText}</button>
         {' '}
       </td>
     </tr>
@@ -55,10 +55,12 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
   };
 
   return (
-    <div>
-      <h3 className="title">{title}</h3>
-      <section id="qual">
-        <table className="table table-striped">
+    <div id="qualifications-list">
+      <div id="table-header">
+        <h3 className="title"><b>{title}</b></h3>
+      </div>
+      <div id="table-wrapper">
+        <table className="qualifications-table">
           <thead>
             <tr>
               <th>Name</th>
@@ -69,7 +71,13 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
             {rows}
           </tbody>
         </table>
-      </section>
+        <b>
+          Total People:
+          {' '}
+          {Object.keys(volunteers).length}
+        </b>
+
+      </div>
 
       {/* old code using custom popups */}
       {/* {title === 'List of Volunteers Who Need Qualifications Reviewed' ? <QualPopup trigger={qualPopup} setTrigger={setQualPopup} qualifications={qualifications} firstName="Kevin" lastName="Durant" /> : <p> </p>} */}
