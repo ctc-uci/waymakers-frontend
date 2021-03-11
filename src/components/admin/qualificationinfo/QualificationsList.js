@@ -4,7 +4,9 @@ import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import './QualificationsList.css';
 
-const QualificationsList = ({ volunteers, title, buttonText }) => {
+const QualificationsList = ({
+  volunteers, qualifications, title, buttonText,
+}) => {
   const [qualModalIsOpen, setQualModalIsOpen] = useState(false);
   const [approveModal, setApproveModal] = useState(false);
   const [rejectModal, setRejectModal] = useState(false);
@@ -12,14 +14,14 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
   // const [firstName, setFirstName] = useState('');
   // const [lastName, setLastName] = useState('');
 
-  const qualifications = [
-    {
-      name: 'Valid Driver\'s License',
-    },
-    {
-      name: '8-Hour New Volunteer Orientation',
-    },
-  ];
+  // const qualifications = [
+  //   {
+  //     name: 'Valid Driver\'s License',
+  //   },
+  //   {
+  //     name: '8-Hour New Volunteer Orientation',
+  //   },
+  // ];
 
   const rows = volunteers.map((volunteer) => (
     <tr>
@@ -39,7 +41,7 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
   // for table inside qualification modal
   const popupRows = qualifications.map((qualification) => (
     <tr>
-      <td className="qual-name">{qualification.name}</td>
+      <td className="qual-name">{qualification.qualification_name}</td>
       <td>
         <button type="button" className="reject" onClick={() => setRejectModal(true)}>Reject</button>
         <button type="button" className="approve" onClick={() => setApproveModal(true)}>Approve</button>
@@ -119,6 +121,7 @@ const QualificationsList = ({ volunteers, title, buttonText }) => {
 
 QualificationsList.propTypes = {
   volunteers: PropTypes.arrayOf(Object).isRequired,
+  qualifications: PropTypes.arrayOf(Object).isRequired,
   title: PropTypes.string.isRequired,
   buttonText: PropTypes.string.isRequired,
 };
