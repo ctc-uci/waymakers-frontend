@@ -5,7 +5,8 @@ import { useSelector, connect } from 'react-redux';
 import EventPopup from '../../event-popup/eventPopup';
 import HoursPopup from '../../hours-popup/hoursPopup';
 import DialogueBox from '../../../admin/dialogue-box/dialogueBox';
-import EditEventPopup from '../../edit-events/editEventPopup';
+// import EditEventPopup from '../../edit-events/editEventPopup';
+import EventForm from '../../edit-events/newEventForm';
 
 import store from '../../redux/store';
 import {
@@ -55,10 +56,7 @@ const CalendarPopup = ({
           //   );
           // }
           return (
-            <EditEventPopup
-              onClose={onClosePopup}
-              event={selectedEvent}
-            />
+            <EventForm />
           );
         case 'aggregatePage':
           return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
