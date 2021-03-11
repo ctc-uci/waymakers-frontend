@@ -8,7 +8,6 @@ const CalendarDayHeader = ({ goToPrev, goToNext, dayInfo }) => {
   const renderDayHeader = () => {
     const prevButton = () => <button className="cal-btn prev-button cursor-pointer" type="button" onClick={goToPrev} aria-label="previous"><IconIo.IoIosArrowBack size={20} /></button>;
     const nextButton = () => <button className="cal-btn next-button cursor-pointer" type="button" onClick={goToNext} aria-label="next"><IconIo.IoIosArrowForward size={20} /></button>;
-    console.log(dayInfo);
     if (dayInfo.view.type === 'timeGridWeek') {
       const currentDay = dayInfo.text.substring(0, 3);
       return (
@@ -33,7 +32,6 @@ const CalendarDayHeader = ({ goToPrev, goToNext, dayInfo }) => {
       );
     }
     // timeGridDay view
-    // TODO: Update this once we get the event list component
     return (
       <div className="day-header">
         <button className="day-button cursor-pointer" type="button" onClick={goToPrev} aria-label="previous"><IconIo.IoIosArrowBack size={20} /></button>

@@ -4,6 +4,7 @@ import * as IconAi from 'react-icons/ai';
 import * as IconGo from 'react-icons/go';
 
 import store from '../../redux/store';
+import fullCalendarEventToRegularEvent from '../../util';
 
 import {
   deleteEvent,
@@ -23,8 +24,10 @@ const EventBlock = ({
     Outreach: 'var(--color-pink)',
     Other: 'var(--color-light-purple)',
   };
-  const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
 
+  console.log(eventInfo);
+
+  const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
   const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
 
   const openPopup = () => {
@@ -36,7 +39,8 @@ const EventBlock = ({
   };
 
   const setEvent = (selectedEvent) => {
-    store.dispatch(changeSelectedEvent(selectedEvent));
+    const convertedEvent = fullCalendarEventToRegularEvent(selectedEvent);
+    store.dispatch(changeSelectedEvent(convertedEvent));
   };
 
   const onEventBlockClick = () => {

@@ -20,8 +20,8 @@ const Event = ({
       <div className={`event-container ${listType}`}>
         <div
           className="event-button"
-          onClick={() => onEventButtonClick(listType, index)}
-          onKeyDown={() => onEventButtonClick(listType, index)}
+          onClick={() => onEventButtonClick(event)}
+          onKeyDown={() => onEventButtonClick(event)}
           role="button"
           tabIndex={index}
         >

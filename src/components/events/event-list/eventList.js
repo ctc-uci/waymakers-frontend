@@ -9,6 +9,12 @@ import './eventList.css';
 import EventLegend from '../../dashboard/event-legend/eventLegend';
 
 import { getUserEvents } from '../redux/selectors';
+import store from '../redux/store';
+import {
+  setShowPopup,
+  changePopupType,
+  changeSelectedEvent,
+} from '../redux/actions';
 
 // events = Array of objects with event details
 /*
@@ -17,16 +23,34 @@ import { getUserEvents } from '../redux/selectors';
   date: date
   time: time
   location: location
-  description: description
 }
 */
 const EventList = ({
-  events, title, listType, onEventButtonClick, page,
+  events, title, listType, page, view,
 }) => {
   // render Event components based on events prop
 
   const userEvents = useSelector(getUserEvents);
   const onDashboard = useLocation().pathname === '/';
+
+  const openPopup = () => {
+    store.dispatch(setShowPopup(true));
+  };
+
+  const setEventPopupType = (type) => {
+    store.dispatch(changePopupType(type));
+  };
+
+  const setEvent = (selectedEvent) => {
+    store.dispatch(changeSelectedEvent(selectedEvent));
+  };
+
+  const onAddButtonClick = (event) => {
+    console.log(event);
+    setEvent(event);
+    setEventPopupType('ConfirmCancelPopup');
+    openPopup();
+  };
 
   const renderEvents = () => (
     events.map((event, index) => {
@@ -43,6 +67,19 @@ const EventList = ({
           eventType = 'more-events';
         }
       }
+
+      let onEventButtonClick;
+      if (eventType === 'more-events') {
+        onEventButtonClick = (clickedEvent) => onAddButtonClick(clickedEvent);
+      } else if (eventType === 'my-events') {
+        // TODO: change this when we know what a checkmark is supposed to be
+        onEventButtonClick = () => console.log('oh the check was clicked -kc');
+      } else if (page === 'addModifyDeleteEventsPage') {
+        onEventButtonClick = () => console.log('edit event popup');
+      } else {
+        onEventButtonClick = () => console.log('dialogue popup');
+      }
+      // TODO: change colors/on event button click for other event pages
       return (
         <div className="event-div">
           <Event
@@ -55,17 +92,14 @@ const EventList = ({
       );
     }));
 
-  const renderSeeMore = () => {
-    console.log('hi');
-    return (
-      <div className="events-see-more">
-        <a className="see-more-link" href="/volunteer/events">see more</a>
-      </div>
-    );
-  };
+  const renderSeeMore = () => (
+    <div className="events-see-more">
+      <a className="see-more-link" href="/volunteer/events">see more</a>
+    </div>
+  );
 
   const renderEventLegend = () => {
-    if (page === 'volunteerDashboard') {
+    if (page === 'volunteerDashboard' && view === 'timeGridDay') {
       return (
         <EventLegend />
       );
@@ -89,12 +123,13 @@ EventList.propTypes = {
   events: PropTypes.arrayOf(Object).isRequired,
   title: PropTypes.string,
   listType: PropTypes.string.isRequired,
-  onEventButtonClick: PropTypes.func.isRequired,
   page: PropTypes.string.isRequired,
+  view: PropTypes.string,
 };
 
 EventList.defaultProps = {
   title: '',
+  view: '',
 };
 
 export default EventList;

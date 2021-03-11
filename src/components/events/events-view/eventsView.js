@@ -140,10 +140,35 @@ const EventsView = ({
 
   const isOnCurrentDay = (event) => {
     const startDate = new Date(event.startTime);
-    if (view === 'timeGridDay' && startDate.getDate() === day && (startDate.getMonth() + 1) === month && startDate.getFullYear() === year) {
+    if (startDate.getDate() === day
+      && (startDate.getMonth() + 1) === month
+      && startDate.getFullYear() === year) {
       return true;
     }
     return false;
+  };
+
+  const isDuringCurrentWeek = (event) => {
+    // TODO: fix this
+    // const startDate = new Date(event.startTime);
+    // const currentDate = new Date(year, month, day);
+    // const oneWeekEarlier = new Date(currentDate);
+    // currentDate.setDate(currentDate.getDate() - 7);
+    // const oneWeekLater = new Date(currentDate);
+    // oneWeekLater.setDate(oneWeekLater.getDate() + 7);
+
+    // if (startDate <= oneWeekLater && startDate >= oneWeekEarlier) {
+    //   return true;
+    // }
+    // return false;
+    console.log(event);
+    return true;
+  };
+
+  const isDuringCurrentMonth = (event) => {
+    // TODO: fill this in
+    console.log(event);
+    return true;
   };
 
   // Returns events based on filters, also adds properties for styling
@@ -163,14 +188,17 @@ const EventsView = ({
     if (showMyEvents && !showMoreEvents) { // Only My Events checked off
       events = userEvents;
     } else if (!showMyEvents && showMoreEvents) { // Only More Events checked off
-      events = allEvents.filter((event) => (
-        isOnCurrentDay(event) && !userEventIds.includes(event.id)));
+      events = allEvents.filter((event) => (!userEventIds.includes(event.id)));
     } else { // Both My Events and More Events checked
       events = allEvents;
     }
 
     if (view === 'timeGridDay') {
       events = events.filter((event) => isOnCurrentDay(event));
+    } else if (view === 'timeGridWeek') {
+      events = events.filter((event) => isDuringCurrentWeek(event));
+    } else {
+      events = events.filter((event) => isDuringCurrentMonth(event));
     }
 
     // Add properties to render styled event blocks
@@ -191,9 +219,20 @@ const EventsView = ({
     return events;
   };
 
+  const renderEventList = () => {
+    let filter;
+    const events = filterEvents('list');
+    if ((showMoreEvents && showMyEvents) || (!showMoreEvents && !showMyEvents)) {
+      filter = 'all';
+    } else {
+      filter = showMoreEvents ? 'more-events' : 'my-events';
+    }
+    return <EventList events={events} title="" listType={filter} page={page} view={view} />;
+  };
+
   const getCalendar = () => {
+    const calendarEvents = filterEvents('cal');
     if (view !== 'timeGridDay') {
-      const calendarEvents = filterEvents('cal');
       return (
         <FullCalendar
           plugins={[timeGridPlugin, dayGridPlugin]}
@@ -216,18 +255,7 @@ const EventsView = ({
         />
       );
     }
-
-    let filter;
-    const events = filterEvents('list');
-    if ((showMoreEvents && showMyEvents) || (!showMoreEvents && !showMyEvents)) {
-      filter = 'all';
-    } else {
-      filter = showMoreEvents ? 'more-events' : 'my-events';
-    }
-
-    // TODO: ADD FILTER FOR DAY
-    // TODO: Add arrows to change day
-    return <EventList events={events} title="" listType={filter} page={page} onEventButtonClick={() => console.log('hi')} />;
+    return null;
   };
 
   const renderCheckboxes = () => {
@@ -265,6 +293,7 @@ const EventsView = ({
         {getCalendar()}
       </div>
       {renderEventLegend()}
+      {renderEventList()}
     </div>
   );
 };

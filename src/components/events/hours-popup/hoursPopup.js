@@ -16,13 +16,13 @@ const instance = axios.create({
 const HoursPopup = ({ event, onClose, cookies }) => {
   const [name, setName] = useState(''); // TODO: Autofill with authenticated user's name
   const [eventTitle, setEventTitle] = useState(event ? event.title : '');
-  const [eventLocation, setEventLocation] = useState(event ? event.extendedProps.location : '');
+  const [eventLocation, setEventLocation] = useState(event ? event.location : '');
   const [logShifts, setLogShifts] = useState([{
     logStart: '',
     logEnd: '',
   }]);
   const [totalHours, setTotalHours] = useState(0);
-  const [division, setDivision] = useState(event ? event.extendedProps.division.replace(/\s+/g, '-') : 'Select a Division'); // TODO: Fix attribute name
+  const [division, setDivision] = useState(event ? event.division.replace(/\s+/g, '-') : 'Select a Division'); // TODO: Fix attribute name
   const [additionalNotes, setNotes] = useState('');
   const [userEvents] = useState(useSelector(getEvents));
   const [selectedEventId, setSelectedEventId] = useState(event ? event.id : null);
