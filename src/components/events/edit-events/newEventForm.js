@@ -64,21 +64,6 @@ const popupTypeToTitleMap = {
   ModifyEventForm: 'Edit Event Information',
 };
 
-// const popupTypeToActionButtons = {
-//   AddEventForm: 'Add Event Information',
-//   ViewEventInfoPopup: 'View Event Information',
-//   ModifyEventForm: 'Edit Event Information',
-// };
-
-/*
-const renderActionButtonSet = (popupType) => {
-  switch (popupType){
-    case 'AddEventForm':
-      s
-  }
-}
-*/
-
 const createEventObject = (values) => ({
   // e.toString().substring(0, e.toString().length - 8)
   eventName: values.eventName,
@@ -117,63 +102,25 @@ const handleDeleteEvent = async (eventId) => {
 //   store.dispatch(setShowPopup(false));
 // };
 
-// const renderActionButtonSet2 = (popupType, formik) => {
-//   switch (popupType) {
-//     case 'ViewEventInfoPopup':
-//       return (
-//         <>
-//           <button
-//             type="button"
-//             onClick={() => store.dispatch(changePopupType('ModifyEventForm'))}
-//           >
-//             Testing
-//           </button>
-//           <LightModalButton
-//             danger
-//             id="asdf"
-//             type="button"
-//             onClick={() => store.dispatch(changePopupType('ModifyEventForm'))}
-//           >
-//             Testing
-//           </LightModalButton>
-//         </>
-//       );
-//     case 'ModifyEventForm':
-//       return (
-//         <>
-//           <LightModalButton primary
-// type="submit" onClick={() => formik.setFieldValue('action', 'modifyEvent')}>
-//             Save
-//           </LightModalButton>
-//           <LightModalButton secondaryOutline
-// type="submit" onClick={() => { formik.setFieldValue('action', 'addEvent'); }}>
-//             Duplicate
-//           </LightModalButton>
-//           <LightModalButton primary type="submit"
-//  onClick={() => formik.setFieldValue('action', 'deleteEvent')}>
-//             Delete
-//           </LightModalButton>
-//           {/* <button type="submit" onClick={(e) => onSubmitModifyEvent(e)}>Save</button>
-//           <button type="submit" onClick={() => {}}>Duplicate</button>
-//           <button type="submit" onClick={() => console.log('Event Delete')}>Delete</button>
-//           <button type="submit" onClick={onSubmitAddEvent}>Delete</button> */}
-//         </>
-//       );
-//     default:
-//   }
-
-//   return '';
-// };
-
 const renderActionButtonSet = (popupType, formik) => {
   switch (popupType) {
     case 'AddEventForm':
       return (
         <>
-          <LightModalButton primary type="submit" onClick={() => { formik.setFieldValue('action', 'addEvent'); }}>
+          <LightModalButton
+            primary
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              formik.setFieldValue('action', 'addEvent');
+            }}
+          >
             Submit
           </LightModalButton>
-          <LightModalButton secondaryOutline type="submit" onClick={() => { formik.setFieldValue('action', 'cancel'); }}>
+          <LightModalButton
+            secondaryOutline
+            onClick={() => store.dispatch(setShowPopup(false))}
+          >
             Cancel
           </LightModalButton>
         </>
@@ -184,17 +131,22 @@ const renderActionButtonSet = (popupType, formik) => {
           <LightModalButton
             primary
             type="button"
-            onClick={() => store.dispatch(changePopupType('ModifyEventForm'))}
+            onClick={(e) => {
+              // TODO: investigate why styled components has
+              // weird behavior with conditional rendering
+              e.preventDefault();
+              store.dispatch(changePopupType('ModifyEventForm'));
+            }}
           >
             Edit Event
           </LightModalButton>
-          {/* <LightModalButton
-            type="button"
-            onClick={() => store.dispatch(changePopupType('ModifyEventForm'))}
+          <LightModalButton
+            secondaryOutline
+            onClick={(e) => {
+              e.preventDefault();
+              store.dispatch(setShowPopup(false));
+            }}
           >
-            Edit Event
-          </LightModalButton> */}
-          <LightModalButton secondaryOutline onClick={() => store.dispatch(setShowPopup(false))}>
             Cancel
           </LightModalButton>
         </>
@@ -202,19 +154,33 @@ const renderActionButtonSet = (popupType, formik) => {
     case 'ModifyEventForm':
       return (
         <>
-          <LightModalButton primary type="submit" onClick={() => formik.setFieldValue('action', 'modifyEvent')}>
+          <LightModalButton
+            type="submit"
+            primary
+            onClick={() => {
+              formik.setFieldValue('action', 'modifyEvent');
+            }}
+          >
             Save
           </LightModalButton>
-          <LightModalButton secondary type="submit" onClick={() => { formik.setFieldValue('action', 'addEvent'); }}>
+          <LightModalButton
+            type="submit"
+            secondary
+            onClick={() => {
+              formik.setFieldValue('action', 'duplicateEvent');
+            }}
+          >
             Duplicate
           </LightModalButton>
-          <LightModalButton danger type="submit" onClick={() => formik.setFieldValue('action', 'deleteEvent')}>
+          <LightModalButton
+            type="submit"
+            danger
+            onClick={() => {
+              formik.setFieldValue('action', 'deleteEvent');
+            }}
+          >
             Delete
           </LightModalButton>
-          {/* <button type="submit" onClick={(e) => onSubmitModifyEvent(e)}>Save</button>
-          <button type="submit" onClick={() => {}}>Duplicate</button>
-          <button type="submit" onClick={() => console.log('Event Delete')}>Delete</button>
-          <button type="submit" onClick={onSubmitAddEvent}>Delete</button> */}
         </>
       );
     default:
@@ -417,14 +383,7 @@ const EventForm = () => {
             </select>
           </ValidatedField>
 
-          {/* <LightModalButton primary type="submit">
-            Submit
-          </LightModalButton>
-          <LightModalButton secondaryOutline onClick={() => store.dispatch(setShowPopup(false))}>
-            Cancel
-          </LightModalButton> */}
           {renderActionButtonSet(popupType, formik)}
-          {/* {renderActionButtonSet2(popupType, formik)} */}
         </LightModalBody>
       </form>
     </LightModal>
