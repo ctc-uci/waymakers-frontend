@@ -253,13 +253,13 @@ const EventForm = () => {
         break;
       default:
         formik.setFieldValue('eventName', event.title);
-        formik.setFieldValue('eventType', event.extendedProps.eventType);
-        formik.setFieldValue('eventLocation', event.extendedProps.location);
-        formik.setFieldValue('eventStartTime', moment(event.start));
-        formik.setFieldValue('eventEndTime', moment(event.end));
-        formik.setFieldValue('eventDescription', event.extendedProps.description);
-        formik.setFieldValue('eventDivision', event.extendedProps.division.replace(/\s+/g, '-'));
-        formik.setFieldValue('eventLimit', event.extendedProps.eventLimit);
+        formik.setFieldValue('eventType', event.eventType);
+        formik.setFieldValue('eventLocation', event.location);
+        formik.setFieldValue('eventStartTime', moment(event.startTime));
+        formik.setFieldValue('eventEndTime', moment(event.endTime));
+        formik.setFieldValue('eventDescription', event.description);
+        formik.setFieldValue('eventDivision', event.division.replace(/\s+/g, '-'));
+        formik.setFieldValue('eventLimit', event.eventLimit);
     }
   }, [popupType]);
 

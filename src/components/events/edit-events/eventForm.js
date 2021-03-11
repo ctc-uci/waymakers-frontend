@@ -59,11 +59,11 @@ const EventForm = () => {
         setTitle(event.title);
         setStartTime(new Date(event.start));
         setEndTime(new Date(event.end));
-        setLocation(event.extendedProps.location);
-        setDescription(event.extendedProps.description);
-        setEventType(event.extendedProps.eventType);
-        setDivision(event.extendedProps.division.replace(/\s+/g, '-'));
-        setEventLimit(event.extendedProps.eventLimit);
+        setLocation(event.location);
+        setDescription(event.description);
+        setEventType(event.eventType);
+        setDivision(event.division.replace(/\s+/g, '-'));
+        setEventLimit(event.eventLimit);
     }
   }, [popupType]);
 
