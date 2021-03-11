@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import './overview.css';
+import './EventDetails.css';
 
 const axios = require('axios');
 
