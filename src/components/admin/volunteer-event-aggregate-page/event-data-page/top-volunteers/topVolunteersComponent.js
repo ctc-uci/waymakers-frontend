@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-
 import './topVolunteersComponent.css';
 
 const topVolunteersComponent = ({ event }) => {
@@ -41,28 +40,31 @@ const topVolunteersComponent = ({ event }) => {
   // );
 
   const TopVolunteerItem = (volunteer) => (
-    <li>
+    <li className="top-volunteer-item">
+      <img src="https://placehold.it/75x75" alt="Profile Pic" className="avatar" />
       <div>
-        <img src="https://placehold.it/75x75" alt="Profile Pic" />
-        <h2>
+        <p className="volunteer-name">
           {volunteer.firstname}
           <br />
           {volunteer.lastname}
-          <br />
+        </p>
+        <p>
           {`${volunteer.sum} hours`}
-        </h2>
+        </p>
       </div>
     </li>
   );
 
   return (
     <div className="top-volunteers">
-      <h2>Top Volunteers:</h2>
-      <ul className="list-group list-group-flush">
-        {topVolunteers.map((volunteer) => (
-          TopVolunteerItem(volunteer)
-        ))}
-      </ul>
+      <h2 className="title">Top Volunteers:</h2>
+      <div className="volunteers-container">
+        <ul className="volunteer-list">
+          {topVolunteers.map((volunteer) => (
+            TopVolunteerItem(volunteer)
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

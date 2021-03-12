@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import React from 'react';
-
+import VolunteerTable from './volunteerTable';
 import './listOfVolunteers.css';
 
-// import 'bootstrap/js/src/collapse';
-
 const axios = require('axios');
-
-/* eslint-disable no-unused-vars */
 
 const ListOfVolunteers = (prop) => {
   const instance = axios.create({
@@ -30,128 +25,58 @@ const ListOfVolunteers = (prop) => {
 
   const getAllVolunteers = async () => {
     const volunteers = await instance.get('volunteerData/all/', paramQuery);
-    setAllVolunteers(volunteers.data);
+    // TODO: remove this temporary overflow test
+    setAllVolunteers([...volunteers.data,
+      ...volunteers.data, ...volunteers.data, ...volunteers.data,
+      ...volunteers.data, ...volunteers.data, ...volunteers.data,
+      ...volunteers.data, ...volunteers.data, ...volunteers.data,
+      ...volunteers.data, ...volunteers.data, ...volunteers.data,
+      ...volunteers.data, ...volunteers.data, ...volunteers.data,
+      ...volunteers.data, ...volunteers.data, ...volunteers.data]);
+    console.log(volunteers.data);
     if (volunteers.data.length) {
-      setTotalHours(volunteers.data.map((v) => v.sum).reduce((acc, v) => acc + v));
+      setTotalHours(
+        volunteers.data.map((v) => v.sum).reduce((acc, v) => acc + v),
+      );
     }
   };
 
   useEffect(() => {
+    // TODO: havent confirmed if sorting works
     getAllVolunteers();
   }, [sortingMethod]);
 
-  // const VolunteerItem = (volunteer, index) => (
-  //   <>
-  //     <tr key={volunteer.userid} data-toggle="collapse" data-target={`.order${index}`}>
-  //       <th className="border-dark">
-  //         <div className="volunteer-info">
-  //           <div className="volunteer-name">
-  //             {volunteer.firstname}
-  //             {' '}
-  //             {volunteer.lastname}
-  //           </div>
-  //           <div className="volunteer-position">
-  //             {volunteer.sum}
-  //           </div>
-  //         </div>
-  //       </th>
-  //     </tr>
-  //     <tr>
-  //       <td className="collapsed-info" style={{ padding: 0 }}>
-  //         <div className={`collapse order${index}`}>
-  //           Position:
-  //           {' '}
-  //           {volunteer.permissions}
-  //           <br />
-  //           Volunteer Tier:
-  //           {' '}
-  //           {volunteer.tier}
-  //           <br />
-  //           Age:
-  //           {' '}
-  //           {volunteer.date_part}
-  //         </div>
-  //       </td>
-  //     </tr>
-  //   </>
-  // );
-
-  const VolunteerTable = () => (
-    <table>
-      <th>head</th>
-      <tr>
-        row
-      </tr>
-    </table>
-  );
-
-  // TODO: All volunteers view box
   return (
-    <div>
-      <p>sort by </p>
-      <VolunteerTable />
-      <p>total people</p>
-      <p>total hours</p>
+    <div className="list-of-volunteer">
+      <h2>List of Volunteers:</h2>
+      <div className="card">
+        <div className="sort-by-dropdown">
+          Sort by:
+          <select className="sort-by" value={sortingMethod} onChange={(e) => setSortingMethod(e.target.value)}>
+            <option className="sort-by-items" value="0">A-Z</option>
+            <option className="sort-by-items" value="1">Z-A</option>
+            <option className="sort-by-items" value="2">Most Hours</option>
+            <option className="sort-by-items" value="3">Least Hours</option>
+          </select>
+        </div>
+
+        <VolunteerTable data={allVolunteers} />
+
+        <div className="total-stats">
+          <p>
+            Total People:
+            {' '}
+            {allVolunteers.length}
+          </p>
+          <p>
+            Total Hours:
+            {' '}
+            {totalHours}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
-
-/* <div className="all-volunteers-table">
-<h1>List of Volunteers</h1>
-<div className="all-volunteers-table-header">
-  <h3>Sort by</h3>
-  <select
-    className="form-control all-volunteers-tier-selection"
-    id="sort-by"
-    name="tiers"
-    onChange={(e) => setSortingMethod(e.target.value)}
-  >
-    <option value="0" selected>None</option>
-    <option value="1">A-Z</option>
-    <option value="2">Z-A</option>
-    <option value="3">Tier</option>
-  </select>
-</div>
-<table className="table table-bordered volunteer-table border-dark">
-  <thead className="border-dark">
-    <th scope="col" className="all-volunteers-table-head">
-      <h1>Name</h1>
-     <select
-        className="form-control all-volunteers-tier-selection"
-        id="tiers"
-        name="tiers"
-        onChange={(e) => setTier(e.target.value)}
-      >
-        <option value="" selected>All Tiers</option>
-        <option value="1">Tier 1</option>
-        <option value="2">Tier 2</option>
-        <option value="3">Tier 3</option>
-        <option value="4">Tier 4</option>
-      </select>      <h1>Number of hours</h1>
-    </th>
-  </thead>
-  <tbody>
-    {allVolunteers.map((volunteer, index) => (
-      VolunteerItem(volunteer, index)
-    ))}
-  </tbody>
-  <div className="volunteer-cardinality">
-    <div className="volunteer-number">
-      <h2>
-        Total People:
-        {' '}
-        {allVolunteers.length}
-      </h2>
-    </div>
-    <div className="volunteer-total-hours">
-      <h2>
-        Total Hours:
-        {' '}
-        {totalHours}
-      </h2>
-    </div>
-  </div>
-</table>
-</div> */
 
 export default ListOfVolunteers;

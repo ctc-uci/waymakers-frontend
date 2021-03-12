@@ -1,0 +1,48 @@
+@import '../../../../../common/vars.css';
+
+.event-details {
+    width: 25%;
+    color: var(--text-color-dark);
+    font-family: 'Assistant';
+    margin: 20px;
+}
+
+.overview-container {
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* min-height: 40vh; */
+    padding: 5%;
+}
+
+.event-details-title {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.event-info {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 1.5%;
+}
+
+.event-date {
+    font-size: 1.3rem;
+}
+
+.event-info-icon {
+    height: 23px;
+    width: 23px;
+}
+
+.event-info-detail {
+    padding-left: 0.5%;
+    font-size: 0.8rem;
+}
+
+.event-description {
+    font-size: 0.8rem;
+}

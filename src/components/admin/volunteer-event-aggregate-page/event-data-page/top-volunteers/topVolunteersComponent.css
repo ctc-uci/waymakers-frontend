@@ -1,26 +1,58 @@
-.top-volunteers {
-    width: 25%;
+@import '../../../../../common/vars.css';
+
+ul {
+    padding: 0;
+    margin: 0;
 }
 
-.avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color:#4242426b;
-    display: block;
-    margin-right: 10px;
+li {
+    list-style-type: none;
+}
+
+.top-volunteers {
+    width: 25%;
+    color: var(--text-color-dark);
+    margin: 20px;
+}
+
+.volunteers-container {
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 5%;
+}
+
+.top-volunteers .title {
+    font-weight: bold;
+    font-size: 25px;
 }
 
 .top-volunteer-item {
+    /* padding: 2% 20% 2% 2%; */
     display: flex;
     flex-direction: row;
+    align-items: center;
+    margin-right: 10%;
 }
 
-.list-group-item + .list-group-item {
-    border-top: .5px solid #4242426b;
+.top-volunteer-item + .top-volunteer-item {
+    border-top: 1px solid var(--color-dark-blue);
 }
 
-.list-group {
-    width: 70%;
+.avatar {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background-color:#4242426b;
+    display: block;
+    margin-right: 5%;
+}
+
+.volunteer-name {
+    font-weight: bold;
+}
+
+.volunteer-list {
+    /* width: 80%; */
     border-radius: 0;
 }
