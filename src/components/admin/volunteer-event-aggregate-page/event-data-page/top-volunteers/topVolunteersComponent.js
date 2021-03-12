@@ -40,28 +40,26 @@ const topVolunteersComponent = ({ event }) => {
   // );
 
   const TopVolunteerItem = (volunteer) => (
-    <li className="list-item">
-      <div className="top-volunteer-item">
-        <img src="https://placehold.it/75x75" alt="Profile Pic" className="avatar" />
-        <div className="top-volunteer-info">
-          <p className="volunteer-name">
-            {volunteer.firstname}
-            <br />
-            {volunteer.lastname}
-          </p>
-          <p>
-            {`${volunteer.sum} hours`}
-          </p>
-        </div>
+    <li className="top-volunteer-item">
+      <img src="https://placehold.it/75x75" alt="Profile Pic" className="avatar" />
+      <div>
+        <p className="volunteer-name">
+          {volunteer.firstname}
+          <br />
+          {volunteer.lastname}
+        </p>
+        <p>
+          {`${volunteer.sum} hours`}
+        </p>
       </div>
     </li>
   );
 
   return (
     <div className="top-volunteers">
-      <h2 className="top-volunteers-title">Top Volunteers:</h2>
-      <div className="events-container">
-        <ul className="list-group list-group-flush">
+      <h2 className="title">Top Volunteers:</h2>
+      <div className="volunteers-container">
+        <ul className="volunteer-list">
           {topVolunteers.map((volunteer) => (
             TopVolunteerItem(volunteer)
           ))}
