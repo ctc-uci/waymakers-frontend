@@ -2,15 +2,23 @@
     display: flex;
     flex-flow: column;
     color: var(--text-color-dark);
+    width: 70%;
+    height: 100%;
+}
+
+.list-of-volunteer .title {
+    margin: 0;
+    font-family: 'Assistant';
 }
 
 .list-of-volunteer .card{
     display: flex;
     flex-flow: column;
     background: var(--color-light-blue);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    /* box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25); */
+    border: 1px solid black;
     border-radius: 5px;
-    width: 500px;   /* TODO: temporary */
+    width: 100%;   /* TODO: temporary */
     padding: 24px 16px 24px 16px;
 }
 

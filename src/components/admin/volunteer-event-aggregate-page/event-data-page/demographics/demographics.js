@@ -96,19 +96,20 @@ const Demographics = ({ event }) => {
   return (
     <div className="demographics">
       <h2 className="demographics-title">Demographics</h2>
-      <div className="pie-charts">
+      <div className="demographics-charts">
         <DemoGraphicsLeftArrow />
-        {pieChartLabels.slice(startDisplayIndex, startDisplayIndex + 3)
-          .map(({ attribute, label }) => (
-            <div className="chart-and-label">
-              <PieChart
-                demoInfo={getDemographicData(attribute)}
-                label={label}
-                className={attribute}
-              />
-              <span className="chart-label">{label}</span>
-            </div>
-          ))}
+        <div className="pie-charts">
+          {pieChartLabels.slice(startDisplayIndex, startDisplayIndex + 3)
+            .map(({ attribute, label }) => (
+              <div className="pie-chart-and-label">
+                <PieChart
+                  demoInfo={getDemographicData(attribute)}
+                  label={label}
+                />
+                <span className="chart-label">{label}</span>
+              </div>
+            ))}
+        </div>
         <DemographicsRightArrow />
       </div>
     </div>

@@ -3,8 +3,8 @@
 .demographics {
     display: flex;
     flex-direction: column;
-    height: 40%;
-    width: 50%;
+    height: 100%;
+    width: 70%;
 }
 
 .demographics-title {
@@ -15,23 +15,40 @@
     margin: 0;
 }
 
+.demographics-charts {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-light-blue);
+    border: 1px solid black;
+    padding: 2% 16px 2% 16px;
+}
+
 .pie-charts {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
-    background-color: var(--color-light-blue);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    /* box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25); */
     height: 100%;
     width: 100%;
 }
 
-.chart-and-label {
-    width: 33%;
-    height: 80%;
+.pie-chart-and-label {
+    width: 30%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.chart-label {
+    color: black;
+    font-family: 'Assistant';
+    font-weight: 600;
+    margin: 0;
+    font-size: 24px;
 }
 
 
@@ -40,18 +57,11 @@
     height: 10%; */
     background: transparent;
     border: 0;
+    padding: 0;
 }
 
 .left-arrow, .right-arrow {
     cursor: pointer;
-}
-
-.left-arrow, .left-arrow-nonfunctional {
-    padding-left: 2%;
-}
-
-.right-arrow, .right-arrow-nonfunctional {
-    padding-right: 2%;
 }
 
 .left-arrow-nonfunctional, .right-arrow-nonfunctional {
@@ -61,13 +71,4 @@
 .arrow-img {
     width: 25px;
     height: 50px;
-}
-
-.chart-label {
-    color: black;
-    font-weight: 600;
-    margin: 0;
-    height: 20%;
-    bottom: 5%;
-    position: absolute;
 }

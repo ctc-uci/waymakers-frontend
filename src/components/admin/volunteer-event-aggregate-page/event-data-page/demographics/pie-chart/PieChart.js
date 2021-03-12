@@ -78,9 +78,9 @@ const PieChart = ({ demoInfo }) => (
             width={width}
             height={height}
             margin={{
-              top: 0,
+              top: 20,
               right: 50,
-              bottom: 0,
+              bottom: 20,
               left: 50,
             }}
             innerRadius={0}

@@ -1,8 +1,30 @@
-.volunteer-section {
-    width: 100vw;
-    height: 100vh;
+.event-title {
+    font-family: 'Assistant';
+    font-weight: bold;
+    font-size: 48px;
+    width: 80%;
+    padding-left: 3%;
+    color: var(--text-color-dark);
+    margin-bottom: 0;
 }
 
-.all-volunteers-table {
-    width: 1000px;
+.event-page-info {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.row1, .row2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 80%;
+    height: 45%;
+}
+
+.row2 {
+    padding-top: 2%;
 }

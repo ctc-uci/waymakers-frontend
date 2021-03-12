@@ -48,7 +48,7 @@ const ListOfVolunteers = (prop) => {
 
   return (
     <div className="list-of-volunteer">
-      <h2>List of Volunteers:</h2>
+      <h2 className="title">List of Volunteers:</h2>
       <div className="card">
         <div className="sort-by-dropdown">
           Sort by:
