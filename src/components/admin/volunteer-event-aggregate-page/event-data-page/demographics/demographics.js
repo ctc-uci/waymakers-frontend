@@ -81,24 +81,35 @@ const Demographics = ({ event }) => {
     }
   };
 
+  const DemoGraphicsLeftArrow = () => (
+    <button type="button" onClick={handleLeftArrowClick} className={startDisplayIndex > 0 ? 'left-arrow' : 'left-arrow-nonfunctional'}>
+      <img src={leftArrow} alt="left-arrow" className="arrow-img" />
+    </button>
+  );
+
+  const DemographicsRightArrow = () => (
+    <button type="button" onClick={handleRightArrowClick} className={startDisplayIndex < pieChartLabels.length - 3 ? 'right-arrow' : 'right-arrow-nonfunctional'}>
+      <img src={rightArrow} alt="right-arrow" className="arrow-img" />
+    </button>
+  );
+
   return (
     <div className="demographics">
       <h2 className="demographics-title">Demographics</h2>
       <div className="pie-charts">
-        <button type="button" onClick={handleLeftArrowClick} className={startDisplayIndex > 0 ? 'left-arrow' : 'left-arrow-nonfunctional'}>
-          <img src={leftArrow} alt="left-arrow" className="arrow-img" />
-        </button>
+        <DemoGraphicsLeftArrow />
         {pieChartLabels.slice(startDisplayIndex, startDisplayIndex + 3)
           .map(({ attribute, label }) => (
-            <PieChart
-              demoInfo={getDemographicData(attribute)}
-              label={label}
-              className={attribute}
-            />
+            <div className="chart-and-label">
+              <PieChart
+                demoInfo={getDemographicData(attribute)}
+                label={label}
+                className={attribute}
+              />
+              <span className="chart-label">{label}</span>
+            </div>
           ))}
-        <button type="button" onClick={handleRightArrowClick} className={startDisplayIndex < pieChartLabels.length - 3 ? 'right-arrow' : 'right-arrow-nonfunctional'}>
-          <img src={rightArrow} alt="right-arrow" className="arrow-img" />
-        </button>
+        <DemographicsRightArrow />
       </div>
     </div>
   );

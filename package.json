@@ -70,6 +70,7 @@
     "react-router-dom": "^5.2.0",
     "react-schedule-selector": "^3.0.0",
     "react-scripts": "4.0.0",
+    "react-virtualized": "^9.22.3",
     "recharts": "^2.0.8",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",

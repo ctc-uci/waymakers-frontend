@@ -1,6 +1,6 @@
 import React from 'react';
 // import { PieChart, Pie, ResponsiveContainer } from 'recharts';
-// import { AutoSizer } from 'react-virtualized';
+import { AutoSizer } from 'react-virtualized';
 import { Pie } from '@nivo/pie';
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,7 @@ import './PieChart.css';
 // TODO: Implement different color schemes for pie charts
 // const colors = ['red', '#8884d8', '#82ca9d'];
 
-const PieChart = ({ demoInfo, label }) => (
+const PieChart = ({ demoInfo }) => (
   // <div className="pie-chart-and-label">
   //   <ResponsiveContainer width="100%" height="100%">
   //     <PieChart className="chart">
@@ -69,37 +69,40 @@ const PieChart = ({ demoInfo, label }) => (
   // 1. Increase the left/right margins
   // 2. Decrease the font size
   // 3. Decrease radialLabelsLinkHorizontalLength
-  <div className="pie-chart-and-label">
-    <Pie
-      data={demoInfo}
-      // TODO: Make size responsive?
-      // The hard part about this is making sure the labels don't mess up afterwards
-      width={250}
-      height={250}
-      margin={{
-        top: 0,
-        right: 50,
-        bottom: 0,
-        left: 50,
-      }}
-      innerRadius={0}
-      padAngle={0.7}
-      cornerRadius={0}
-      colors={{ scheme: 'nivo' }}
-      borderWidth={1}
-      borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-      radialLabelsLinkDiagonalLength={8}
-      radialLabelsLinkHorizontalLength={5}
-      radialLabelsSkipAngle={0}
-      radialLabelsTextColor="var(--text-color-blue-gray)"
-      radialLabelsLinkColor="#000"
-      sliceLabelsSkipAngle={10}
-      sliceLabelsTextColor={{ from: 'color' }}
-      theme={{
-        fontSize: 12,
-      }}
-    />
-    <p className="chart-label">{label}</p>
+  <div className="pie-chart">
+    <AutoSizer>
+      {({ height, width }) => (
+        <>
+          <Pie
+            data={demoInfo}
+            width={width}
+            height={height}
+            margin={{
+              top: 0,
+              right: 50,
+              bottom: 0,
+              left: 50,
+            }}
+            innerRadius={0}
+            padAngle={0.7}
+            cornerRadius={0}
+            colors={{ scheme: 'nivo' }}
+            borderWidth={1}
+            borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+            radialLabelsLinkDiagonalLength={8}
+            radialLabelsLinkHorizontalLength={5}
+            radialLabelsSkipAngle={0}
+            radialLabelsTextColor="var(--text-color-blue-gray)"
+            radialLabelsLinkColor="#000"
+            sliceLabelsSkipAngle={10}
+            sliceLabelsTextColor={{ from: 'color' }}
+            theme={{
+              fontSize: 11,
+            }}
+          />
+        </>
+      )}
+    </AutoSizer>
   </div>
 );
 
@@ -108,7 +111,7 @@ PieChart.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
   })).isRequired,
-  label: PropTypes.string.isRequired,
+  // label: PropTypes.string.isRequired,
 };
 
 export default PieChart;
