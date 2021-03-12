@@ -24,7 +24,8 @@ const EventDetailPage = () => {
   useEffect(() => {
     getEventInfo();
   }, []);
-
+  // TODO: Remove borders and add box shadows before we're done
+  // (they're commented out to help with alignment)
   return (
     <div className="event-page-info">
       <h2 className="event-title">{eventName}</h2>
