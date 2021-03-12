@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import './QualificationsList.css';
 
+import profCircle from '../../../images/profCircle.png';
+
 const QualificationsList = ({
   volunteers, qualifications, title, buttonText,
 }) => {
@@ -11,17 +13,7 @@ const QualificationsList = ({
   const [approveModal, setApproveModal] = useState(false);
   const [rejectModal, setRejectModal] = useState(false);
   const [notesModal, setNotesModal] = useState(false);
-  // const [firstName, setFirstName] = useState('');
-  // const [lastName, setLastName] = useState('');
-
-  // const qualifications = [
-  //   {
-  //     name: 'Valid Driver\'s License',
-  //   },
-  //   {
-  //     name: '8-Hour New Volunteer Orientation',
-  //   },
-  // ];
+  // const [name, setName] = useState('');
 
   const rows = volunteers.map((volunteer) => (
     <tr>
@@ -41,7 +33,8 @@ const QualificationsList = ({
   // for table inside qualification modal
   const popupRows = qualifications.map((qualification) => (
     <tr>
-      <td className="qual-name">{qualification.qualification_name}</td>
+      {/* currently creating an empty row when condition not met */}
+      <td className="qual-name">{qualification.completion_status === 'Not Qualified' || qualification.completion_status === 'Pending' ? qualification.qualification_name : '' }</td>
       <td>
         <button type="button" className="reject" onClick={() => setRejectModal(true)}>Reject</button>
         <button type="button" className="approve" onClick={() => setApproveModal(true)}>Approve</button>
@@ -81,9 +74,6 @@ const QualificationsList = ({
 
       </div>
 
-      {/* old code using custom popups */}
-      {/* {title === 'List of Volunteers Who Need Qualifications Reviewed' ? <QualPopup trigger={qualPopup} setTrigger={setQualPopup} qualifications={qualifications} firstName="Kevin" lastName="Durant" /> : <p> </p>} */}
-      {/* new code using modals */}
       {title === 'List of Volunteers Who Need Qualifications Reviewed'
         ? (
           <Modal
@@ -91,6 +81,7 @@ const QualificationsList = ({
             onRequestClose={() => setQualModalIsOpen(false)}
           >
             <h4>Qualifications to Approve</h4>
+            <img src={profCircle} alt="" width="150" height="150" />
             <button type="button" onClick={() => setQualModalIsOpen(false)} className="close-button">x</button>
             <section>
               <table className="table">
