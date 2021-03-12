@@ -1,0 +1,48 @@
+.overflow-volunteer-table {
+    overflow: auto;
+    height: 500px;  /* TODO: change for the future*/
+}
+
+.volunteer-table {
+    border-color: black;
+    border-spacing: 0px;
+    width: 100%;
+}
+
+/* wow i love math */
+.volunteer-table tr:nth-child(4n), .volunteer-table tr:nth-child(4n+1) {
+    background-color: rgba(51, 100, 115, 0.37);
+}
+
+.volunteer-table tr:last-child {
+    border-bottom: 1px solid black;
+}
+
+.volunteer-table th {
+    background-color: #336473;
+    color: white;
+    text-align: left;
+    font-weight: normal;
+    padding: 10px 0px 10px 0px;
+    position: sticky;
+    top: 0;
+}
+
+.volunteer-table th:first-child {
+    border-top-left-radius: 4px;
+}
+
+.volunteer-table th:last-child {
+    border-top-right-radius: 4px;
+}
+
+.volunteer-table td {
+    padding: 8px;
+}
+
+.volunteer-table .profile-pic {
+    background: #336473;
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+}
