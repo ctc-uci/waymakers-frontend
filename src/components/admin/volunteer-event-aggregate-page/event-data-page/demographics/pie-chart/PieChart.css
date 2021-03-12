@@ -1,0 +1,10 @@
+.pie-chart-and-label {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+.pie-chart-and-label .label .chart-label {
+    color: black;
+    font-weight: 900;
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Tooltip } from 'recharts';
 import PropTypes from 'prop-types';
+import GenericPieChart from './pie-chart/PieChart';
 
 const axios = require('axios');
 
@@ -12,13 +12,14 @@ const Demographics = ({ event }) => {
 
   const [allVolunteers, setAllVolunteers] = useState([]);
 
-  const getDemographicData = ({ attribute }) => {
+  const getDemographicData = (attribute) => {
     const counter = {};
     allVolunteers.forEach((volunteer) => {
+      console.log(attribute, volunteer[attribute]);
       if (!counter[volunteer[attribute]]) {
         counter[volunteer[attribute]] = 0;
       }
-      counter[volunteer.attribute] += 1;
+      counter[volunteer[attribute]] += 1;
     });
     return Object.entries(counter).map(([k, v]) => ({ name: k, value: v }));
   };
@@ -36,61 +37,13 @@ const Demographics = ({ event }) => {
 
   useEffect(() => {
     getAllVolunteers();
-    getDemographicData('gender');
   }, []);
 
-  const data = [{ name: 'Facebook', value: 69 }, { name: 'Joe', value: 138 }, { name: 'Ted', value: 78 }];
-  const colors = ['red', '#8884d8', '#82ca9d'];
-
   return (
-    <PieChart width={400} height={400}>
-      <Pie
-        dataKey="value"
-        isAnimationActive={false}
-        data={data.map((d, index) => (
-          {
-            ...d,
-            fill: colors[index],
-          }
-        ))}
-        cx="50%"
-        cy="50%"
-        outerRadius={80}
-        fill="#8884d8"
-        label={({
-          cx,
-          cy,
-          midAngle,
-          innerRadius,
-          outerRadius,
-          value,
-          index,
-        }) => {
-          const RADIAN = Math.PI / 180;
-          // eslint-disable-next-line
-          const radius = 25 + innerRadius + (outerRadius - innerRadius);
-          // eslint-disable-next-line
-          const x = cx + radius * Math.cos(-midAngle * RADIAN);
-          // eslint-disable-next-line
-          const y = cy + radius * Math.sin(-midAngle * RADIAN);
-          return (
-            <text
-              x={x}
-              y={y}
-              fill={colors[index]}
-              textAnchor={x > cx ? 'start' : 'end'}
-              dominantBaseline="central"
-            >
-              {data[index].name}
-              (
-              {value}
-              )
-            </text>
-          );
-        }}
-      />
-      <Tooltip />
-    </PieChart>
+    <>
+      <GenericPieChart demoInfo={getDemographicData('gender')} label="gender" />
+      <GenericPieChart demoInfo={getDemographicData('tier')} label="tier" />
+    </>
   );
 };
 
