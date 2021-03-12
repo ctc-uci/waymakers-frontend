@@ -10,12 +10,16 @@
     flex: 1 1 98%;
 }
 
-.more-events {
+.more-events,
+.aggregatePage,
+.addModifyDeleteEventsPage {
     background-color: var(--color-dark-blue);
+    cursor: pointer;
 }
 
 .my-events {
     background-color: var(--color-teal);
+    cursor: pointer;
 }
 
 .event-button {

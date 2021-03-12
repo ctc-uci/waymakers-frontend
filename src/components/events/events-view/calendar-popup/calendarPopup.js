@@ -5,7 +5,6 @@ import { useSelector, connect } from 'react-redux';
 import EventPopup from '../../event-popup/eventPopup';
 import HoursPopup from '../../hours-popup/hoursPopup';
 import DialogueBox from '../../../admin/dialogue-box/dialogueBox';
-// import EditEventPopup from '../../edit-events/editEventPopup';
 import EventForm from '../../edit-events/newEventForm';
 
 import store from '../../redux/store';
@@ -46,15 +45,6 @@ const CalendarPopup = ({
           }
           return <EventPopup event={selectedEvent} />;
         case 'addModifyDeleteEventsPage':
-        // TODO: Add View Event Info Popup here when it is created
-        // if (popupType === 'EditEventsPopup') {
-          //   return (
-          //     <EditEventPopup
-          //       onClose={onClosePopup}
-          //       event={selectedEvent}
-          //     />
-          //   );
-          // }
           return (
             <EventForm />
           );

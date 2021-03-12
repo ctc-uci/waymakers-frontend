@@ -71,13 +71,14 @@ const EventList = ({
       let onEventButtonClick;
       if (eventType === 'more-events') {
         onEventButtonClick = (clickedEvent) => onAddButtonClick(clickedEvent);
-      } else if (eventType === 'my-events') {
+      } else {
         // TODO: change this when we know what a checkmark is supposed to be
         onEventButtonClick = () => console.log('oh the check was clicked -kc');
-      } else if (page === 'addModifyDeleteEventsPage') {
-        onEventButtonClick = () => console.log('edit event popup');
-      } else {
-        onEventButtonClick = () => console.log('dialogue popup');
+      }
+
+      if (page === 'addModifyDeleteEventsPage' || page === 'aggregatePage') {
+        eventType = page;
+        // onEventButtonClick = (clickedEvent) => onViewEventsPageBlockClick(clickedEvent);
       }
       // TODO: change colors/on event button click for other event pages
       return (
