@@ -3,6 +3,7 @@
 .event-details {
     width: 25%;
     color: var(--text-color-dark);
+    font-family: 'Assistant';
     margin: 20px;
 }
 
@@ -14,6 +15,11 @@
     /* flex-direction: column; */
     /* min-height: 40vh; */
     padding: 5%;
+}
+
+.event-details-title {
+    font-weight: bold;
+    font-size: 25px;
 }
 
 .event-info {
