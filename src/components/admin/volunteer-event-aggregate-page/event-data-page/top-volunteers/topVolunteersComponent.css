@@ -1,10 +1,18 @@
+@import '../../../../../common/vars.css';
+
+li {
+    list-style-type: none;
+}
+
 .top-volunteers {
     width: 25%;
+    color: var(--text-color-dark);
+    margin: 20px;
 }
 
 .avatar {
-    width: 50px;
-    height: 50px;
+    width: 85px;
+    height: 85px;
     border-radius: 50%;
     background-color:#4242426b;
     display: block;
@@ -14,13 +22,28 @@
 .top-volunteer-item {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
-.list-group-item + .list-group-item {
-    border-top: .5px solid #4242426b;
+.volunteer-name {
+    font-weight: bold;
+}
+
+.list-item + .list-item {
+    border-top: 1px solid var(--color-dark-blue);
 }
 
 .list-group {
     width: 70%;
     border-radius: 0;
+}
+
+.events-container {
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* min-height: 40vh; */
+    padding-bottom: 5vh;
 }
