@@ -1,7 +1,7 @@
 .volunteer-section {
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    flex: 0 0 auto;
-    flex-direction: row;
 }
 
 .all-volunteers-table {

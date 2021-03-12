@@ -1,6 +1,7 @@
 import React from 'react';
 // import { PieChart, Pie, ResponsiveContainer } from 'recharts';
-import { ResponsivePie } from '@nivo/pie';
+// import { AutoSizer } from 'react-virtualized';
+import { Pie } from '@nivo/pie';
 import PropTypes from 'prop-types';
 
 import '../../../../../../common/vars.css';
@@ -64,21 +65,22 @@ const PieChart = ({ demoInfo, label }) => (
   //   <p className="chart-label">{label}</p>
   // </div>
 
-  // NOTE: There are 2 solutions to labels overlapping (might be more if you look hard enough):
+  // NOTE: There are 3 solutions to labels overlapping (might be more if you look hard enough):
   // 1. Increase the left/right margins
   // 2. Decrease the font size
+  // 3. Decrease radialLabelsLinkHorizontalLength
   <div className="pie-chart-and-label">
-    <ResponsivePie
+    <Pie
       data={demoInfo}
       // TODO: Make size responsive?
       // The hard part about this is making sure the labels don't mess up afterwards
-      width={350}
-      height={350}
+      width={250}
+      height={250}
       margin={{
         top: 0,
-        right: 80,
+        right: 50,
         bottom: 0,
-        left: 80,
+        left: 50,
       }}
       innerRadius={0}
       padAngle={0.7}
@@ -86,7 +88,9 @@ const PieChart = ({ demoInfo, label }) => (
       colors={{ scheme: 'nivo' }}
       borderWidth={1}
       borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-      radialLabelsSkipAngle={10}
+      radialLabelsLinkDiagonalLength={8}
+      radialLabelsLinkHorizontalLength={5}
+      radialLabelsSkipAngle={0}
       radialLabelsTextColor="var(--text-color-blue-gray)"
       radialLabelsLinkColor="#000"
       sliceLabelsSkipAngle={10}

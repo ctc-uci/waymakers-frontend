@@ -86,17 +86,18 @@ const Demographics = ({ event }) => {
       <h2 className="demographics-title">Demographics</h2>
       <div className="pie-charts">
         <button type="button" onClick={handleLeftArrowClick} className={startDisplayIndex > 0 ? 'left-arrow' : 'left-arrow-nonfunctional'}>
-          <img src={leftArrow} alt="left-arrow" />
+          <img src={leftArrow} alt="left-arrow" className="arrow-img" />
         </button>
         {pieChartLabels.slice(startDisplayIndex, startDisplayIndex + 3)
           .map(({ attribute, label }) => (
             <PieChart
               demoInfo={getDemographicData(attribute)}
               label={label}
+              className={attribute}
             />
           ))}
         <button type="button" onClick={handleRightArrowClick} className={startDisplayIndex < pieChartLabels.length - 3 ? 'right-arrow' : 'right-arrow-nonfunctional'}>
-          <img src={rightArrow} alt="right-arrow" />
+          <img src={rightArrow} alt="right-arrow" className="arrow-img" />
         </button>
       </div>
     </div>
