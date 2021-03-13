@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import {
   getMonth,
   getYear,
+  getDay,
 } from '../../redux/selectors';
 
 import store from '../../redux/store';
@@ -46,7 +47,7 @@ const DayPicker = (props) => {
     const numDays = mapMonthToDays[props.month];
     const dayOptionTags = [];
     for (let i = 1; i <= numDays; i += 1) {
-      dayOptionTags.push(<option className="picker" value={i}>{i}</option>);
+      dayOptionTags.push(<option className="picker" value={i} selected={i === props.day}>{i}</option>);
     }
     return dayOptionTags;
   };
@@ -61,11 +62,13 @@ const DayPicker = (props) => {
 const mapStateToProps = (state) => ({
   month: getMonth(state),
   year: getYear(state),
+  day: getDay(state),
 });
 
 DayPicker.propTypes = {
   month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
+  day: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, null)(DayPicker);

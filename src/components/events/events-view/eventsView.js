@@ -14,6 +14,7 @@ import CalendarDayHeader from './calendar-day-header/calendarDayHeader';
 import EventList from '../event-list/eventList';
 import EventLegend from '../../dashboard/event-legend/eventLegend';
 import store from '../redux/store';
+import { isOnCurrentDay, isDuringCurrentMonth, isDuringCurrentWeek } from '../util';
 
 import {
   getEvents,
@@ -57,7 +58,7 @@ const EventsView = ({
   // Update calendar
   useEffect(() => {
     if (view !== 'timeGridDay') {
-      calendarEl.current.getApi().changeView('dayGridMonth', `${year}-${month < 10 ? '0' : ''}${month}-01`);
+      calendarEl.current.getApi().changeView(view, `${year}-${month < 10 ? '0' : ''}${month}-01`);
       calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
     }
   }, [useSelector(getMonth), useSelector(getYear)]);
@@ -89,9 +90,21 @@ const EventsView = ({
     );
   }
 
+  const updateDate = (newDate) => {
+    store.dispatch(changeDay(newDate.getDate()));
+    store.dispatch(changeMonth(newDate.getMonth() + 1));
+    store.dispatch(changeYear(newDate.getFullYear()));
+  };
+
   const renderHeader = (dayInfo) => {
-    const goToPrev = () => { calendarEl.current.getApi().prev(); };
-    const goToNext = () => { calendarEl.current.getApi().next(); };
+    const goToPrev = () => {
+      calendarEl.current.getApi().prev();
+      updateDate(calendarEl.current.getApi().getDate());
+    };
+    const goToNext = () => {
+      calendarEl.current.getApi().next();
+      updateDate(calendarEl.current.getApi().getDate());
+    };
     return <CalendarDayHeader goToPrev={goToPrev} goToNext={goToNext} dayInfo={dayInfo} />;
   };
 
@@ -104,16 +117,8 @@ const EventsView = ({
     prevDate.setDate(currentDate.getDate() - 1);
 
     // Create functions for previous and next arrows
-    const goToPrev = () => {
-      store.dispatch(changeDay(prevDate.getDate()));
-      store.dispatch(changeMonth(prevDate.getMonth() + 1));
-      store.dispatch(changeYear(prevDate.getFullYear()));
-    };
-    const goToNext = () => {
-      store.dispatch(changeDay(nextDate.getDate()));
-      store.dispatch(changeMonth(nextDate.getMonth() + 1));
-      store.dispatch(changeYear(nextDate.getFullYear()));
-    };
+    const goToPrev = () => { updateDate(prevDate); };
+    const goToNext = () => { updateDate(nextDate); };
 
     const dayInfo = {
       view: { type: view },
@@ -138,39 +143,6 @@ const EventsView = ({
     );
   }
 
-  const isOnCurrentDay = (event) => {
-    const startDate = new Date(event.startTime);
-    if (startDate.getDate() === day
-      && (startDate.getMonth() + 1) === month
-      && startDate.getFullYear() === year) {
-      return true;
-    }
-    return false;
-  };
-
-  const isDuringCurrentWeek = (event) => {
-    // TODO: fix this
-    // const startDate = new Date(event.startTime);
-    // const currentDate = new Date(year, month, day);
-    // const oneWeekEarlier = new Date(currentDate);
-    // currentDate.setDate(currentDate.getDate() - 7);
-    // const oneWeekLater = new Date(currentDate);
-    // oneWeekLater.setDate(oneWeekLater.getDate() + 7);
-
-    // if (startDate <= oneWeekLater && startDate >= oneWeekEarlier) {
-    //   return true;
-    // }
-    // return false;
-    console.log(event);
-    return true;
-  };
-
-  const isDuringCurrentMonth = (event) => {
-    // TODO: fill this in
-    console.log(event);
-    return true;
-  };
-
   // Returns events based on filters, also adds properties for styling
   const filterEvents = (display) => {
     let userEvents;
@@ -193,12 +165,14 @@ const EventsView = ({
       events = allEvents;
     }
 
-    if (view === 'timeGridDay') {
-      events = events.filter((event) => isOnCurrentDay(event));
-    } else if (view === 'timeGridWeek') {
-      events = events.filter((event) => isDuringCurrentWeek(event));
-    } else {
-      events = events.filter((event) => isDuringCurrentMonth(event));
+    if (display === 'list') {
+      if (view === 'timeGridDay') {
+        events = events.filter((event) => isOnCurrentDay(event, day, month, year));
+      } else if (view === 'timeGridWeek') {
+        events = events.filter((event) => isDuringCurrentWeek(event, day, month, year));
+      } else {
+        events = events.filter((event) => isDuringCurrentMonth(event, day, month, year));
+      }
     }
 
     // Add properties to render styled event blocks
