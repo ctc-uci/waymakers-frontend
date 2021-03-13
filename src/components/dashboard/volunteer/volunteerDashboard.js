@@ -16,6 +16,7 @@ import store from '../../events/redux/store';
 import './volunteerDashboard.css';
 import ViewAvailability from '../availability-component/viewAvailability/viewAvailability';
 import EditAvailability from '../availability-component/editAvailability/editAvailability';
+import CalendarPopup from '../../events/events-view/calendar-popup/calendarPopup';
 
 const VolunteerDashboard = (props) => {
   const instance = axios.create({
@@ -50,12 +51,10 @@ const VolunteerDashboard = (props) => {
 
   async function getEvents() {
     try {
-      console.log('getting events');
       let allEvents = await instance.get('events');
 
       if (allEvents.status === 200) {
         allEvents = allEvents.data.slice(0, 6);
-        console.log(allEvents);
       }
       setMoreEvents(allEvents);
       setMyEvents([...allEvents]);
@@ -101,7 +100,6 @@ const VolunteerDashboard = (props) => {
       );
 
       const { userAvailability } = availabilityResult.data;
-
       const dateList = userAvailability.map((dateString) => (stringToDate(dateString)));
 
       setAvailability(dateList);
@@ -195,31 +193,6 @@ const VolunteerDashboard = (props) => {
     setLoading(false);
   }, []);
 
-  const onEventButtonClick = (eventType, index) => {
-    // If user clicks on event from More Events section to add to My Events section
-    if (eventType === 'more-events') {
-      // Pop element from moreEvents array and update its state
-      const tempMoreEventsArr = [...moreEvents];
-      const [poppedEvent] = tempMoreEventsArr.splice(index, 1);
-      setMoreEvents(tempMoreEventsArr);
-
-      // Push element that was popped from moreEvents array to myEvents array and update its state
-      const tempMyEventsArr = [...myEvents];
-      tempMyEventsArr.push(poppedEvent);
-      setMyEvents(tempMyEventsArr);
-    } else {
-      // Pop element from myEvents array and update its state
-      const tempMyEventsArr = [...myEvents];
-      const [poppedEvent] = tempMyEventsArr.splice(index, 1);
-      setMyEvents(tempMyEventsArr);
-
-      // Push element that was popped from myEvents array to moreEvents array and update its state
-      const tempMoreEventsArr = [...moreEvents];
-      tempMoreEventsArr.push(poppedEvent);
-      setMoreEvents(tempMoreEventsArr);
-    }
-  };
-
   if (isLoading) {
     return (<div>Loading dashboard...</div>);
   }
@@ -243,11 +216,12 @@ const VolunteerDashboard = (props) => {
           <div className="filler" />
         </div>
         <div className="events-section">
+          <CalendarPopup page="volunteerDashboard" />
           <div className="event-list-component">
-            <EventList events={moreEvents} title="More Events" listType="more-events" onEventButtonClick={onEventButtonClick} />
+            <EventList events={moreEvents} title="More Events" listType="more-events" page="dashboard" />
           </div>
           <div className="event-list-component">
-            <EventList events={myEvents} title="My Events" listType="my-events" onEventButtonClick={onEventButtonClick} />
+            <EventList events={myEvents} title="My Events" listType="my-events" page="dashboard" />
           </div>
         </div>
         <div className="key-section">

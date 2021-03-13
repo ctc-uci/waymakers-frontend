@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
 // import "./events.css";
 import PropTypes from 'prop-types';
@@ -16,37 +15,16 @@ import {
   changeSelectedEvent,
 } from '../redux/actions';
 
-// events = Array of objects with event details
-/*
-{
-  name: name
-  date: date
-  time: time
-  location: location
-}
-*/
 const EventList = ({
   events, title, listType, page, view,
 }) => {
-  // render Event components based on events prop
-
   const userEvents = useSelector(getUserEvents);
-  const onDashboard = useLocation().pathname === '/';
 
-  const openPopup = () => {
-    store.dispatch(setShowPopup(true));
-  };
-
-  const setEventPopupType = (type) => {
-    store.dispatch(changePopupType(type));
-  };
-
-  const setEvent = (selectedEvent) => {
-    store.dispatch(changeSelectedEvent(selectedEvent));
-  };
+  const openPopup = () => { store.dispatch(setShowPopup(true)); };
+  const setEventPopupType = (type) => { store.dispatch(changePopupType(type)); };
+  const setEvent = (selectedEvent) => { store.dispatch(changeSelectedEvent(selectedEvent)); };
 
   const onAddButtonClick = (event) => {
-    console.log(event);
     setEvent(event);
     setEventPopupType('ConfirmCancelPopup');
     openPopup();
@@ -63,9 +41,7 @@ const EventList = ({
             eventType = 'my-events';
           }
         });
-        if (eventType !== 'my-events') {
-          eventType = 'more-events';
-        }
+        eventType = (eventType !== 'my-events') ? 'more-events' : eventType;
       }
 
       let onEventButtonClick;
@@ -78,11 +54,10 @@ const EventList = ({
 
       if (page === 'addModifyDeleteEventsPage' || page === 'aggregatePage') {
         eventType = page;
-        // onEventButtonClick = (clickedEvent) => onViewEventsPageBlockClick(clickedEvent);
       }
-      // TODO: change colors/on event button click for other event pages
+
       return (
-        <div className="event-div">
+        <div className="event-div" key={event.id}>
           <Event
             event={event}
             listType={eventType}
@@ -99,22 +74,13 @@ const EventList = ({
     </div>
   );
 
-  const renderEventLegend = () => {
-    if (page === 'volunteerDashboard' && view === 'timeGridDay') {
-      return (
-        <EventLegend />
-      );
-    }
-    return null;
-  };
-
   return (
     <div className="event-list">
-      {!onDashboard && renderEventLegend()}
+      {page === 'volunteerDashboard' && view === 'timeGridDay' && <EventLegend />}
       <h5 className="event-list-title">{ title }</h5>
       <div className="events-container">
         {renderEvents()}
-        {onDashboard && renderSeeMore()}
+        {page === 'dashboard' && renderSeeMore()}
       </div>
     </div>
   );

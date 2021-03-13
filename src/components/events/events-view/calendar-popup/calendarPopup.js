@@ -35,7 +35,6 @@ const CalendarPopup = ({
         case 'volunteerDashboard':
           // Event is on the user's calendar already
           if (popupType === 'LogHoursForm') {
-            console.log('joe');
             return (
               <HoursPopup
                 onClose={onClosePopup}

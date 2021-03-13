@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import './event.css';
 import store from '../redux/store';
+
 import {
   setShowPopup,
   changePopupType,
@@ -19,6 +21,56 @@ const Event = ({
   const startTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(startDate);
   const endTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(endDate);
   const eventType = `${event.eventType.toLowerCase()}-event`;
+
+  const openPopup = () => { store.dispatch(setShowPopup(true)); };
+  const setEventPopupType = (type) => { store.dispatch(changePopupType(type)); };
+  const setEvent = (selectedEvent) => { store.dispatch(changeSelectedEvent(selectedEvent)); };
+
+  // EVENT BLOCK CLICK HANDLERS
+  // Admin Add/Modify/View Event Calendar
+  const onViewEventsPageBlockClick = (clickedEvent) => {
+    setEvent(clickedEvent);
+    setEventPopupType('ViewEventInfoPopup');
+    openPopup();
+  };
+
+  const onAdminEventBlockClick = (clickedEvent) => {
+    setEvent(clickedEvent);
+    openPopup();
+  };
+
+  const onVolunteerEventBlockClick = (clickedEvent) => {
+    setEvent(clickedEvent);
+    if (listType === 'my-events') {
+      if (moment(new Date(clickedEvent.startTime)).isBefore(moment())) {
+        setEventPopupType('AddMyHoursPopup');
+      } else {
+        setEventPopupType('RemoveFromMyEventPopup');
+      }
+    } else {
+      setEventPopupType('AddEventPopup');
+    }
+    openPopup();
+  };
+
+  // RENDERING FUNCTIONS
+  const renderEventBlockPopup = () => {
+    switch (listType) {
+      case 'my-events':
+        onVolunteerEventBlockClick(event);
+        break;
+      case 'more-events':
+        onVolunteerEventBlockClick(event);
+        break;
+      case 'addModifyDeleteEventsPage':
+        onViewEventsPageBlockClick(event);
+        break;
+      case 'aggregatePage':
+        onAdminEventBlockClick(event);
+        break;
+      default: console.log('incorrect list type');
+    }
+  };
 
   const renderButton = () => {
     const onButtonClick = (e) => {
@@ -39,68 +91,6 @@ const Event = ({
       );
     }
     return null;
-  };
-
-  const openPopup = () => {
-    store.dispatch(setShowPopup(true));
-  };
-
-  const setEventPopupType = (type) => {
-    store.dispatch(changePopupType(type));
-  };
-
-  const setEvent = (selectedEvent) => {
-    store.dispatch(changeSelectedEvent(selectedEvent));
-  };
-
-  // Event Block Click Handlers
-
-  // Admin Add/Modify/View Event Calendar
-  const onViewEventsPageBlockClick = (clickedEvent) => {
-    setEvent(clickedEvent);
-    setEventPopupType('ViewEventInfoPopup');
-    openPopup();
-  };
-
-  const onAdminEventBlockClick = (clickedEvent) => {
-    setEvent(clickedEvent);
-    openPopup();
-  };
-
-  const isPast = (firstDate, secondDate) => (
-    firstDate.setHours(0, 0, 0, 0) - secondDate.setHours(0, 0, 0, 0) < 0
-  );
-
-  const onVolunteerEventBlockClick = (clickedEvent) => {
-    setEvent(clickedEvent);
-    if (listType === 'my-events') {
-      if (isPast(new Date(clickedEvent.startTime), new Date())) {
-        setEventPopupType('AddMyHoursPopup');
-      } else {
-        setEventPopupType('RemoveFromMyEventPopup');
-      }
-    } else {
-      setEventPopupType('AddEventPopup');
-    }
-    openPopup();
-  };
-
-  const renderEventBlockPopup = () => {
-    switch (listType) {
-      case 'my-events':
-        onVolunteerEventBlockClick(event);
-        break;
-      case 'more-events':
-        onVolunteerEventBlockClick(event);
-        break;
-      case 'addModifyDeleteEventsPage':
-        onViewEventsPageBlockClick(event);
-        break;
-      case 'aggregatePage':
-        onAdminEventBlockClick(event);
-        break;
-      default: console.log('oops');
-    }
   };
 
   return (
