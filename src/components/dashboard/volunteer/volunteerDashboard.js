@@ -1,32 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import {
   Card, Button, Alert,
 } from 'react-bootstrap';
 import {
   startOfWeek, add, getHours, getDay,
 } from 'date-fns';
-import { Provider } from 'react-redux';
 import axios from 'axios';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+
 import auth from '../../firebase/firebase';
-import EventList from '../../events/event-list/eventList';
 import store from '../../events/redux/store';
 import './volunteerDashboard.css';
 import ViewAvailability from '../availability-component/viewAvailability/viewAvailability';
 import EditAvailability from '../availability-component/editAvailability/editAvailability';
-import CalendarPopup from '../../events/events-view/calendar-popup/calendarPopup';
+import DashboardEventSection from './dashboardEventSection';
 
 const VolunteerDashboard = (props) => {
-  const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-    withCredentials: true,
-  });
-
   const { cookies } = props;
-  const [moreEvents, setMoreEvents] = useState([]);
-  const [myEvents, setMyEvents] = useState([]);
   const [availability, setAvailability] = useState([]);
   const [availabilityMode, setAvailabilityMode] = useState('view');
   const history = useHistory();
@@ -46,21 +39,6 @@ const VolunteerDashboard = (props) => {
       // Sign-out successful
     } catch (err) {
       setError(err.message);
-    }
-  }
-
-  async function getEvents() {
-    try {
-      let allEvents = await instance.get('events');
-
-      if (allEvents.status === 200) {
-        allEvents = allEvents.data.slice(0, 6);
-      }
-      setMoreEvents(allEvents);
-      setMyEvents([...allEvents]);
-    } catch (e) {
-      // eslint-disable-next-line
-      console.log('Error while getting events from the backend!');
     }
   }
 
@@ -188,7 +166,6 @@ const VolunteerDashboard = (props) => {
 
   useEffect(async () => {
     setLoading(true);
-    getEvents();
     getAvailability();
     setLoading(false);
   }, []);
@@ -215,24 +192,7 @@ const VolunteerDashboard = (props) => {
           <h5 className="my-stats-title">My Stats</h5>
           <div className="filler" />
         </div>
-        <div className="events-section">
-          <CalendarPopup page="volunteerDashboard" />
-          <div className="event-list-component">
-            <EventList events={moreEvents} title="More Events" listType="more-events" page="dashboard" />
-          </div>
-          <div className="event-list-component">
-            <EventList events={myEvents} title="My Events" listType="my-events" page="dashboard" />
-          </div>
-        </div>
-        <div className="key-section">
-          <p className="key-text">Key</p>
-          <div className="volunteer-event-square" />
-          <p className="volunteer-event-text">Volunteer Event</p>
-          <div className="outreach-event-square" />
-          <p className="outreach-event-text">Outreach Event</p>
-          <div className="other-event-square" />
-          <p className="other-event-text">Other Event</p>
-        </div>
+        <DashboardEventSection />
         <div className="availability-section">
           {renderAvailability()}
         </div>
