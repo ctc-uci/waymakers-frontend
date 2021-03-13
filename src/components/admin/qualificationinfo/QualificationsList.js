@@ -4,16 +4,19 @@ import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import './QualificationsList.css';
 
-import profCircle from '../../../images/profCircle.png';
+import QualModal from './qualModal';
 
 const QualificationsList = ({
-  volunteers, qualifications, title, buttonText,
+  volunteers, title, buttonText,
 }) => {
   const [qualModalIsOpen, setQualModalIsOpen] = useState(false);
-  const [approveModal, setApproveModal] = useState(false);
-  const [rejectModal, setRejectModal] = useState(false);
-  const [notesModal, setNotesModal] = useState(false);
-  // const [name, setName] = useState('');
+  const [currUserID, setCurrUserID] = useState('');
+
+  // Open qualification modual, and set the current user being viewed
+  const openQualModual = (userID) => {
+    setQualModalIsOpen(true);
+    setCurrUserID(userID);
+  };
 
   const rows = volunteers.map((volunteer) => (
     <tr>
@@ -24,30 +27,11 @@ const QualificationsList = ({
         </div>
       </td>
       <td>
-        <button className="green-button" type="button" onClick={() => setQualModalIsOpen(true)}>{buttonText}</button>
+        <button className="green-button" type="button" onClick={() => openQualModual(volunteer.userid)}>{buttonText}</button>
         {' '}
       </td>
     </tr>
   ));
-
-  // for table inside qualification modal
-  const popupRows = qualifications.map((qualification) => (
-    <tr>
-      {/* currently creating an empty row when condition not met */}
-      <td className="qual-name">{qualification.completion_status === 'Not Qualified' || qualification.completion_status === 'Pending' ? qualification.qualification_name : '' }</td>
-      <td>
-        <button type="button" className="reject" onClick={() => setRejectModal(true)}>Reject</button>
-        <button type="button" className="approve" onClick={() => setApproveModal(true)}>Approve</button>
-      </td>
-    </tr>
-  ));
-
-  // closes Reject Qualifications? Modal
-  // opens notes modal
-  const onClickRejectBtn = () => {
-    setRejectModal(false);
-    setNotesModal(true);
-  };
 
   return (
     <div id="qualifications-list">
@@ -73,54 +57,13 @@ const QualificationsList = ({
         </b>
 
       </div>
-
-      {title === 'List of Volunteers Who Need Qualifications Reviewed'
-        ? (
-          <Modal
-            isOpen={qualModalIsOpen}
-            onRequestClose={() => setQualModalIsOpen(false)}
-          >
-            <h4>Qualifications to Approve</h4>
-            <img src={profCircle} alt="" width="150" height="150" />
-            <button type="button" onClick={() => setQualModalIsOpen(false)} className="close-button">x</button>
-            <section>
-              <table className="table">
-                <tbody>
-                  {popupRows}
-                </tbody>
-              </table>
-            </section>
-          </Modal>
-        ) : <p> </p> }
-      <Modal isOpen={rejectModal} onRequestClose={() => setRejectModal(false)}>
-        <h6>Reject Qualification?</h6>
-        <section>
-          <button type="button" className="cancel-btn" onClick={() => setRejectModal(false)}>Cancel</button>
-          <button type="button" className="yes-btn" onClick={onClickRejectBtn}>Yes</button>
-        </section>
-      </Modal>
-      <Modal isOpen={approveModal} onRequestClose={() => setApproveModal(false)}>
-        <h6>Approve Qualification?</h6>
-        <section>
-          <button type="button" className="cancel-btn" onClick={() => setApproveModal(false)}>Cancel</button>
-          {/* should update qualifications approved in database */}
-          <button type="button" className="yes-btn" onClick={() => setApproveModal(false)}>Yes</button>
-        </section>
-      </Modal>
-      <Modal isOpen={notesModal} onRequestClose={() => setNotesModal(false)}>
-        <h6>Please enter any additional notes for the volunteer</h6>
-        <input type="text" />
-        <button type="button" className="cancel-btn" onClick={() => setNotesModal(false)}>Cancel</button>
-        {/* should update database with notes */}
-        <button type="button" className="submit-btn" onClick={() => setNotesModal(false)}>Submit</button>
-      </Modal>
+      <QualModal qualModalIsOpen={qualModalIsOpen} setQualModalIsOpen={setQualModalIsOpen} userID={currUserID} />
     </div>
   );
 };
 
 QualificationsList.propTypes = {
   volunteers: PropTypes.arrayOf(Object).isRequired,
-  qualifications: PropTypes.arrayOf(Object).isRequired,
   title: PropTypes.string.isRequired,
   buttonText: PropTypes.string.isRequired,
 };
