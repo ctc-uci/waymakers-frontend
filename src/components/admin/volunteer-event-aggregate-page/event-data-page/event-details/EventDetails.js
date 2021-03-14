@@ -71,8 +71,7 @@ const Overview = (prop) => {
   return (
     <>
       {eventInfo.length !== 0 && (
-        <div className="event-details">
-          {/* <h1>{eventInfo.title}</h1> */}
+        <div className="event-details-aggregate">
           <h2 className="event-details-title">Event Details</h2>
           <div className="overview-container">
             <p className="event-date">{prettifyDate()}</p>
