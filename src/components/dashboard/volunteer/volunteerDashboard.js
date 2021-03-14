@@ -9,11 +9,14 @@ import {
 import axios from 'axios';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import disableScroll from 'disable-scroll';
+import EventConfirmationPopup from '../../events/event-confirmation-popup/eventConfirmationPopup';
 import auth from '../../firebase/firebase';
 import EventList from '../../events/event-list/eventList';
 import './volunteerDashboard.css';
 import ViewAvailability from '../availability-component/viewAvailability/viewAvailability';
 import EditAvailability from '../availability-component/editAvailability/editAvailability';
+import HelpPopup from '../availability-component/help-popup/helpPopup';
 
 const VolunteerDashboard = (props) => {
   const instance = axios.create({
@@ -29,6 +32,9 @@ const VolunteerDashboard = (props) => {
   const history = useHistory();
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
+  const [currEvent, setCurrEvent] = useState({});
+  const [confirmPopupSeen, setConfirmPopupSeen] = useState(false);
+  const [helpPopupSeen, setHelpPopupSeen] = useState(false);
 
   const startWeek = startOfWeek(new Date());
   //   const [currDivision, setCurrDivision] = useState('human');
@@ -48,12 +54,10 @@ const VolunteerDashboard = (props) => {
 
   async function getEvents() {
     try {
-      console.log('getting events');
       let allEvents = await instance.get('events');
 
       if (allEvents.status === 200) {
         allEvents = allEvents.data.slice(0, 6);
-        console.log(allEvents);
       }
       setMoreEvents(allEvents);
       setMyEvents([...allEvents]);
@@ -87,9 +91,8 @@ const VolunteerDashboard = (props) => {
     return [getDay(date), `${hours}:00:00`];
   };
 
-  async function getAvailability() {
+  const getAvailability = async () => {
     try {
-      console.log('getting availability');
       const userID = cookies.get('userId');
 
       const availabilityResult = await axios.get(
@@ -107,11 +110,10 @@ const VolunteerDashboard = (props) => {
       // eslint-disable-next-line
       console.log('Error while getting availability from the backend!');
     }
-  }
+  };
 
-  async function updateAvailability() {
+  const updateAvailability = async () => {
     const dateList = availability.map((date) => (parseDate(date)));
-    console.log('about to post dateList to POST route');
     const seen = new Set();
 
     const filteredDates = dateList.filter((date) => {
@@ -122,10 +124,6 @@ const VolunteerDashboard = (props) => {
 
     const userID = cookies.get('userId');
 
-    console.log('dateList to POST:', filteredDates);
-
-    console.log('POST route called');
-
     await axios.post(
       `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
         dates: filteredDates,
@@ -134,66 +132,11 @@ const VolunteerDashboard = (props) => {
       },
     );
 
-    console.log('post complete');
-
     setAvailabilityMode('view');
-  }
+  };
 
-  function renderAvailability() {
-    // console.log(availabilityViewMode);
-    console.log(`rendering availability in ${availabilityMode} mode`);
-    console.log('availability:', availability);
-    return (
-      <div>
-        {availabilityMode === 'view' ? (
-          <div className="availability-wrapper">
-            <h5 className="availability-title">Availability for the Week</h5>
-            <div className="availability-buttons-container">
-              <div
-                className="edit-button"
-                onClick={() => { setAvailabilityMode('edit'); }}
-                onKeyDown={() => { setAvailabilityMode('edit'); }}
-                role="button"
-                tabIndex={0}
-              >
-                Change Availability
-              </div>
-              <div className="help-popup">?</div>
-            </div>
-            <ViewAvailability availabilities={availability} startWeek={startWeek} />
-          </div>
-        )
-          : (
-            <div className="availability-wrapper">
-              <h5 className="availability-title">Availability for the Week</h5>
-              <div
-                className="save-button"
-                onClick={updateAvailability}
-                onKeyDown={updateAvailability}
-                role="button"
-                tabIndex={0}
-              >
-                Save Changes
-              </div>
-              <EditAvailability
-                availabilityTimes={availability}
-                setAvailabilityTimes={setAvailability}
-                startWeek={startWeek}
-              />
-            </div>
-          )}
-      </div>
-    );
-  }
-
-  useEffect(async () => {
-    setLoading(true);
-    getEvents();
-    getAvailability();
-    setLoading(false);
-  }, []);
-
-  const onEventButtonClick = (eventType, index) => {
+  // eslint-disable-next-line no-unused-vars
+  const moveEvent = (eventType, index) => {
     // If user clicks on event from More Events section to add to My Events section
     if (eventType === 'more-events') {
       // Pop element from moreEvents array and update its state
@@ -217,6 +160,93 @@ const VolunteerDashboard = (props) => {
       setMoreEvents(tempMoreEventsArr);
     }
   };
+
+  // Helper function that toggles the confirm popup
+  const toggleConfirmPopup = () => {
+    if (confirmPopupSeen) {
+      disableScroll.off();
+    } else {
+      disableScroll.on();
+    }
+    setConfirmPopupSeen(!confirmPopupSeen);
+  };
+
+  // This needs to take note of which event was pressed so it can be rendered for the popup
+  const onEventButtonClick = (event) => {
+    toggleConfirmPopup();
+    setCurrEvent(event);
+  };
+
+  const onConfirmClick = () => {
+    toggleConfirmPopup();
+    moveEvent(currEvent.listType, currEvent.index);
+  };
+
+  const onHelpButtonClick = () => {
+    if (helpPopupSeen) {
+      disableScroll.off();
+    } else {
+      disableScroll.on();
+    }
+    setHelpPopupSeen(!helpPopupSeen);
+  };
+
+  const renderAvailability = () => (
+    <div>
+      {availabilityMode === 'view' ? (
+        <div className="availability-wrapper">
+          <h5 className="availability-title">Availability for the Week</h5>
+          <div className="availability-buttons-container">
+            <div
+              className="edit-button"
+              onClick={() => { setAvailabilityMode('edit'); }}
+              onKeyDown={() => { setAvailabilityMode('edit'); }}
+              role="button"
+              tabIndex={0}
+            >
+              Change Availability
+            </div>
+            <div
+              className="help-popup"
+              onClick={onHelpButtonClick}
+              onKeyDown={onHelpButtonClick}
+              role="button"
+              tabIndex={0}
+            >
+              ?
+            </div>
+          </div>
+          <ViewAvailability availabilities={availability} startWeek={startWeek} />
+        </div>
+      )
+        : (
+          <div className="availability-wrapper">
+            <h5 className="availability-title">Availability for the Week</h5>
+            <div
+              className="save-button"
+              onClick={updateAvailability}
+              onKeyDown={updateAvailability}
+              role="button"
+              tabIndex={0}
+            >
+              Save Changes
+            </div>
+            <EditAvailability
+              availabilityTimes={availability}
+              setAvailabilityTimes={setAvailability}
+              startWeek={startWeek}
+            />
+          </div>
+        )}
+    </div>
+  );
+
+  useEffect(async () => {
+    setLoading(true);
+    getEvents();
+    getAvailability();
+    setLoading(false);
+  }, []);
 
   if (isLoading) {
     return (<div>Loading dashboard...</div>);
@@ -243,6 +273,14 @@ const VolunteerDashboard = (props) => {
         <div className="event-list-component">
           <EventList events={moreEvents} title="More Events" listType="more-events" onEventButtonClick={onEventButtonClick} />
         </div>
+        {confirmPopupSeen
+        && (
+        <EventConfirmationPopup
+          event={currEvent}
+          onConfirmClick={onConfirmClick}
+          onCancelClick={onEventButtonClick}
+        />
+        )}
         <div className="event-list-component">
           <EventList events={myEvents} title="My Events" listType="my-events" onEventButtonClick={onEventButtonClick} />
         </div>
@@ -258,6 +296,7 @@ const VolunteerDashboard = (props) => {
       </div>
       <div className="availability-section">
         {renderAvailability()}
+        {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} />}
       </div>
     </div>
   );

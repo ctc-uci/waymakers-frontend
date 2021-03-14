@@ -6,6 +6,7 @@
     --text-color-dark: #003E53;
     --text-color-light: #F9F9F9;
 
+    --color-gray: #93A2A8;
     --color-light-blue: #F2FBFC;
     --color-dark-blue: #003E53;
     --color-teal: #0CA17E;
@@ -13,8 +14,10 @@
     --color-light-purple: #AD90FF;
     --color-lavender: #AD90FF;
     --color-light-green: #0CA27E;
+    --color-mint: #B4F4BD;
     --color-green: #5D9A64;
     --color-olive: #85B38B;
     --color-yellow: #EFB442;
     --color-light-pink: #FFAECB;
+    --color-orange: #DA6153;
 }
