@@ -108,14 +108,28 @@ const InventoryComponent = ({ division }) => {
     }
   }, [warehouseName]);
 
-  return (
-    <div className="inventory-component">
-      { Menu() }
+  const renderInfo = () => {
+    if (warehouseList.length === 0) {
+      return (
+        <div className="no-items-message"> No warehouses in this division :( </div>
+      );
+    }
+    if (topItems.length === 0) {
+      return (<div className="no-items-message"> No items in this warehouse :( </div>);
+    }
+    return (
       <div className="top-items-section">
         {topItems.map((item) => (
           itemDisplay(item)
         ))}
       </div>
+    );
+  };
+
+  return (
+    <div className="inventory-component">
+      { warehouseList.length > 0 && Menu() }
+      {renderInfo()}
       <div className="view-inventory-section">
         <Link to="/inventory">
           <button type="button" className="view-inventory-button">View All</button>

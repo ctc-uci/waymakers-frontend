@@ -278,7 +278,7 @@ const VolunteerDashboard = (props) => {
         <EventConfirmationPopup
           event={currEvent}
           onConfirmClick={onConfirmClick}
-          onCancelClick={onEventButtonClick}
+          onCancelClick={toggleConfirmPopup}
         />
         )}
         <div className="event-list-component">
