@@ -13,6 +13,7 @@ import './layout.css';
 
 const Layout = ({ cookies }) => {
   const [permissions, setPermissions] = useState('');
+  const [currDashboard, setCurrDashboard] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(async () => {
@@ -23,8 +24,30 @@ const Layout = ({ cookies }) => {
     });
 
     setPermissions(result.data.permissions.permissions);
+
+    if (result.data.permissions.permissions === 'Volunteer') {
+      setCurrDashboard('volunteer');
+    } else {
+      setCurrDashboard('admin');
+    }
+
     setIsLoading(false);
   }, []);
+
+  const renderDropdown = () => (
+    <div>
+      <select
+        name="dashboards"
+        id="dashboards"
+        onChange={(e) => {
+          setCurrDashboard(e.target.value);
+        }}
+      >
+        <option key={0} value="admin">Admin Dashboard</option>
+        <option key={1} value="dashboard">Volunteer Dashboard</option>
+      </select>
+    </div>
+  );
 
   if (isLoading) {
     return (<div>Loading dashboard...</div>);
@@ -33,7 +56,8 @@ const Layout = ({ cookies }) => {
   return (
     <div className="layout">
       <Header />
-      {(permissions === 'Admin' || permissions === 'Staff') ? <AdminDashboard /> : <VolunteerDashboard />}
+      {(permissions === 'Admin' || permissions === 'Staff') && renderDropdown()}
+      {(currDashboard === 'admin') ? <AdminDashboard /> : <VolunteerDashboard />}
       <Footer />
     </div>
   );
