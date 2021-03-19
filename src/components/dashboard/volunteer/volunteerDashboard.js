@@ -37,7 +37,8 @@ const VolunteerDashboard = (props) => {
   const [helpPopupSeen, setHelpPopupSeen] = useState(false);
 
   const startWeek = startOfWeek(new Date());
-  //   const [currDivision, setCurrDivision] = useState('human');
+
+  const NUM_EVENTS_DISPLAYED = 5;
 
   async function logout() {
     try {
@@ -54,13 +55,28 @@ const VolunteerDashboard = (props) => {
 
   async function getEvents() {
     try {
+      // Gets events user is signed up for as well as all waymakers events
+      const userID = cookies.get('userId');
       let allEvents = await instance.get('events');
+      let userEvents = await instance.get(`userEvent/${userID}`);
 
-      if (allEvents.status === 200) {
-        allEvents = allEvents.data.slice(0, 6);
+      const filteredAllEvents = [];
+      allEvents = allEvents.data;
+      userEvents = userEvents.data;
+      const userEventIDSet = new Set(userEvents.map((event) => event.id));
+
+      // Removes the events the user is signed up for from the list of all events. Only render
+      // NUM_EVENTS_DISPLAYED number of events for both 'More Events' list and 'My Events' list
+      let i = 0;
+      while (filteredAllEvents.length < NUM_EVENTS_DISPLAYED && i < allEvents.length) {
+        if (!userEventIDSet.has(allEvents[i].id)) {
+          filteredAllEvents.push(allEvents[i]);
+        }
+        i += 1;
       }
-      setMoreEvents(allEvents);
-      setMyEvents([...allEvents]);
+
+      setMoreEvents(filteredAllEvents);
+      setMyEvents(userEvents.slice(0, NUM_EVENTS_DISPLAYED));
     } catch (e) {
       // eslint-disable-next-line
       console.log('Error while getting events from the backend!');

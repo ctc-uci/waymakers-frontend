@@ -10,10 +10,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    /* border: 2px solid red; */
 }
 
 .event-modal-content {
-    height: 50%;
+    height: 65%;
     width: 25%;
     padding: 20px;
     border-radius: 15px;
@@ -21,6 +22,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* border: 2px solid blue; */
 }
 
 .popup-volunteer-event-header {
