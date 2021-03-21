@@ -4,8 +4,6 @@ import { withCookies, Cookies } from 'react-cookie';
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-require('dotenv').config();
-
 const signInEndpoint = '/login';
 
 const verifyToken = async (cookies) => {

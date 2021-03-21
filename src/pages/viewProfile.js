@@ -11,9 +11,7 @@ import About from '../components/profile/about/About';
 import Contact from '../components/profile/contact/Contact';
 import Availability from '../components/profile/availability/Availability';
 
-import profCircle from '../images/profCircle.png';
-
-require('dotenv').config();
+import profCircle from '../assets/profCircle.png';
 
 const viewProfile = (props) => {
   // Notes for Preston:

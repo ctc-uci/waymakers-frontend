@@ -22,7 +22,7 @@
 .arrow-prev {
     width: 40px;
     padding: 20px 20px 20px 20px;
-    background-image: url(images/inventoryArrowPrev.png);
+    background-image: url(assets/inventoryArrowPrev.png);
     background-repeat: no-repeat;
     background-size: 30px;
     background-color: transparent;
@@ -33,7 +33,7 @@
 .arrow-next {
     width: 40px;
     padding: 20px 20px 20px 20px;
-    background-image: url(images/inventoryArrowNext.png);
+    background-image: url(assets/inventoryArrowNext.png);
     background-repeat: no-repeat;
     background-size: 30px;
     background-color: transparent;
@@ -106,7 +106,7 @@
 .category-icon--delete {
     height: 30px;
     width: 30px;
-    background-image: url(images/deleteItem.png);
+    background-image: url(assets/deleteItem.png);
     background-repeat: no-repeat;
     background-color: transparent;
     background-size: 20px;
@@ -119,7 +119,7 @@
 .category-icon--undo {
     height: 30px;
     width: 30px;
-    background-image: url(images/undeleteItem.png);
+    background-image: url(assets/undeleteItem.png);
     background-repeat: no-repeat;
     background-color: transparent;
     background-size: 20px;

@@ -6,9 +6,9 @@ import {
 
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import auth from '../firebase/firebase';
-import AdminDashboard from '../../templates/admin-dashboard/adminDashboard';
-import VolunteerDashboard from '../../templates/volunteer-dashboard/volunteerDashboard';
+import GoogleAuthService from '../../services/firebase/firebase';
+import AdminDashboard from '../../pages/admin-dashboard/adminDashboard';
+import VolunteerDashboard from '../../pages/volunteer-dashboard/volunteerDashboard';
 
 const axios = require('axios');
 
@@ -20,7 +20,7 @@ const Dashboard = (props) => {
 
   async function logout() {
     try {
-      await auth.signOut();
+      await GoogleAuthService.auth.signOut();
       history.push('/login');
       // Removing session cookie
       cookies.remove('accessToken');

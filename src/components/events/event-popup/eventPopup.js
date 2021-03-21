@@ -14,10 +14,10 @@ import store from '../redux/store';
 
 import './eventPopup.css';
 
-import locationPinIcon from '../../../images/locationPin.svg';
-import folderIcon from '../../../images/folder.svg';
-import peopleIcon from '../../../images/peopleIcon.svg';
-import cross from '../../../images/cross.svg';
+import locationPinIcon from '../../../assets/locationPin.svg';
+import folderIcon from '../../../assets/folder.svg';
+import peopleIcon from '../../../assets/peopleIcon.svg';
+import cross from '../../../assets/cross.svg';
 
 const dayList = [
   'SUN', 'MON', 'TUE', 'WED',

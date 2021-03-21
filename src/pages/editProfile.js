@@ -16,9 +16,7 @@ import EditAbout from '../components/profile/editAbout/editAbout.js';
 import EditContact from '../components/profile/editContact/editContact.js';
 import EditAvailability from '../components/profile/editAvailability/editAvailability';
 
-import profCircle from '../images/profCircle.png';
-
-require('dotenv').config();
+import profCircle from '../assets/profCircle.png';
 
 const editProfile = (props) => {
   // Idea: we have states for each of the information fields we're allowed to change
