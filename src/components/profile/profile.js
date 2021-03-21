@@ -3,8 +3,8 @@ import React from 'react';
 import './profile.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import viewProfile from '../../templates/viewProfile';
-import editProfile from '../../templates/editProfile';
+import viewProfile from '../../pages/viewProfile';
+import editProfile from '../../pages/editProfile';
 
 function Profile() {
   return (

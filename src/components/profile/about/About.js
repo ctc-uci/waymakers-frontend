@@ -2,9 +2,9 @@
 import React from 'react';
 import './About.css';
 
-import cake from '../../../images/bday.png';
-import people from '../../../images/ppl.png';
-import building from '../../../images/building.png';
+import cake from '../../../assets/bday.png';
+import people from '../../../assets/ppl.png';
+import building from '../../../assets/building.png';
 
 function About({ birthday, tier, status }) {
   return (

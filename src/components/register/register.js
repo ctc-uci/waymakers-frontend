@@ -4,7 +4,7 @@ import {
   Card, Button, Form, Alert,
 } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
-import auth from '../firebase/firebase';
+import GoogleAuthService from '../../services/firebase/firebase';
 
 const Register = () => {
   const history = useHistory();
@@ -27,7 +27,7 @@ const Register = () => {
 
   async function register() {
     try {
-      const user = await auth.createUserWithEmailAndPassword(email, password);
+      const user = await GoogleAuthService.auth.createUserWithEmailAndPassword(email, password);
       // eslint-disable-next-line
       console.log(user);
       history.push('/');

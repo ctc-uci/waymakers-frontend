@@ -11,7 +11,7 @@ import {
   changeSelectedEvent,
   changePopupType,
 } from '../../redux/actions';
-import trashcan from '../../../../images/trashcan.svg';
+import trashcan from '../../../../assets/trashcan.svg';
 
 import './eventBlock.css';
 
