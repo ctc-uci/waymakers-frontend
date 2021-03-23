@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import store from '../redux/store';
+import { useSelector, useDispatch } from 'react-redux';
 import { getEditing } from '../redux/selectors';
 import { changeSelectedWarehouse } from '../redux/actions';
 import handleOutsideClick from '../../../common/handleOutsideClick';
@@ -8,6 +7,7 @@ import AddWarehouseButton from './add-warehouse/addWarehouse';
 import './warehouseMenu.css';
 
 const WarehouseMenu = (prop) => {
+  const dispatch = useDispatch();
   const [currentWarehouse, setCurrentWarehouse] = useState('All Warehouses');
   const [open, setOpen] = useState(false);
   const ref = useRef();
@@ -41,7 +41,7 @@ const WarehouseMenu = (prop) => {
   };
 
   const handleWarehouseClick = (e, warehouseName) => {
-    store.dispatch(changeSelectedWarehouse(parseInt(e.target.value, 10)));
+    dispatch(changeSelectedWarehouse(parseInt(e.target.value, 10)));
     setCurrentWarehouse(warehouseName);
     setOpen(false);
   };

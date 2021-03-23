@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import EditButton from './edit-button/editButton';
 import DivisionMenu from './division-menu/divisionMenu';
 import CategoryMenu from './category-menu/categoryMenu';
@@ -9,7 +9,6 @@ import AddCategoryButton from './add-category/addCategory';
 import AddItemModal from './add-item/addItemModal';
 import './inventoryApp.css';
 
-import store from './redux/store';
 import {
   fetchItems,
   fetchCategories,
@@ -26,6 +25,8 @@ import {
 } from './redux/selectors';
 
 const InventoryApp = () => {
+  const dispatch = useDispatch();
+
   // Displays selected category
   const CurrentCategoryLabel = () => {
     const currentCategory = useSelector(getSelectedCategoryLabel) === '' ? ' All Categories' : ` ${useSelector(getSelectedCategoryLabel)}`;
@@ -38,14 +39,14 @@ const InventoryApp = () => {
     );
   };
   useEffect(() => {
-    store.dispatch(fetchItems());
-    store.dispatch(fetchCategories());
-    store.dispatch(fetchDivisions());
-    store.dispatch(fetchWarehouses());
+    dispatch(fetchItems());
+    dispatch(fetchCategories());
+    dispatch(fetchDivisions());
+    dispatch(fetchWarehouses());
   }, []);
   // Updates items list when search term, category, division or warehouse changes
   useEffect(() => {
-    store.dispatch(fetchItems());
+    dispatch(fetchItems());
   }, [
     useSelector(getSearchTerm),
     useSelector(getSelectedCategoryID),

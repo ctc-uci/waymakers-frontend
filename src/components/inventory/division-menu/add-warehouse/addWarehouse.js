@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { connect } from 'react-redux';
-import store from '../../redux/store';
+import { connect, useDispatch } from 'react-redux';
 import { addWarehouse } from '../../redux/actions';
 import { getWarehouses } from '../../redux/selectors';
 import './addWarehouse.css';
 
 Modal.setAppElement('#root');
 const AddWarehouseButton = (prop) => {
+  const dispatch = useDispatch();
   const [popup, setPopup] = useState(false);
   const [warehouse, setWarehouse] = useState('');
   const [selectedDivision, setSelectedDivision] = useState(prop.selectedDivision);
@@ -19,7 +19,7 @@ const AddWarehouseButton = (prop) => {
 
   const handleOnSubmit = () => {
     // create an add warehouse action
-    store.dispatch(addWarehouse({
+    dispatch(addWarehouse({
       warehouseLabel: warehouse,
       // get currently selected division and put it here v
       // TO DO: set the division to whatever division is currently selected

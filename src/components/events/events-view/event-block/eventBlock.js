@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import * as IconAi from 'react-icons/ai';
 import * as IconGo from 'react-icons/go';
-
-import store from '../../redux/store';
 
 import {
   deleteEvent,
@@ -18,6 +17,8 @@ import './eventBlock.css';
 const EventBlock = ({
   path, eventInfo,
 }) => {
+  const dispatch = useDispatch();
+
   const eventTypeColors = {
     Volunteer: 'var(--color-golden-yellow)',
     Outreach: 'var(--color-pink)',
@@ -28,15 +29,15 @@ const EventBlock = ({
   const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
 
   const openPopup = () => {
-    store.dispatch(setShowPopup(true));
+    dispatch(setShowPopup(true));
   };
 
   const setEventPopupType = (type) => {
-    store.dispatch(changePopupType(type));
+    dispatch(changePopupType(type));
   };
 
   const setEvent = (selectedEvent) => {
-    store.dispatch(changeSelectedEvent(selectedEvent));
+    dispatch(changeSelectedEvent(selectedEvent));
   };
 
   const onEventBlockClick = () => {
@@ -62,7 +63,7 @@ const EventBlock = ({
 
   const onDeleteClick = (e) => {
     e.stopPropagation();
-    store.dispatch(deleteEvent(eventInfo.event.id));
+    dispatch(deleteEvent(eventInfo.event.id));
   };
 
   const onAdminEventBlockClick = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import {
   addUserEvent,
   removeUserEvent,
@@ -10,7 +10,6 @@ import {
   changePopupType,
 } from '../redux/actions';
 import { getPopupType } from '../redux/selectors';
-import store from '../redux/store';
 
 import './eventPopup.css';
 
@@ -34,6 +33,7 @@ const monthList = [
 const EventPopup = ({
   event, addEventToUserCalendar, removeEventFromUserCalendar, cookies, popupType,
 }) => {
+  const dispatch = useDispatch();
   const startDate = new Date(event.start);
   const endDate = new Date(event.end);
 
@@ -43,7 +43,7 @@ const EventPopup = ({
       type="button"
       aria-label="close popup"
       onClick={() => {
-        store.dispatch(setShowPopup(false));
+        dispatch(setShowPopup(false));
       }}
     >
       Cancel
@@ -64,17 +64,17 @@ const EventPopup = ({
   const addEvent = () => {
     addEventToUserCalendar(cookies.cookies.userId, event.id)
       .then(() => {
-        store.dispatch(fetchEvents());
+        dispatch(fetchEvents());
       });
-    store.dispatch(setShowPopup(false));
+    dispatch(setShowPopup(false));
   };
 
   const removeEvent = () => {
     removeEventFromUserCalendar(cookies.cookies.userId, event.id)
       .then(() => {
-        store.dispatch(fetchEvents());
+        dispatch(fetchEvents());
       });
-    store.dispatch(setShowPopup(false));
+    dispatch(setShowPopup(false));
   };
 
   // Rendered when + button clicked
@@ -101,7 +101,7 @@ const EventPopup = ({
         type="button"
         aria-label="Add To My Events"
         onClick={() => {
-          store.dispatch(changePopupType('ConfirmCancelPopup'));
+          dispatch(changePopupType('ConfirmCancelPopup'));
         }}
       >
         Add to My Events
@@ -115,7 +115,7 @@ const EventPopup = ({
         className="add-intent-button"
         type="button"
         aria-label="Add to My Hours"
-        onClick={() => store.dispatch(changePopupType('LogHoursForm'))}
+        onClick={() => dispatch(changePopupType('LogHoursForm'))}
       >
         Add to My Hours
       </button>
@@ -144,7 +144,7 @@ const EventPopup = ({
         type="button"
         aria-label="Event is full"
         onClick={() => {
-          store.dispatch(setShowPopup(false));
+          dispatch(setShowPopup(false));
         }}
       >
         Event is Full
@@ -185,7 +185,7 @@ const EventPopup = ({
         className="exit-button"
         type="button"
         aria-label="close"
-        onClick={() => { store.dispatch(setShowPopup(false)); }}
+        onClick={() => { dispatch(setShowPopup(false)); }}
       >
         <img className="x-icon" src={cross} alt="close" />
       </button>

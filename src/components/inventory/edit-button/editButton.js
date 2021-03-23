@@ -1,19 +1,19 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import store from '../redux/store';
 import { startEdits, saveEdits, cancelEdits } from '../redux/actions';
 import { getEditing } from '../redux/selectors';
 import './editButton.css';
 
 const EditButton = () => {
+  const dispatch = useDispatch();
   const handleClick = (e) => {
     if (e.target.id === 'start-edit') {
-      store.dispatch(startEdits());
+      dispatch(startEdits());
     } else if (e.target.id === 'save-edit') {
-      store.dispatch(saveEdits());
+      dispatch(saveEdits());
     } else if (e.target.id === 'cancel-edit') {
-      store.dispatch(cancelEdits());
+      dispatch(cancelEdits());
     }
   };
 

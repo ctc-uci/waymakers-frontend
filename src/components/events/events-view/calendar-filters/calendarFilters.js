@@ -1,11 +1,10 @@
 import React from 'react';
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import DayPicker from './daypicker';
 import './calendarFilters.css';
 
-import store from '../../redux/store';
 import { changeMonth, changeYear, changeView } from '../../redux/actions';
 
 import {
@@ -14,9 +13,10 @@ import {
 } from '../../redux/selectors';
 
 const CalendarFilters = () => {
+  const dispatch = useDispatch();
   const getCurrentYear = () => new Date().getFullYear();
   const setView = (newView) => {
-    store.dispatch(changeView(newView));
+    dispatch(changeView(newView));
   };
   return (
     <div>
@@ -33,7 +33,7 @@ const CalendarFilters = () => {
           value={useSelector(getMonth) - 1}
           onChange={(newMonth) => {
             if (newMonth !== '') {
-              store.dispatch(changeMonth(parseInt(newMonth, 10) + 1));
+              dispatch(changeMonth(parseInt(newMonth, 10) + 1));
             }
           }}
           id="month"
@@ -47,7 +47,7 @@ const CalendarFilters = () => {
           value={useSelector(getYear)}
           onChange={(newYear) => {
             if (newYear !== '') {
-              store.dispatch(changeYear(parseInt(newYear, 10)));
+              dispatch(changeYear(parseInt(newYear, 10)));
             }
           }}
           id="year"

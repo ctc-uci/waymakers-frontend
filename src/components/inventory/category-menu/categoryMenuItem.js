@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import store from '../redux/store';
 import { deleteCategory, undeleteCategory, changeSelectedCategory } from '../redux/actions';
 import { getEditing } from '../redux/selectors';
 import './categoryMenu.css';
 
 // Returns a button for a single category
 const CategoryMenuItem = (props) => {
+  const dispatch = useDispatch();
   // Keeps track of whether or not a category has been deleted
   const [deleted, setDeleted] = useState(false);
 
@@ -26,16 +26,16 @@ const CategoryMenuItem = (props) => {
   const selCategory = () => {
     const selectedCategoryID = (props.category.label === 'All Categories') ? null : props.category.id;
     const selectedCategoryLabel = (props.category.label === 'All Categories') ? '' : props.category.label;
-    store.dispatch(changeSelectedCategory(selectedCategoryID, selectedCategoryLabel));
+    dispatch(changeSelectedCategory(selectedCategoryID, selectedCategoryLabel));
   };
   // Adds category ID to list of category IDs to be deleted if delete is toggled on;
   // otherwise, reverts the category delete both in the component and in the Redux store
   const toggleDelCategory = () => {
     if (!deleted) {
-      store.dispatch(deleteCategory(props.category.id));
+      dispatch(deleteCategory(props.category.id));
       setDeleted(true);
     } else {
-      store.dispatch(undeleteCategory(props.category.id));
+      dispatch(undeleteCategory(props.category.id));
       setDeleted(false);
     }
   };
