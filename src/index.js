@@ -11,6 +11,7 @@ import LogIn from './components/login/login';
 import ManageUsers from './components/admin/manageusers/manageusers';
 import ManageDB from './components/admin/managedb/managedb';
 import QualificationInfo from './components/admin/qualificationinfo/QualificationInfo';
+import EditQualifications from './components/admin/qualifications/editQualifications';
 // import Profile from './components/profile/profile';
 import viewProfile from './templates/viewProfile';
 import editProfile from './templates/editProfile';
@@ -45,6 +46,7 @@ ReactDOM.render(
               <ProtectedRoute path="/admin/users" component={ManageUsers} />
               <ProtectedRoute path="/admin/db" component={ManageDB} />
               <ProtectedRoute path="/admin/qualifications" component={QualificationInfo} />
+              <ProtectedRoute path="/admin/editQualifications" component={EditQualifications} />
             </Switch>
 
             <Switch>
