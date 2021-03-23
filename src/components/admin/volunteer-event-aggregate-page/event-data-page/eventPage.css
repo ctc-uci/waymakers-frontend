@@ -1,0 +1,9 @@
+.volunteer-section {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+}
+
+.all-volunteers-table {
+    width: 1000px;
+}

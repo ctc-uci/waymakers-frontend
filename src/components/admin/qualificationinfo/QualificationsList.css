@@ -58,7 +58,7 @@
 #qualifications-list .qualifications-table thead {
   font-size: 20px;
   align-self: center;
-  background-color: #336473;
+  background-color: var(--color-dark-teal);
   color: white;
 }
 #qualifications-list .qualifications-table tbody {

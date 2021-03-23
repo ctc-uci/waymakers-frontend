@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 
-import store from '../redux/store';
-import { deleteItem, editItem } from '../redux/actions';
+import { deleteItem, editItem, undeleteItem } from '../redux/actions';
 import { getEditing, getCategories } from '../redux/selectors';
+
+import './editableItem.css';
 
 const getCategoryLabelFromID = (id) => {
   const category = useSelector(getCategories).find((cat) => cat.id === id);
@@ -12,12 +13,14 @@ const getCategoryLabelFromID = (id) => {
 
 // Converts table rows into forms when in Edit mode
 const EditableItem = (props) => {
+  const dispatch = useDispatch();
   // State variable for all editable fields
+  const originalCategory = props.item.category_id;
   const [fieldState, setFieldState] = useState({
     name: props.item.name,
     quantity: props.item.quantity,
     needed: props.item.needed,
-    category: props.item.category_id,
+    category: originalCategory,
   });
 
   // Used to update css class of unsaved edits
@@ -29,15 +32,18 @@ const EditableItem = (props) => {
   // Appends to edits object at every change
   // This could probably be changed to only update once
   const updateEdits = () => {
-    store.dispatch(editItem(props.item.id, fieldState));
+    dispatch(editItem(props.item.id, fieldState));
     setModified(false);
   };
 
   // Adds item id to list of items to be deleted
   const deleteHandler = () => {
     if (!deleted) {
-      store.dispatch(deleteItem(props.item.id));
+      dispatch(deleteItem(props.item.id));
       setDeleted(true);
+    } else {
+      dispatch(undeleteItem(props.item.id));
+      setDeleted(false);
     }
   };
 
@@ -49,6 +55,30 @@ const EditableItem = (props) => {
     setFieldState((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  // Decrement field value
+
+  const incrementField = (e) => {
+    setModified(true);
+    const { name } = e.target;
+
+    setFieldState((prevState) => ({
+      ...prevState,
+      [name]: Number(prevState[name]) + 1,
+    }));
+  };
+
+  // Increment field value
+
+  const decrementField = (e) => {
+    setModified(true);
+    const { name } = e.target;
+
+    setFieldState((prevState) => ({
+      ...prevState,
+      [name]: prevState[name] - 1 >= 0 ? Number(prevState[name] - 1) : Number(prevState[name]),
     }));
   };
 
@@ -80,11 +110,11 @@ const EditableItem = (props) => {
 
   // Static row to display when not in Edit mode
   const staticItem = (
-    <tr>
-      <td>{fieldState.name}</td>
-      <td>{fieldState.quantity}</td>
-      <td>{fieldState.needed}</td>
-      <td>{getCategoryLabelFromID(fieldState.category)}</td>
+    <tr className="static-table-row">
+      <td className="static-item-name">{fieldState.name}</td>
+      <td className="static-item-attribute">{fieldState.quantity}</td>
+      <td className="static-item-attribute">{fieldState.needed}</td>
+      <td className="static-item-attribute">{getCategoryLabelFromID(fieldState.category)}</td>
     </tr>
   );
 
@@ -92,60 +122,140 @@ const EditableItem = (props) => {
   // column has an input that uses that form
   const formItem = (
     // CSS class to indicate that value has been changed
-    // TODO: Add a separate css class for deleted items
-    <tr className={modified ? 'modified' : null}>
-      <td>
-        <form id={props.item.id} />
-        <input
-          name="name"
-          type="text"
-          className="form-control"
-          value={fieldState.name}
-          form={props.item.id}
-          onChange={handleChange}
-        />
+    <tr className="edit-table-row">
+      <td className="item-edit-name">
+        {deleted ? <strike className="deleted-item--name">{fieldState.name}</strike> : (
+          <input
+            name="name"
+            type="text"
+            className="table-input-name"
+            value={fieldState.name}
+            form={props.item.id}
+            onChange={handleChange}
+          />
+        )}
+      </td>
+      <td className="item-qty-field">
+        <div className="change-quantity-wrapper">
+          {deleted ? <strike className="deleted-item">{fieldState.quantity}</strike> : (
+            <div className="change-quantity-wrapper">
+              <div className="minus-button-wrapper">
+                <button
+                  type="button"
+                  name="quantity"
+                  aria-label="minus"
+                  className="item-edit-minus-button"
+                  form={props.item.id}
+                  onClick={decrementField}
+                >
+                  -
+                </button>
+              </div>
+              <input
+                name="quantity"
+                type="number"
+                className="table-input"
+                value={fieldState.quantity}
+                form={props.item.id}
+                onChange={handleChange}
+              />
+              <div className="plus-button-wrapper">
+                <button
+                  type="button"
+                  name="quantity"
+                  aria-label="plus"
+                  className="item-edit-plus-button"
+                  form={props.item.id}
+                  onClick={incrementField}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </td>
+      <td className="item-needed-field">
+        <div className="change-quantity-wrapper">
+          {deleted ? <strike className="deleted-item">{fieldState.needed}</strike> : (
+            <div className="change-quantity-wrapper">
+              <div className="minus-button-wrapper">
+                <button
+                  type="button"
+                  name="needed"
+                  aria-label="-"
+                  className="item-edit-minus-button"
+                  form={props.item.id}
+                  onClick={decrementField}
+                >
+                  -
+                </button>
+              </div>
+              <input
+                name="needed"
+                type="number"
+                className="table-input"
+                value={fieldState.needed}
+                form={props.item.id}
+                onChange={handleChange}
+              />
+              <div className="plus-button-wrapper">
+                <button
+                  type="button"
+                  name="needed"
+                  aria-label="+"
+                  className="item-edit-plus-button"
+                  form={props.item.id}
+                  onClick={incrementField}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </td>
+      <td className="item-cat-field">
+        <div className="change-quantity-wrapper">
+          {deleted
+            ? (
+              // Calling getCategory to ensure hook is always called so there is no rendering issue
+              <strike className="deleted-item">
+                {getCategoryLabelFromID(originalCategory)}
+              </strike>
+            )
+            : (
+              <div className="change-quantity-wrapper">
+                <select
+                  id="categories"
+                  name="category"
+                  className="category-dropdown"
+                  value={fieldState.category}
+                  form={props.item.id}
+                  onChange={handleChange}
+                >
+                  <option value="">No category</option>
+                  {/* Creating dropdown menu items from categories list */}
+                  {/* category.label is displayed, but the value of the option will be the ID */}
+                  {useSelector(getCategories)
+                    .filter((cat) => cat.id > 0)
+                    .map((cat) => (
+                      <option key={props.item.id} value={cat.id}>{cat.label}</option>
+                    ))}
+                </select>
+              </div>
+            )}
+        </div>
       </td>
       <td>
-        <input
-          name="quantity"
-          type="number"
-          className="form-control"
-          value={fieldState.quantity}
-          form={props.item.id}
-          onChange={handleChange}
-        />
-      </td>
-      <td>
-        <input
-          name="needed"
-          type="number"
-          className="form-control"
-          value={fieldState.needed}
-          form={props.item.id}
-          onChange={handleChange}
-        />
-      </td>
-      <td>
-        <select
-          id="categories"
-          name="category"
-          className="form-control"
-          value={fieldState.category}
-          form={props.item.id}
-          onChange={handleChange}
-        >
-          <option value="">No category</option>
-          {/* Creating dropdown menu items from categories list */}
-          {/* category.label is displayed, but the value of the option will be the ID */}
-          {useSelector(getCategories)
-            .filter((cat) => cat.id > 0)
-            .map((cat) => (
-              <option key={props.item.id} value={cat.id}>{cat.label}</option>
-            ))}
-        </select>
-      </td>
-      <td>
-        <button type="button" className="btn btn-outline-danger" onClick={deleteHandler}>Delete</button>
+        <div id="delete-wrapper">
+          <button
+            type="button"
+            aria-label="delete"
+            className={deleted ? 'table-item-undelete-button' : 'table-item-delete-button'}
+            onClick={deleteHandler}
+          />
+        </div>
       </td>
     </tr>
   );

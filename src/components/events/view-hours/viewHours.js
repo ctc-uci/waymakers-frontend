@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { withCookies, Cookies } from 'react-cookie';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import HoursBox from './hoursBox';
 
@@ -7,12 +9,13 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-const ViewHours = () => {
+const ViewHours = ({ cookies }) => {
   const [logs, setLogs] = useState([]);
 
   async function getLogs() {
     try {
-      let allLogs = await instance.get('logs/');
+      let allLogs = await instance.get(`logs/${cookies.cookies.userId}`);
+      console.log(allLogs.data);
       if (allLogs.status === 200) {
         allLogs = allLogs.data;
       }
@@ -29,9 +32,13 @@ const ViewHours = () => {
 
   return (
     <div>
-      <HoursBox events={logs} />
+      <HoursBox logs={logs} />
     </div>
   );
 };
 
-export default ViewHours;
+ViewHours.propTypes = {
+  cookies: PropTypes.instanceOf(Cookies).isRequired,
+};
+
+export default withCookies(ViewHours);

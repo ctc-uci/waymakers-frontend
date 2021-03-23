@@ -1,0 +1,53 @@
+@import '../../common/vars.css';
+
+.inventory-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.inventory {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.inventory-top {
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+}
+
+.category-container {
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+}
+
+.table-header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 71%;
+    padding-left: 14%;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 50px;    
+}
+
+.current-category-label {
+    align-self: flex-start;
+    font-family: var(font-family);
+    color: var(--text-color-dark);
+    font-weight: 600;
+    font-size: 40px;
+}

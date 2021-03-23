@@ -15,3 +15,10 @@ const rootReducer = combineReducers({
 });
 
 export default rootReducer;
+
+export {
+  itemsReducer,
+  categoriesReducer,
+  divisionsReducer,
+  editsReducer,
+};

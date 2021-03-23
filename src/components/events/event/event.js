@@ -10,7 +10,7 @@ const Event = ({ event, onEditEventClick }) => {
 
   return (
     <div className="eventContainer">
-      <h3>{event.title}</h3>
+      <h4>{event.title}</h4>
       <p>{`Start: ${startTime}`}</p>
       <p>{`End: ${endTime}`}</p>
       <p>{`Location: ${event.location}`}</p>

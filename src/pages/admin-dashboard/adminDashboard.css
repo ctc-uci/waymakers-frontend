@@ -1,0 +1,19 @@
+#inventory-events-container {
+    display: flex;
+    flex: 1 1 0px;
+    max-width: 500px;
+    flex-direction: column;
+}
+
+#analytics-content {
+    background-color: #c4c4c46b;
+    border: none;
+    padding: 20px;
+    margin: 10px;
+}
+
+#admin-dashboard-container {
+    display: flex;
+    flex: 1 1 0px;
+    justify-content: space-between;
+}

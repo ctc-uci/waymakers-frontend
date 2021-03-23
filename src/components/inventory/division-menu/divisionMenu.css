@@ -1,0 +1,82 @@
+@import '../../../common/vars.css';
+
+.division-menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding-bottom: 5px;
+    width: 550px;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    color: var(--text-color-dark);
+}
+
+.division-menu--top {
+    width: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 54px;
+    line-height: 80px;
+}
+
+.division-menu--open {
+    margin-left: 20px;
+    margin-bottom: 5px;
+    border: solid var(--text-color-dark);
+    background-color: transparent;
+    border-width: 0 4px 4px 0;
+    height: 18px;
+    width: 18px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    cursor: pointer;
+  }
+  
+  .division-menu--close {
+    margin-left: 20px;
+    margin-top: 15px;
+    border: solid var(--text-color-dark);
+    background-color: transparent;
+    border-width: 0 4px 4px 0;
+    height: 18px;
+    width: 18px;
+    flex-direction: row;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    cursor: pointer;
+  }
+
+.division-menu--list {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
+    width: 360px;
+    z-index: 2;
+    border: none;
+    outline: none;
+    box-shadow: 2px 2px 6px;
+    background-color: solid #FFFF;
+}
+
+.division-menu--list-item {
+    display: flex;
+    align-items: flex-start;
+    border: none;
+    background-color: #FFFF;
+    color: var(--text-color-dark);
+    font-weight: 700;
+    font-size: 32px;
+    width: inherit;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+}
+
+.division-menu--list-item:focus {
+    text-decoration: underline;
+}

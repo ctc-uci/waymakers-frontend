@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 
 import './hoursBox.css';
 
-const HoursBox = ({ events }) => {
-  const getRows = (event) => (
+const HoursBox = ({ logs }) => {
+  const getRows = (log) => (
     <tr>
-      <td>{event.event_name}</td>
-      <td>{event.event_location}</td>
-      <td>{new Date(event.log_start).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}</td>
-      <td>{new Date(event.log_end).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}</td>
-      <td>{event.total_hours}</td>
+      <td>{log.title}</td>
+      <td>{log.location}</td>
+      <td>{new Date(log.logStart).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}</td>
+      <td>{new Date(log.logEnd).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })}</td>
+      <td>{log.totalHours}</td>
     </tr>
   );
 
@@ -56,14 +56,14 @@ const HoursBox = ({ events }) => {
           <th>End Date and Time</th>
           <th>Total hours</th>
         </tr>
-        { events.map((event) => getRows(event)) }
+        { logs.map((log) => getRows(log)) }
       </table>
     </div>
   );
 };
 
 HoursBox.propTypes = {
-  events: PropTypes.arrayOf(Object).isRequired,
+  logs: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default HoursBox;

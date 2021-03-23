@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Card, Button, Alert,
@@ -6,18 +6,21 @@ import {
 
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import EditEvents from '../events/edit-events/editEvents';
-import InventoryComponent from './inventory-component/inventoryComponent';
-import auth from '../firebase/firebase';
+import GoogleAuthService from '../../services/firebase/firebase';
+import AdminDashboard from '../../pages/admin-dashboard/adminDashboard';
+import VolunteerDashboard from '../../pages/volunteer-dashboard/volunteerDashboard';
+
+const axios = require('axios');
 
 const Dashboard = (props) => {
   const { cookies } = props;
   const history = useHistory();
   const [error, setError] = useState('');
+  const [userPermission, setUserPermission] = useState('');
 
   async function logout() {
     try {
-      await auth.signOut();
+      await GoogleAuthService.auth.signOut();
       history.push('/login');
       // Removing session cookie
       cookies.remove('accessToken');
@@ -27,6 +30,38 @@ const Dashboard = (props) => {
       setError(err.message);
     }
   }
+
+  // Get users permission level
+  const getPermissions = async () => {
+    // Getting user ID from cookies
+    const userID = cookies.get('userId');
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`,
+        { withCredentials: true },
+      );
+      setUserPermission(response.data);
+    } catch (err) {
+      // eslint-disable-next-line
+      console.error(err);
+    }
+  };
+
+  // Get users permissions on page load
+  useEffect(() => {
+    getPermissions();
+  }, []);
+
+  const renderDashboard = () => {
+    if (!userPermission.permissions) {
+      return <h3>Error - No Permissions</h3>;
+    }
+    switch (userPermission.permissions.permissions) {
+      case 'Admin': return <AdminDashboard />;
+      case 'Volunteer': return <VolunteerDashboard />;
+      default: return <h3>Error - No Permissions</h3>;
+    }
+  };
 
   return (
     <div>
@@ -41,10 +76,7 @@ const Dashboard = (props) => {
           </Card>
         </div>
       </div>
-      <div>
-        <EditEvents />
-        <InventoryComponent />
-      </div>
+      {renderDashboard()}
     </div>
   );
 };

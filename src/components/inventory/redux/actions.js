@@ -1,6 +1,5 @@
 // Functions defined here create and dispatch action
 // objects that are used to modify the state
-import store from './store';
 
 // Creating an instance of axios with custom config
 const axios = require('axios');
@@ -11,16 +10,14 @@ const instance = axios.create({
 });
 
 // Fetching items from server
-export const fetchItems = () => async (dispatch) => {
+export const fetchItems = () => async (dispatch, getState) => {
   const url = 'inventory';
-  // Getting filter values from store -
-  // may be possible to do this with a selector
   const paramsQuery = {
     params: {
-      division: store.getState().items.selectedDivisionID,
-      warehouse: store.getState().items.selectedWarehouseID,
-      category: store.getState().items.selectedCategoryID,
-      search: store.getState().items.searchTerm,
+      division: getState().items.selectedDivisionID,
+      warehouse: getState().items.selectedWarehouseID,
+      category: getState().items.selectedCategoryID,
+      search: getState().items.searchTerm,
     },
   };
 
@@ -119,6 +116,12 @@ export const deleteItem = (id) => ({
   payload: { id },
 });
 
+// Creates a edits/revertItemDelete action
+export const undeleteItem = (id) => ({
+  type: 'edits/revertItemDelete',
+  payload: { id },
+});
+
 // Creates a edits/addItemEdit action
 // newValues must be an object
 export const editItem = (id, newValues) => ({
@@ -140,6 +143,11 @@ export const addCategory = (newCategory) => async (dispatch) => {
 // Creates a edits/addItemDelete action
 export const deleteCategory = (id) => ({
   type: 'edits/addCategoryDelete',
+  payload: { id },
+});
+
+export const undeleteCategory = (id) => ({
+  type: 'edits/revertCategoryDelete',
   payload: { id },
 });
 
@@ -177,12 +185,12 @@ export const cancelEdits = () => ({
 });
 
 // Creates a edits/saveEdits action
-export const saveEdits = () => async (dispatch) => {
+export const saveEdits = () => async (dispatch, getState) => {
   const editPromises = [];
   const deletePromises = [];
 
   // Populating edited list with PUT requests for each edited item
-  const editedItems = { ...store.getState().edits.editedItems };
+  const editedItems = { ...getState().edits.editedItems };
   Object.keys(editedItems).forEach(async (id) => {
     editPromises.push(
       instance.put(`inventory/${id}`, editedItems[id]),
@@ -190,7 +198,7 @@ export const saveEdits = () => async (dispatch) => {
   });
 
   // Populating list with DELETE requests for each deleted item
-  const deletedItems = [...store.getState().edits.deletedItems];
+  const deletedItems = [...getState().edits.deletedItems];
   deletedItems.forEach(async (id) => {
     deletePromises.push(
       instance.delete(`inventory/${id}`),
@@ -198,7 +206,7 @@ export const saveEdits = () => async (dispatch) => {
   });
 
   // Populating list with DELETE requests for each deleted category
-  const deletedCategories = [...store.getState().edits.deletedCategories];
+  const deletedCategories = [...getState().edits.deletedCategories];
   deletedCategories.forEach(async (id) => {
     deletePromises.push(
       instance.delete(`category/${id}`),

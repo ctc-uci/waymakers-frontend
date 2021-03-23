@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import firebase from 'firebase/app';
 import './login.css';
 import {
   Card, Button, Form, Alert,
@@ -7,7 +6,7 @@ import {
 import { Link, useHistory } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import auth from '../firebase/firebase';
+import GoogleAuthService from '../../services/firebase/firebase';
 
 const LogIn = (props) => {
   const { cookies } = props;
@@ -27,9 +26,9 @@ const LogIn = (props) => {
 
   async function login() {
     try {
-      const user = await auth.signInWithEmailAndPassword(email, password);
+      const user = await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
 
-      const idToken = await firebase.auth().currentUser.getIdToken();
+      const idToken = await GoogleAuthService.auth.currentUser.getIdToken();
       // console.log(`idToken: ${JSON.stringify(idToken)}`);
       console.log(`idToken: ${idToken}`);
 
@@ -51,9 +50,9 @@ const LogIn = (props) => {
 
   async function loginWithGoogle() {
     try {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      await auth.signInWithRedirect(provider);
-      const result = await auth.getRedirectResult();
+      const provider = new GoogleAuthService.firebase.auth.GoogleAuthProvider();
+      await GoogleAuthService.auth.signInWithRedirect(provider);
+      const result = await GoogleAuthService.firebase.getRedirectResult();
       if (result.credential) {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // const token = result.credential.accessToken;

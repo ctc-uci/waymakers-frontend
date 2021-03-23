@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
-import store from '../redux/store';
 import {
   addItem,
   addCategory,
@@ -16,6 +15,7 @@ const axios = require('axios');
 
 // Add item menu here
 const AddItem = (prop) => {
+  const dispatch = useDispatch();
   // name of item
   const [name, setName] = useState('');
   // quantity of item currently in stock
@@ -57,27 +57,27 @@ const AddItem = (prop) => {
 
   const onSubmitAddItem = () => {
     // Create an add item action
-    store.dispatch(addItem({
+    dispatch(addItem({
       name, quantity, needed, warehouse, category,
     }));
   };
 
   const onSubmitAddCategory = () => {
     // Create an add category action
-    store.dispatch(addCategory({
+    dispatch(addCategory({
       label,
     }));
   };
   const onSubmitAddDivision = () => {
     // Create an add division action
-    store.dispatch(addDivision({
+    dispatch(addDivision({
       divisionLabel,
     }));
   };
 
   const onSubmitAddWarehouse = () => {
     // Create an add warehouse action
-    store.dispatch(addWarehouse({
+    dispatch(addWarehouse({
       warehouseLabel: newWarehouse,
       division: newWarehouseDivision,
     }));

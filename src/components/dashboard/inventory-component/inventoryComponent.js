@@ -46,7 +46,7 @@ const InventoryComponent = () => {
   }, []);
 
   return (
-    <div style={{ outline: '1px solid black', display: 'inline-block' }}>
+    <div>
       <h3>Inventory</h3>
       <div id="top-item-box">
         {topItems.map((item) => (

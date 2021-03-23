@@ -2,9 +2,9 @@
 import React from 'react';
 import './Contact.css';
 
-import emailPic from '../../../images/email.png';
-import phone from '../../../images/phone.png';
-import house from '../../../images/house.png';
+import emailPic from '../../../assets/email.png';
+import phone from '../../../assets/phone.png';
+import house from '../../../assets/house.png';
 
 function Contact({ email, number, address }) {
   return (

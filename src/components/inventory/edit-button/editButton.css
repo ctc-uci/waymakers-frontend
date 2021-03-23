@@ -1,0 +1,22 @@
+@import '../../../common/vars.css';
+
+.edit-button {
+    border: none;
+    right: 20%;
+    top: 23%;
+    background: none;
+    text-decoration: underline;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    font-size: larger;
+    color: var(--text-color-dark);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.edit-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 115px;
+    margin-left: 1150px;
+    position: absolute;
+}

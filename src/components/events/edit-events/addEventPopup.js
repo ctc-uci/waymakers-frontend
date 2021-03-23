@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
-
 import '../event-popup/eventPopup.css';
 
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
+import { connect } from 'react-redux';
+import { addEvent } from '../redux/actions';
 
-const AddEventPopup = ({ onClose }) => {
+// import axios from 'axios';
+// const instance = axios.create({
+//   baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
+//   withCredentials: true,
+// });
+
+const AddEventPopup = ({ onClose, addNewEvent }) => {
   const [title, setTitle] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [division, setDivision] = useState('Volunteer');
+  const [eventType, setEventType] = useState('Volunteer');
+  const [eventLimit, setEventLimit] = useState(0);
+  const [division, setDivision] = useState('Crisis-Response-Team');
 
   // TODO: Import DateTime picker component since datetimelocal not on safari
 
@@ -26,28 +30,17 @@ const AddEventPopup = ({ onClose }) => {
     e.preventDefault();
     const newEvent = {
       eventName: title,
-      division,
+      eventType,
       eventLocation: location,
       eventDescription: description,
+      division: division.replace(/-/g, ' '),
       startTime: new Date(startTime),
       endTime: new Date(endTime),
+      eventLimit,
       isAllDay: false, // default to false right now
     };
-
-    try {
-      const addedEvent = await instance.post('events/add', newEvent);
-      if (addedEvent.status === 200 && addedEvent.data) {
-        // eslint-disable-next-line
-        console.log('Event added successfully');
-      } else {
-        // eslint-disable-next-line
-        console.log('Failed to create event');
-      }
-    } catch (error) {
-      // eslint-disable-next-line
-      console.log('Error while trying to add event ' + error);
-    }
-    // close the popup
+    console.log(newEvent);
+    addNewEvent(newEvent);
     onClose();
   };
 
@@ -59,15 +52,36 @@ const AddEventPopup = ({ onClose }) => {
           Title:
           <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
         </label>
+
         <br />
+
         <label htmlFor="event-type">
           Event Type:
-          <select id="event-type" name="division" onChange={(e) => setDivision(e.target.value)}>
-            <option value="volunteer">Volunteer</option>
-            <option value="outreach">Outreach</option>
+          <br />
+          <select id="event-type" name="eventType" onChange={(e) => setEventType(e.target.value)}>
+            <option value="Volunteer">Volunteer</option>
+            <option value="Outreach">Outreach</option>
           </select>
         </label>
+
         <br />
+
+        <label htmlFor="event-limit">
+          Limit:
+          <br />
+          <input id="event-limit" type="number" value={eventLimit} onChange={(e) => setEventLimit(e.target.value)} required />
+        </label>
+
+        <label htmlFor="division">
+          Division:
+          <br />
+          <select id="division" name="division" value={division} onChange={(e) => setDivision(e.target.value)}>
+            <option value="Crisis-Response-Team">Crisis Response Team</option>
+            <option value="Gang-Services">Gang Services</option>
+            <option value="Human-Trafficking">Human Trafficking</option>
+          </select>
+        </label>
+
         <div>Start Time</div>
         <Datetime
           initialValue={new Date(startTime)}
@@ -103,6 +117,10 @@ const AddEventPopup = ({ onClose }) => {
 
 AddEventPopup.propTypes = {
   onClose: PropTypes.func.isRequired,
+  addNewEvent: PropTypes.func.isRequired,
 };
 
-export default AddEventPopup;
+// export default AddEventPopup;
+export default connect(null, {
+  addNewEvent: addEvent,
+})(AddEventPopup);
