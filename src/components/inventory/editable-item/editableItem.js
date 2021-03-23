@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 
-import store from '../redux/store';
 import { deleteItem, editItem, undeleteItem } from '../redux/actions';
 import { getEditing, getCategories } from '../redux/selectors';
 
@@ -14,6 +13,7 @@ const getCategoryLabelFromID = (id) => {
 
 // Converts table rows into forms when in Edit mode
 const EditableItem = (props) => {
+  const dispatch = useDispatch();
   // State variable for all editable fields
   const originalCategory = props.item.category_id;
   const [fieldState, setFieldState] = useState({
@@ -32,17 +32,17 @@ const EditableItem = (props) => {
   // Appends to edits object at every change
   // This could probably be changed to only update once
   const updateEdits = () => {
-    store.dispatch(editItem(props.item.id, fieldState));
+    dispatch(editItem(props.item.id, fieldState));
     setModified(false);
   };
 
   // Adds item id to list of items to be deleted
   const deleteHandler = () => {
     if (!deleted) {
-      store.dispatch(deleteItem(props.item.id));
+      dispatch(deleteItem(props.item.id));
       setDeleted(true);
     } else {
-      store.dispatch(undeleteItem(props.item.id));
+      dispatch(undeleteItem(props.item.id));
       setDeleted(false);
     }
   };

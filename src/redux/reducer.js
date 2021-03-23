@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
-import itemsReducer from './itemsReducer';
-import categoriesReducer from './categoriesReducer';
-import divisionsReducer from './divisionsReducer';
-import editsReducer from './editsReducer';
+
+import {
+  itemsReducer, categoriesReducer, divisionsReducer, editsReducer,
+} from '../components/inventory/redux/reducers';
+
+import {
+  eventsReducer,
+} from '../components/events/redux/reducers';
 
 // Combines all reducers into a single "rootReducer"
 // used to create the store
@@ -12,13 +16,7 @@ const rootReducer = combineReducers({
   edits: editsReducer,
   categories: categoriesReducer,
   divisions: divisionsReducer,
+  events: eventsReducer,
 });
 
 export default rootReducer;
-
-export {
-  itemsReducer,
-  categoriesReducer,
-  divisionsReducer,
-  editsReducer,
-};

@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, connect } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 
 import EventPopup from '../../event-popup/eventPopup';
 import HoursPopup from '../../hours-popup/hoursPopup';
 import DialogueBox from '../../../admin/dialogue-box/dialogueBox';
 import EditEventPopup from '../../edit-events/editEventPopup';
 
-import store from '../../redux/store';
 import {
   getShowPopup,
   getSelectedEvent,
@@ -19,8 +18,10 @@ import { setShowPopup } from '../../redux/actions';
 const CalendarPopup = ({
   path,
 }) => {
+  const dispatch = useDispatch();
+
   const onClosePopup = () => {
-    store.dispatch(setShowPopup(false));
+    dispatch(setShowPopup(false));
   };
 
   // Volunteer Dashboard => AddPopup/EventPopup

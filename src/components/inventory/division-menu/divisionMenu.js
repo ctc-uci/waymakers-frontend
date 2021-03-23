@@ -1,14 +1,14 @@
 import React, { useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import WarehouseMenu from './warehouseMenu';
 import handleOutsideClick from '../../../common/handleOutsideClick';
-import store from '../redux/store';
 import { changeSelectedDivision } from '../redux/actions';
 import { getDivisions, getSelectedDivisionID, getWarehouses } from '../redux/selectors';
 
 import './divisionMenu.css';
 
 const DivisionMenu = (prop) => {
+  const dispatch = useDispatch();
   const [currentDivision, setCurrentDivision] = useState('All Divisions');
   const [open, setOpen] = useState(false);
   const ref = useRef();
@@ -27,7 +27,7 @@ const DivisionMenu = (prop) => {
   };
 
   const handleDivisionClick = (e, divName) => {
-    store.dispatch(changeSelectedDivision(parseInt(e.target.value, 10)));
+    dispatch(changeSelectedDivision(parseInt(e.target.value, 10)));
     setCurrentDivision(divName);
     setOpen(false);
   };

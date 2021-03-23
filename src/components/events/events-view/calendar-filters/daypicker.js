@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
@@ -7,10 +7,10 @@ import {
   getYear,
 } from '../../redux/selectors';
 
-import store from '../../redux/store';
 import { changeDay } from '../../redux/actions';
 
 const DayPicker = (props) => {
+  const dispatch = useDispatch();
   const getFebDays = () => {
     if (props.year % 4 === 0) {
       if (props.year % 100 === 0 && props.year % 400 !== 0) {
@@ -38,7 +38,7 @@ const DayPicker = (props) => {
 
   const onDayChange = (newDay) => {
     if (newDay !== '') {
-      store.dispatch(changeDay(newDay));
+      dispatch(changeDay(newDay));
     }
   };
 

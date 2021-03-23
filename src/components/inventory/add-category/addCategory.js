@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { connect } from 'react-redux';
-import store from '../redux/store';
+import { connect, useDispatch } from 'react-redux';
 import { addCategory } from '../redux/actions';
 import { getCategories } from '../redux/selectors';
 import './addCategory.css';
 
 Modal.setAppElement('#root');
 const AddCategoryButton = () => {
+  const dispatch = useDispatch();
   const [popup, setPopup] = useState(false);
   const [label, setLabel] = useState('');
 
   const handleOnSubmit = () => {
     // create an add category action
-    store.dispatch(addCategory({
+    dispatch(addCategory({
       label,
     }));
   };
