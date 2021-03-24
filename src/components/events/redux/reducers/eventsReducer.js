@@ -7,6 +7,7 @@ AddEventPopup
 AddMyHoursPopup
 RemoveFromMyEventPopup
 EditEventsPopup
+AddEventForm
 ViewEventInfoPopup
 ModifyEventInfoForm
 CreateEventForm

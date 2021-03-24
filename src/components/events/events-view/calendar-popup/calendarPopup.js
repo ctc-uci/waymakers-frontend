@@ -5,7 +5,7 @@ import { useSelector, useDispatch, connect } from 'react-redux';
 import EventPopup from '../../event-popup/eventPopup';
 import HoursPopup from '../../hours-popup/hoursPopup';
 import DialogueBox from '../../../admin/dialogue-box/dialogueBox';
-import EditEventPopup from '../../edit-events/editEventPopup';
+import EventForm from '../../edit-events/newEventForm';
 
 import {
   getShowPopup,
@@ -16,7 +16,7 @@ import {
 import { setShowPopup } from '../../redux/actions';
 
 const CalendarPopup = ({
-  path,
+  page,
 }) => {
   const dispatch = useDispatch();
 
@@ -32,11 +32,10 @@ const CalendarPopup = ({
     const popupType = useSelector(getPopupType);
     if (useSelector(getShowPopup)) {
       // Event is NOT on the user's calendar
-      switch (path) {
-        case '/volunteer/events':
+      switch (page) {
+        case 'volunteerDashboard':
           // Event is on the user's calendar already
           if (popupType === 'LogHoursForm') {
-            console.log('joe');
             return (
               <HoursPopup
                 onClose={onClosePopup}
@@ -45,23 +44,11 @@ const CalendarPopup = ({
             );
           }
           return <EventPopup event={selectedEvent} />;
-        case '/events':
-        // TODO: Add View Event Info Popup here when it is created
-        // if (popupType === 'EditEventsPopup') {
-          //   return (
-          //     <EditEventPopup
-          //       onClose={onClosePopup}
-          //       event={selectedEvent}
-          //     />
-          //   );
-          // }
+        case 'addModifyDeleteEventsPage':
           return (
-            <EditEventPopup
-              onClose={onClosePopup}
-              event={selectedEvent}
-            />
+            <EventForm />
           );
-        case '/admin/aggregate':
+        case 'aggregatePage':
           return <DialogueBox onClose={onClosePopup} event={selectedEvent} />;
         default: break;
       }
@@ -77,7 +64,7 @@ const CalendarPopup = ({
 };
 
 CalendarPopup.propTypes = {
-  path: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
