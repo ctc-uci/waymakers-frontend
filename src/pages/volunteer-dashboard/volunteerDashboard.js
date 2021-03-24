@@ -1,5 +1,4 @@
 import React from 'react';
-import EditEvents from '../../components/events/edit-events/editEvents';
 
 import './volunteerDashboard.css';
 
@@ -16,7 +15,6 @@ const VolunteerDashboard = () => (
           XX Outreach Hours
         </div>
       </div>
-      <EditEvents />
     </div>
     <div>
       {/* Temporary holder for weekly availability component */}

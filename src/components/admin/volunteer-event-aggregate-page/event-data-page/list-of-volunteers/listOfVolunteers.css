@@ -1,0 +1,58 @@
+.list-of-volunteer  {
+    display: flex;
+    flex-flow: column;
+    color: var(--text-color-dark);
+    width: 70%;
+    height: 100%;
+}
+
+.list-of-volunteer .title {
+    margin: 0;
+    font-family: 'Assistant';
+}
+
+.list-of-volunteer .card{
+    display: flex;
+    flex-flow: column;
+    background: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    /* border: 1px solid black; */
+    border-radius: 5px;
+    width: 100%;   /* TODO: temporary */
+    padding: 24px 16px 24px 16px;
+}
+
+.list-of-volunteer select.sort-by {
+    border-radius: 15px;
+    background: #5D9A64;
+    color: white;
+    text-align: center;
+    padding: 6px 12px 6px 12px;
+    margin-left: 12px;
+    border-width: 0px;
+} 
+
+/* TODO: may want to switch to a react library to have better styling */
+.list-of-volunteer option.sort-by-items {
+    background: white;
+    color: black;
+}
+
+.list-of-volunteer .sort-by-items::hover {
+    background: rgba(93, 154, 100, 0.58);
+}
+
+.list-of-volunteer .sort-by-dropdown {
+    align-self: flex-end;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.list-of-volunteer .total-stats {
+    display: flex;
+    flex: row;
+    justify-content: space-between;
+    font-weight: bold;
+}
