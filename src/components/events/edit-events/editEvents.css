@@ -1,0 +1,52 @@
+.add-event-button
+{
+    font-size: medium;
+    border-radius: 100%;
+    border: none;
+    padding: 5px 10px 5px 10px;
+    opacity: 0.6;
+    transition: 0.3s;
+    outline: none;
+}
+
+.add-event-button:hover,
+.all-events:hover
+{
+    opacity: 1;
+}
+
+.toggle-buttons button
+{
+    border: none;
+    background-color: white;
+    outline: none;
+}
+
+.active
+{
+    text-decoration: underline;
+}
+
+.all-events {
+    font-size: medium;
+    border-radius: 12px;
+    border: none;
+    padding: 10px 20px 10px 20px;
+    opacity: 0.6;
+    transition: 0.3s;
+    outline: none;
+}
+
+#middle-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.top-item-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #c4c4c46b;
+  }

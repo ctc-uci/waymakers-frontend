@@ -1,0 +1,163 @@
+#calendar{
+    align-items: center;
+    margin: auto;
+    padding: 1em;
+    background: white;
+}
+
+/* table {
+    background: white; 
+    border-collapse:collapse;
+} */
+
+/* Change background color of calendar while keeping vertical lines */
+.fc-view-harness.fc-view-harness-active {
+    background-color: var( --color-light-blue);
+}
+
+.fc-scrollgrid {
+    border: none;
+    border-color: white !important;
+    border-collapse: collapse !important;
+}
+
+.fc-timegrid-axis {
+    border-color: white !important;
+}
+
+.fc-col-header-cell {
+    border-color: white !important;
+}
+
+table thead {
+    background: white !important;
+    /* border: 1px solid black !important; */
+}
+
+.fc-timegrid-slot {
+    /* background: red !important; */
+    border: 1px solid white !important;
+}
+
+/* Makes background color light blue (month view)*/
+.fc-daygrid-day-frame {
+    background: var( --color-light-blue) !important;
+}
+
+/* To make the calendar background light blue and horizontal border lines dark blue (week/day view)*/
+.fc-timegrid-slot-lane {
+    /* background: var( --color-light-blue) !important; */
+    border-color: var(--text-color-dark) !important;
+}
+
+.fc-timegrid-slot-minor {
+    border-top: 0 !important;
+}
+
+/* To make the time labels' backgrounds white (week/day view) */
+.fc-timegrid-slot-label-frame{
+    background: white;
+}
+
+/* To make the time labels' backgrounds white (week/day view) */
+.fc-timegrid-slot-label {
+    background: white;
+}
+
+.fc .fc-event-main {
+    padding: 0px;
+}
+
+.fc .fc-event {
+    border-right: 0 !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+}
+
+.fc-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start !important;
+}
+
+/* 'Week of XX-XXXX' label */
+.fc-toolbar-title {
+    color: var(--text-color-dark);
+    font-weight: bold;
+}
+
+/* To add 'week of' */
+.fc-toolbar-title::before {
+    content: "Week of ";
+}
+
+/* Remove today button */
+.fc-today-button {
+    display: none !important;
+}
+
+.fc-toolbar-chunk {
+    width: 100%;
+    display: inline-block !important;
+}
+
+.fc-button-group {
+    margin: 0px !important;
+    width: 100%;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+}
+
+/* Remove FullCalendar.io default button color*/
+.fc-button-group .fc-button {
+    border: 0;
+    background: transparent;
+    outline: none !important;
+}
+
+/* Remove FullCalendar.io default hover effect */
+.fc-button-group .fc-button:hover{
+    background: transparent;
+}
+
+.fc-button-group .fc-button:active {
+    background: transparent !important;
+    border-color: transparent !important;
+    outline: none !important;
+}
+
+.fc-button-group .fc-button:focus {
+    outline: none !important;
+}
+
+/* TODO: Find better way to move this to the end of the div*/
+.fc-button-group .fc-next-button {
+    margin-left: 90% !important;
+}
+
+/* Changes arrow color of the buttons */
+.fc-button-group .fc-button .fc-icon {
+    color: var(--text-color-dark);
+}
+
+.fc-day-today {
+  background-color:inherit !important;
+}
+
+.button{
+    margin: 1%;
+}
+/* .blur{
+    filter: blur(3px);
+} */
+
+.selected{
+    color: lightblue;
+}
+
+.test-headers{
+    /* background: blue; */
+    border: none;
+}
+

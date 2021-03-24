@@ -1,0 +1,7 @@
+.register h1 {
+ background: purple;
+}
+
+.register-container {
+    max-width: 400px;
+}

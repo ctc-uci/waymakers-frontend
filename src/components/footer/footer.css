@@ -1,0 +1,6 @@
+@import '../../common/vars.css';
+
+.footer h1 {
+  color: var(--text-color-light);
+  background: var(--color-dark-blue);
+}

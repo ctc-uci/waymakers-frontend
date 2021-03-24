@@ -1,0 +1,23 @@
+@import '../../common/vars.css';
+
+.header {
+  color: var(--text-color-light);
+  background: var(--color-dark-blue);
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.header .one {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header .two {
+  font-size: 50px;
+}
+
+.header .three {
+  font-size: 100px;
+}

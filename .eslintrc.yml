@@ -1,0 +1,14 @@
+extends:
+    - "airbnb"
+
+rules:
+   react/jsx-filename-extension:
+      - "off"
+   linebreak-style:
+      - "off"
+
+overrides:
+   - files: "handleOutsideClick.js"
+     rules:
+       no-undef: 
+         - "off"
