@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import EditQualificationsRow from './editQualificationsRow';
 import AddQualificationModal from './addQualificationModal';
+import UpdateQualificationModal from './updateQualificationModal';
 
 import './editQualifications.css';
 
@@ -9,6 +10,8 @@ const axios = require('axios');
 const EditQualifications = () => {
   const [qualifications, setQualifications] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
+  const [qual, setQual] = useState();
 
   // Fetching qualifications from the server
   const getQualifications = async () => {
@@ -24,10 +27,28 @@ const EditQualifications = () => {
     }
   };
 
+  const openUpdateModal = (q) => {
+    setUpdateOpen(true);
+    setQual(q);
+  };
+
   // Get qualificationsLists on page load
   useEffect(() => {
     getQualifications();
   }, []);
+
+  const getUpdateModal = () => {
+    if (!qual) {
+      return null;
+    }
+    return (
+      <UpdateQualificationModal
+        isModalOpen={updateOpen}
+        setIsModalOpen={setUpdateOpen}
+        qualificationID={qual.id}
+      />
+    );
+  };
 
   return (
     <div id="edit-qualifications">
@@ -36,9 +57,10 @@ const EditQualifications = () => {
         <button type="button" className="green-button" onClick={() => setModalOpen(true)}>Add Qualification</button>
       </div>
       <AddQualificationModal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
+        isModalOpen={modalOpen}
+        setIsModalOpen={setModalOpen}
       />
+      {getUpdateModal()}
       <div id="table-wrapper">
         <table className="qualifications-table">
           <thead>
@@ -54,8 +76,8 @@ const EditQualifications = () => {
             {Object.values(qualifications)
               .map((qualification) => (
                 <EditQualificationsRow
-                  key={qualification.id}
                   qualification={qualification}
+                  openUpdateModal={openUpdateModal}
                 />
               ))}
           </tbody>

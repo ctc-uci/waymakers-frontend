@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './editQualifications.css';
 
-const EditQualificationsRow = ({ qualification }) => (
+const EditQualificationsRow = ({ qualification, openUpdateModal }) => (
   <tr>
     <td>
       {qualification.volunteer_tier}
@@ -15,7 +15,7 @@ const EditQualificationsRow = ({ qualification }) => (
       {qualification.qualification_description}
     </td>
     <td>
-      <button type="button" className="green-button">Update</button>
+      <button type="button" className="green-button" onClick={() => openUpdateModal(qualification)}>Update</button>
     </td>
     <td>
       <button type="button" className="red-button">Remove</button>
@@ -25,6 +25,7 @@ const EditQualificationsRow = ({ qualification }) => (
 
 EditQualificationsRow.propTypes = {
   qualification: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  openUpdateModal: PropTypes.oneOfType([PropTypes.object]).isRequired,
 };
 
 export default EditQualificationsRow;
