@@ -8,7 +8,6 @@ import './common/ConfigLoader';
 import Test from './.harrison-sandbox/Test';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 // import Layout from './components/layout/layout';
-import Dashboard from './components/dashboard/dashboard';
 import Register from './components/register/register';
 import LogIn from './components/login/login';
 import ManageUsers from './components/admin/manageusers/manageusers';
@@ -28,6 +27,9 @@ import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggr
 import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
 import VolunteerEvents from './components/dashboard/volunteer-events/volunteerEvents';
+import VolunteerDashboard from './components/dashboard/volunteer/volunteerDashboard';
+import AdminDashboard from './components/dashboard/admin/adminDashboard';
+import AdminDashboard2 from './pages/admin-dashboard/adminDashboard';
 import store from './redux/store';
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
@@ -35,23 +37,26 @@ import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Layout /> */}
     <CookiesProvider>
       <Provider store={store}>
         <Router>
           <div className="App">
-            {/* <div className="container"> */}
 
             <Route path="/sandbox" component={Test} />
 
             <Switch>
-              <ProtectedRoute path="/" component={Dashboard} exact />
+              <ProtectedRoute path="/" component={VolunteerDashboard} exact />
+              <ProtectedRoute path="/volunteerDashboard" component={VolunteerDashboard} exact />
+              <ProtectedRoute path="/adminDashboard" component={AdminDashboard} exact />
+              <ProtectedRoute path="/adminDashboard2" component={AdminDashboard2} />
               <Route path="/register" component={Register} />
               <Route path="/login" component={LogIn} />
               {/* <ProtectedRoute path="/profile" component={Profile} /> */}
               <ProtectedRoute path="/profile" component={viewProfile} />
               <ProtectedRoute path="/editProfile" component={editProfile} />
             </Switch>
+            {/* <div className="container"> */}
+            <Route path="/sandbox" component={Test} />
 
             <Switch>
               <ProtectedRoute path="/admin/users" component={ManageUsers} />
@@ -76,7 +81,7 @@ ReactDOM.render(
               <ProtectedRoute path="/events/viewHours" component={viewHours} />
               <ProtectedRoute path="/events" component={Events} />
             </Switch>
-            {/* </div> */}
+
           </div>
         </Router>
       </Provider>

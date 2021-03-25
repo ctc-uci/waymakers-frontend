@@ -39,7 +39,7 @@ const LogIn = (props) => {
       });
 
       // eslint-disable-next-line
-      console.log(user);
+      console.log(user.user.uid);
       history.push('/');
       // Signed in
     } catch (err) {

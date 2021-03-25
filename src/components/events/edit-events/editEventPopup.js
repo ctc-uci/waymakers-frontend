@@ -15,11 +15,11 @@ const EditEventPopup = ({ event, onClose, updateEvent }) => {
   const [title, setTitle] = useState(event.title);
   const [startTime, setStartDate] = useState(new Date(event.start));
   const [endTime, setEndDate] = useState(new Date(event.end));
-  const [location, setLocation] = useState(event.extendedProps.location);
-  const [description, setDescription] = useState(event.extendedProps.description);
-  const [eventType, setEventType] = useState(event.extendedProps.eventType);
-  const [division, setDivision] = useState(event.extendedProps.division.replace(/\s+/g, '-'));
-  const [eventLimit, setEventLimit] = useState(event.extendedProps.eventLimit);
+  const [location, setLocation] = useState(event.location);
+  const [description, setDescription] = useState(event.description);
+  const [eventType, setEventType] = useState(event.eventType);
+  const [division, setDivision] = useState(event.division.replace(/\s+/g, '-'));
+  const [eventLimit, setEventLimit] = useState(event.eventLimit);
 
   const onSubmit = async (e) => {
     e.preventDefault();

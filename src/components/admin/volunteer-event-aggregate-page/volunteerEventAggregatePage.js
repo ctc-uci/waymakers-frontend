@@ -7,7 +7,7 @@ const VolunteerEventAggregatePage = () => {
   return (
     <div className="volunteer-event-aggregatePage">
       <h1 className="title">Select Event to View Data</h1>
-      <EventsView />
+      <EventsView page="aggregatePage" />
     </div>
   );
 };

@@ -58,4 +58,19 @@
 .day-header{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.day-button {
+    background: transparent;
+    box-shadow: 0px 0px 0px transparent;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
+    color: var(--text-color-dark);
+}
+
+#day-view-title{
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--color-dark-blue);
 }

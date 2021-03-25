@@ -10,7 +10,7 @@ const LightModal = ({
   <Modal
     isOpen={isOpen}
     onRequestClose={() => setIsOpen(false)}
-    className="modal"
+    className="light-modal"
     overlayClassName="light-modal-overlay"
     {...prop}
   >

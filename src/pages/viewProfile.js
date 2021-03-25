@@ -11,10 +11,11 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
 import Contact from '../components/profile/contact/Contact';
+import ViewAvailability from '../components/dashboard/availability-component/viewAvailability/viewAvailability';
 
 import profCircle from '../assets/profCircle.png';
 import Qualification from '../components/profile/qualifications/qualifications';
-import Availability from '../components/profile/availability/Availability';
+// import Availability from '../components/profile/availability/Availability';
 import About from '../components/profile/about/About';
 
 const viewProfile = (props) => {
@@ -152,7 +153,8 @@ const viewProfile = (props) => {
           <div className="qualCard">
             <Qualification qualifications={qualificationAll} isEditing={false} />
           </div>
-          <Availability availabilities={availability} startWeek={startWeek} />
+          {/* <Availability availabilities={availability} startWeek={startWeek} /> */}
+          <ViewAvailability availabilities={availability} startWeek={startWeek} />
         </div>
       </div>
     </div>

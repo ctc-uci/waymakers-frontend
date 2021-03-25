@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import { useSelector, connect } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useSelector, connect, useDispatch } from 'react-redux';
+import moment from 'moment';
 
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -12,8 +12,13 @@ import CalendarFilters from './calendar-filters/calendarFilters';
 import EventBlock from './event-block/eventBlock';
 import CalendarPopup from './calendar-popup/calendarPopup';
 import CalendarDayHeader from './calendar-day-header/calendarDayHeader';
+import EventList from '../event-list/eventList';
+import EventLegend from '../../dashboard/event-legend/eventLegend';
+import { filterEventsByView } from '../util';
 
 import {
+  getEvents,
+  getUserEvents,
   getEventsForFullCalendar,
   getUserEventsForFullCalendar,
   getMonth,
@@ -22,141 +27,185 @@ import {
   getView,
 } from '../redux/selectors';
 
-import { fetchEvents, fetchUserEvents } from '../redux/actions';
+import {
+  changeDay,
+  changeMonth,
+  changeYear,
+  fetchEvents,
+  fetchUserEvents,
+} from '../redux/actions';
 
 import './eventsView.css';
 import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
 
 const EventsView = ({
-  getEvents, getUserEvents, cookies, day, year, month, view,
+  loadEvents, loadUserEvents, cookies, day, year, month, view, page,
 }) => {
+  const dispatch = useDispatch();
   const [showMoreEvents, setShowMoreEvents] = useState(true);
   const [showMyEvents, setShowMyEvents] = useState(true);
-  const [showEditPopup, setShowEditPopup] = useState(false);
-  const [confirmAddEvent, setConfirmAddEvent] = useState(false);
-  const [path] = useState(useLocation().pathname);
   const calendarEl = useRef(null);
+  const moreEventsColor = 'var(--text-color-dark)';
+  const myEventsColor = 'var(--color-light-green)';
 
   useEffect(() => {
     (async () => {
-      await getEvents();
-      await getUserEvents(cookies.cookies.userId);
+      await loadEvents();
+      await loadUserEvents(cookies.cookies.userId);
     })();
   }, []);
 
-  // Update calendar
+  // UPDATE CALENDAR USING REDUX
   useEffect(() => {
-    calendarEl.current.getApi().changeView('dayGridMonth', `${year}-${month < 10 ? '0' : ''}${month}-01`);
-    calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
+    if (view !== 'timeGridDay') {
+      calendarEl.current.getApi().changeView(view, `${year}-${month < 10 ? '0' : ''}${month}-01`);
+      calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
+    }
   }, [useSelector(getMonth), useSelector(getYear)]);
 
   useEffect(() => {
-    calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
+    if (view !== 'timeGridDay') {
+      calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
+    }
   }, [useSelector(getDay)]);
 
   useEffect(() => {
-    calendarEl.current.getApi().changeView(view);
+    if (view !== 'timeGridDay') {
+      calendarEl.current.getApi().changeView(view);
+    }
   }, [useSelector(getView)]);
 
-  function renderPopup() {
-    const userEvents = useSelector(getUserEventsForFullCalendar);
-    return (
-      <CalendarPopup
-        userEvents={userEvents}
-        setShowEditPopup={(value) => setShowEditPopup(value)}
-        showEditPopup={showEditPopup}
-        path={path}
-        showMoreEvents={showMoreEvents}
-        confirmAddEvent={confirmAddEvent}
-        setConfirmAddEvent={setConfirmAddEvent}
-      />
-    );
-  }
+  // VIEW HEADER RENDERING FUNCTIONS
+  const updateDate = (newDate) => {
+    dispatch(changeDay(newDate.getDate()));
+    dispatch(changeMonth(newDate.getMonth() + 1));
+    dispatch(changeYear(newDate.getFullYear()));
+  };
 
-  const renderHeader = (dayInfo) => {
-    const goToPrev = () => { calendarEl.current.getApi().prev(); };
-    const goToNext = () => { calendarEl.current.getApi().next(); };
+  const renderWeekMonthHeader = (dayInfo) => {
+    const goToPrev = () => {
+      calendarEl.current.getApi().prev();
+      updateDate(calendarEl.current.getApi().getDate());
+    };
+    const goToNext = () => {
+      calendarEl.current.getApi().next();
+      updateDate(calendarEl.current.getApi().getDate());
+    };
     return <CalendarDayHeader goToPrev={goToPrev} goToNext={goToNext} dayInfo={dayInfo} />;
   };
 
-  function renderEventContent(eventInfo) {
+  const renderDayViewHeader = () => {
+    const currentDate = moment().date(day).month(month - 1).year(year);
+    const goToPrev = () => { updateDate(new Date(currentDate.add(-1, 'days'))); };
+    const goToNext = () => { updateDate(new Date(currentDate.add(1, 'days'))); };
+
+    const currentDateAsDate = new Date(currentDate);
+    const dayInfo = {
+      view: { type: view },
+      text: currentDateAsDate.toLocaleString('en-US', { month: 'long', year: 'numeric', day: 'numeric' }),
+    };
     return (
-      <EventBlock
-        path={path}
-        eventInfo={eventInfo}
-        setConfirmAddEvent={setConfirmAddEvent}
+      <CalendarDayHeader
+        goToPrev={goToPrev}
+        goToNext={goToNext}
+        dayInfo={dayInfo}
       />
     );
-  }
+  };
 
-  // Returns events based on filters, also adds properties for styling
-  const filterEvents = () => {
-    const userEvents = useSelector(getUserEventsForFullCalendar);
-    const allEvents = useSelector(getEventsForFullCalendar);
-    const userEventIds = userEvents.map((event) => event.id);
-    let events;
-    if (showMyEvents && !showMoreEvents) { // Only My Events checked off
-      events = userEvents;
-    } else if (!showMyEvents && showMoreEvents) { // Only More Events checked off
-      events = allEvents.filter((event) => !userEventIds.includes(event.id));
-    } else { // Both My Events and More Events checked
-      events = allEvents;
-    }
+  const renderCheckboxes = () => (
+    <EventCheckBoxes
+      showMyEvents={showMyEvents}
+      showMoreEvents={showMoreEvents}
+      onMoreClick={(value) => setShowMoreEvents(value)}
+      onMyClick={(value) => setShowMyEvents(value)}
+    />
+  );
 
+  // EVENT FILTERING FUNCTIONS
+  function colorEvents(userEventIds, events) {
     // Add properties to render styled event blocks
-    events = events.map((event) => {
+    return events.map((event) => {
       const newEvent = event;
       newEvent.textColor = 'var(--text-color-light)';
       newEvent.eventBorderColor = 'transparent';
 
-      if (path === '/volunteer/events' && userEventIds.includes(newEvent.id)) {
-        newEvent.backgroundColor = 'var(--color-light-green)';
-        newEvent.borderColor = 'var(--color-light-green)';
+      if (page === 'volunteerDashboard' && userEventIds.includes(newEvent.id)) {
+        newEvent.backgroundColor = myEventsColor;
+        newEvent.borderColor = myEventsColor;
       } else {
-        newEvent.backgroundColor = 'var(--text-color-dark)';
-        newEvent.borderColor = 'var(--text-color-dark)';
+        newEvent.backgroundColor = moreEventsColor;
+        newEvent.borderColor = moreEventsColor;
       }
       return newEvent;
     });
+  }
+
+  const filterEventsForCheckboxes = (allEvents, userEvents, userEventIds) => {
+    // Filter based on checkbox filters (More Events, My Events)
+    let filteredEvents = allEvents;
+    if (showMyEvents && showMoreEvents) {
+      filteredEvents = allEvents;
+    } else if (showMyEvents) {
+      filteredEvents = userEvents;
+    } else { // just myEvents
+      filteredEvents = allEvents.filter((event) => (!userEventIds.includes(event.id)));
+    }
+    return filteredEvents;
+  };
+
+  const filterEvents = (display) => {
+    // Get events based on display type (cal or list)
+    let userEvents;
+    let allEvents;
+    if (display === 'cal') {
+      userEvents = useSelector(getUserEventsForFullCalendar);
+      allEvents = useSelector(getEventsForFullCalendar);
+    } else { // get events for list
+      userEvents = useSelector(getUserEvents);
+      allEvents = useSelector(getEvents);
+    }
+
+    const userEventIds = userEvents.map((event) => event.id);
+    let events;
+    events = filterEventsForCheckboxes(allEvents, userEvents, userEventIds);
+    events = filterEventsByView(display, view, events, day, month, year);
+    events = colorEvents(userEventIds, events);
     return events;
   };
 
-  const getCalendar = () => {
-    const events = filterEvents();
-
-    return (
-      <FullCalendar
-        plugins={[timeGridPlugin, dayGridPlugin]}
-        initialView="timeGridWeek"
-        events={events}
-        // contentHeight="auto"
-        contentHeight={1000}
-        expandRows="true"
-        ref={calendarEl}
-        headerToolbar={{
-          left: 'title',
-          center: '',
-          right: '',
-        }}
-        dayHeaderContent={renderHeader}
-        eventContent={renderEventContent}
-        allDaySlot={false}
-        // height="auto"
-        slotDuration="00:60:00"
-      />
-    );
+  const renderEventList = () => {
+    const events = filterEvents('list').sort((e1, e2) => new Date(e1.startTime) - new Date(e2.startTime));
+    let filter;
+    if ((showMoreEvents && showMyEvents) || (!showMoreEvents && !showMyEvents)) {
+      filter = 'all';
+    } else {
+      filter = showMoreEvents ? 'more-events' : 'my-events';
+    }
+    return <EventList events={events} listType={filter} page={page} view={view} />;
   };
 
-  const renderCheckboxes = () => {
-    const pathName = useLocation().pathname;
-    if (pathName === '/volunteer/events') {
+  const renderCalendar = () => {
+    const calendarEvents = filterEvents('cal');
+    if (view !== 'timeGridDay') {
       return (
-        <EventCheckBoxes
-          showMyEvents={showMyEvents}
-          showMoreEvents={showMoreEvents}
-          onMoreClick={(value) => setShowMoreEvents(value)}
-          onMyClick={(value) => setShowMyEvents(value)}
+        <FullCalendar
+          plugins={[timeGridPlugin, dayGridPlugin]}
+          initialView="timeGridWeek"
+          events={calendarEvents}
+          contentHeight={1000}
+          expandRows="true"
+          ref={calendarEl}
+          headerToolbar={{
+            left: 'title',
+            center: '',
+            right: '',
+          }}
+          dayHeaderContent={renderWeekMonthHeader}
+          eventContent={(eventInfo) => <EventBlock page={page} eventInfo={eventInfo} />}
+          allDaySlot={false}
+          slotDuration="00:60:00"
         />
       );
     }
@@ -166,25 +215,29 @@ const EventsView = ({
   return (
     <div className="events-view">
       <div id="top-of-calendar">
-        {renderPopup()}
+        <CalendarPopup page={page} />
         <CalendarFilters />
-        {renderCheckboxes()}
+        { page === 'volunteerDashboard' && renderCheckboxes()}
       </div>
       <div id="calendar">
-        {getCalendar()}
+        {view === 'timeGridDay' && renderDayViewHeader()}
+        {renderCalendar()}
       </div>
+      { page === 'volunteerDashboard' && view !== 'timeGridDay' && <EventLegend />}
+      {renderEventList()}
     </div>
   );
 };
 
 EventsView.propTypes = {
-  getEvents: PropTypes.func.isRequired,
-  getUserEvents: PropTypes.func.isRequired,
+  loadEvents: PropTypes.func.isRequired,
+  loadUserEvents: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
   day: PropTypes.number.isRequired,
   view: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -195,6 +248,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default withCookies(connect(mapStateToProps, {
-  getEvents: fetchEvents, // rename fetchEvents action
-  getUserEvents: fetchUserEvents,
+  loadEvents: fetchEvents, // rename fetchEvents action
+  loadUserEvents: fetchUserEvents,
 })(EventsView));

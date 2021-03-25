@@ -1,16 +1,15 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import './Availability.css';
+import './viewAvailability.css';
 import ScheduleSelector from 'react-schedule-selector';
 
-function Availability({ availabilities, startWeek }) {
+function viewAvailability({ availabilities, startWeek }) {
   const handleChange = () => {
     console.log('');
   };
 
   return (
     <div className="availCard">
-      <h2>Availability</h2>
       <ScheduleSelector
         selection={availabilities}
         selectionScheme="square"
@@ -26,4 +25,4 @@ function Availability({ availabilities, startWeek }) {
   );
 }
 
-export default Availability;
+export default viewAvailability;

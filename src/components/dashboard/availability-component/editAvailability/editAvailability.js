@@ -21,7 +21,6 @@ const EditAvailability = ({
 
   return (
     <div className="editAvailCard">
-      <h2>Availability</h2>
       <ScheduleSelector
         selection={availabilityTimes}
         selectionScheme="square"

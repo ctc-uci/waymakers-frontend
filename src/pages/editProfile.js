@@ -15,7 +15,8 @@ import { withCookies, Cookies } from 'react-cookie';
 import EditAbout from '../components/profile/editAbout/editAbout.js';
 import EditContact from '../components/profile/editContact/editContact.js';
 import Qualification from '../components/profile/qualifications/qualifications';
-import EditAvailability from '../components/profile/editAvailability/editAvailability';
+// import EditAvailability from '../components/profile/editAvailability/editAvailability';
+import EditAvailability from '../components/dashboard/availability-component/editAvailability/editAvailability';
 
 import profCircle from '../assets/profCircle.png';
 
