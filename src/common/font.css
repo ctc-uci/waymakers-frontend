@@ -50,30 +50,30 @@ p.small {
 /* TODO: figure out mobile font sizes */
 @media screen and (max-width: 768px) {
     h1 {
-        font-size: 48px;
+        font-size: 42px;
     }
     
     h2 {
-        font-size: 40px;
-    }
-    
-    h3 {
         font-size: 36px;
     }
     
-    h4 {
+    h3 {
         font-size: 30px;
     }
     
-    p.large {
+    h4 {
         font-size: 24px;
     }
     
-    p.medium {
+    p.large {
         font-size: 18px;
     }
     
-    p.small {
+    p.medium {
         font-size: 14px;
+    }
+    
+    p.small {
+        font-size: 12px;
     }
 }
