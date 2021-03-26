@@ -9,10 +9,10 @@ const EditQualificationsRow = ({ qualification }) => {
   return (
     <tr className="edit-qualification-row">
       <td>
-        {qualification.volunteer_tier}
+        {qualification.qualification_name}
       </td>
       <td>
-        {qualification.qualification_name}
+        {qualification.qualification_tiers.join(', ')}
       </td>
       <td>
         {qualification.qualification_description}
@@ -30,6 +30,7 @@ const EditQualificationsRow = ({ qualification }) => {
       </td>
       <td>
         <button type="button" className="red-button">Remove</button>
+        {/* RemoveQualificationModal here */}
       </td>
     </tr>
   );

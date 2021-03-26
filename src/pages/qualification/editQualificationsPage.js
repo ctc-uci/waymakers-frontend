@@ -46,8 +46,8 @@ const EditQualifications = () => {
         <table className="qualifications-table">
           <thead>
             <tr>
-              <th>Tier</th>
               <th>Qualification</th>
+              <th>Tier</th>
               <th>About/Description</th>
               <th> </th>
               <th> </th>

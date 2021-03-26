@@ -5,20 +5,20 @@ import {
   useFormik,
 } from 'formik';
 import * as Yup from 'yup';
-// import axios from 'axios';
 import {
   LightModal, LightModalHeader, LightModalBody, LightModalButton,
 } from '../../../common/LightModal';
 import {
   ValidatedField,
 } from '../../../common/formikExtensions';
-// import server from '../../../common/utils';
+import { wmkAPI } from '../../../common/utils';
 
 // Using Yup to do schema validation
 const schema = Yup.object().shape({
   name: Yup.string()
     .required('Required'),
-  tier: Yup.string()
+  tier: Yup.array()
+    .of(Yup.number())
     .required('Required'),
   link: Yup.string()
     .required('Required'),
@@ -28,13 +28,27 @@ const AddQualificationModal = ({ isModalOpen, setIsModalOpen }) => {
   const formik = useFormik({
     initialValues: {
       name: '',
-      tier: '',
+      tier: [], // todo: plural in the future
       link: '',
     },
     validationSchema: schema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       // eslint-disable-next-line no-undef
-      alert(JSON.stringify(values, null, 2));
+      try {
+        const response = await wmkAPI.post('/qualifications',
+          {
+            name: values.name,
+            description: values.link, // TODO: update
+            volunteerTier: -1, // TODO: make sure backend supports this
+            qualificationTiers: values.tier,
+          },
+          { withCredentials: true });
+        console.log(response);
+        alert('yay');
+      } catch (err) {
+        // eslint-disable-next-line
+        console.error(err);
+      }
     },
     // validate only on submit, change as needed
     validateOnSubmit: true,
@@ -47,8 +61,6 @@ const AddQualificationModal = ({ isModalOpen, setIsModalOpen }) => {
       <LightModalHeader title="Add Qualification Information" onClose={() => setIsModalOpen(false)} />
       <form onSubmit={formik.handleSubmit}>
         <LightModalBody>
-
-          {/* DIY formik */}
 
           <ValidatedField name="name" labelText="Name" formik={formik}>
             <input
@@ -67,14 +79,16 @@ const AddQualificationModal = ({ isModalOpen, setIsModalOpen }) => {
               id="tier"
               name="tier"
               onChange={formik.handleChange}
+              value={formik.values.tier}
+              multiple
             >
               <option value="none" selected hidden> </option>
-              <option value="tier1">Tier 1</option>
-              <option value="tier2">Tier 2</option>
-              <option value="tier3">Tier 3</option>
+              <option value="1">Tier 1</option>
+              <option value="2">Tier 2</option>
+              <option value="3">Tier 3</option>
             </select>
           </ValidatedField>
-          {/* Using LightModalValidatedField */}
+
           <ValidatedField name="link" labelText="Link" formik={formik}>
             <input
               id="link"

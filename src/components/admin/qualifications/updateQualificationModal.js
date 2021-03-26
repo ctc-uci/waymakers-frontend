@@ -5,19 +5,20 @@ import {
   useFormik,
 } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import {
   LightModal, LightModalHeader, LightModalBody, LightModalButton,
 } from '../../../common/LightModal';
 import {
   ValidatedField,
 } from '../../../common/formikExtensions';
+import { wmkAPI } from '../../../common/utils';
 
 // Using Yup to do schema validation
 const schema = Yup.object().shape({
   name: Yup.string()
     .required('Required'),
-  tier: Yup.string()
+  tier: Yup.array()
+    .of(Yup.number())
     .required('Required'),
   link: Yup.string()
     .required('Required'),
@@ -34,15 +35,14 @@ const UpdateQualificationModal = ({ isModalOpen, setIsModalOpen, qualification }
     onSubmit: async (values) => {
       // eslint-disable-next-line no-undef
       try {
-        const response = await axios.put(
-          `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/qualifications/${qualification.id}`,
+        const response = await wmkAPI.put(`/qualifications/${qualification.id}`,
           {
             name: values.name,
             description: values.link, // TODO: update
-            tier: values.tier, // TODO: make sure backend supports this
+            tier: -1,
+            qualificationTiers: values.tier,
           },
-          { withCredentials: true },
-        );
+          { withCredentials: true });
         console.log(response);
         alert('yay');
       } catch (err) {
@@ -84,9 +84,9 @@ const UpdateQualificationModal = ({ isModalOpen, setIsModalOpen, qualification }
               multiple
             >
               <option value="none" selected hidden> </option>
-              <option value="tier1">Tier 1</option>
-              <option value="tier2">Tier 2</option>
-              <option value="tier3">Tier 3</option>
+              <option value="1">Tier 1</option>
+              <option value="2">Tier 2</option>
+              <option value="3">Tier 3</option>
             </select>
           </ValidatedField>
 

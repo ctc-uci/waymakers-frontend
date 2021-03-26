@@ -1,8 +1,17 @@
 const axios = require('axios');
 
-const server = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
+/* ex:
+  const response = await wmkAPI.post('/route_appended_to_baseURL', body);
+  const response = await wmkAPI.post(`/route_appended_to_baseURL/{:params}`, body);
+*/
+const wmkAPI = axios.create({
+  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}`,
   withCredentials: true,
 });
 
-export default server;
+const dummyFunc = () => {};
+
+export {
+  wmkAPI,
+  dummyFunc,
+};
