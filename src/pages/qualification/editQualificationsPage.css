@@ -1,4 +1,4 @@
-#edit-qualifications {
+.edit-qualifications {
   margin: 10px;
   display: block;
   justify-content: space-between;
@@ -6,7 +6,7 @@
   padding: 2em;
 }
 
-#edit-qualifications #table-header {
+.edit-qualifications .table-header {
   color: var(--text-color-dark);
   display: flex;
   flex-direction: row;
@@ -15,7 +15,7 @@
   padding-bottom: 0.5em;
 }
 
-#edit-qualifications .green-button {
+.edit-qualifications .green-button {
   color: white;
   text-decoration: none;
   font-weight: bold;
@@ -28,42 +28,42 @@
 /* #edit-qualifications .table-title {
 } */
 
-#edit-qualifications #table-wrapper {
+.edit-qualifications .table-wrapper {
   padding: 1em 1em 2em;
   background-color: #F2FBFC;
   box-shadow: 2px 2px 2px gray;
 }
 
-#edit-qualifications .qualifications-table {
+.edit-qualifications .qualifications-table {
   width: 100%;
   table-layout: fixed;
   margin-bottom: 1em;
 }
 
-#edit-qualifications .qualifications-table thead {
+.edit-qualifications .qualifications-table thead {
   font-size: 20px;
   align-self: center;
   background-color: var(--color-dark-teal);
   color: white;
 }
 
-#edit-qualifications .qualifications-table tbody {
+.edit-qualifications .qualifications-table tbody {
   border-collapse: separate;
 }
 
-#edit-qualifications .qualifications-table tbody>tr>td {
+.edit-qualifications .qualifications-table tbody>tr>td {
   padding: 0.5em 0.5em;
 }
 
-#edit-qualifications .qualifications-table tbody>tr:nth-child(even)>td {
+.edit-qualifications .qualifications-table tbody>tr:nth-child(even)>td {
   background-color: rgba(51, 100, 115, 0.37);
 }
 
-#add-qualification-form {
+.add-qualification-form {
   display: flex;
   flex-direction: column;
 }
 
-#edit-qualifications .form-label, .form-textarea, .form-input {
+.edit-qualifications .form-label, .form-textarea, .form-input {
   display:block;
 }

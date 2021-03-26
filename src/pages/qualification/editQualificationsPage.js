@@ -32,8 +32,8 @@ const EditQualifications = () => {
   }, []);
 
   return (
-    <div id="edit-qualifications">
-      <div id="table-header">
+    <div className="edit-qualifications">
+      <div className="table-header">
         <h3><b>List of Qualifications</b></h3>
         <button type="button" className="green-button" onClick={() => setAddQualModalOpen(true)}>Add Qualification</button>
       </div>
@@ -42,7 +42,7 @@ const EditQualifications = () => {
         setIsModalOpen={setAddQualModalOpen}
       />
       {/* {getUpdateModal()} */}
-      <div id="table-wrapper">
+      <div className="table-wrapper">
         <table className="qualifications-table">
           <thead>
             <tr>

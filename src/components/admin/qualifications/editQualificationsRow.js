@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import UpdateQualificationModal from './updateQualificationModal';
+import DeleteQualificationModal from './deleteQualificationModal';
 import './editQualificationsRow.css';
 
 const EditQualificationsRow = ({ qualification }) => {
   const [isUpdateQualModalOpen, setIsUpdateQualModalOpen] = useState(false);
+  const [isDeleteQualModalOpen, setIsDeleteQualModalOpen] = useState(false);
   return (
     <tr className="edit-qualification-row">
       <td>
@@ -29,7 +31,15 @@ const EditQualificationsRow = ({ qualification }) => {
           )}
       </td>
       <td>
-        <button type="button" className="red-button">Remove</button>
+        <button type="button" className="red-button" onClick={() => setIsDeleteQualModalOpen(true)}>Remove</button>
+        {isDeleteQualModalOpen
+          && (
+          <DeleteQualificationModal
+            isModalOpen={isDeleteQualModalOpen}
+            setIsModalOpen={setIsDeleteQualModalOpen}
+            qualification={qualification}
+          />
+          )}
         {/* RemoveQualificationModal here */}
       </td>
     </tr>
