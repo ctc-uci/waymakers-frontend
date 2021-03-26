@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import EditQualificationsRow from './editQualificationsRow';
 import AddQualificationModal from './addQualificationModal';
-import UpdateQualificationModal from './updateQualificationModal';
 
 import './editQualifications.css';
 
@@ -9,9 +8,7 @@ const axios = require('axios');
 
 const EditQualifications = () => {
   const [qualifications, setQualifications] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [updateOpen, setUpdateOpen] = useState(false);
-  const [qual, setQual] = useState();
+  const [addQualModalOpen, setAddQualModalOpen] = useState(false);
 
   // Fetching qualifications from the server
   const getQualifications = async () => {
@@ -27,40 +24,22 @@ const EditQualifications = () => {
     }
   };
 
-  const openUpdateModal = (q) => {
-    setUpdateOpen(true);
-    setQual(q);
-  };
-
   // Get qualificationsLists on page load
   useEffect(() => {
     getQualifications();
   }, []);
 
-  const getUpdateModal = () => {
-    if (!qual) {
-      return null;
-    }
-    return (
-      <UpdateQualificationModal
-        isModalOpen={updateOpen}
-        setIsModalOpen={setUpdateOpen}
-        qualificationID={qual.id}
-      />
-    );
-  };
-
   return (
     <div id="edit-qualifications">
       <div id="table-header">
         <h3><b>List of Qualifications</b></h3>
-        <button type="button" className="green-button" onClick={() => setModalOpen(true)}>Add Qualification</button>
+        <button type="button" className="green-button" onClick={() => setAddQualModalOpen(true)}>Add Qualification</button>
       </div>
       <AddQualificationModal
-        isModalOpen={modalOpen}
-        setIsModalOpen={setModalOpen}
+        isModalOpen={addQualModalOpen}
+        setIsModalOpen={setAddQualModalOpen}
       />
-      {getUpdateModal()}
+      {/* {getUpdateModal()} */}
       <div id="table-wrapper">
         <table className="qualifications-table">
           <thead>
@@ -77,7 +56,6 @@ const EditQualifications = () => {
               .map((qualification) => (
                 <EditQualificationsRow
                   qualification={qualification}
-                  openUpdateModal={openUpdateModal}
                 />
               ))}
           </tbody>
@@ -87,7 +65,6 @@ const EditQualifications = () => {
           {' '}
           {Object.keys(qualifications).length}
         </b>
-        {/* <pre>{JSON.stringify(qualifications, null, 2) }</pre> */}
       </div>
     </div>
   );
