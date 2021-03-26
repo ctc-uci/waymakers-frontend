@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant&display=swap');
+
+body {
+  font-family: 'Assistant', sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  /* -webkit-font-smoothing: subpixel-antialiased; */
+  -moz-osx-font-smoothing: grayscale;
+
+  margin: 0;
+  padding: 0;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+h3 {
+    font-size: 36px;
+}
+
+h4 {
+    font-size: 30px;
+}
+
+p.large {
+    font-size: 24px;
+}
+
+p.medium {
+    font-size: 18px;
+}
+
+p.small {
+    font-size: 14px;
+}
+
+/* TODO: figure out mobile font sizes */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 48px;
+    }
+    
+    h2 {
+        font-size: 40px;
+    }
+    
+    h3 {
+        font-size: 36px;
+    }
+    
+    h4 {
+        font-size: 30px;
+    }
+    
+    p.large {
+        font-size: 24px;
+    }
+    
+    p.medium {
+        font-size: 18px;
+    }
+    
+    p.small {
+        font-size: 14px;
+    }
+}
