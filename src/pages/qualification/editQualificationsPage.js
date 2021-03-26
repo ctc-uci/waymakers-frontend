@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import EditQualificationsRow from './editQualificationsRow';
-import AddQualificationModal from './addQualificationModal';
 
-import './editQualifications.css';
+import EditQualificationsRow from '../../components/admin/qualifications/editQualificationsRow';
+import AddQualificationModal from '../../components/admin/qualifications/addQualificationModal';
+
+import './editQualificationsPage.css';
 
 const axios = require('axios');
 
+// TODO: add loading spinner or something similar
 const EditQualifications = () => {
   const [qualifications, setQualifications] = useState([]);
   const [addQualModalOpen, setAddQualModalOpen] = useState(false);

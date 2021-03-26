@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import './qualModal.css';
-import profCircle from '../../../assets/profCircle.png';
+import profCircle from '../../../../assets/profCircle.png';
 import RejectModal from './rejectModal';
 import ApproveModal from './approveModal';
 

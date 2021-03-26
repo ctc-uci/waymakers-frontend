@@ -12,8 +12,8 @@ import Register from './components/register/register';
 import LogIn from './components/login/login';
 import ManageUsers from './components/admin/manageusers/manageusers';
 import ManageDB from './components/admin/managedb/managedb';
-import QualificationInfo from './components/admin/qualificationinfo/QualificationInfo';
-import EditQualifications from './components/admin/qualifications/editQualifications';
+import QualificationInfoPage from './pages/qualification/QualificationInfoPage';
+import EditQualifications from './pages/qualification/editQualificationsPage';
 // import Profile from './components/profile/profile';
 import viewProfile from './pages/viewProfile';
 import editProfile from './pages/editProfile';
@@ -61,7 +61,7 @@ ReactDOM.render(
             <Switch>
               <ProtectedRoute path="/admin/users" component={ManageUsers} />
               <ProtectedRoute path="/admin/db" component={ManageDB} />
-              <ProtectedRoute path="/admin/qualifications" component={QualificationInfo} />
+              <ProtectedRoute path="/admin/qualifications" component={QualificationInfoPage} />
               <ProtectedRoute path="/admin/editQualifications" component={EditQualifications} />
               <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
               <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />

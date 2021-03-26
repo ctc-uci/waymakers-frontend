@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import UpdateQualificationModal from './updateQualificationModal';
-import './editQualifications.css';
+import './editQualificationsRow.css';
 
 const EditQualificationsRow = ({ qualification }) => {
   const [isUpdateQualModalOpen, setIsUpdateQualModalOpen] = useState(false);
   return (
-    <tr>
+    <tr className="edit-qualification-row">
       <td>
         {qualification.volunteer_tier}
       </td>
