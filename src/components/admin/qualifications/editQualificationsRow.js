@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './editQualifications.css';
+import './editQualificationsRow.css';
 
 const EditQualificationsRow = ({ qualification, openUpdateModal }) => (
-  <tr>
+  <tr className="edit-qualification-row">
     <td>
       {qualification.volunteer_tier}
     </td>

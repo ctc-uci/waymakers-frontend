@@ -1,0 +1,19 @@
+.edit-qualification-row .green-button {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: var(--color-green);
+  border: none;
+  border-radius: 25px;
+  padding: 0.1em 1.5em;
+}
+  
+.edit-qualification-row .red-button {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: var(--color-orange);
+  border: none;
+  border-radius: 25px;
+  padding: 0.1em 1.5em;
+}

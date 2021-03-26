@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import QualificationsList from './QualificationsList';
-import './QualificationInfo.css';
+import QualificationsList from '../../components/admin/qualifications/qualificationInfo/QualificationsList';
+import './QualificationInfoPage.css';
 
 const QualificationInfo = () => {
   // console.log('hi');

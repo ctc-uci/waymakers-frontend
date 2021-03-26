@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import EditQualificationsRow from './editQualificationsRow';
-import AddQualificationModal from './addQualificationModal';
-import UpdateQualificationModal from './updateQualificationModal';
 
-import './editQualifications.css';
+import EditQualificationsRow from '../../components/admin/qualifications/editQualificationsRow';
+import AddQualificationModal from '../../components/admin/qualifications/addQualificationModal';
+import UpdateQualificationModal from '../../components/admin/qualifications/updateQualificationModal';
+
+import './editQualificationsPage.css';
 
 const axios = require('axios');
 
