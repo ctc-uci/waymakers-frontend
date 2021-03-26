@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import {
   useFormik,
 } from 'formik';
-// import * as Yup from 'yup';
-// import axios from 'axios';
+import * as Yup from 'yup';
+import axios from 'axios';
 import {
   LightModal, LightModalHeader, LightModalBody, LightModalButton,
 } from '.';
@@ -14,28 +14,28 @@ import {
 } from '../formikExtensions';
 
 // Using Yup to do schema validation
-// const ExampleSchema = Yup.object().shape({
-//   firstName: Yup.string()
-//     .required('Required')
-//     .test('custom-test', 'Failed custom test', (value) => value === 'harrison'),
-//   lastName: Yup.string()
-//     .required('Required')
-//     .test('custom-test-async', 'Failed async test', async () => {
-//       try {
-//         // Should see a noticable 1 second lag in UI, proves async working
-//         // await new Promise((resolve) => {
-//         //   setTimeout(resolve, 1000);
-//         // });
-//         await axios.get('https://jsonplaceholder.typicode.com/todos/1');
-//         // await axios.get('https://notrealURL.jibberish');
-//         return true;
-//       } catch (err) {
-//         return false;
-//       }
-//     }),
-//   dateTime: Yup.string() // TODO: could do better than just a string
-//     .required('Required'),
-// });
+const ExampleSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .required('Required')
+    .test('custom-test', 'Failed custom test', (value) => value === 'harrison'),
+  lastName: Yup.string()
+    .required('Required')
+    .test('custom-test-async', 'Failed async test', async () => {
+      try {
+        // Should see a noticable 1 second lag in UI, proves async working
+        // await new Promise((resolve) => {
+        //   setTimeout(resolve, 1000);
+        // });
+        await axios.get('https://jsonplaceholder.typicode.com/todos/1');
+        // await axios.get('https://notrealURL.jibberish');
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }),
+  dateTime: Yup.string() // TODO: could do better than just a string
+    .required('Required'),
+});
 
 const ExampleLightModalWithFormik = ({ isModalOpen, setIsModalOpen }) => {
   /*
@@ -52,7 +52,7 @@ const ExampleLightModalWithFormik = ({ isModalOpen, setIsModalOpen }) => {
       email: '',
       dateTime: '',
     },
-    // validationSchema: ExampleSchema,
+    validationSchema: ExampleSchema,
     onSubmit: (values) => {
       // eslint-disable-next-line no-undef
       alert(JSON.stringify(values, null, 2));
