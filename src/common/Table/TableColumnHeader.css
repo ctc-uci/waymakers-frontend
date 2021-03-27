@@ -1,0 +1,12 @@
+.generic-table-column-header {
+    color: white;
+
+    font-size: 22px;
+    vertical-align: middle;
+
+    padding-left: 20px;
+}
+
+/* .generic-table-column-header:first-child {
+    margin-left: 20%;
+} */
