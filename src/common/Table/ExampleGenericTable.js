@@ -7,7 +7,7 @@ import {
 const ExampleGenericTable = () => (
   <Table>
     <TableHeader>
-      <TableColumnHeader>Column 1</TableColumnHeader>
+      <TableColumnHeader className="example-classname">Column 1</TableColumnHeader>
       <TableColumnHeader>Column 2</TableColumnHeader>
       <TableColumnHeader>Column 3</TableColumnHeader>
       <TableColumnHeader>Column 4</TableColumnHeader>

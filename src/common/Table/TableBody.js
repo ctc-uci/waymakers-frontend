@@ -1,19 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import './TableBody.css';
-
-const TableBody = ({ className, children }) => (
-  <tbody className={className}>{children}</tbody>
-);
-
-TableBody.defaultProps = {
-  className: 'generic-table-body',
-};
-
-TableBody.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
-};
+const TableBody = styled.tbody`
+`;
 
 export default TableBody;

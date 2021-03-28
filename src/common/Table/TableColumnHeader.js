@@ -1,20 +1,10 @@
-/* eslint-disable no-unused-vars */
-import React from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import './TableColumnHeader.css';
-
-const TableColumnHeader = ({ className, children, ...props }) => (
-  <th className={className}>{children}</th>
-);
-
-TableColumnHeader.defaultProps = {
-  className: 'generic-table-column-header',
-};
-
-TableColumnHeader.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
-};
+const TableColumnHeader = styled.th`
+  color: white;
+  font-size: 22px;
+  vertical-align: middle;
+  padding-left: 20px;
+`;
 
 export default TableColumnHeader;

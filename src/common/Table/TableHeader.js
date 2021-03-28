@@ -1,19 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import './TableHeader.css';
-
-const TableHeader = ({ className, children }) => (
-  <tr className={className}>{children}</tr>
-);
-
-TableHeader.defaultProps = {
-  className: 'generic-table-header',
-};
-
-TableHeader.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
-};
+const TableHeader = styled.tr`
+  background: #336473;
+  height: 35px;
+`;
 
 export default TableHeader;

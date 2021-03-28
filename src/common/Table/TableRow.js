@@ -1,19 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import './TableRow.css';
-
-const TableRow = ({ className, children }) => (
-  <tr className={className}>{children}</tr>
-);
-
-TableRow.defaultProps = {
-  className: 'generic-table-row',
-};
-
-TableRow.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
-};
+const TableRow = styled.tr`
+  height: 35px;
+  &:nth-child(even) {
+    background: rgba(51, 100, 115, 0.37);
+  }
+`;
 
 export default TableRow;

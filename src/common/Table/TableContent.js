@@ -1,19 +1,11 @@
-import React from 'react';
-import Proptypes from 'prop-types';
+import styled from 'styled-components';
 
-import './TableContent.css';
+const TableContent = styled.td`
+  color: var(--text-color-dark);
+  font-weight: 700;
+  white-space: pre-wrap;
 
-const TableContent = ({ className, children }) => (
-  <td className={className}>{children}</td>
-);
-
-TableContent.defaultProps = {
-  className: 'generic-table-content',
-};
-
-TableContent.propTypes = {
-  className: Proptypes.string,
-  children: Proptypes.node.isRequired,
-};
+  padding-left: 20px;
+`;
 
 export default TableContent;
