@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import './common/ConfigLoader';
 import Test from './.harrison-sandbox/Test';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-// import Layout from './components/layout/layout';
+import Layout from './components/layout/layout';
 import Register from './components/register/register';
 import LogIn from './components/login/login';
 import ManageUsers from './components/admin/manageusers/manageusers';
@@ -38,44 +38,45 @@ ReactDOM.render(
     <CookiesProvider>
       <Provider store={store}>
         <Router>
-          <div className="App">
+          <Layout>
+            <div className="App">
 
-            <Route path="/sandbox" component={Test} />
+              <Route path="/sandbox" component={Test} />
 
-            <Switch>
-              <ProtectedRoute path="/" component={VolunteerDashboard} exact />
-              <ProtectedRoute path="/volunteerDashboard" component={VolunteerDashboard} exact />
-              <ProtectedRoute path="/adminDashboard" component={AdminDashboard} exact />
-              <ProtectedRoute path="/adminDashboard2" component={AdminDashboard2} />
-              <Route path="/register" component={Register} />
-              <Route path="/login" component={LogIn} />
-              <ProtectedRoute path="/profile" component={viewProfile} />
-              <ProtectedRoute path="/editProfile" component={editProfile} />
-            </Switch>
+              <Switch>
+                <ProtectedRoute path="/" component={VolunteerDashboard} exact />
+                <ProtectedRoute path="/volunteerDashboard" component={VolunteerDashboard} exact />
+                <ProtectedRoute path="/adminDashboard" component={AdminDashboard} exact />
+                <ProtectedRoute path="/adminDashboard2" component={AdminDashboard2} />
+                <Route path="/register" component={Register} />
+                <Route path="/login" component={LogIn} />
+                <ProtectedRoute path="/profile" component={viewProfile} />
+                <ProtectedRoute path="/editProfile" component={editProfile} />
+              </Switch>
 
-            <Switch>
-              <ProtectedRoute path="/admin/users" component={ManageUsers} />
-              <ProtectedRoute path="/admin/db" component={ManageDB} />
-              <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
-              <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
-              <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
-            </Switch>
+              <Switch>
+                <ProtectedRoute path="/admin/users" component={ManageUsers} />
+                <ProtectedRoute path="/admin/db" component={ManageDB} />
+                <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
+                <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
+                <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
+              </Switch>
 
-            <Switch>
-              <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
-              <ProtectedRoute path="/volunteer/hours" component={Hours} />
-              <ProtectedRoute path="/volunteer/tier" component={Tier} />
-              <ProtectedRoute path="/volunteer/forms" component={Forms} />
-            </Switch>
+              <Switch>
+                <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
+                <ProtectedRoute path="/volunteer/hours" component={Hours} />
+                <ProtectedRoute path="/volunteer/tier" component={Tier} />
+                <ProtectedRoute path="/volunteer/forms" component={Forms} />
+              </Switch>
 
-            <Switch>
-              <ProtectedRoute path="/inventory" component={Inventory} />
-              <ProtectedRoute path="/reports" component={Reports} />
-              <ProtectedRoute path="/events/viewHours" component={viewHours} />
-              <ProtectedRoute path="/events" component={Events} />
-            </Switch>
-
-          </div>
+              <Switch>
+                <ProtectedRoute path="/inventory" component={Inventory} />
+                <ProtectedRoute path="/reports" component={Reports} />
+                <ProtectedRoute path="/events/viewHours" component={viewHours} />
+                <ProtectedRoute path="/events" component={Events} />
+              </Switch>
+            </div>
+          </Layout>
         </Router>
       </Provider>
     </CookiesProvider>
