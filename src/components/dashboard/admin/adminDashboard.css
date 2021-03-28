@@ -5,14 +5,27 @@
     flex-direction: column;
 }
 
-.division-selector-title {
+.component-title {
     color: var(--text-color-dark);
     font-weight: bold;
 }
 
-.component-title {
+.division-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.division-dropdown {
+    border: none;
+    outline: none;
+    width: inherit;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
     color: var(--text-color-dark);
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 32px;
+    cursor: pointer;
+    text-align: left;
 }
 
 .admin-components-container {

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './event.css';
-// import '../edit-events/editEvents.css';
 
 const Event = ({
   event, listType, index, onEventButtonClick,
@@ -15,13 +14,24 @@ const Event = ({
   const endTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(endDate);
   const eventType = `${event.eventType.toLowerCase()}-event`;
 
+  // Event click helper that builds a copy of the current event object, adding two new properties
+  // for the event list type and index in the event array. This is done so that when
+  // onEventButtonClick is called in VolunteerDashboard, it can render the event confirmation
+  // popup with the correct event info and the moveEvent function can move the correct event.
+  const eventClickHelper = () => {
+    const newEventObj = event;
+    newEventObj.listType = listType;
+    newEventObj.index = index;
+    onEventButtonClick(newEventObj);
+  };
+
   return (
     <div className="event-list-container">
       <div className={`event-container ${listType}`}>
         <div
           className="event-button"
-          onClick={() => onEventButtonClick(listType, index)}
-          onKeyDown={() => onEventButtonClick(listType, index)}
+          onClick={eventClickHelper}
+          onKeyDown={eventClickHelper}
           role="button"
           tabIndex={index}
         >

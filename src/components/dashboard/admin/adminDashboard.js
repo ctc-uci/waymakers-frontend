@@ -13,13 +13,9 @@ import EditEvents from '../../events/edit-events/editEvents';
 import InventoryComponent from '../inventory-component/inventoryComponent';
 import auth from '../../firebase/firebase';
 import './adminDashboard.css';
-
 import ViewAvailability from '../availability-component/viewAvailability/viewAvailability';
 import EditAvailability from '../availability-component/editAvailability/editAvailability';
 import AdminAvailability from '../availability-component/adminAvailability/adminAvailability';
-
-import Header from '../../header/header';
-import Footer from '../../footer/footer';
 
 const AdminDashboard = (props) => {
   const startWeek = startOfWeek(new Date());
@@ -34,6 +30,8 @@ const AdminDashboard = (props) => {
   const [error, setError] = useState('');
   // eslint-disable-next-line
     const [isLoading, setLoading] = useState(false);
+  const [divisionList, setDivisionList] = useState([]);
+  const [currDivision, setCurrDivision] = useState(1);
 
   async function logout() {
     try {
@@ -264,16 +262,49 @@ const AdminDashboard = (props) => {
     );
   }
 
-  useEffect(async () => {
+  // Fetching warehouse names from the server
+  const getDivisionList = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/divisions`,
+        { withCredentials: true },
+      );
+      setDivisionList(response.data);
+    } catch (err) {
+      // eslint-disable-next-line
+      console.error(err);
+    }
+  };
+
+    useEffect(async () => {
     setLoading(true);
     getAvailability();
+    getDivisionList();
     setLoading(false);
   }, []);
 
+  // Creating dropdown selector for division menu
+  const Menu = () => (
+    <div className="division-section">
+      <select
+        name="division"
+        className="division-dropdown"
+        value={currDivision - 1}
+        onChange={(e) => {
+          setCurrDivision(parseInt(e.target.value, 10) + 1);
+        }}
+      >
+        {Object.entries(divisionList)
+          .sort((a, b) => (a.id > b.id ? 1 : -1))
+          .map(([id, division]) => (
+            <option key={id} value={id}>{division.div_name}</option>
+          ))}
+      </select>
+    </div>
+  );
+
   return (
     <div>
-      <Header />
-
       <div className="d-flex align-items-center justify-content-center">
         <div className="w-100 login-container">
           <Card className="w-100">
@@ -286,14 +317,14 @@ const AdminDashboard = (props) => {
         </div>
       </div>
       <div className="admin-components">
-        <div className="division-selector">
-          <h2 className="division-selector-title">Crisis Response Team</h2>
+        <div className="division-section">
+          { Menu() }
         </div>
         <div className="admin-components-container">
           <div className="inventory-events-section">
             <div className="inventory-section">
               <h5 className="component-title">Inventory</h5>
-              <InventoryComponent />
+              <InventoryComponent division={currDivision} />
             </div>
             <div className="upcoming-events-section">
               <h5 className="component-title">Events</h5>
@@ -309,8 +340,6 @@ const AdminDashboard = (props) => {
           {renderAvailability()}
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

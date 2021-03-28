@@ -11,7 +11,7 @@ const WarehouseMenu = (prop) => {
     <div className="warehouse-menu-container">
       <select
         name="category"
-        className={`warehouse-menu ${prop.dropdownType}`}
+        className="warehouse-menu"
         value={prop.selectedWarehouse}
         onChange={(e) => { store.dispatch(changeSelectedWarehouse(parseInt(e.target.value, 10))); }}
       >

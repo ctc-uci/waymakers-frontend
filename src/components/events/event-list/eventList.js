@@ -1,5 +1,4 @@
 import React from 'react';
-// import "./events.css";
 import PropTypes from 'prop-types';
 import Event from '../event/event';
 import './eventList.css';
@@ -17,8 +16,7 @@ import './eventList.css';
 const EventList = ({
   events, title, listType, onEventButtonClick,
 }) => {
-  // render Event components based on events prop
-
+  // render Event components based on events prop, which is an array of event objects.
   const renderEvents = () => events.map((event, index) => (
     <div className="event-div">
       <Event
