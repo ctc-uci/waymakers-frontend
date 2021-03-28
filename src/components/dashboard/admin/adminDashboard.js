@@ -29,6 +29,7 @@ const AdminDashboard = (props) => {
   const [availability, setAvailability] = useState([]);
   const [allAvailability, setAllAvailability] = useState([]);
   const [freqMap, setfreqMap] = useState(new Map());
+  const [nameMap, setNameMap] = useState(new Map());
   const [availabilityMode, setAvailabilityMode] = useState('view');
   const [error, setError] = useState('');
   // eslint-disable-next-line
@@ -83,7 +84,13 @@ const AdminDashboard = (props) => {
       );
 
       const allAvailabilityResult = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/all`, {
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/counts`, {
+          withCredentials: true,
+        },
+      );
+
+      const availabilityNamesResult = await axios.get(
+        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/names`, {
           withCredentials: true,
         },
       );
@@ -96,6 +103,7 @@ const AdminDashboard = (props) => {
 
       // handling all users' availability
       let { usersAvailability } = allAvailabilityResult.data;
+      // console.log('usersAvailability', usersAvailability);
 
       const frequencyMap = new Map();
 
@@ -112,12 +120,51 @@ const AdminDashboard = (props) => {
           freq: Number(count),
         };
       });
+
       setAllAvailability(usersAvailability);
-      console.log('frequencyMap', frequencyMap);
+      // console.log('frequencyMap', frequencyMap);
       setfreqMap(frequencyMap);
+
+      let { availabilityNames } = availabilityNamesResult.data;
+      console.log('availabilityNames', availabilityNames);
       // console.log('usersAvailability', usersAvailability);
+      const namesMap = new Map();
+
+      availabilityNames = availabilityNames.map((dateString) => {
+        const {
+          dayofweek, starttime, firstname, lastname, locationcity, phone, email,
+        } = dateString;
+
+        const parsedDate = stringToDate({ dayofweek, starttime });
+
+        const dateValue = namesMap.get(JSON.stringify(parsedDate));
+
+        if (dateValue === undefined) {
+          namesMap.set(JSON.stringify(parsedDate), [
+            {
+              fname: firstname, lname: lastname, city: locationcity, phone, email,
+            },
+          ]);
+        } else {
+          dateValue.push({
+            fname: firstname, lname: lastname, city: locationcity, phone, email,
+          });
+          namesMap.set(JSON.stringify(parsedDate), dateValue);
+        }
+
+        return {
+          date: parsedDate,
+          name: String(`${firstname} ${lastname}`),
+        };
+      });
+
+      setAllAvailability(usersAvailability);
+      // console.log('frequencyMap', frequencyMap);
+      setNameMap(namesMap);
+      console.log(namesMap);
     } catch (e) {
       // eslint-disable-next-line
+      console.log('Error:', e);
       console.log('Error while getting availability from the backend!');
     }
   }
@@ -190,6 +237,7 @@ const AdminDashboard = (props) => {
               allAvailability={allAvailability}
               freqMap={freqMap}
               maxFreq={Math.max(...allAvailability.map((el) => el.freq), 0)}
+              nameMap={nameMap}
             />
           </div>
         )

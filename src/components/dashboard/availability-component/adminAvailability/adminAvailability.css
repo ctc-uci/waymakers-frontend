@@ -28,3 +28,44 @@
 .adminAvailCard .availability-title {
   margin-bottom: 20px;
 }
+
+.avail-names-section {
+  border: 2px solid #003E53;
+  padding: 30px;
+}
+
+.admin-avail-title-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: 800;
+}
+
+.names-table {
+  width: 90%;
+  margin: auto;
+}
+
+.names-table tbody {
+  width: 80%;
+}
+
+.names-table td {
+  height: 65px;
+  text-align: center;
+  padding: 10px;
+}
+
+.names-table tr {
+  margin: 0 30px;
+  border-bottom: 1px solid #003E53;
+}
+
+tr td:first-child {
+  margin-left: 30px;
+}
+
+.no-members-message {
+  margin-top: 30px;
+  margin-left: 20px;
+}
