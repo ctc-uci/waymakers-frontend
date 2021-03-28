@@ -35,7 +35,11 @@ const createRowsForMobileTable = (headers, rows) => {
   for (let i = 0; i < rows.length; i++) {
     const mid = [labels[i], []];
     for (let j = 1; j < rows[0].length; j++) {
-      mid[1].push([headers[j], rows[i][j]]);
+      if (typeof rows[i][j] !== 'string') {
+        mid[1].push(rows[i][j]);
+      } else {
+        mid[1].push(`${headers[j]}: ${rows[i][j]}`);
+      }
     }
     result.push(mid);
   }
@@ -53,8 +57,8 @@ const renderMobileView = (children) => {
         <MobileTableRow>
           <MobileTableRowHeader>{label}</MobileTableRowHeader>
           <Divider />
-          {details.map(([header, content]) => (
-            <MobileTableContent>{`${header}: ${content}`}</MobileTableContent>
+          {details.map((content) => (
+            <MobileTableContent>{content}</MobileTableContent>
           ))}
         </MobileTableRow>
       ))}
