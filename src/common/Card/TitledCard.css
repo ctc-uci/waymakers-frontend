@@ -1,0 +1,10 @@
+.titled-card-container{
+    display: flex;
+    flex-flow: column;
+    margin: 16px;
+}
+
+h4.titled-card-title{
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+}

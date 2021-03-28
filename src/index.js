@@ -49,12 +49,9 @@ ReactDOM.render(
               <ProtectedRoute path="/adminDashboard2" component={AdminDashboard2} />
               <Route path="/register" component={Register} />
               <Route path="/login" component={LogIn} />
-              {/* <ProtectedRoute path="/profile" component={Profile} /> */}
               <ProtectedRoute path="/profile" component={viewProfile} />
               <ProtectedRoute path="/editProfile" component={editProfile} />
             </Switch>
-            {/* <div className="container"> */}
-            <Route path="/sandbox" component={Test} />
 
             <Switch>
               <ProtectedRoute path="/admin/users" component={ManageUsers} />
