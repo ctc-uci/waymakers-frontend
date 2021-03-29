@@ -17,17 +17,17 @@ const UpdateButton = styled.button`
 const ExampleGenericTable = () => (
   <Table>
     <TableHeader>
-      <TableColumnHeader className="example-classname">Qualification</TableColumnHeader>
-      <TableColumnHeader>&nbsp;</TableColumnHeader>
-      <TableColumnHeader>Date Added</TableColumnHeader>
-      <TableColumnHeader>Status</TableColumnHeader>
-      <TableColumnHeader>Notes</TableColumnHeader>
+      <TableColumnHeader className="example-header-classname">Qualification</TableColumnHeader>
+      <TableColumnHeader className="example-header-classname">&nbsp;</TableColumnHeader>
+      <TableColumnHeader className="example-header-classname">Date Added</TableColumnHeader>
+      <TableColumnHeader className="example-header-classname">Status</TableColumnHeader>
+      <TableColumnHeader className="example-header-classname">Notes</TableColumnHeader>
     </TableHeader>
-    <TableBody>
-      <TableRow>
-        <TableContent>Valid Driver&apos;s License</TableContent>
-        <TableContent>
-          <UpdateButton>Update</UpdateButton>
+    <TableBody className="example-body-classname">
+      <TableRow className="example-row-classname">
+        <TableContent className="example-content-classname">Valid Driver&apos;s License</TableContent>
+        <TableContent className="example-content-classname">
+          <UpdateButton className="example-content-child-classname">Update</UpdateButton>
         </TableContent>
         <TableContent>03/12/21</TableContent>
         <TableContent>Qualified</TableContent>
