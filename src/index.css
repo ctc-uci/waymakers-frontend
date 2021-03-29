@@ -1,12 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant&display=swap');
+@import './common/vars.css';
 
-body {
-  font-family: 'Assistant', sans-serif;
-
-  -webkit-font-smoothing: antialiased;
-  /* -webkit-font-smoothing: subpixel-antialiased; */
-  -moz-osx-font-smoothing: grayscale;
-
-  margin: 0;
-  padding: 0;
+div.App {
+    max-width: 1600px;
+    margin: 0 auto;
 }
