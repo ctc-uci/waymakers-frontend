@@ -19,9 +19,9 @@ const UpdateButton = styled.button`
   width: 65%;
 `;
 
-const ExampleGenericTable = () => {
+const ExampleGenericTableWithUseWindow = () => {
   const { width } = useWindowDimension();
-  console.log(width);
+  // console.log(width);
 
   return (
     <>
@@ -80,15 +80,9 @@ const ExampleGenericTable = () => {
             <MobileTableRow>
               <MobileTableRowHeader>Hello</MobileTableRowHeader>
               <Divider />
-              <MobileTableContent>There</MobileTableContent>
-              <MobileTableContent>There</MobileTableContent>
-              <MobileTableContent>There</MobileTableContent>
-              <MobileTableContent>There</MobileTableContent>
-            </MobileTableRow>
-            <MobileTableRow>
-              <MobileTableRowHeader>Hello</MobileTableRowHeader>
-              <Divider />
-              <MobileTableContent>There</MobileTableContent>
+              <MobileTableContent>
+                <UpdateButton>Submit</UpdateButton>
+              </MobileTableContent>
               <MobileTableContent>There</MobileTableContent>
               <MobileTableContent>There</MobileTableContent>
               <MobileTableContent>There</MobileTableContent>
@@ -96,7 +90,19 @@ const ExampleGenericTable = () => {
             <MobileTableRow>
               <MobileTableRowHeader>Hello</MobileTableRowHeader>
               <Divider />
+              <MobileTableContent>
+                <UpdateButton>Submit</UpdateButton>
+              </MobileTableContent>
               <MobileTableContent>There</MobileTableContent>
+              <MobileTableContent>There</MobileTableContent>
+              <MobileTableContent>There</MobileTableContent>
+            </MobileTableRow>
+            <MobileTableRow>
+              <MobileTableRowHeader>Hello</MobileTableRowHeader>
+              <Divider />
+              <MobileTableContent>
+                <UpdateButton>Submit</UpdateButton>
+              </MobileTableContent>
               <MobileTableContent>There</MobileTableContent>
               <MobileTableContent>There</MobileTableContent>
               <MobileTableContent>There</MobileTableContent>
@@ -107,4 +113,4 @@ const ExampleGenericTable = () => {
   );
 };
 
-export default ExampleGenericTable;
+export default ExampleGenericTableWithUseWindow;
