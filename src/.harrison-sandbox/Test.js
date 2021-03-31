@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import ExampleLightModalWithFormik from "../common/LightModal/ExampleLightModalWithFormik";
 import { TitledCard } from '../common/Card';
+import ExampleGenericTableWithUseWindow from '../common/Table/ExampleGenericTableWithUseWindow';
 
 const Test = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,6 +10,7 @@ const Test = () => {
     <>
       <button onClick={() => setIsOpen(true)}>Click me to open modal</button>
       <ExampleLightModalWithFormik isModalOpen={isOpen} setIsModalOpen={setIsOpen}/>
+      <ExampleGenericTableWithUseWindow />
       <h1>This is heading 1</h1>
       <h2>This is heading 2</h2>
       <h3>This is heading 3</h3>
