@@ -8,6 +8,14 @@
     padding: 15px 20px;
 }
 
+.legend-info {
+    display: flex;
+}
+
+.single-legend-element {
+    display: flex;
+}
+
 .key-text {
     font-size: 1.3rem;
     font-weight: bold;

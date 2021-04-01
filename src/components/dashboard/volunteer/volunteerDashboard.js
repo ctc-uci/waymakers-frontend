@@ -173,7 +173,7 @@ const VolunteerDashboard = (props) => {
   }
 
   return (
-    <div>
+    <div className="dashboard-container">
       <div className="d-flex align-items-center justify-content-center">
         <div className="w-100 login-container">
           <Card className="w-100">

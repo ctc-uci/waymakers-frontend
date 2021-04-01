@@ -9,7 +9,7 @@ import {
 import EventList from '../../events/event-list/eventList';
 import { getEvents, getUserEvents } from '../../events/redux/selectors';
 import './volunteerDashboard.css';
-import CalendarPopup from '../../events/events-view/calendar-popup/calendarPopup';
+// import CalendarPopup from '../../events/events-view/calendar-popup/calendarPopup';
 import EventLegend from '../event-legend/eventLegend';
 
 const DashboardEventSection = (props) => {
@@ -48,20 +48,22 @@ const DashboardEventSection = (props) => {
   };
 
   return (
-    <div>
+    <>
       <div className="events-section">
-        <CalendarPopup page="volunteerDashboard" />
-        <div className="event-list-component">
-          {renderMoreEventList()}
+        {/* <CalendarPopup page="volunteerDashboard" /> */}
+        <div className="event-lists">
+          <div className="event-list-component">
+            {renderMoreEventList()}
+          </div>
+          <div className="event-list-component">
+            {renderMyEventList()}
+          </div>
         </div>
-        <div className="event-list-component">
-          {renderMyEventList()}
+        <div className="dashboard-event-legend">
+          <EventLegend />
         </div>
       </div>
-      <div className="dashboard-event-legend">
-        <EventLegend />
-      </div>
-    </div>
+    </>
   );
 };
 

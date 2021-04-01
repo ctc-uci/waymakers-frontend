@@ -1,3 +1,9 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .my-stats-section {
     width: 85%;
     margin: 30px auto;
@@ -18,20 +24,36 @@
 
 .events-section {
     display: flex;
-    justify-content: space-between;
-    margin: auto;
+    flex-direction: column;
+    /* margin: auto; */
     width: 85%;
+}
+
+.events-section .event-lists {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .event-list-component {
-    flex: 0 1 48%;
+    width: 48%;
 }
 
-.key-section {
-    display: flex;
-    width: 85%;
-    margin: 20px auto auto auto;
-    padding: 15px 20px;
+.event-div .event-list-container .event-container {
+    overflow: hidden;
+}
+
+.event-div .event-list-container .event-container .event-info-section {
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.legend-key-section {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .key-text {
@@ -116,6 +138,33 @@
     margin-left: 15px;
 }
 
-.dashboard-event-legend {
-    margin-left: 6%;
+.dashboard-container .dashboard-event-legend {
+    width: 100%;
+    align-items: center;
+}
+
+@media all and (max-width: 1000px) {
+    /* Events dashboard component */
+    .events-section .event-lists{
+        flex-direction: column;
+        align-items: center;
+        /* width: 100%; */
+    }
+    .events-section .event-list-component {
+        width: 85%;
+    }
+    /* Events dashboard legend */
+    .dashboard-container .dashboard-event-legend {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .dashboard-container .legend-key-section {
+        width: 50%;
+    }
+    .dashboard-container .legend-key-section .legend-info{
+        flex-direction: column;
+        justify-content: space-around;
+    }
 }
