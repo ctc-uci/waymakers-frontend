@@ -6,6 +6,7 @@ import { startOfWeek, add } from 'date-fns';
 
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import './viewProfile.css';
 
 import About from '../components/profile/about/About';
 import Contact from '../components/profile/contact/Contact';
@@ -111,30 +112,22 @@ const viewProfile = (props) => {
   // Passing user info as props to About, Contact and (eventually) availability components
   // Also, remove the two buttons later
   return (
-    <div>
-      <div className="page-container">
-        <div className="profilePic">
-          <img src={profCircle} alt="" width="200" height="200" />
-        </div>
-        <div className="name">
-          <h3>{`${firstName} ${lastName}`}</h3>
-          <ul className="edit-save">
-            <button type="button" onClick={() => { history.push('/editProfile'); }}>
-              Edit
-            </button>
-          </ul>
-        </div>
-        <div className="abt-contact">
-          <div className="abtCard">
-            <About bday={birthday} tier={tier} status={status} />
-          </div>
-          <div className="contactCard">
-            <Contact email={email} number={number} address={address} />
-          </div>
-        </div>
-        <div>
-          <viewAvailability availabilities={availability} startWeek={startWeek} />
-        </div>
+    <div className="page-container">
+      <div className="profilePic">
+        <img src={profCircle} alt="" width="200" height="200" />
+      </div>
+      <div className="name">
+        <h3>{`${firstName} ${lastName}`}</h3>
+        <button type="button" className="edit-save" onClick={() => { history.push('/editProfile'); }}>
+          <p className="large">Edit</p>
+        </button>
+      </div>
+      <div className="user-info">
+        <About className="about-card" bday={birthday} tier={tier} status={status} />
+        <Contact className="contact-card" email={email} number={number} address={address} />
+      </div>
+      <div>
+        <viewAvailability availabilities={availability} startWeek={startWeek} />
       </div>
     </div>
   );
