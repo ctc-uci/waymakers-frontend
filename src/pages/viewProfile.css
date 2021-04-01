@@ -21,3 +21,10 @@
   display: flex;
   flex-direction: row;
 }
+
+@media screen and (max-width: 768px) {
+  .page-container .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+}

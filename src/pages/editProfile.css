@@ -18,3 +18,10 @@
 .abt-contact {
     display: flex;
 }
+
+@media screen and (max-width: 768px) {
+    .page-container .abt-contact {
+        display: flex;
+        flex-direction: column;
+    }
+}
