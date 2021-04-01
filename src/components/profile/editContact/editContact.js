@@ -2,6 +2,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import './editContact.css';
+import TitledCard from '../../../common/Card/TitledCard';
+
+import emailPic from '../../../assets/email.svg';
+import phone from '../../../assets/phone.svg';
+import house from '../../../assets/house.svg';
 
 const EditContact = ({
   email, setEmail, firstName, setFirstName,
@@ -9,22 +14,22 @@ const EditContact = ({
   const [address, setAddress] = useState('');
 
   return (
-    <div className="contactCard">
-      <h2>Contact</h2>
+    <TitledCard title="Contact" className="contact-card">
       <form>
-        <label htmlFor="bday">Email: </label>
-        <input type="email" value={email} name="email" onChange={(e) => setEmail(e.target.value)} />
-        <br />
-        <br />
-        <label htmlFor="number">Phone Number: </label>
-        <input type="tel" value={firstName} name="number" onChange={(e) => setFirstName(e.target.value)} />
-        <br />
-        <br />
-        <label htmlFor="address">Address: </label>
-        <input type="text" value={address} name="address" onChange={(e) => setAddress(e.target.value)} />
-        {/* <input type="submit" /> */}
+        <div className="contact-input">
+          <img className="contact-icons" src={emailPic} alt="" />
+          <input type="email" value={email} name="email" onChange={(e) => setEmail(e.target.value)} />
+        </div>
+        <div className="contact-input">
+          <img className="contact-icons" src={phone} alt="" />
+          <input type="tel" value={firstName} name="number" onChange={(e) => setFirstName(e.target.value)} />
+        </div>
+        <div className="contact-input">
+          <img className="contact-icons" src={house} alt="" />
+          <input type="text" value={address} name="address" onChange={(e) => setAddress(e.target.value)} />
+        </div>
       </form>
-    </div>
+    </TitledCard>
 
   );
 };

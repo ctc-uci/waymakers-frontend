@@ -2,24 +2,24 @@
 import React from 'react';
 import './Contact.css';
 
-import emailPic from '../../../assets/email.png';
-import phone from '../../../assets/phone.png';
-import house from '../../../assets/house.png';
+import emailPic from '../../../assets/email.svg';
+import phone from '../../../assets/phone.svg';
+import house from '../../../assets/house.svg';
 import TitledCard from '../../../common/Card/TitledCard';
 
 function Contact({ email, number, address }) {
   return (
     <TitledCard title="Contact Info" className="contact-card">
       <p>
-        <img src={emailPic} alt="" width="15px" height="15px" />
+        <img className="about-icons" src={emailPic} alt="" />
         {` ${email}`}
       </p>
       <p>
-        <img src={phone} alt="" width="15px" height="15px" />
+        <img className="about-icons" src={phone} alt="" />
         {` ${number}`}
       </p>
       <p>
-        <img src={house} alt="" width="15px" height="15px" />
+        <img className="about-icons" src={house} alt="" />
         {` ${address}`}
       </p>
     </TitledCard>
