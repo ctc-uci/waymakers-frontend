@@ -4,7 +4,10 @@
   }
 
 .edit-save {
-  list-style: none;
+  text-decoration: underline;
+  border: none;
+  background-color: transparent;
+  color: var(--color-dark-blue);
 }
 
 .page-container {
@@ -14,6 +17,7 @@
   padding: 15px;
 }
 
-.abt-contact {
+.page-container .user-info {
   display: flex;
+  flex-direction: row;
 }
