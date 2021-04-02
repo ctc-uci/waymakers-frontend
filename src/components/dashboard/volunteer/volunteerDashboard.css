@@ -40,11 +40,17 @@
 }
 
 .event-div .event-list-container .event-container {
+    width: 100%;
     overflow: hidden;
 }
 
 .event-div .event-list-container .event-container .event-info-section {
     width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.dashboard-container .event-block-title, .dashboard-container .event-time {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
