@@ -9,13 +9,19 @@ const DesktopNavbar = () => {
   const isVolunteer = false;
   return (
     <div className="desktop-navbar">
-      {isVolunteer && <Link to="/">isAdmin</Link>}
-      {isVolunteer && <Link to="/">isAdmin</Link>}
       {isAdmin && <Link to="/analytics" className="desktop-navbar-link">Analytics</Link>}
-      {/* <Link to="/" className="desktop-navbar-link">Temp Link</Link> */}
-      {isAdmin && <Link to="/events" className="desktop-navbar-link">Events</Link>}
+      <Link to="/events" className="desktop-navbar-link">Events</Link>
+      {isVolunteer && <Link to="/volunteer/hours" className="desktop-navbar-link">My Hours</Link>}
+      {isVolunteer
+      && (
+        <a href="/volunteer/hours">
+          <button className="desktop-navbar-submit-hours-button" aria-label="Submit Hours" type="button">Submit Hours</button>
+        </a>
+      )}
       {isAdmin && <Link to="/inventory" className="desktop-navbar-link">Inventory</Link>}
       {isAdmin && <Link to="/users" className="desktop-navbar-link">Users</Link>}
+      {/* <div className="desktop-navbar-pfp" /> */}
+      <div className="profile" />
     </div>
   );
 };
