@@ -1,30 +1,71 @@
-.name {
-    text-align: center;
-    display: flex;
-  }
-
-.edit-save {
-  text-decoration: underline;
-  border: none;
-  background-color: transparent;
-  color: var(--color-dark-blue);
-}
-
-.page-container {
+.view-page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 15px;
 }
 
-.page-container .user-info {
+.view-page-container .name {
   display: flex;
-  flex-direction: row;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
+.view-page-container .edit-save {
+  text-decoration: underline;
+  border: none;
+  background-color: transparent;
+  color: var(--color-dark-blue);
+
+  position: absolute;
+  right: 0;
+  margin-right: 2%;
+
+  cursor: pointer;
+}
+
+.view-page-container .user-info {
+  display: flex;
+  flex-direction: row;
+  /* align-items: stretch; */
+  justify-content: center;
+  width: 80%;
+}
+
+.user-info .card-width {
+  width: 50%;
+}
+/* 
+.view-page-container .user-info .card-width .about-card {
+  display: flex;
+  align-items: stretch;
+}
+
+.view-page-container .user-info .card-width .contact-card {
+  display: flex;
+  align-items: stretch;
+} */
+
 @media screen and (max-width: 768px) {
-  .page-container .user-info {
+  .view-page-container .user-info {
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
+
+  .user-info .card-width {
+    width: 100%;
+  }
+
+
+.view-page-container .name {
+  display: flex;
+  flex-direction: column;
+  /* width: 80%; */
+  /* justify-content: center; */
+  align-items: center;
+  /* position: relative; */
+}
 }

@@ -46,7 +46,19 @@ const ProtectedRoute = ({ component, path, cookies }) => {
   }, []);
 
   if (isLoading) {
-    return <h1 style={{ textAlign: 'center' }}>LOADING...</h1>;
+    return (
+      <h1
+        style={{
+          margin: 'auto',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        LOADING...
+      </h1>
+    );
   }
   if (isAuthenticated) {
     return <Route exact path={path} component={component} />;

@@ -173,46 +173,44 @@ const editProfile = (props) => {
   }
 
   return (
-    <div>
-      <div className="page-container">
-        <div className="profilePic">
-          <img src={profCircle} alt="" width="200" height="200" />
+    // <div>
+    <div className="edit-page-container">
+      <div className="profilePic">
+        <img src={profCircle} alt="" width="200" height="200" />
+      </div>
+      <div className="name">
+        <h3 className="profile-name">{`${firstname} ${lastname}`}</h3>
+        <button className="edit-save" onClick={updateInfo} type="button">
+          <p className="large">Save</p>
+        </button>
+      </div>
+      <div className="user-info">
+        <div className="card-width">
+          <EditAbout
+            tier={tier}
+            setTier={setTier}
+            status={status}
+            setStatus={setStatus}
+          />
         </div>
-        <div className="name">
-          <h3>{`${firstname} ${lastname}`}</h3>
-          <ul className="edit-save">
-            <button onClick={updateInfo} type="button">
-              Save
-            </button>
-          </ul>
-        </div>
-        <div className="abt-contact">
-          <div className="abtCard">
-            <EditAbout
-              tier={tier}
-              setTier={setTier}
-              status={status}
-              setStatus={setStatus}
-            />
-          </div>
-          <div className="contactCard">
-            <EditContact
-              email={email}
-              setEmail={setEmail}
-              firstname={firstname}
-              setFirstname={setFirstname}
-            />
-          </div>
-        </div>
-        <div>
-          <EditAvailability
-            availabilityTimes={availability}
-            setAvailabilityTimes={setAvailability}
-            startWeek={startWeek}
+        <div className="card-width">
+          <EditContact
+            email={email}
+            setEmail={setEmail}
+            firstname={firstname}
+            setFirstname={setFirstname}
           />
         </div>
       </div>
+      <div>
+        <EditAvailability
+          availabilityTimes={availability}
+          setAvailabilityTimes={setAvailability}
+          startWeek={startWeek}
+        />
+      </div>
     </div>
+    // </div>
   );
 };
 

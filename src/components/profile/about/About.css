@@ -1,5 +1,14 @@
 .about-card {
-    width: 300px;
+    width: 90%;
+}
+
+.about-card .about-card-inner {
+    /* display: flex;
+    align-items: stretch; */
+    /* background: pink; */
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;    
 }
 
 .about-icons {

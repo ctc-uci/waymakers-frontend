@@ -6,13 +6,19 @@ import { startOfWeek, add } from 'date-fns';
 
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import './viewProfile.css';
 
-import About from '../components/profile/about/About';
+// import About from '../components/profile/about/About';
 import Contact from '../components/profile/contact/Contact';
 import viewAvailability from '../components/dashboard/availability-component/viewAvailability/viewAvailability';
 
+import Card from '../common/Card/Card';
+
 import profCircle from '../assets/profCircle.png';
+import cake from '../assets/birthday.svg';
+import people from '../assets/volunteer-tier.svg';
+import building from '../assets/student.svg';
+
+import './viewProfile.css';
 
 const viewProfile = (props) => {
   // Notes for Preston:
@@ -112,20 +118,45 @@ const viewProfile = (props) => {
   // Passing user info as props to About, Contact and (eventually) availability components
   // Also, remove the two buttons later
   return (
-    <div className="page-container">
+    <div className="view-page-container">
       <div className="profilePic">
         <img src={profCircle} alt="" width="200" height="200" />
       </div>
       <div className="name">
-        <h3>{`${firstName} ${lastName}`}</h3>
+        <h3 className="profile-name">{`${firstName} ${lastName}`}</h3>
         <button type="button" className="edit-save" onClick={() => { history.push('/editProfile'); }}>
           <p className="large">Edit</p>
         </button>
       </div>
-      <div className="user-info">
-        <About className="about-card" bday={birthday} tier={tier} status={status} />
+      <div className="card-titles">
+        <h4 className="titled-card-title">About</h4>
+        <h4 className="titled-card-title">Contact</h4>
+      </div>
+      <div>
+        <Card title="About" className="about-card">
+          <p>
+            <img className="about-icons" src={cake} alt="" />
+            {`${birthday}`}
+          </p>
+          <p>
+            <img className="about-icons" src={people} alt="" />
+            {`${tier}`}
+          </p>
+          <p>
+            <img className="about-icons" src={building} alt="" />
+            {`${status}`}
+          </p>
+        </Card>
         <Contact className="contact-card" email={email} number={number} address={address} />
       </div>
+      {/* <div className="user-info">
+        <div className="card-width">
+          <About bday={birthday} tier={tier} status={status} />
+        </div>
+        <div className="card-width">
+          <Contact className="contact-card" email={email} number={number} address={address} />
+        </div>
+      </div> */}
       <div>
         <viewAvailability availabilities={availability} startWeek={startWeek} />
       </div>
