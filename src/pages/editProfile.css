@@ -1,26 +1,40 @@
-.name {
-    text-align: center;
-    display: flex;   
-}
-
-.edit-save {
-    list-style: none;
-    float: right;
-}
-
-.page-container {
+.edit-page-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 15px;
 }
-
-.abt-contact {
+  
+.edit-page-container .name {
     display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.edit-page-container .edit-save {
+    text-decoration: underline;
+    border: none;
+    background-color: transparent;
+    color: var(--color-dark-blue);
+
+    position: absolute;
+    right: 0;
+    margin-right: 20%;
+
+    cursor: pointer;
+}
+
+.edit-page-container .user-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 90%;
 }
 
 @media screen and (max-width: 768px) {
-    .page-container .abt-contact {
+    .edit-page-container .user-info {
         display: flex;
         flex-direction: column;
     }

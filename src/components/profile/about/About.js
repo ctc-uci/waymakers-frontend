@@ -1,29 +1,43 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
-import './About.css';
+import PropTypes from 'prop-types';
 
 import cake from '../../../assets/birthday.svg';
 import people from '../../../assets/volunteer-tier.svg';
 import building from '../../../assets/student.svg';
-import TitledCard from '../../../common/Card/TitledCard';
+import Card from '../../../common/Card/Card';
 
-function About({ birthday, tier, status }) {
+import './About.css';
+
+function About({
+  birthday, tier, status,
+}) {
   return (
-    <TitledCard title="About" className="about-card">
+    <Card title="About" className="about-card">
       <p>
         <img className="about-icons" src={cake} alt="" />
         {`${birthday}`}
       </p>
       <p>
-        <img className="about-icons" src={people} alt="" width="15px" height="15px" />
+        <img className="about-icons" src={people} alt="" />
         {`${tier}`}
       </p>
       <p>
-        <img className="about-icons" src={building} alt="" width="15px" height="15px" />
+        <img className="about-icons" src={building} alt="" />
         {`${status}`}
       </p>
-    </TitledCard>
+    </Card>
   );
 }
+
+// About.defaultProps = {
+//   className: '',
+// };
+
+About.propTypes = {
+  // className: PropTypes.string,
+  birthday: PropTypes.string.isRequired,
+  tier: PropTypes.number.isRequired,
+  status: PropTypes.number.isRequired,
+};
 
 export default About;

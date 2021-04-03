@@ -1,5 +1,11 @@
 .contact-card {
-  width: 300px;
+  width: 90%;
+}
+
+.contact-card-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch; 
 }
 
 .contact-icons {
