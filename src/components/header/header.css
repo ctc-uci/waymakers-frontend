@@ -14,14 +14,14 @@
   flex-direction: row;
   justify-content: flex-start;
   padding-left: 10px;
-  width: 40%;
+  width: 20%;
 }
 
 .header-right-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  width: 60%;
+  width: 80%;
 }
 
 .header-wmk-logo {
