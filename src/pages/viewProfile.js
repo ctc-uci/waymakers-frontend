@@ -122,49 +122,53 @@ const viewProfile = (props) => {
   // Also, remove the two buttons later
   return (
     <div className="view-page-container">
-      <div className="profilePic">
-        <img src={profCircle} alt="" width="200" height="200" />
-      </div>
+      <img src={profCircle} alt="" width="200" height="200" />
       <div className="name">
-        <h3 className="profile-name">{`${firstName} ${lastName}`}</h3>
+        <h3>{`${firstName} ${lastName}`}</h3>
         <button type="button" className="edit-save" onClick={() => { history.push('/editProfile'); }}>
           <p className="large">Edit</p>
         </button>
       </div>
       <div className="profile-cards">
-        <div className="about-card">
-          <h4 className="titled-card-title">About</h4>
-          <Card title="About" className="about-card">
-            <p>
-              <img className="about-icons" src={cake} alt="" />
-              {`${birthday}`}
-            </p>
-            <p>
-              <img className="about-icons" src={people} alt="" />
-              {`${tier}`}
-            </p>
-            <p>
-              <img className="about-icons" src={building} alt="" />
-              {`${status}`}
-            </p>
-          </Card>
+        <div className="profile-card">
+          <h4 className="card-title">About</h4>
+          <div className="card-body">
+            <Card title="About" className="about-card">
+              <p>
+                <img className="about-icons" src={cake} alt="" />
+                {`${birthday}`}
+              </p>
+              <p>
+                <img className="about-icons" src={people} alt="" />
+                {`${tier}`}
+              </p>
+              <p>
+                <img className="about-icons" src={building} alt="" />
+                {`${status}`}
+              </p>
+            </Card>
+          </div>
         </div>
-        <div className="contact-card">
-          <h4 className="titled-card-title">Contact Info</h4>
-          <Card title="Contact Info" className="contact-card">
-            <p>
-              <img className="contact-icons" src={emailPic} alt="" />
-              {` ${email}`}
-            </p>
-            <p>
-              <img className="contact-icons" src={phone} alt="" />
-              {` ${number}`}
-            </p>
-            <p>
-              <img className="contact-icons" src={house} alt="" />
-              {` ${address}`}
-            </p>
-          </Card>
+        <div className="profile-card">
+          <div className="contact-card">
+            <h4 className="card-title">Contact Info</h4>
+            <div className="card-body">
+              <Card title="Contact Info" className="contact-card">
+                <p>
+                  <img className="contact-icons" src={emailPic} alt="" />
+                  {` ${email}`}
+                </p>
+                <p>
+                  <img className="contact-icons" src={phone} alt="" />
+                  {` ${number}`}
+                </p>
+                <p>
+                  <img className="contact-icons" src={house} alt="" />
+                  {` ${address}`}
+                </p>
+              </Card>
+            </div>
+          </div>
         </div>
       </div>
       <div>
