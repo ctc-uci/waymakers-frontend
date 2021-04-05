@@ -26,46 +26,43 @@
   cursor: pointer;
 }
 
-.view-page-container .user-info {
-  display: flex;
-  flex-direction: row;
-  /* align-items: stretch; */
-  justify-content: center;
-  width: 80%;
+h4.titled-card-title{
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
 }
 
-.user-info .card-width {
-  width: 50%;
-}
-/* 
-.view-page-container .user-info .card-width .about-card {
-  display: flex;
-  align-items: stretch;
+.about-card,
+.contact-card {
+  width: 90%;
 }
 
-.view-page-container .user-info .card-width .contact-card {
+.about-card .about-card-inner,
+.contact-card .contact-card-inner {
   display: flex;
-  align-items: stretch;
-} */
+  flex-direction: column;
+  justify-content: stretch;    
+}
+
+.profile-cards {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
 
 @media screen and (max-width: 768px) {
-  .view-page-container .user-info {
+  .view-page-container .profile-cards {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .user-info .card-width {
-    width: 100%;
+  .header {
+    display: block;
   }
 
-
-.view-page-container .name {
-  display: flex;
-  flex-direction: column;
-  /* width: 80%; */
-  /* justify-content: center; */
-  align-items: center;
-  /* position: relative; */
-}
+  .view-page-container .name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
