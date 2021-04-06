@@ -133,7 +133,7 @@ const viewProfile = (props) => {
         <div className="profile-card">
           <h4 className="card-title">About</h4>
           <div className="card-body">
-            <Card title="About" className="about-card">
+            <Card className="about-card">
               <p>
                 <img className="about-icons" src={cake} alt="" />
                 {`${birthday}`}
@@ -153,7 +153,7 @@ const viewProfile = (props) => {
           <div className="contact-card">
             <h4 className="card-title">Contact Info</h4>
             <div className="card-body">
-              <Card title="Contact Info" className="contact-card">
+              <Card className="contact-card">
                 <p>
                   <img className="contact-icons" src={emailPic} alt="" />
                   {` ${email}`}
