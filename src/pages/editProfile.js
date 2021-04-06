@@ -6,17 +6,27 @@ import {
   startOfWeek, add, getHours, getDay,
 } from 'date-fns';
 import { useHistory } from 'react-router-dom';
+import Datetime from 'react-datetime';
 import './editProfile.css';
 import axios from 'axios';
+import moment from 'moment';
 
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
-import EditAbout from '../components/profile/editAbout/editAbout.js';
-import EditContact from '../components/profile/editContact/editContact.js';
+import Card from '../common/Card/Card';
+
+// import EditAbout from '../components/profile/editAbout/editAbout.js';
+// import EditContact from '../components/profile/editContact/editContact.js';
 import EditAvailability from '../components/dashboard/availability-component/editAvailability/editAvailability';
 
 import profCircle from '../assets/profCircle.png';
+import cake from '../assets/birthday.svg';
+import people from '../assets/volunteer-tier.svg';
+import building from '../assets/student.svg';
+import emailPic from '../assets/email.svg';
+import phone from '../assets/phone.svg';
+import house from '../assets/house.svg';
 
 const editProfile = (props) => {
   // Idea: we have states for each of the information fields we're allowed to change
@@ -46,7 +56,8 @@ const editProfile = (props) => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zip, setZip] = useState(0);
-  const [birthday, setBirthday] = useState('');
+  const [birthday, setBirthday] = useState(new Date());
+  const [address, setAddress] = useState('');
 
   const [tier, setTier] = useState(3);
   const [status, setStatus] = useState('Volunteer');
@@ -105,7 +116,7 @@ const editProfile = (props) => {
     setCity(locationcity);
     setState(locationstate);
     setZip(locationzip);
-    setBirthday(account.birthdate);
+    setBirthday(moment(account.birthdate));
     setTier(account.tier);
     setStatus(permissions.permissions);
 
@@ -147,7 +158,7 @@ const editProfile = (props) => {
       `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
         firstname,
         lastname,
-        birthdate: birthday,
+        birthdate: birthday.format(),
         locationstreet: street,
         locationcity: city,
         locationstate: state,
@@ -184,31 +195,64 @@ const editProfile = (props) => {
           <p className="large">Save</p>
         </button>
       </div>
-      <div className="user-info">
-        <div className="card-width">
-          <EditAbout
-            tier={tier}
-            setTier={setTier}
-            status={status}
-            setStatus={setStatus}
-          />
+      <div className="profile-cards">
+        <div className="profile-card">
+          <h4 className="card-title">About</h4>
+          <div className="card-body">
+            <Card className="about-card">
+              <form>
+                <div className="about-input">
+                  <img className="about-icons" src={cake} alt="" />
+                  <div className="datetime-input-box">
+                    <Datetime
+                      initialValue={birthday}
+                      onChange={(e) => setBirthday(e)}
+                    />
+                  </div>
+                </div>
+                <div className="about-input">
+                  <img className="about-icons" src={people} alt="" />
+                  <input className="profile-input-box profile-input-box-width" type="text" value={tier} name="tier" onChange={(e) => setTier(e.target.value)} />
+                </div>
+                <div className="about-input">
+                  <img className="about-icons" src={building} alt="" />
+                  <input className="profile-input-box profile-input-box-width" type="text" value={status} name="status" onChange={(e) => setStatus(e.target.value)} />
+                </div>
+              </form>
+            </Card>
+          </div>
         </div>
-        <div className="card-width">
-          <EditContact
-            email={email}
-            setEmail={setEmail}
-            firstname={firstname}
-            setFirstname={setFirstname}
-          />
+        <div className="profile-card">
+          <div className="contact-card">
+            <h4 className="card-title">Contact Info</h4>
+            <div className="card-body">
+              <Card className="contact-card">
+                <form>
+                  <div className="contact-input">
+                    <img className="contact-icons" src={emailPic} alt="" />
+                    <input className="profile-input-box profile-input-box-width" type="email" value={email} name="email" onChange={(e) => setEmail(e.target.value)} />
+                  </div>
+                  <div className="contact-input">
+                    <img className="contact-icons" src={phone} alt="" />
+                    <input className="profile-input-box profile-input-box-width" type="tel" value={firstname} name="number" onChange={(e) => setFirstName(e.target.value)} />
+                  </div>
+                  <div className="contact-input">
+                    <img className="contact-icons" src={house} alt="" />
+                    <input className="profile-input-box profile-input-box-width" type="text" value={address} name="address" onChange={(e) => setAddress(e.target.value)} />
+                  </div>
+                </form>
+              </Card>
+            </div>
+          </div>
         </div>
       </div>
-      <div>
+      {/* <div>
         <EditAvailability
           availabilityTimes={availability}
           setAvailabilityTimes={setAvailability}
           startWeek={startWeek}
         />
-      </div>
+      </div> */}
     </div>
     // </div>
   );
