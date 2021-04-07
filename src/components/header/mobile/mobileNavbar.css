@@ -1,0 +1,19 @@
+/* Hide the links inside the navigation menu (except for logo/home) */
+.navbar navBarLinks {
+    display: none;
+  }
+
+  /* Style navigation menu links */
+.navbar a {
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+  }
+
+  /* Add a grey background color on mouse-over */
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+  }
