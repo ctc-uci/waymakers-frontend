@@ -116,6 +116,7 @@ const editProfile = (props) => {
     setCity(locationcity);
     setState(locationstate);
     setZip(locationzip);
+    setAddress(`${locationstreet} ${locationcity}, ${locationstate} ${locationzip}`);
     setBirthday(moment(account.birthdate));
     setTier(account.tier);
     setStatus(permissions.permissions);
