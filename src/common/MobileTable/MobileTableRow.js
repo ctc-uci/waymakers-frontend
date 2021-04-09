@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const MobileTableRow = styled.div`
-  padding: 3% 5% 3% 5%;
+  padding: 2% 2% 2% 2%;
   &:nth-child(even) {
     background: rgba(51, 100, 115, 0.37);
   };
