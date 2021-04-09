@@ -13,6 +13,7 @@
 }
 
 .event-list-container .volunteer-event {
+    min-width: 14px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
