@@ -17,11 +17,11 @@ const PendingHoursDesktop = ({ pendingHours }) => (
     <TableBody>
       {pendingHours && pendingHours.map((pendingHour) => (
         <TableRow>
-          <TableContent>{pendingHour.event_name}</TableContent>
-          <TableContent>{pendingHour.event_location}</TableContent>
-          <TableContent>{pendingHour.log_start}</TableContent>
-          <TableContent>{pendingHour.log_end}</TableContent>
-          <TableContent>{pendingHour.total_hours}</TableContent>
+          <TableContent>{pendingHour.title}</TableContent>
+          <TableContent>{pendingHour.location}</TableContent>
+          <TableContent>{pendingHour.logStart}</TableContent>
+          <TableContent>{pendingHour.logEnd}</TableContent>
+          <TableContent>{pendingHour.totalHours}</TableContent>
         </TableRow>
       ))}
     </TableBody>
@@ -31,11 +31,11 @@ const PendingHoursDesktop = ({ pendingHours }) => (
 PendingHoursDesktop.propTypes = {
   pendingHours: PropTypes.arrayOf(
     PropTypes.shape({
-      event_name: PropTypes.string,
-      event_location: PropTypes.string,
-      log_start: PropTypes.string,
-      log_end: PropTypes.string,
-      total_hours: PropTypes.string,
+      title: PropTypes.string,
+      location: PropTypes.string,
+      logStart: PropTypes.string,
+      logEnd: PropTypes.string,
+      totalHours: PropTypes.string,
     }),
   ).isRequired,
 };
