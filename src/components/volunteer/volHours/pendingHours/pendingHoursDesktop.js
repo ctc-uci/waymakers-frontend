@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import {
   Table, TableHeader, TableColumnHeader, TableBody, TableContent, TableRow,
 } from '../../../../common/Table';
+import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 
-const PendingHoursDesktop = ({ pendingHours, formatDate }) => (
+const PendingHoursDesktop = ({ pendingHours }) => (
   <Table>
     <TableHeader>
       <TableColumnHeader>Event Name</TableColumnHeader>
@@ -17,11 +18,11 @@ const PendingHoursDesktop = ({ pendingHours, formatDate }) => (
     <TableBody>
       {pendingHours.map((pendingHour) => (
         <TableRow>
-          <TableContent>{pendingHour.title}</TableContent>
+          <TableContent>{pendingHour.eventName}</TableContent>
           <TableContent>{pendingHour.location}</TableContent>
-          <TableContent>{formatDate(pendingHour.logStart)}</TableContent>
-          <TableContent>{formatDate(pendingHour.logEnd)}</TableContent>
-          <TableContent>{pendingHour.totalHours}</TableContent>
+          <TableContent>{formatDate(pendingHour.startTime, DATE_FORMAT.MY_HOURS)}</TableContent>
+          <TableContent>{formatDate(pendingHour.endTime, DATE_FORMAT.MY_HOURS)}</TableContent>
+          <TableContent>{pendingHour.hours}</TableContent>
         </TableRow>
       ))}
     </TableBody>
@@ -31,14 +32,13 @@ const PendingHoursDesktop = ({ pendingHours, formatDate }) => (
 PendingHoursDesktop.propTypes = {
   pendingHours: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string,
+      eventName: PropTypes.string,
       location: PropTypes.string,
-      logStart: PropTypes.string,
-      logEnd: PropTypes.string,
-      totalHours: PropTypes.string,
+      startTime: PropTypes.string,
+      endTime: PropTypes.string,
+      hours: PropTypes.string,
     }),
   ).isRequired,
-  formatDate: PropTypes.func.isRequired,
 };
 
 export default PendingHoursDesktop;

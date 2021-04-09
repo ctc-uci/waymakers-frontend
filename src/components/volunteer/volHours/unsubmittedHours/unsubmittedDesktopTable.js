@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {
   Table, TableHeader, TableColumnHeader, TableBody, TableRow, TableContent,
 } from '../../../../common/Table';
-
+import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 import './unsubmittedDesktopTable.css';
 
 const UpdateButton = styled.button`
@@ -23,8 +23,8 @@ const UnsubmittedDesktopTable = ({ unsubmittedHours }) => {
     <TableRow className="uh-table-row">
       <TableContent>{e.eventName}</TableContent>
       <TableContent>{e.location}</TableContent>
-      <TableContent>{`${new Date(e.startTime).toLocaleDateString('en-US')}, ${new Date(e.startTime).getTime()}`}</TableContent>
-      <TableContent>{`${new Date(e.endTime).toLocaleDateString('en-US')}, ${new Date(e.endTime).getTime()}`}</TableContent>
+      <TableContent>{formatDate(e.startTime, DATE_FORMAT.MY_HOURS)}</TableContent>
+      <TableContent>{formatDate(e.endTime, DATE_FORMAT.MY_HOURS)}</TableContent>
       <TableContent>
         <UpdateButton>Submit</UpdateButton>
       </TableContent>

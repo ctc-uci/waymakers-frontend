@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
-
+import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 import './unsubmittedHoursMobileTable.css';
 
 const UpdateButton = styled.button`
@@ -22,9 +22,9 @@ const UnsubmittedMobileTable = ({ unsubmittedHours }) => {
     <MobileTableRow className="uh-table-row">
       <MobileTableRowHeader>{e.eventName}</MobileTableRowHeader>
       <Divider />
-      <MobileTableContent>{e.location}</MobileTableContent>
-      <MobileTableContent>{`${new Date(e.startTime).toLocaleDateString('en-US')}, ${new Date(e.startTime).getTime()}`}</MobileTableContent>
-      <MobileTableContent>{`${new Date(e.endTime).toLocaleDateString('en-US')}, ${new Date(e.endTime).getTime()}`}</MobileTableContent>
+      <MobileTableContent>{`Location: ${e.location}`}</MobileTableContent>
+      <MobileTableContent>{`Start Date/Time: ${formatDate(e.startTime, DATE_FORMAT.MY_HOURS)}`}</MobileTableContent>
+      <MobileTableContent>{`End Date/Time: ${formatDate(e.endTime, DATE_FORMAT.MY_HOURS)}`}</MobileTableContent>
       <MobileTableContent>
         <UpdateButton>Submit</UpdateButton>
       </MobileTableContent>

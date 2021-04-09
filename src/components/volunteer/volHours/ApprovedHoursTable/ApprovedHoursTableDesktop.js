@@ -6,6 +6,7 @@ import {
 import {
   TitledCard,
 } from '../../../../common/Card';
+import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 
 const ApprovedHoursTableDesktop = ({ approvedHours }) => (
   <TitledCard title="Approved Hours">
@@ -22,8 +23,8 @@ const ApprovedHoursTableDesktop = ({ approvedHours }) => (
           <TableRow>
             <TableContent>{approvedHour.eventName}</TableContent>
             <TableContent>{approvedHour.location}</TableContent>
-            <TableContent>{approvedHour.startTime}</TableContent>
-            <TableContent>{approvedHour.endTime}</TableContent>
+            <TableContent>{formatDate(approvedHour.startTime, DATE_FORMAT.MY_HOURS)}</TableContent>
+            <TableContent>{formatDate(approvedHour.endTime, DATE_FORMAT.MY_HOURS)}</TableContent>
             <TableContent>{approvedHour.hours}</TableContent>
           </TableRow>
         ))}

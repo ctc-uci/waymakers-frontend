@@ -4,24 +4,25 @@ import PropTypes from 'prop-types';
 import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
+import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 
-const PendingHoursMobile = ({ pendingHours, formatDate }) => (
+const PendingHoursMobile = ({ pendingHours }) => (
   <MobileTable>
     {pendingHours.map((pendingHour) => (
       <MobileTableRow>
-        <MobileTableRowHeader>{pendingHour.title}</MobileTableRowHeader>
+        <MobileTableRowHeader>{pendingHour.eventName}</MobileTableRowHeader>
         <Divider />
         <MobileTableContent>
           {`Location: ${pendingHour.location}`}
         </MobileTableContent>
         <MobileTableContent>
-          {`Start Date/Time: ${formatDate(pendingHour.logStart)}`}
+          {`Start Date/Time: ${formatDate(pendingHour.startTime, DATE_FORMAT.MY_HOURS)}`}
         </MobileTableContent>
         <MobileTableContent>
-          {`End Date/Time: ${formatDate(pendingHour.logEnd)}`}
+          {`End Date/Time: ${formatDate(pendingHour.endTime, DATE_FORMAT.MY_HOURS)}`}
         </MobileTableContent>
         <MobileTableContent>
-          {`Hours: ${pendingHour.totalHours}`}
+          {`Hours: ${pendingHour.hours}`}
         </MobileTableContent>
       </MobileTableRow>
     ))}
@@ -31,14 +32,13 @@ const PendingHoursMobile = ({ pendingHours, formatDate }) => (
 PendingHoursMobile.propTypes = {
   pendingHours: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string,
+      eventName: PropTypes.string,
       location: PropTypes.string,
-      logStart: PropTypes.string,
-      logEnd: PropTypes.string,
-      totalHours: PropTypes.string,
+      startTime: PropTypes.string,
+      endTime: PropTypes.string,
+      hours: PropTypes.string,
     }),
   ).isRequired,
-  formatDate: PropTypes.func.isRequired,
 };
 
 export default PendingHoursMobile;

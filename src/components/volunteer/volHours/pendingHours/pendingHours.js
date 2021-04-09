@@ -27,30 +27,31 @@ const PendingHours = () => {
     }
   };
 
-  const formatDate = (dateString) => {
-    const timestamp = new Date(dateString);
-
-    return new Intl.DateTimeFormat('en', {
-      year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
-    }).format(timestamp);
-  };
-
   useEffect(() => {
     getPendingHours();
   }, []);
 
-  if (pendingHours && pendingHours.length > 0) {
+  if (pendingHours === null) {
     return (
       <TitledCard title="Pending Hours">
-        {isMobile
-          ? <PendingHoursMobile pendingHours={pendingHours} formatDate={formatDate} />
-          : <PendingHoursDesktop pendingHours={pendingHours} formatDate={formatDate} /> }
+        <p className="medium">Loading...</p>
       </TitledCard>
     );
   }
+
+  if (pendingHours && pendingHours.length === 0) {
+    return (
+      <TitledCard title="Pending Hours">
+        <p className="medium">There are no pending hours.</p>
+      </TitledCard>
+    );
+  }
+
   return (
     <TitledCard title="Pending Hours">
-      <p>There are no pending hours.</p>
+      {isMobile
+        ? <PendingHoursMobile pendingHours={pendingHours} />
+        : <PendingHoursDesktop pendingHours={pendingHours} /> }
     </TitledCard>
   );
 };

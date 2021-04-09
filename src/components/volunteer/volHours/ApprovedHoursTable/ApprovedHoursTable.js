@@ -15,15 +15,15 @@ const ApprovedHoursTable = () => {
   if (approvedHours === null) {
     return (
       <TitledCard title="Approved Hours">
-        <p className="medium">Loading</p>
+        <p className="medium">Loading...</p>
       </TitledCard>
     );
   }
 
-  if (approvedHours.length === 0) {
+  if (approvedHours && approvedHours.length === 0) {
     return (
       <TitledCard title="Approved Hours">
-        <p className="medium">There are no entries</p>
+        <p className="medium">There are no approved hours.</p>
       </TitledCard>
     );
   }

@@ -15,7 +15,7 @@ import ManageDB from './components/admin/managedb/managedb';
 // import Profile from './components/profile/profile';
 import viewProfile from './pages/viewProfile';
 import editProfile from './pages/editProfile';
-import Hours from './components/volunteer/volHours/unsubmittedHours/unsubmittedHours';
+import Hours from './components/volunteer/volHours/hours';
 import Tier from './components/volunteer/tier/tier';
 import Forms from './components/volunteer/forms/forms';
 import Inventory from './components/inventory/inventory';

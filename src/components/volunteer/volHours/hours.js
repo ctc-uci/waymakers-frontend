@@ -1,12 +1,14 @@
 import React from 'react';
-import PendingHours from './pendingHours/pendingHours';
 import './hours.css';
 
+import PendingHours from './pendingHours/pendingHours';
 import ApprovedHoursTable from './ApprovedHoursTable/ApprovedHoursTable';
+import UnsubmittedHours from './unsubmittedHours/unsubmittedHours';
 
 const Hours = () => (
   <div className="hours">
-    <h1>Volunteer Hours</h1>
+    <h1 className="title">My Hours</h1>
+    <UnsubmittedHours />
     <PendingHours />
     <ApprovedHoursTable />
   </div>

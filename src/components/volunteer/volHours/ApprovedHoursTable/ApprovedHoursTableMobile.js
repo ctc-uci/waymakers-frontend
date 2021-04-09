@@ -6,6 +6,7 @@ import {
 import {
   TitledCard,
 } from '../../../../common/Card';
+import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 
 const ApprovedHoursTableMobile = ({ approvedHours }) => (
   <TitledCard title="Approved Hours">
@@ -18,10 +19,10 @@ const ApprovedHoursTableMobile = ({ approvedHours }) => (
             {`Location: ${approvedHour.location}`}
           </MobileTableContent>
           <MobileTableContent>
-            {`Start Date/Time: ${approvedHour.startTime}`}
+            {`Start Date/Time: ${formatDate(approvedHour.startTime, DATE_FORMAT.MY_HOURS)}`}
           </MobileTableContent>
           <MobileTableContent>
-            {`End Date/Time: ${approvedHour.endTime}`}
+            {`End Date/Time: ${formatDate(approvedHour.endTime, DATE_FORMAT.MY_HOURS)}`}
           </MobileTableContent>
           <MobileTableContent>
             {`Hours: ${approvedHour.hours}`}

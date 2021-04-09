@@ -3,12 +3,12 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { TitledCard } from '../../../../common/Card';
 
-import useWindowDimension from '../../../../common/useWindowDimension';
+import useMobileWidth from '../../../../common/useMobileWidth';
 import UnsubmittedDesktopTable from './unsubmittedDesktopTable';
 import UnsubmittedMobileTable from './unsubmittedMobileTable';
 
 const UnsubmittedHours = () => {
-  const { width } = useWindowDimension();
+  const isMobile = useMobileWidth();
   const [unsubmittedHours, setUnsubmittedHours] = useState(null);
   const [cookies] = useCookies(['userId']);
 
@@ -28,7 +28,15 @@ const UnsubmittedHours = () => {
   if (unsubmittedHours === null) {
     return (
       <TitledCard title="Unsubmitted Hours">
-        <p>Loading...</p>
+        <p className="medium">Loading...</p>
+      </TitledCard>
+    );
+  }
+
+  if (unsubmittedHours && unsubmittedHours.length === 0) {
+    return (
+      <TitledCard title="Unsubmitted Hours">
+        <p className="medium">There are no unsubmitted hours.</p>
       </TitledCard>
     );
   }
@@ -36,12 +44,12 @@ const UnsubmittedHours = () => {
   return (
     <>
       <TitledCard title="Unsubmitted Hours">
-        {width > 768
+        {isMobile
           ? (
-            <UnsubmittedDesktopTable unsubmittedHours={unsubmittedHours} />
+            <UnsubmittedMobileTable unsubmittedHours={unsubmittedHours} />
           )
           : (
-            <UnsubmittedMobileTable unsubmittedHours={unsubmittedHours} />
+            <UnsubmittedDesktopTable unsubmittedHours={unsubmittedHours} />
           )}
       </TitledCard>
     </>
