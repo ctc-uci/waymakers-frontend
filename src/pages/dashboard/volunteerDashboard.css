@@ -1,0 +1,46 @@
+.volunteer-dashboard-page-container .my-stats-section {
+    width: 85%;
+    margin: 30px auto;
+}
+
+.filler {
+    height: 100px;
+    width: 100%;
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.my-stats-title {
+    color: var(--text-color-dark);
+    font-weight: bold;
+}
+
+.events-section {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    width: 85%;
+}
+
+.event-list-component {
+    flex: 0 1 48%;
+}
+
+/* .volunteer-dashboard-page-container .availability-third {
+  width: 60vw;
+  background-color: pink;
+} */
+
+.help-popup {
+    background-color: var(--color-olive);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    padding: 10px;
+    margin-left: 15px;
+}

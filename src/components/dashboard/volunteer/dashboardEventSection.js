@@ -2,15 +2,18 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withCookies, Cookies } from 'react-cookie';
 import { instanceOf } from 'prop-types';
+
 import {
   fetchEvents,
   fetchUserEvents,
 } from '../../events/redux/actions';
-import EventList from '../../events/event-list/eventList';
 import { getEvents, getUserEvents } from '../../events/redux/selectors';
-import './volunteerDashboard.css';
+
 import CalendarPopup from '../../events/events-view/calendar-popup/calendarPopup';
 import EventLegend from '../event-legend/eventLegend';
+import EventList from '../../events/event-list/eventList';
+
+import './dashboardEventSection.css';
 
 const DashboardEventSection = (props) => {
   const dispatch = useDispatch();
@@ -48,7 +51,7 @@ const DashboardEventSection = (props) => {
   };
 
   return (
-    <div>
+    <>
       <div className="events-section">
         <CalendarPopup page="volunteerDashboard" />
         <div className="event-list-component">
@@ -61,7 +64,7 @@ const DashboardEventSection = (props) => {
       <div className="dashboard-event-legend">
         <EventLegend />
       </div>
-    </div>
+    </>
   );
 };
 

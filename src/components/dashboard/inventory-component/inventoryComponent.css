@@ -73,6 +73,10 @@
   text-align: center;
 }
 
+.no-items-message {
+  text-align: center;
+}
+
 .view-inventory-section {
   width: 100%;
 }
