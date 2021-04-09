@@ -5,7 +5,7 @@ import {
   Table, TableHeader, TableColumnHeader, TableBody, TableContent, TableRow,
 } from '../../../../common/Table';
 
-const PendingHoursDesktop = ({ pendingHours }) => (
+const PendingHoursDesktop = ({ pendingHours, formatDate }) => (
   <Table>
     <TableHeader>
       <TableColumnHeader>Event Name</TableColumnHeader>
@@ -15,12 +15,12 @@ const PendingHoursDesktop = ({ pendingHours }) => (
       <TableColumnHeader>Hours</TableColumnHeader>
     </TableHeader>
     <TableBody>
-      {pendingHours && pendingHours.map((pendingHour) => (
+      {pendingHours.map((pendingHour) => (
         <TableRow>
           <TableContent>{pendingHour.title}</TableContent>
           <TableContent>{pendingHour.location}</TableContent>
-          <TableContent>{pendingHour.logStart}</TableContent>
-          <TableContent>{pendingHour.logEnd}</TableContent>
+          <TableContent>{formatDate(pendingHour.logStart)}</TableContent>
+          <TableContent>{formatDate(pendingHour.logEnd)}</TableContent>
           <TableContent>{pendingHour.totalHours}</TableContent>
         </TableRow>
       ))}
@@ -38,6 +38,7 @@ PendingHoursDesktop.propTypes = {
       totalHours: PropTypes.string,
     }),
   ).isRequired,
+  formatDate: PropTypes.func.isRequired,
 };
 
 export default PendingHoursDesktop;

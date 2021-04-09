@@ -27,6 +27,14 @@ const PendingHours = () => {
     }
   };
 
+  const formatDate = (dateString) => {
+    const timestamp = new Date(dateString);
+
+    return new Intl.DateTimeFormat('en', {
+      year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
+    }).format(timestamp);
+  };
+
   useEffect(() => {
     getPendingHours();
   }, []);
@@ -35,8 +43,8 @@ const PendingHours = () => {
     return (
       <TitledCard title="Pending Hours">
         {isMobile
-          ? <PendingHoursMobile pendingHours={pendingHours} />
-          : <PendingHoursDesktop pendingHours={pendingHours} /> }
+          ? <PendingHoursMobile pendingHours={pendingHours} formatDate={formatDate} />
+          : <PendingHoursDesktop pendingHours={pendingHours} formatDate={formatDate} /> }
       </TitledCard>
     );
   }

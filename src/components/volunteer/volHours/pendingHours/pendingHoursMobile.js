@@ -5,9 +5,9 @@ import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
 
-const PendingHoursMobile = ({ pendingHours }) => (
+const PendingHoursMobile = ({ pendingHours, formatDate }) => (
   <MobileTable>
-    {pendingHours && pendingHours.map((pendingHour) => (
+    {pendingHours.map((pendingHour) => (
       <MobileTableRow>
         <MobileTableRowHeader>{pendingHour.title}</MobileTableRowHeader>
         <Divider />
@@ -15,10 +15,10 @@ const PendingHoursMobile = ({ pendingHours }) => (
           {`Location: ${pendingHour.location}`}
         </MobileTableContent>
         <MobileTableContent>
-          {`Start Date/Time: ${pendingHour.logStart}`}
+          {`Start Date/Time: ${formatDate(pendingHour.logStart)}`}
         </MobileTableContent>
         <MobileTableContent>
-          {`End Date/Time: ${pendingHour.logEnd}`}
+          {`End Date/Time: ${formatDate(pendingHour.logEnd)}`}
         </MobileTableContent>
         <MobileTableContent>
           {`Hours: ${pendingHour.totalHours}`}
@@ -38,6 +38,7 @@ PendingHoursMobile.propTypes = {
       totalHours: PropTypes.string,
     }),
   ).isRequired,
+  formatDate: PropTypes.func.isRequired,
 };
 
 export default PendingHoursMobile;
