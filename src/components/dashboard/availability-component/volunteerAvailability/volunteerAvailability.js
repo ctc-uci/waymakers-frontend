@@ -96,6 +96,58 @@ const VolunteerAvailability = (props) => {
   };
 
   function renderAvailability() {
+    if (true) {
+      return (
+        <div className="availability-wrapper">
+          <div className="availability-header">
+            <h2 className="availability-title">Availability for the Week</h2>
+            <div className="availability-buttons-container">
+              {availabilityMode === 'view'
+                ? (
+                  <div
+                    className="availability-edit-button"
+                    onClick={() => { setAvailabilityMode('edit'); }}
+                    onKeyDown={() => { setAvailabilityMode('edit'); }}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    Change Availability
+                  </div>
+                )
+                : (
+                  <div
+                    className="availability-save-button"
+                    onClick={updateAvailability}
+                    onKeyDown={updateAvailability}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    Save Changes
+                  </div>
+                )}
+              <div
+                className="help-popup-button"
+                onClick={onHelpButtonClick}
+                onKeyDown={onHelpButtonClick}
+                role="button"
+                tabIndex={0}
+              >
+                ?
+              </div>
+            </div>
+          </div>
+          { availabilityMode === 'view'
+            ? (<ViewAvailability availabilities={availability} startWeek={startWeek} />)
+            : (
+              <EditAvailability
+                availabilityTimes={availability}
+                setAvailabilityTimes={setAvailability}
+                startWeek={startWeek}
+              />
+            )}
+        </div>
+      );
+    }
     return (
       <>
         {availabilityMode === 'view' ? (
@@ -127,7 +179,7 @@ const VolunteerAvailability = (props) => {
         )
           : (
             <div className="availability-wrapper">
-              <h5 className="availability-title">Availability for the Week</h5>
+              <h2 className="availability-title">Availability for the Week</h2>
               <div
                 className="save-button"
                 onClick={updateAvailability}

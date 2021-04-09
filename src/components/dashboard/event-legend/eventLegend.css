@@ -8,6 +8,14 @@
     padding: 15px 20px;
 }
 
+.legend-info {
+    display: flex;
+}
+
+.single-legend-element {
+    display: flex;
+}
+
 .key-text {
     font-size: 1.3rem;
     font-weight: bold;
@@ -48,3 +56,14 @@
     font-size: 1.3rem;
     margin: 0 10px 0 0;
 }
+
+@media screen and (max-width: 768px) {
+    .legend-key-section {
+        width: 80%;
+    }
+    .legend-key-section .legend-info {
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+

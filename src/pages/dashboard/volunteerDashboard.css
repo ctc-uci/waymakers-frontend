@@ -1,4 +1,7 @@
 .volunteer-dashboard-page-container .my-stats-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 85%;
     margin: 30px auto;
 }
@@ -43,4 +46,83 @@
     line-height: 1.2rem;
     padding: 10px;
     margin-left: 15px;
+}
+
+/* CSS From DashboardEventSection.js */
+
+.events-section {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    width: 85%;
+    height: 850px;
+}
+
+.event-list-component {
+    flex: 0 1 48%;
+}
+
+.key-section {
+    display: flex;
+    width: 85%;
+    margin: 20px auto auto auto;
+    padding: 15px 20px;
+}
+
+.key-text {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0 10px 0 0;
+}
+
+.volunteer-event-square {
+    background-color: var(--color-yellow);
+    width: 25px;
+    height: 25px;
+    margin: 0 10px 0 25px;
+}
+
+.volunteer-event-text {
+    font-size: 1.3rem;
+    margin: 0 10px 0 0;
+}
+
+.outreach-event-square {
+    background-color: var(--color-light-pink);
+    width: 25px;
+    height: 25px;
+    margin: 0 10px 0 25px;
+}
+
+.outreach-event-text {
+    font-size: 1.3rem;
+    margin: 0 10px 0 0;
+}
+
+.other-event-square {
+    background-color: var(--color-lavender);
+    width: 25px;
+    height: 25px;
+    margin: 0 10px 0 25px;
+}
+
+.other-event-text {
+    font-size: 1.3rem;
+    margin: 0 10px 0 0;
+}
+
+.dashboard-event-legend {
+    margin-left: 6%;
+}
+
+@media screen and (max-width: 768px) {
+    /* Events dashboard component */
+    .events-section {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .events-section .event-list-component {
+        width: 90%;
+    }
 }

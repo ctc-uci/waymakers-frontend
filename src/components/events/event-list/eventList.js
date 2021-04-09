@@ -88,7 +88,7 @@ const EventList = ({
   return (
     <div className="event-list">
       {page === 'volunteerDashboard' && view === 'timeGridDay' && <EventLegend />}
-      <h5 className="event-list-title">{ title }</h5>
+      <h4 className="event-list-title">{ title }</h4>
       <div className="events-container">
         {renderEvents()}
         {page === 'dashboard' && renderSeeMore()}
