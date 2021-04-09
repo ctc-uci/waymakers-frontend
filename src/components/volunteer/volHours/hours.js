@@ -1,5 +1,5 @@
 import React from 'react';
-import PendingHours from './pendingHours';
+import PendingHours from './pendingHours/pendingHours';
 import './hours.css';
 
 const Hours = () => (
