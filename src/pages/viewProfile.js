@@ -9,7 +9,7 @@ import { withCookies, Cookies } from 'react-cookie';
 
 import About from '../components/profile/about/About';
 import Contact from '../components/profile/contact/Contact';
-import viewAvailability from '../components/dashboard/availability-component/viewAvailability/viewAvailability';
+import viewAvailability from '../components/dashboard/availability-component/volunteerAvailability/viewAvailability/viewAvailability';
 
 import profCircle from '../assets/profCircle.png';
 

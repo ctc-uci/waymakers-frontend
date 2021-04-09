@@ -1,4 +1,4 @@
-.editAvailCard {
+.viewAvailCard {
     padding: 30px;
     margin: 25px;
     /* margin: auto; */
@@ -9,4 +9,16 @@
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+    pointer-events: none;
+}
+
+.viewAvailCard .grid-cell {
+    width: 100%;
+    height: 25px;
+}
+
+.viewAvailCard .cell-text {
+    font-size: 5;
+    margin: auto;
+    color: white;
 }
