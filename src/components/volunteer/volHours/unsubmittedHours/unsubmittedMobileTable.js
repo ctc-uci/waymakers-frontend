@@ -17,14 +17,14 @@ const UpdateButton = styled.button`
   width: 65%;
 `;
 
-const UnsubmittedMobileTable = ({ tableData }) => {
-  const rows = tableData.map((e) => (
+const UnsubmittedMobileTable = ({ unsubmittedHours }) => {
+  const rows = unsubmittedHours.map((e) => (
     <MobileTableRow className="uh-table-row">
-      <MobileTableRowHeader>{e.name}</MobileTableRowHeader>
+      <MobileTableRowHeader>{e.eventName}</MobileTableRowHeader>
       <Divider />
       <MobileTableContent>{e.location}</MobileTableContent>
-      <MobileTableContent>{e.start}</MobileTableContent>
-      <MobileTableContent>{e.end}</MobileTableContent>
+      <MobileTableContent>{`${new Date(e.startTime).toLocaleDateString('en-US')}, ${new Date(e.startTime).getTime()}`}</MobileTableContent>
+      <MobileTableContent>{`${new Date(e.endTime).toLocaleDateString('en-US')}, ${new Date(e.endTime).getTime()}`}</MobileTableContent>
       <MobileTableContent>
         <UpdateButton>Submit</UpdateButton>
       </MobileTableContent>
@@ -32,20 +32,20 @@ const UnsubmittedMobileTable = ({ tableData }) => {
   ));
   return (
     <MobileTable className="uh-table">
-      <select name="dateDropDown" id="date">
+      {/* <select name="dateDropDown" id="date">
         <option value="">--Select Date to Filter By--</option>
         <option value="">October 2020</option>
         <option value="">November 2020</option>
         <option value="">December 2020</option>
         <option value="">January 2021</option>
-      </select>
+      </select> */}
       {rows}
     </MobileTable>
   );
 };
 
 UnsubmittedMobileTable.propTypes = {
-  tableData: PropTypes.arrayOf(Object).isRequired,
+  unsubmittedHours: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default UnsubmittedMobileTable;

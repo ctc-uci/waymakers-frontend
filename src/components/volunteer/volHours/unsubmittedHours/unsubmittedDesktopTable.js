@@ -17,27 +17,29 @@ const UpdateButton = styled.button`
   width: 65%;
 `;
 
-const UnsubmittedDesktopTable = ({ tableData }) => {
-  const rows = tableData.map((e) => (
+// need to convert timestamp to MM:HH AM/PM format
+const UnsubmittedDesktopTable = ({ unsubmittedHours }) => {
+  const rows = unsubmittedHours.map((e) => (
     <TableRow className="uh-table-row">
-      <TableContent>{e.name}</TableContent>
+      <TableContent>{e.eventName}</TableContent>
       <TableContent>{e.location}</TableContent>
-      <TableContent>{e.start}</TableContent>
-      <TableContent>{e.end}</TableContent>
+      <TableContent>{`${new Date(e.startTime).toLocaleDateString('en-US')}, ${new Date(e.startTime).getTime()}`}</TableContent>
+      <TableContent>{`${new Date(e.endTime).toLocaleDateString('en-US')}, ${new Date(e.endTime).getTime()}`}</TableContent>
       <TableContent>
         <UpdateButton>Submit</UpdateButton>
       </TableContent>
     </TableRow>
   ));
+
   return (
     <Table className="uh-table">
-      <select name="dateDropDown" id="date">
+      {/* <select name="dateDropDown" id="date">
         <option value="">--Select Date to Filter By--</option>
         <option value="">October 2020</option>
         <option value="">November 2020</option>
         <option value="">December 2020</option>
         <option value="">January 2021</option>
-      </select>
+      </select> */}
       <TableHeader>
         <TableColumnHeader className="uh-table-col-header">Event Name</TableColumnHeader>
         <TableColumnHeader className="uh-table-col-header">Location</TableColumnHeader>
@@ -54,7 +56,7 @@ const UnsubmittedDesktopTable = ({ tableData }) => {
 
 // use for
 UnsubmittedDesktopTable.propTypes = {
-  tableData: PropTypes.arrayOf(Object).isRequired,
+  unsubmittedHours: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default UnsubmittedDesktopTable;

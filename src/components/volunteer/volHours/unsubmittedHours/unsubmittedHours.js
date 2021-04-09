@@ -1,4 +1,6 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 import { TitledCard } from '../../../../common/Card';
 
 import useWindowDimension from '../../../../common/useWindowDimension';
@@ -7,44 +9,39 @@ import UnsubmittedMobileTable from './unsubmittedMobileTable';
 
 const UnsubmittedHours = () => {
   const { width } = useWindowDimension();
+  const [unsubmittedHours, setUnsubmittedHours] = useState(null);
+  const [cookies] = useCookies(['userId']);
 
-  // dummy data
-  const tableData = [
-    {
-      name: 'Swing for Kids Tournament',
-      location: 'Waymakers',
-      start: '08/10/2020, 10:00 AM',
-      end: '08/10/2020, 12:00 PM',
-    },
-    {
-      name: 'Food Drive',
-      location: 'Waymakers',
-      start: '08/10/2020, 10:00 AM',
-      end: '08/10/2020, 12:00 PM',
-    },
-    {
-      name: 'Event 3',
-      location: 'Waymakers',
-      start: '08/10/2020, 10:00 AM',
-      end: '08/10/2020, 12:00 PM',
-    },
-    {
-      name: 'Event 4',
-      location: 'Waymakers',
-      start: '08/10/2020, 10:00 AM',
-      end: '08/10/2020, 12:00 PM',
-    },
-  ];
+  useEffect(() => {
+    axios.get(
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/logs/unsubmitted`, {
+        params: { userId: cookies.userId },
+        withCredentials: true,
+      },
+    ).then((res) => {
+      setUnsubmittedHours(res.data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
+  if (unsubmittedHours === null) {
+    return (
+      <TitledCard title="Unsubmitted Hours">
+        <p>Loading...</p>
+      </TitledCard>
+    );
+  }
 
   return (
     <>
       <TitledCard title="Unsubmitted Hours">
         {width > 768
           ? (
-            <UnsubmittedDesktopTable tableData={tableData} />
+            <UnsubmittedDesktopTable unsubmittedHours={unsubmittedHours} />
           )
           : (
-            <UnsubmittedMobileTable tableData={tableData} />
+            <UnsubmittedMobileTable unsubmittedHours={unsubmittedHours} />
           )}
       </TitledCard>
     </>
