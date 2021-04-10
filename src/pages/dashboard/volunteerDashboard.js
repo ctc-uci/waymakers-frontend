@@ -121,9 +121,9 @@ const VolunteerDashboard = (props) => {
           {renderMoreEventList()}
           {renderMyEventList()}
         </div>
-      </div>
-      <div className="dashboard-event-legend">
-        <EventLegend />
+        <div className="dashboard-event-legend">
+          <EventLegend />
+        </div>
       </div>
       <div className="availability-third">
         <VolunteerAvailability />
