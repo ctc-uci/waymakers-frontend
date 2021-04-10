@@ -118,12 +118,8 @@ const VolunteerDashboard = (props) => {
       <div className="events-section">
         <div className="event-lists">
           <CalendarPopup page="volunteerDashboard" />
-          <div className="event-list-component">
-            {renderMoreEventList()}
-          </div>
-          <div className="event-list-component">
-            {renderMyEventList()}
-          </div>
+          {renderMoreEventList()}
+          {renderMyEventList()}
         </div>
       </div>
       <div className="dashboard-event-legend">
