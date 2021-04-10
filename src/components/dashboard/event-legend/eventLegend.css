@@ -59,7 +59,7 @@
 
 @media screen and (max-width: 768px) {
     .legend-key-section {
-        width: 80%;
+        /* width: 80%; */
     }
     .legend-key-section .legend-info {
         flex-direction: column;

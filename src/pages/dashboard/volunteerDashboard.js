@@ -116,12 +116,14 @@ const VolunteerDashboard = (props) => {
       </TitledCard>
       {/* </div> */}
       <div className="events-section">
-        <CalendarPopup page="volunteerDashboard" />
-        <div className="event-list-component">
-          {renderMoreEventList()}
-        </div>
-        <div className="event-list-component">
-          {renderMyEventList()}
+        <div className="event-lists">
+          <CalendarPopup page="volunteerDashboard" />
+          <div className="event-list-component">
+            {renderMoreEventList()}
+          </div>
+          <div className="event-list-component">
+            {renderMyEventList()}
+          </div>
         </div>
       </div>
       <div className="dashboard-event-legend">

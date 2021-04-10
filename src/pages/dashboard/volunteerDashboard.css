@@ -1,7 +1,6 @@
 .volunteer-dashboard-page-container .my-stats-section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 85%;
     margin: 30px auto;
 }
@@ -21,13 +20,23 @@
 
 .events-section {
     display: flex;
-    justify-content: space-between;
-    margin: auto;
-    width: 85%;
+    flex-direction: column;
+    /* margin: auto; */
+    width: 100%;
+    height: 100%;
 }
 
-.event-list-component {
-    flex: 0 1 48%;
+.events-section .event-lists {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 90%;
+}
+
+.dashboard-event-legend {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
 }
 
 /* .volunteer-dashboard-page-container .availability-third {
@@ -50,15 +59,15 @@
 
 /* CSS From DashboardEventSection.js */
 
-.events-section {
+/* .events-section {
     display: flex;
     justify-content: space-between;
     margin: auto;
     width: 85%;
     height: 850px;
-}
+} */
 
-.event-list-component {
+/* .event-list-component {
     flex: 0 1 48%;
 }
 
@@ -112,17 +121,29 @@
 }
 
 .dashboard-event-legend {
-    margin-left: 6%;
-}
+    width: 100%;
+} */
 
 @media screen and (max-width: 768px) {
-    /* Events dashboard component */
-    .events-section {
+    .volunteer-dashboard-page-container {
+        display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
     }
-    .events-section .event-list-component {
+    .events-section .event-lists {
+        flex-direction: column;
+        align-items: center;
+    }
+    .events-section .event-list-component{
+        width: 95%;
+    }
+    .dashboard-event-legend {
         width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .dashboard-event-legend .legend-key-section {
+        align-content: center;
     }
 }
