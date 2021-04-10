@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   useFormik,
@@ -33,16 +33,43 @@ const ExampleSchema = Yup.object().shape({
   additionalNotes: Yup.string(),
 });
 
+// Fill in form according to the selected event title
+const autofillEventInfo = (title, userEvents, formik) => {
+  console.log(title, userEvents);
+
+  // No op on default empty option
+  if (title === '') { return; }
+
+  // No op with no userEvents
+  if (!userEvents || userEvents.length === 0) { return; }
+
+  // No op with no formik
+  if (!formik) { return; }
+
+  const selectedUserEvent = userEvents.filter(
+    (userEvent) => userEvent.title === title,
+  )[0];
+  formik.setFieldValue('type', selectedUserEvent.eventType);
+  formik.setFieldValue('title', selectedUserEvent.title);
+  formik.setFieldValue('location', selectedUserEvent.location);
+  formik.setFieldValue('startTime', new Date(selectedUserEvent.startTime));
+  formik.setFieldValue('endTime', new Date(selectedUserEvent.endTime));
+  formik.setFieldValue('totalHours', Math.ceil((new Date(selectedUserEvent.endTime) - new Date(selectedUserEvent.startTime)) / (1000 * 60 * 60)));
+  formik.setFieldValue('division', selectedUserEvent.division);
+};
+
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
   withCredentials: true,
 });
 
-const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen }) => {
+// TODO: Loading state
+const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
   const [divisions] = useDivisions();
   const [userEvents] = useUserEvents();
   const [cookies] = useCookies(['userId']);
 
+  // TODO: autofill name
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -83,6 +110,10 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen }) => {
     validateOnChange: false,
   });
 
+  useEffect(() => {
+    autofillEventInfo(eventTitle, userEvents, formik);
+  }, [eventTitle, userEvents]);
+
   return (
     <LightModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
       <LightModalHeader title="Submit Hours" onClose={() => setIsModalOpen(false)} />
@@ -114,22 +145,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen }) => {
               id="title"
               name="Title of Event"
               value={formik.values.title}
-              onChange={(e) => {
-                // Fill in form according to the selected event title
-                // No action on default empty option
-                if (e.target.value === '') { return; }
-
-                const selectedUserEvent = userEvents.filter(
-                  (userEvent) => userEvent.title === e.target.value,
-                )[0];
-                formik.setFieldValue('type', selectedUserEvent.eventType);
-                formik.setFieldValue('title', selectedUserEvent.title);
-                formik.setFieldValue('location', selectedUserEvent.location);
-                formik.setFieldValue('startTime', new Date(selectedUserEvent.startTime));
-                formik.setFieldValue('endTime', new Date(selectedUserEvent.endTime));
-                formik.setFieldValue('totalHours', Math.ceil((new Date(selectedUserEvent.endTime) - new Date(selectedUserEvent.startTime)) / (1000 * 60 * 60)));
-                formik.setFieldValue('division', selectedUserEvent.division);
-              }}
+              onChange={(e) => autofillEventInfo(e.target.value)}
             >
               <option value="">{' '}</option>
               {userEvents.map((userEvent) => (
@@ -230,6 +246,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen }) => {
 SubmitHoursPopup.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
+  eventTitle: PropTypes.func.isRequired,
 };
 
 export default SubmitHoursPopup;

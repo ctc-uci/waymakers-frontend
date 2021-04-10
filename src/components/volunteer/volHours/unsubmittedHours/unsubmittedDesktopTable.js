@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -7,6 +8,8 @@ import {
 } from '../../../../common/Table';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 import './unsubmittedDesktopTable.css';
+
+import SubmitHoursPopup from '../SubmitHoursPopup';
 
 const UpdateButton = styled.button`
   border-radius: 25px;
@@ -17,42 +20,59 @@ const UpdateButton = styled.button`
   width: 65%;
 `;
 
-// need to convert timestamp to MM:HH AM/PM format
-const UnsubmittedDesktopTable = ({ unsubmittedHours }) => {
-  const rows = unsubmittedHours.map((e) => (
+const Row = ({
+  eventName, location, startTime, endTime,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  return (
     <TableRow className="uh-table-row">
-      <TableContent>{e.eventName}</TableContent>
-      <TableContent>{e.location}</TableContent>
-      <TableContent>{formatDate(e.startTime, DATE_FORMAT.MY_HOURS)}</TableContent>
-      <TableContent>{formatDate(e.endTime, DATE_FORMAT.MY_HOURS)}</TableContent>
+      <TableContent>{eventName}</TableContent>
+      <TableContent>{location}</TableContent>
+      <TableContent>{formatDate(startTime, DATE_FORMAT.MY_HOURS)}</TableContent>
+      <TableContent>{formatDate(endTime, DATE_FORMAT.MY_HOURS)}</TableContent>
       <TableContent>
-        <UpdateButton>Submit</UpdateButton>
+        <UpdateButton type="button" onClick={() => setIsModalOpen(true)}>Submit</UpdateButton>
+        {isModalOpen && (
+        <SubmitHoursPopup
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          eventTitle={eventName}
+        />
+        )}
       </TableContent>
     </TableRow>
-  ));
+  );
+};
 
-  return (
-    <Table className="uh-table">
-      {/* <select name="dateDropDown" id="date">
+// need to convert timestamp to MM:HH AM/PM format
+const UnsubmittedDesktopTable = ({ unsubmittedHours }) => (
+  <Table className="uh-table">
+    {/* <select name="dateDropDown" id="date">
         <option value="">--Select Date to Filter By--</option>
         <option value="">October 2020</option>
         <option value="">November 2020</option>
         <option value="">December 2020</option>
         <option value="">January 2021</option>
       </select> */}
-      <TableHeader>
-        <TableColumnHeader className="uh-table-col-header">Event Name</TableColumnHeader>
-        <TableColumnHeader className="uh-table-col-header">Location</TableColumnHeader>
-        <TableColumnHeader className="uh-table-col-header">Start Date/Time</TableColumnHeader>
-        <TableColumnHeader className="uh-table-col-header">End Date/Time</TableColumnHeader>
-        <TableColumnHeader className="uh-table-col-header">Submit</TableColumnHeader>
-      </TableHeader>
-      <TableBody className="uh-table-body">
-        {rows}
-      </TableBody>
-    </Table>
-  );
-};
+    <TableHeader>
+      <TableColumnHeader className="uh-table-col-header">Event Name</TableColumnHeader>
+      <TableColumnHeader className="uh-table-col-header">Location</TableColumnHeader>
+      <TableColumnHeader className="uh-table-col-header">Start Date/Time</TableColumnHeader>
+      <TableColumnHeader className="uh-table-col-header">End Date/Time</TableColumnHeader>
+      <TableColumnHeader className="uh-table-col-header">Submit</TableColumnHeader>
+    </TableHeader>
+    <TableBody className="uh-table-body">
+      {unsubmittedHours && unsubmittedHours.map((e) => (
+        <Row
+          eventName={e.eventName}
+          location={e.location}
+          startTime={e.startTime}
+          endTime={e.endTime}
+        />
+      ))}
+    </TableBody>
+  </Table>
+);
 
 // use for
 UnsubmittedDesktopTable.propTypes = {
