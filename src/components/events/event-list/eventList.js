@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { getUserEvents } from '../redux/selectors';
@@ -81,7 +82,9 @@ const EventList = ({
 
   const renderSeeMore = () => (
     <div className="events-see-more">
-      <a className="see-more-link" href="/volunteer/events">see more</a>
+      <Link to="/volunteer/events" className="see-more-link">
+        <button type="button" className="see-more-button" href="/volunteer/events">See More</button>
+      </Link>
     </div>
   );
 
