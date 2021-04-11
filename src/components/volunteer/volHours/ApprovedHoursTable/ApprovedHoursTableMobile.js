@@ -4,7 +4,7 @@ import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
-import '../unsubmittedHours/unsubmittedDesktopTable.css';
+import '../hours.css';
 
 const ApprovedHoursTableMobile = ({ filteredApprovedHours }) => (
   <MobileTable>

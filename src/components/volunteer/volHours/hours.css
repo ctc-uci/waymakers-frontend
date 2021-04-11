@@ -1,3 +1,22 @@
 .hours > .title {
     margin-left: 16px;
 }
+
+.rdt input {
+  border-radius: 25px;
+  margin-bottom: 5px;
+  background: #5D9A64;
+  color: white;
+  text-align: center;
+  border: none;
+  float: right;
+}
+
+.rdt input::placeholder {
+  color: white;
+}
+
+
+.rdtPicker {
+  right: 0;
+}

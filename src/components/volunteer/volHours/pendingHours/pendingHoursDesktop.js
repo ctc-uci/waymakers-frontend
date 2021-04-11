@@ -5,7 +5,7 @@ import {
   Table, TableHeader, TableColumnHeader, TableBody, TableContent, TableRow,
 } from '../../../../common/Table';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
-import '../unsubmittedHours/unsubmittedDesktopTable.css';
+import '../hours.css';
 
 const PendingHoursDesktop = ({ filteredPendingHours }) => (
   <Table>

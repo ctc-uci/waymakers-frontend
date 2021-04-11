@@ -1,49 +1,22 @@
 import { React, useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
-import moment from 'moment';
 import Datetime from 'react-datetime';
 
+import styles from 'react-datetime/css/react-datetime.css';
 import useMobileWidth from '../../../../common/useMobileWidth';
 import TitledCard from '../../../../common/Card/TitledCard';
 import PendingHoursDesktop from './pendingHoursDesktop';
 import PendingHoursMobile from './pendingHoursMobile';
-import '../unsubmittedHours/unsubmittedDesktopTable.css';
+import '../hours.css';
+import UseFilteredHours from '../useFilteredHours';
 
 const PendingHours = () => {
   const isMobile = useMobileWidth();
-  // subject to change based on filtering
-  const [filteredPendingHours, setFilteredPendingHours] = useState(null);
-
-  // contains all unsubmitted hours from db
   // NOT subject to change based on filtering
   const [allPendingHours, setAllPendingHours] = useState(null);
-
-  // used to display selected date and pass it to sortHours
-  const [selectedDate, setSelectedDate] = useState('');
-
-  // method to sort hours
-  // filter allUnsubmittedHours based on month and year
-  const sortHours = (month, year) => {
-    // get index for month, number version of year
-    const monthIndex = moment().month(month).format('M') - 1;
-    const yearIndex = Number(moment().year(year).format('YYYY'));
-
-    const sorted = allPendingHours.filter((s) => {
-      const d = new Date(s.startTime);
-      return (d.getMonth() === monthIndex && d.getFullYear() === yearIndex);
-    });
-
-    // update unsubmittedHours to reflect filtered results
-    setFilteredPendingHours(sorted);
-  };
-
-  // updates selectedDate
-  // passes selected date month & year to sortHours()
-  const handleSelectedDate = (date) => {
-    setSelectedDate(date);
-    sortHours(date.format('MMMM'), date.format('YYYY'));
-  };
+  // Filtered pending hours and filter interface
+  const [filteredPendingHours, filteredDate, setFilteredDate] = UseFilteredHours(allPendingHours);
 
   const [cookies] = useCookies(['userId']);
 
@@ -56,7 +29,6 @@ const PendingHours = () => {
           withCredentials: true,
         },
       );
-      setFilteredPendingHours(response.data);
       setAllPendingHours(response.data);
     } catch (err) {
       console.log(err);
@@ -71,11 +43,12 @@ const PendingHours = () => {
     return (
       <TitledCard title="Pending Hours">
         <Datetime
-          onChange={(date) => handleSelectedDate(date)}
-          value={selectedDate}
+          onChange={(date) => setFilteredDate(date)}
+          value={filteredDate}
           closeOnSelect
           timeFormat={false}
-          inputProps={{ className: 'date-picker', placeholder: 'Select Date Filter' }}
+          dateFormat="MMMM YYYY"
+          inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
         />
         <p className="medium">Loading...</p>
       </TitledCard>
@@ -86,11 +59,12 @@ const PendingHours = () => {
     return (
       <TitledCard title="Pending Hours">
         <Datetime
-          onChange={(date) => handleSelectedDate(date)}
-          value={selectedDate}
+          onChange={(date) => setFilteredDate(date)}
+          value={filteredDate}
           closeOnSelect
           timeFormat={false}
-          inputProps={{ className: 'date-picker', placeholder: 'Select Date Filter' }}
+          dateFormat="MMMM YYYY"
+          inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
         />
         <p className="medium">There are no pending hours.</p>
       </TitledCard>
@@ -100,11 +74,12 @@ const PendingHours = () => {
   return (
     <TitledCard title="Pending Hours">
       <Datetime
-        onChange={(date) => handleSelectedDate(date)}
-        value={selectedDate}
+        onChange={(date) => setFilteredDate(date)}
+        value={filteredDate}
         closeOnSelect
         timeFormat={false}
-        inputProps={{ className: 'date-picker', placeholder: 'Select Date Filter' }}
+        dateFormat="MMMM YYYY"
+        inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
       />
       {isMobile
         ? (

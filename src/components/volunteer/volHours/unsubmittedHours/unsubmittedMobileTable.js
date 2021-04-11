@@ -6,7 +6,8 @@ import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
-import './unsubmittedHoursMobileTable.css';
+import '../hours.css';
+import './unsubmittedMobileTable.css';
 
 const UpdateButton = styled.button`
   border-radius: 25px;
@@ -18,15 +19,6 @@ const UpdateButton = styled.button`
 `;
 
 const UnsubmittedMobileTable = ({ filteredUnsubmittedHours }) => {
-  // used to display selected date and pass it to sortHours
-  // const [selectedDate, setSelectedDate] = useState('');
-
-  // // updates selectedDate
-  // // passes selected date month & year to sortHours()
-  // const handleSelectedDate = (date) => {
-  //   setSelectedDate(date);
-  //   sortHours(date.format('MMMM'), date.format('YYYY'));
-  // };
   const rows = filteredUnsubmittedHours.map((e) => (
     <MobileTableRow className="uh-table-row">
       <MobileTableRowHeader>{e.eventName}</MobileTableRowHeader>
@@ -41,13 +33,6 @@ const UnsubmittedMobileTable = ({ filteredUnsubmittedHours }) => {
   ));
   return (
     <MobileTable className="uh-table">
-      {/* <Datetime
-        onChange={(date) => handleSelectedDate(date)}
-        value={selectedDate}
-        closeOnSelect
-        timeFormat={false}
-        inputProps={{ className: 'date-picker' }}
-      /> */}
       {rows}
     </MobileTable>
   );

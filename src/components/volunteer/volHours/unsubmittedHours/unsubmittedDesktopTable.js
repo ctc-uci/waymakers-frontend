@@ -5,6 +5,7 @@ import {
   Table, TableHeader, TableColumnHeader, TableBody, TableRow, TableContent,
 } from '../../../../common/Table';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
+import '../hours.css';
 import './unsubmittedDesktopTable.css';
 
 const UpdateButton = styled.button`
@@ -31,13 +32,6 @@ const UnsubmittedDesktopTable = ({ filteredUnsubmittedHours }) => {
 
   return (
     <Table className="uh-table">
-      {/* <Datetime
-        onChange={(date) => handleSelectedDate(date)}
-        value={selectedDate}
-        closeOnSelect
-        timeFormat={false}
-        inputProps={{ className: 'date-picker' }}
-      /> */}
       <TableHeader>
         <TableColumnHeader className="uh-table-col-header">Event Name</TableColumnHeader>
         <TableColumnHeader className="uh-table-col-header">Location</TableColumnHeader>
