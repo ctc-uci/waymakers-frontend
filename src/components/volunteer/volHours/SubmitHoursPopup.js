@@ -52,8 +52,8 @@ const autofillEventInfo = (title, userEvents, formik) => {
   formik.setFieldValue('location', selectedUserEvent.location);
   formik.setFieldValue('startTime', new Date(selectedUserEvent.startTime));
   formik.setFieldValue('endTime', new Date(selectedUserEvent.endTime));
-  formik.setFieldValue('totalHours', Math.ceil((new Date(selectedUserEvent.endTime) - new Date(selectedUserEvent.startTime)) / (1000 * 60 * 60)));
   formik.setFieldValue('division', selectedUserEvent.division);
+  formik.setFieldValue('totalHours', Math.ceil((new Date(selectedUserEvent.endTime) - new Date(selectedUserEvent.startTime)) / (1000 * 60 * 60)));
 };
 
 const instance = axios.create({

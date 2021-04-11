@@ -57,6 +57,7 @@ const UnsubmittedDesktopTable = ({ unsubmittedHours }) => (
     <TableBody className="uh-table-body">
       {unsubmittedHours && unsubmittedHours.map((e) => (
         <Row
+          key={e.eventName}
           eventName={e.eventName}
           location={e.location}
           startTime={e.startTime}

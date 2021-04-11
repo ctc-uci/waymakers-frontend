@@ -49,6 +49,7 @@ const UnsubmittedMobileTable = ({ unsubmittedHours }) => (
   <MobileTable className="uh-table">
     {unsubmittedHours && unsubmittedHours.map((e) => (
       <Row
+        key={e.eventName}
         eventName={e.eventName}
         location={e.location}
         startTime={e.startTime}

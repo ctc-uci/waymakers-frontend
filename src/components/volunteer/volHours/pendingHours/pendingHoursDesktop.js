@@ -17,7 +17,7 @@ const PendingHoursDesktop = ({ pendingHours }) => (
     </TableHeader>
     <TableBody>
       {pendingHours.map((pendingHour) => (
-        <TableRow>
+        <TableRow key={pendingHour.eventName}>
           <TableContent>{pendingHour.eventName}</TableContent>
           <TableContent>{pendingHour.location}</TableContent>
           <TableContent>{formatDate(pendingHour.startTime, DATE_FORMAT.MY_HOURS)}</TableContent>
