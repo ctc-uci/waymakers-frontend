@@ -1,0 +1,120 @@
+.event-modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.event-modal-content {
+    height: 65%;
+    width: 25%;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-volunteer-event-header {
+    background-color: var(--color-yellow);
+    width: 100%;
+}
+
+.popup-outreach-event-header {
+    background-color: var(--color-light-pink);
+    width: 100%;
+}
+
+.popup-other-event-header {
+    background-color: var(--color-lavender);
+    width: 100%;
+}
+
+.event-modal-close {
+    float: right;
+    text-align: center;
+    background-color: white;
+    width: 25px;
+    height: 25px;
+    margin: 10px;
+    border-radius: 50%;
+}
+
+.event-modal-body {
+    background-color: var(--color-dark-blue);
+    color: var(--text-color-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.event-modal-title {
+    width: 100%;
+    font-weight: bold;
+    color: var(--text-color-light);
+}
+
+.event-modal-time {
+    font-weight: bold;
+    color: var(--color-orange);
+    margin-top: 20px;
+}
+
+.event-title {
+    font-weight: bold;
+}
+
+.event-modal-details {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.popup-details-text {
+    margin: 0;
+}
+
+.event-modal-description {
+    width: 100%;
+    padding: 0 0 0 20px;
+}
+
+.popup-confirm-buttons-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.popup-confirm-button {
+    background-color: var(--color-green);
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 20px 15px 7.5px 15px;
+}
+
+.popup-cancel-button {
+    background-color: var(--color-orange);
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 7.5px 15px 15px 15px;
+}
+
+.popup-remove-button {
+    background-color: var(--color-green);
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 20px;
+}

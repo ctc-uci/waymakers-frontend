@@ -8,6 +8,7 @@ import './common/ConfigLoader';
 import Test from './.harrison-sandbox/Test';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Layout from './components/layout/layout';
+import Dashboard from './pages/dashboard/dashboard';
 import Register from './components/register/register';
 import LogIn from './components/login/login';
 import ManageUsers from './components/admin/manageusers/manageusers';
@@ -24,13 +25,9 @@ import Events from './components/events/events';
 import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggregate-page/volunteerEventAggregatePage';
 import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
-import VolunteerEvents from './components/dashboard/volunteer-events/volunteerEvents';
-import VolunteerDashboard from './components/dashboard/volunteer/volunteerDashboard';
-import AdminDashboard from './components/dashboard/admin/adminDashboard';
-import AdminDashboard2 from './pages/admin-dashboard/adminDashboard';
+import VolunteerEvents from './pages/volunteer-events/volunteerEvents';
 import store from './redux/store';
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 ReactDOM.render(
@@ -40,14 +37,9 @@ ReactDOM.render(
         <Router>
           <Layout>
             <div className="App">
-
               <Route path="/sandbox" component={Test} />
-
               <Switch>
-                <ProtectedRoute path="/" component={VolunteerDashboard} exact />
-                <ProtectedRoute path="/volunteerDashboard" component={VolunteerDashboard} exact />
-                <ProtectedRoute path="/adminDashboard" component={AdminDashboard} exact />
-                <ProtectedRoute path="/adminDashboard2" component={AdminDashboard2} />
+                <ProtectedRoute path="/" component={Dashboard} exact />
                 <Route path="/register" component={Register} />
                 <Route path="/login" component={LogIn} />
                 <ProtectedRoute path="/profile" component={viewProfile} />

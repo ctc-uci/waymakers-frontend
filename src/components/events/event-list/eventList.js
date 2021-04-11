@@ -1,11 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
-// import "./events.css";
 import PropTypes from 'prop-types';
-import Event from '../event/event';
-import './eventList.css';
-import EventLegend from '../../dashboard/event-legend/eventLegend';
 
 import { getUserEvents } from '../redux/selectors';
 import {
@@ -13,6 +8,11 @@ import {
   changePopupType,
   changeSelectedEvent,
 } from '../redux/actions';
+
+import Event from '../event/event';
+import EventLegend from '../../dashboard/event-legend/eventLegend';
+
+import './eventList.css';
 
 const EventList = ({
   events, title, listType, page, view,
@@ -41,11 +41,9 @@ const EventList = ({
         // TODO: change this when we know what a checkmark is supposed to be
         onEventButtonClick = () => console.log('oh the check was clicked -kc');
       }
-
       if (page === 'addModifyDeleteEventsPage' || page === 'aggregatePage') {
         finalEventType = page;
       }
-
       return (
         <div className="event-div" key={event.id}>
           <Event
