@@ -66,10 +66,9 @@
     margin-left: 5%;
 }
 
-/* .volunteer-dashboard-page-container .availability-third {
-  width: 60vw;
-  background-color: pink;
-} */
+.volunteer-dashboard-page-container .availability-third {
+  width: 100vw;
+}
 
 .help-popup {
     background-color: var(--color-olive);
