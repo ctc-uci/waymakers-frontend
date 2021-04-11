@@ -6,4 +6,5 @@ import './hamburger.css';
 const Burger = () => (
   <img src={HamburgerIcon} alt="Hamburger Icon" />
 );
+
 export default Burger;
