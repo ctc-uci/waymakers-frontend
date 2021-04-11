@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import './editEvents.css';
+import useMobileWidth from '../../../common/useMobileWidth';
+
+import './AdminEventsPreview.css';
 // import Event from '../event/event';
 // import EditEventPopup from './editEventPopup';
 
@@ -11,10 +13,12 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-const EditEvents = () => {
+const AdminEventsPreview = () => {
   const [events, setEvents] = useState([]);
   // const [editPopup, setEditPopup] = useState(false);
   // const [selectedEvent, setSelectedEvent] = useState(null);
+  const isMobile = useMobileWidth();
+  const sliceNum = isMobile ? 2 : 3;
 
   async function getEvents() {
     try {
@@ -23,7 +27,7 @@ const EditEvents = () => {
       if (allEvents.status === 200) {
         allEvents = allEvents.data;
       }
-      setEvents(allEvents.sort((a, b) => b.startTime - a.startTime).slice(0, 3));
+      setEvents(allEvents.sort((a, b) => b.startTime - a.startTime).slice(0, sliceNum));
     } catch (e) {
       console.log('Error while getting events from the backend!');
     }
@@ -32,16 +36,16 @@ const EditEvents = () => {
   // Load events
   useEffect(() => {
     getEvents();
-  }, []);
+  }, [isMobile]);
 
-  const renderEvent = (event) => {
+  const renderEvent = (event, key) => {
     const startDate = new Date(event.startTime);
     const endDate = new Date(event.endTime);
     const date = new Intl.DateTimeFormat('en', { month: 'long', day: '2-digit' }).format(startDate);
     const startTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(startDate);
     const endTime = new Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric' }).format(endDate);
     return (
-      <div className="upcoming-event">
+      <div className="upcoming-event" key={key}>
         <p className="upcoming-event-name">
           {event.title}
         </p>
@@ -99,18 +103,27 @@ const EditEvents = () => {
     // </div>
     <div className="upcoming-events-component">
       <h4 className="upcoming-events-title">Upcoming Events</h4>
-      <div className="upcoming-events-sectionn">
-        {events.map((item) => (
-          renderEvent(item)
+      <div className="upcoming-events-section">
+        {events.map((item, index) => (
+          renderEvent(item, index)
         ))}
       </div>
       <div className="all-events-section">
-        <Link to="/events">
-          <button type="button" className="all-events-button">Edit Events</button>
-        </Link>
+        {/* <Link to="/events">
+          <button type="button" className="all-events-button">
+            <p className="large">
+              Edit Events
+            </p>
+          </button>
+        </Link> */}
+        <button type="button" className="all-events-button">
+          <Link to="/events" className="button-anchor">
+            <p className="large">Edit Events</p>
+          </Link>
+        </button>
       </div>
     </div>
   );
 };
 
-export default EditEvents;
+export default AdminEventsPreview;
