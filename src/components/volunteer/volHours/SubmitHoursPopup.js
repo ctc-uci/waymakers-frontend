@@ -21,8 +21,7 @@ import useDivisions from './useDivisions';
 import useUserEvents from './useUserEvents';
 
 // Using Yup to do schema validation
-const ExampleSchema = Yup.object().shape({
-  name: Yup.string().required('Required'),
+const Schema = Yup.object().shape({
   type: Yup.string().required('Required'),
   title: Yup.string().required('Required'),
   location: Yup.string().required('Required'),
@@ -35,8 +34,6 @@ const ExampleSchema = Yup.object().shape({
 
 // Fill in form according to the selected event title
 const autofillEventInfo = (title, userEvents, formik) => {
-  console.log(title, userEvents);
-
   // No op on default empty option
   if (title === '') { return; }
 
@@ -49,6 +46,7 @@ const autofillEventInfo = (title, userEvents, formik) => {
   const selectedUserEvent = userEvents.filter(
     (userEvent) => userEvent.title === title,
   )[0];
+
   formik.setFieldValue('type', selectedUserEvent.eventType);
   formik.setFieldValue('title', selectedUserEvent.title);
   formik.setFieldValue('location', selectedUserEvent.location);
@@ -69,10 +67,8 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
   const [userEvents] = useUserEvents();
   const [cookies] = useCookies(['userId']);
 
-  // TODO: autofill name
   const formik = useFormik({
     initialValues: {
-      name: '',
       type: '',
       title: '',
       location: '',
@@ -82,7 +78,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
       division: '',
       additionalNotes: '',
     },
-    validationSchema: ExampleSchema,
+    validationSchema: Schema,
     onSubmit: (values) => {
       const selectedUserEvent = userEvents.filter(
         (userEvent) => userEvent.title === values.title,
@@ -120,16 +116,6 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
       <form onSubmit={formik.handleSubmit}>
         <LightModalBody style={{ maxHeight: '600px', overflow: 'auto' }}>
 
-          <ValidatedField name="name" labelText="Name" formik={formik}>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.name}
-            />
-          </ValidatedField>
-
           <ValidatedField name="type" labelText="Type" formik={formik}>
             <input
               id="type"
@@ -145,7 +131,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
               id="title"
               name="Title of Event"
               value={formik.values.title}
-              onChange={(e) => autofillEventInfo(e.target.value)}
+              onChange={(e) => autofillEventInfo(e.target.value, userEvents, formik)}
             >
               <option value="">{' '}</option>
               {userEvents.map((userEvent) => (
