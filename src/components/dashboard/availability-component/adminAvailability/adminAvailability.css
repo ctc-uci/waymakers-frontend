@@ -1,32 +1,43 @@
 .adminAvailCard {
   padding: 30px;
-  margin: 25px;
-  max-width: 850px;
-  min-width: 750px;
-  min-height: 250px;
+  width: 95%;
   background-color: white;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  margin-bottom: 30px;
 }
 
 .adminAvailCard .grid-cell {
+  border: 1px solid black;
   width: 100%;
-  height: 25px;
+  height: 50px;
 }
 
-.grid-cell:hover {
-  background-color: red;
-}
-
-.adminAvailCard .cell-text {
-  font-size: 5;
-  margin: auto;
-  color: white;
+.adminAvailCard .availability-header {
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .adminAvailCard .availability-title {
-  margin-bottom: 20px;
+  font-weight: bold;
+  color: var(--text-color-dark);
+}
+
+.adminAvailCard .help-popup-button {
+  background-color: var(--color-light-orange);
+  color: white;
+  border-radius: 50%;
+  height: 37px;
+  width: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin: 5px;
 }
 
 .avail-names-section {
@@ -64,4 +75,37 @@
 .no-members-message {
   margin-top: 30px;
   margin-left: 20px;
+}
+
+@media screen and (max-width: 1300px) {
+  .adminAvailCard .availability-title {
+    font-size: 25px;
+  }
+
+  .adminAvailCard .grid-cell {
+    height: 35px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .adminAvailCard .availability-header {
+    margin-left: 5px;
+  }
+  
+  .adminAvailCard .availability-title {
+    font-size: 12px;
+  }
+
+  .availability-save-button, .availability-edit-button {
+    height: 15px;
+    padding: 0 5px;
+    font-size: 10px;
+    margin: 5px 0;
+  }
+
+  .adminAvailCard .help-popup-button {
+    height: 15px;
+    width: 15px;
+    font-size: 10px;
+  }
 }
