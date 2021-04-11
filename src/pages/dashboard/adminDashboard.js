@@ -7,10 +7,12 @@ import axios from 'axios';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
-import EditEvents from '../../components/events/edit-events/editEvents';
-import InventoryComponent from '../../components/dashboard/inventory-component/inventoryComponent';
+import AdminEventsPreview from '../../components/dashboard/AdminEventsPreview/AdminEventsPreview';
+import AdminInventoryPreview from '../../components/dashboard/AdminInventoryPreview/AdminInventoryPreview';
 import AdminAvailability from '../../components/dashboard/availability-component/adminAvailability/adminAvailability';
 import GoogleAuthService from '../../services/firebase/firebase';
+
+import TitledCard from '../../common/Card/TitledCard';
 
 import './adminDashboard.css';
 
@@ -80,7 +82,7 @@ const AdminDashboard = (props) => {
   }
 
   return (
-    <div>
+    <>
       <div className="d-flex align-items-center justify-content-center">
         <div className="w-100 login-container">
           <Card className="w-100">
@@ -99,24 +101,27 @@ const AdminDashboard = (props) => {
         <div className="admin-components-container">
           <div className="inventory-events-section">
             <div className="inventory-section">
-              <h5 className="component-title">Inventory</h5>
-              <InventoryComponent division={currDivision} />
+              <TitledCard title="Inventory">
+                <AdminInventoryPreview division={currDivision} />
+              </TitledCard>
             </div>
             <div className="upcoming-events-container">
-              <h5 className="component-title">Events</h5>
-              <EditEvents />
+              <TitledCard title="Events">
+                <AdminEventsPreview />
+              </TitledCard>
             </div>
           </div>
           <div className="analytics-section">
-            <h5 className="component-title">Analytics</h5>
-            <div className="analytics-component" />
+            <TitledCard title="Analytics">
+              <div className="analytics-component" />
+            </TitledCard>
           </div>
         </div>
         <div className="availability-section">
           <AdminAvailability />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
