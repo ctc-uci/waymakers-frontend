@@ -17,8 +17,17 @@ const UpdateButton = styled.button`
   width: 65%;
 `;
 
-const UnsubmittedMobileTable = ({ unsubmittedHours }) => {
-  const rows = unsubmittedHours.map((e) => (
+const UnsubmittedMobileTable = ({ filteredUnsubmittedHours }) => {
+  // used to display selected date and pass it to sortHours
+  // const [selectedDate, setSelectedDate] = useState('');
+
+  // // updates selectedDate
+  // // passes selected date month & year to sortHours()
+  // const handleSelectedDate = (date) => {
+  //   setSelectedDate(date);
+  //   sortHours(date.format('MMMM'), date.format('YYYY'));
+  // };
+  const rows = filteredUnsubmittedHours.map((e) => (
     <MobileTableRow className="uh-table-row">
       <MobileTableRowHeader>{e.eventName}</MobileTableRowHeader>
       <Divider />
@@ -32,20 +41,20 @@ const UnsubmittedMobileTable = ({ unsubmittedHours }) => {
   ));
   return (
     <MobileTable className="uh-table">
-      {/* <select name="dateDropDown" id="date">
-        <option value="">--Select Date to Filter By--</option>
-        <option value="">October 2020</option>
-        <option value="">November 2020</option>
-        <option value="">December 2020</option>
-        <option value="">January 2021</option>
-      </select> */}
+      {/* <Datetime
+        onChange={(date) => handleSelectedDate(date)}
+        value={selectedDate}
+        closeOnSelect
+        timeFormat={false}
+        inputProps={{ className: 'date-picker' }}
+      /> */}
       {rows}
     </MobileTable>
   );
 };
 
 UnsubmittedMobileTable.propTypes = {
-  unsubmittedHours: PropTypes.arrayOf(Object).isRequired,
+  filteredUnsubmittedHours: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default UnsubmittedMobileTable;

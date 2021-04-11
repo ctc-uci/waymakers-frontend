@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
 import {
   Table, TableHeader, TableColumnHeader, TableBody, TableRow, TableContent,
 } from '../../../../common/Table';
@@ -17,9 +16,8 @@ const UpdateButton = styled.button`
   width: 65%;
 `;
 
-// need to convert timestamp to MM:HH AM/PM format
-const UnsubmittedDesktopTable = ({ unsubmittedHours }) => {
-  const rows = unsubmittedHours.map((e) => (
+const UnsubmittedDesktopTable = ({ filteredUnsubmittedHours }) => {
+  const rows = filteredUnsubmittedHours.map((e) => (
     <TableRow className="uh-table-row">
       <TableContent>{e.eventName}</TableContent>
       <TableContent>{e.location}</TableContent>
@@ -33,13 +31,13 @@ const UnsubmittedDesktopTable = ({ unsubmittedHours }) => {
 
   return (
     <Table className="uh-table">
-      {/* <select name="dateDropDown" id="date">
-        <option value="">--Select Date to Filter By--</option>
-        <option value="">October 2020</option>
-        <option value="">November 2020</option>
-        <option value="">December 2020</option>
-        <option value="">January 2021</option>
-      </select> */}
+      {/* <Datetime
+        onChange={(date) => handleSelectedDate(date)}
+        value={selectedDate}
+        closeOnSelect
+        timeFormat={false}
+        inputProps={{ className: 'date-picker' }}
+      /> */}
       <TableHeader>
         <TableColumnHeader className="uh-table-col-header">Event Name</TableColumnHeader>
         <TableColumnHeader className="uh-table-col-header">Location</TableColumnHeader>
@@ -56,7 +54,7 @@ const UnsubmittedDesktopTable = ({ unsubmittedHours }) => {
 
 // use for
 UnsubmittedDesktopTable.propTypes = {
-  unsubmittedHours: PropTypes.arrayOf(Object).isRequired,
+  filteredUnsubmittedHours: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default UnsubmittedDesktopTable;

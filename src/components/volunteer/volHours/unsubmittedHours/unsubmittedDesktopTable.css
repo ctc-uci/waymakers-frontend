@@ -2,3 +2,17 @@
     width: 100%;
     border-collapse: collapse;
 }
+
+.date-picker {
+  border-radius: 25px;
+  margin-bottom: 5px;
+  background: #5D9A64;
+  text-align: center;
+  color: white;
+  border: none;
+  float: right;
+}
+
+.date-picker::placeholder {
+  color: white;
+}

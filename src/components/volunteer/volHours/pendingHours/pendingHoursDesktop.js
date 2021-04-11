@@ -5,8 +5,9 @@ import {
   Table, TableHeader, TableColumnHeader, TableBody, TableContent, TableRow,
 } from '../../../../common/Table';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
+import '../unsubmittedHours/unsubmittedDesktopTable.css';
 
-const PendingHoursDesktop = ({ pendingHours }) => (
+const PendingHoursDesktop = ({ filteredPendingHours }) => (
   <Table>
     <TableHeader>
       <TableColumnHeader>Event Name</TableColumnHeader>
@@ -16,7 +17,7 @@ const PendingHoursDesktop = ({ pendingHours }) => (
       <TableColumnHeader>Hours</TableColumnHeader>
     </TableHeader>
     <TableBody>
-      {pendingHours.map((pendingHour) => (
+      {filteredPendingHours.map((pendingHour) => (
         <TableRow>
           <TableContent>{pendingHour.eventName}</TableContent>
           <TableContent>{pendingHour.location}</TableContent>
@@ -30,7 +31,7 @@ const PendingHoursDesktop = ({ pendingHours }) => (
 );
 
 PendingHoursDesktop.propTypes = {
-  pendingHours: PropTypes.arrayOf(
+  filteredPendingHours: PropTypes.arrayOf(
     PropTypes.shape({
       eventName: PropTypes.string,
       location: PropTypes.string,
