@@ -4,7 +4,7 @@ import WMKLogo from '../../assets/wmkLogo.svg';
 
 import './header.css';
 import DesktopNavbar from './desktop/desktopNavbar';
-import MobileNavbar from './mobile/mobileNavbar';
+// import MobileNavbar from './mobile/mobileNavbar';
 
 const Header = () => {
   console.log('.');
@@ -21,9 +21,9 @@ const Header = () => {
         />
       </div>
       <div className="header-right-wrapper">
-        <span>Filler span</span>
+        {/* <span>Filler span</span> */}
         <DesktopNavbar />
-        <MobileNavbar />
+        {/* <MobileNavbar /> */}
       </div>
     </div>
   );
