@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import disableScroll from 'disable-scroll';
+// import disableScroll from 'disable-scroll';
 import {
   Card, Button, Alert,
 } from 'react-bootstrap';
@@ -16,7 +16,7 @@ import { getEvents, getUserEvents } from '../../components/events/redux/selector
 
 import TitledCard from '../../common/Card/TitledCard';
 import VolunteerAvailability from '../../components/dashboard/availability-component/volunteerAvailability/volunteerAvailability';
-import HelpPopup from '../../components/dashboard/availability-component/help-popup/helpPopup';
+// import HelpPopup from '../../components/dashboard/availability-component/help-popup/helpPopup';
 import CalendarPopup from '../../components/events/events-view/calendar-popup/calendarPopup';
 import EventLegend from '../../components/dashboard/event-legend/eventLegend';
 import EventList from '../../components/events/event-list/eventList';
@@ -30,7 +30,7 @@ const VolunteerDashboard = (props) => {
   const history = useHistory();
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
-  const [helpPopupSeen, setHelpPopupSeen] = useState(false);
+  // const [helpPopupSeen, setHelpPopupSeen] = useState(false);
 
   async function logout() {
     try {
@@ -58,14 +58,14 @@ const VolunteerDashboard = (props) => {
     })();
   }, []);
 
-  const onHelpButtonClick = () => {
-    if (helpPopupSeen) {
-      disableScroll.off();
-    } else {
-      disableScroll.on();
-    }
-    setHelpPopupSeen(!helpPopupSeen);
-  };
+  // const onHelpButtonClick = () => {
+  //   if (helpPopupSeen) {
+  //     disableScroll.off();
+  //   } else {
+  //     disableScroll.on();
+  //   }
+  //   setHelpPopupSeen(!helpPopupSeen);
+  // };
 
   if (isLoading) {
     return (<div>Loading dashboard...</div>);
@@ -127,7 +127,7 @@ const VolunteerDashboard = (props) => {
       </div>
       <div className="availability-third">
         <VolunteerAvailability />
-        {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} />}
+        {/* {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} />} */}
       </div>
     </div>
   );
