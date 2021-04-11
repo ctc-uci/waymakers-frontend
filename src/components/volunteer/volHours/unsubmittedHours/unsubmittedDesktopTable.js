@@ -47,13 +47,6 @@ const Row = ({
 // need to convert timestamp to MM:HH AM/PM format
 const UnsubmittedDesktopTable = ({ unsubmittedHours }) => (
   <Table className="uh-table">
-    {/* <select name="dateDropDown" id="date">
-        <option value="">--Select Date to Filter By--</option>
-        <option value="">October 2020</option>
-        <option value="">November 2020</option>
-        <option value="">December 2020</option>
-        <option value="">January 2021</option>
-      </select> */}
     <TableHeader>
       <TableColumnHeader className="uh-table-col-header">Event Name</TableColumnHeader>
       <TableColumnHeader className="uh-table-col-header">Location</TableColumnHeader>
