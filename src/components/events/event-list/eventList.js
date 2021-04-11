@@ -31,6 +31,12 @@ const EventList = ({
     openPopup();
   };
 
+  const onCheckMarkClick = (event) => {
+    setEvent(event);
+    setEventPopupType('RemoveFromMyEventPopup');
+    openPopup();
+  };
+
   // Create list of Event Components for a specific type
   const createEventBlocks = (eventType, eventList) => {
     let finalEventType = eventType;
@@ -40,7 +46,7 @@ const EventList = ({
         onEventButtonClick = (clickedEvent) => onAddButtonClick(clickedEvent);
       } else {
         // TODO: change this when we know what a checkmark is supposed to be
-        onEventButtonClick = () => console.log('oh the check was clicked -kc');
+        onEventButtonClick = (clickedEvent) => onCheckMarkClick(clickedEvent);
       }
       if (page === 'addModifyDeleteEventsPage' || page === 'aggregatePage') {
         finalEventType = page;
