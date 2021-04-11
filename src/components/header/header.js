@@ -1,17 +1,15 @@
 import React from 'react';
 import WMKLogo from '../../assets/wmkLogo.svg';
-// import useWindowDimension
+import useWindowDimension from '../../common/useWindowDimension';
 
 import './header.css';
 import DesktopNavbar from './desktop/desktopNavbar';
-// import MobileNavbar from './mobile/mobileNavbar';
+import MobileNavbar from './mobile/mobileNavbar';
 
 const Header = () => {
-  console.log('.');
+  const { width } = useWindowDimension();
 
   return (
-    // get isMobile using leon's hook, set state variable
-    // render mobile header or desktop header based on isMobile; probably a ternary
     <div className="header">
       <div className="header-left-wrapper">
         <img
@@ -21,9 +19,9 @@ const Header = () => {
         />
       </div>
       <div className="header-right-wrapper">
-        {/* <span>Filler span</span> */}
-        <DesktopNavbar />
-        {/* <MobileNavbar /> */}
+        {width > 768
+          ? <DesktopNavbar />
+          : <MobileNavbar />}
       </div>
     </div>
   );
