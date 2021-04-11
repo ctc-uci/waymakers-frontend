@@ -11,10 +11,8 @@ const verifyToken = async (cookies) => {
   if (accessToken != null) {
     try {
       const url = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/auth/verifyToken/${accessToken}`;
-      console.log(url);
 
       const isVerified = await axios.get(url);
-      console.log('isVerified:', isVerified);
 
       if (isVerified) {
         cookies.set('userId', isVerified.data, {
