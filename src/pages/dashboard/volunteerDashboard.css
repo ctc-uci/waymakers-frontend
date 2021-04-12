@@ -54,7 +54,7 @@
 
 .events-section .events-container {
     height: 650px;
-    overflow-y: scroll;
+    overflow-y: hidden;
 }
 
 .dashboard-event-legend {
