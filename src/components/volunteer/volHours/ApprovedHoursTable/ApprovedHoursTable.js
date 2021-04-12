@@ -1,6 +1,4 @@
 import React from 'react';
-import Datetime from 'react-datetime';
-import styles from 'react-datetime/css/react-datetime.css';
 import useMobileWidth from '../../../../common/useMobileWidth';
 
 import ApprovedHoursTableDesktop from './ApprovedHoursTableDesktop';
@@ -9,6 +7,8 @@ import useAllApprovedHours from './useApprovedHours';
 import {
   TitledCard,
 } from '../../../../common/Card';
+import DateTimeFilter from '../DateTimeFilter';
+
 import '../hours.css';
 import UseFilteredHours from '../useFilteredHours';
 
@@ -22,13 +22,9 @@ const ApprovedHoursTable = () => {
   if (filteredApprovedHours === null) {
     return (
       <TitledCard title="Approved Hours">
-        <Datetime
-          onChange={(date) => setFilteredDate(date)}
-          value={filteredDate}
-          closeOnSelect
-          timeFormat={false}
-          dateFormat="MMMM YYYY"
-          inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
+        <DateTimeFilter
+          filteredDate={filteredDate}
+          setFilteredDate={setFilteredDate}
         />
         <p className="medium">Loading...</p>
       </TitledCard>
@@ -38,13 +34,9 @@ const ApprovedHoursTable = () => {
   if (filteredApprovedHours && filteredApprovedHours.length === 0) {
     return (
       <TitledCard title="Approved Hours">
-        <Datetime
-          onChange={(date) => setFilteredDate(date)}
-          value={filteredDate}
-          closeOnSelect
-          timeFormat={false}
-          dateFormat="MMMM YYYY"
-          inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
+        <DateTimeFilter
+          filteredDate={filteredDate}
+          setFilteredDate={setFilteredDate}
         />
         <p className="medium">There are no approved hours.</p>
       </TitledCard>
@@ -54,13 +46,9 @@ const ApprovedHoursTable = () => {
   return (
     <>
       <TitledCard title="Approved Hours">
-        <Datetime
-          onChange={(date) => setFilteredDate(date)}
-          value={filteredDate}
-          closeOnSelect
-          timeFormat={false}
-          dateFormat="MMMM YYYY"
-          inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
+        <DateTimeFilter
+          filteredDate={filteredDate}
+          setFilteredDate={setFilteredDate}
         />
         {isMobile
           ? (

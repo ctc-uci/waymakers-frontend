@@ -11,13 +11,14 @@ import './unsubmittedMobileTable.css';
 
 import SubmitHoursPopup from '../SubmitHoursPopup';
 
-const UpdateButton = styled.button`
+const SubmitButton = styled.button`
   border-radius: 25px;
   background: #5D9A64;
   color: white;
   border: none;
   text-decoration: none;
-  width: 65%;
+  padding: 4px 24px 4px 24px;
+  cursor:pointer;
 `;
 
 const Row = ({
@@ -32,7 +33,7 @@ const Row = ({
       <MobileTableContent>{`Start Date/Time: ${formatDate(startTime, DATE_FORMAT.MY_HOURS)}`}</MobileTableContent>
       <MobileTableContent>{`End Date/Time: ${formatDate(endTime, DATE_FORMAT.MY_HOURS)}`}</MobileTableContent>
       <MobileTableContent>
-        <UpdateButton type="button" onClick={() => setIsModalOpen(true)}>Submit</UpdateButton>
+        <SubmitButton type="button" onClick={() => setIsModalOpen(true)}>Submit</SubmitButton>
         {isModalOpen && (
           <SubmitHoursPopup
             isModalOpen={isModalOpen}

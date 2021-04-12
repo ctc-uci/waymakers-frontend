@@ -5,20 +5,21 @@ import PropTypes from 'prop-types';
 import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
-import {
-  TitledCard,
-} from '../../../../common/Card';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
+
+import trashcan from '../../../../assets/trashcan.svg';
+import StylelessButton from '../../../../common/StylelessButton';
 
 import ResubmitHoursPopup from './ResubmitHoursPopup';
 
-const UpdateButton = styled.button`
+const ResubmitButton = styled.button`
   border-radius: 25px;
   background: #5D9A64;
   color: white;
   border: none;
   text-decoration: none;
-  width: 65%;
+  padding: 4px 24px 4px 24px;
+  cursor:pointer;
 `;
 
 const Row = ({
@@ -39,33 +40,45 @@ const Row = ({
         {`End Date/Time: ${formatDate(endTime, DATE_FORMAT.MY_HOURS)}`}
       </MobileTableContent>
       <MobileTableContent>
-        <UpdateButton type="button" onClick={() => setIsModalOpen(true)}>Submit</UpdateButton>
-        {isModalOpen && (
-        <ResubmitHoursPopup
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          eventTitle={eventName}
-        />
-        )}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <ResubmitButton type="button" onClick={() => setIsModalOpen(true)}>Resubmit</ResubmitButton>
+          {isModalOpen && (
+          <ResubmitHoursPopup
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            eventTitle={eventName}
+          />
+          )}
+          <StylelessButton
+            type="button"
+            onClick={() => console.log('TODO: impl delete endpoint')}
+            style={{ height: '30px' }}
+          >
+            <img
+              className="trash-icon"
+              src={trashcan}
+              alt="trashcan"
+              style={{ height: '30px' }}
+            />
+          </StylelessButton>
+        </div>
       </MobileTableContent>
     </MobileTableRow>
   );
 };
 
 const RejectedHoursTableMobile = ({ rejectedHours }) => (
-  <TitledCard title="Rejected Hours">
-    <MobileTable>
-      {rejectedHours && rejectedHours.map((rejectedHour) => (
-        <Row
-          key={rejectedHour.eventName}
-          eventName={rejectedHour.eventName}
-          rejectedNotes={rejectedHour.rejectedNotes}
-          startTime={rejectedHour.startTime}
-          endTime={rejectedHour.endTime}
-        />
-      ))}
-    </MobileTable>
-  </TitledCard>
+  <MobileTable>
+    {rejectedHours && rejectedHours.map((rejectedHour) => (
+      <Row
+        key={rejectedHour.eventName}
+        eventName={rejectedHour.eventName}
+        rejectedNotes={rejectedHour.rejectedNotes}
+        startTime={rejectedHour.startTime}
+        endTime={rejectedHour.endTime}
+      />
+    ))}
+  </MobileTable>
 );
 
 RejectedHoursTableMobile.propTypes = {

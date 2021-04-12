@@ -1,8 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import Datetime from 'react-datetime';
-import styles from 'react-datetime/css/react-datetime.css';
+
 import '../hours.css';
 import { TitledCard } from '../../../../common/Card';
 
@@ -10,6 +9,7 @@ import useMobileWidth from '../../../../common/useMobileWidth';
 import UnsubmittedDesktopTable from './unsubmittedDesktopTable';
 import UnsubmittedMobileTable from './unsubmittedMobileTable';
 import UseFilteredHours from '../useFilteredHours';
+import DateTimeFilter from '../DateTimeFilter';
 
 const UnsubmittedHours = () => {
   const isMobile = useMobileWidth();
@@ -38,13 +38,9 @@ const UnsubmittedHours = () => {
   if (filteredUnsubmittedHours === null) {
     return (
       <TitledCard title="Unsubmitted Hours">
-        <Datetime
-          onChange={(date) => setFilteredDate(date)}
-          value={filteredDate}
-          closeOnSelect
-          timeFormat={false}
-          dateFormat="MMMM YYYY"
-          inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
+        <DateTimeFilter
+          filteredDate={filteredDate}
+          setFilteredDate={setFilteredDate}
         />
         <p className="medium">Loading...</p>
       </TitledCard>
@@ -54,13 +50,9 @@ const UnsubmittedHours = () => {
   if (filteredUnsubmittedHours && filteredUnsubmittedHours.length === 0) {
     return (
       <TitledCard title="Unsubmitted Hours">
-        <Datetime
-          onChange={(date) => setFilteredDate(date)}
-          value={filteredDate}
-          closeOnSelect
-          timeFormat={false}
-          dateFormat="MMMM YYYY"
-          inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
+        <DateTimeFilter
+          filteredDate={filteredDate}
+          setFilteredDate={setFilteredDate}
         />
         <p className="medium">There are no unsubmitted hours.</p>
       </TitledCard>
@@ -70,13 +62,9 @@ const UnsubmittedHours = () => {
   return (
     <>
       <TitledCard title="Unsubmitted Hours">
-        <Datetime
-          onChange={(date) => setFilteredDate(date)}
-          value={filteredDate}
-          closeOnSelect
-          timeFormat={false}
-          dateFormat="MMMM YYYY"
-          inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
+        <DateTimeFilter
+          filteredDate={filteredDate}
+          setFilteredDate={setFilteredDate}
         />
         {isMobile
           ? (
