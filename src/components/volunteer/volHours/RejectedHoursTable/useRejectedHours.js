@@ -14,14 +14,13 @@ const useRejectedHours = () => {
   ).then((res) => {
     setRejectedHours(res.data);
   }).catch((err) => {
-    console.log(err);
+    console.error(err);
   });
 
   useEffect(() => {
     fetchRejectedHours();
   }, []);
 
-  console.log(rejectedHours);
   return [rejectedHours, fetchRejectedHours];
 };
 

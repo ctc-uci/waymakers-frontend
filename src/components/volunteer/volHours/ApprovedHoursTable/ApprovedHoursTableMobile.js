@@ -9,7 +9,7 @@ import '../hours.css';
 const ApprovedHoursTableMobile = ({ filteredApprovedHours }) => (
   <MobileTable>
     {filteredApprovedHours && filteredApprovedHours.map((approvedHour) => (
-      <MobileTableRow>
+      <MobileTableRow key={approvedHour.eventName}>
         <MobileTableRowHeader>{approvedHour.eventName}</MobileTableRowHeader>
         <Divider />
         <MobileTableContent>

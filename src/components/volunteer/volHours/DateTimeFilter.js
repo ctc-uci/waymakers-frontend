@@ -16,8 +16,12 @@ const DateTimeFilter = ({ filteredDate, setFilteredDate }) => (
   />
 );
 
+DateTimeFilter.defaultProps = {
+  filteredDate: null,
+};
+
 DateTimeFilter.propTypes = {
-  filteredDate: PropTypes.string.isRequired,
+  filteredDate: PropTypes.string,
   setFilteredDate: PropTypes.func.isRequired,
 };
 

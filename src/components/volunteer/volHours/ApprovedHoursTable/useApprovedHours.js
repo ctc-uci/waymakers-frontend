@@ -16,7 +16,7 @@ const useAllApprovedHours = () => {
   ).then((res) => {
     setAllApprovedHours(res.data);
   }).catch((err) => {
-    console.log(err);
+    console.error(err);
   });
 
   useEffect(() => {

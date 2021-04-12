@@ -10,7 +10,7 @@ import '../hours.css';
 const PendingHoursMobile = ({ filteredPendingHours }) => (
   <MobileTable>
     {filteredPendingHours.map((pendingHour) => (
-      <MobileTableRow>
+      <MobileTableRow key={pendingHour.eventName}>
         <MobileTableRowHeader>{pendingHour.eventName}</MobileTableRowHeader>
         <Divider />
         <MobileTableContent>

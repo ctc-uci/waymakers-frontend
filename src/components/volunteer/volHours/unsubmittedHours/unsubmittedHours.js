@@ -31,7 +31,7 @@ const UnsubmittedHours = () => {
     ).then((res) => {
       setAllUnsubmittedHours(res.data);
     }).catch((err) => {
-      console.log(err);
+      console.error(err);
     });
   }, []);
 
