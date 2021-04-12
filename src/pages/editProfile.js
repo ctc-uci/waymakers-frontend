@@ -155,7 +155,7 @@ const editProfile = (props) => {
     });
 
     const userID = cookies.get('userId');
-    await axios.put(
+    const response = await axios.put(
       `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
         firstname,
         lastname,
@@ -168,6 +168,7 @@ const editProfile = (props) => {
         permission: status,
       }, { withCredentials: true },
     );
+    console.log(`status: ${response.status}`);
 
     await axios.post(
       `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
