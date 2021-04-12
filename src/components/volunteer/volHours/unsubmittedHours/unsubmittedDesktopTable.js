@@ -1,12 +1,11 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
 import {
   Table, TableHeader, TableColumnHeader, TableBody, TableRow, TableContent,
 } from '../../../../common/Table';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
+import '../hours.css';
 import './unsubmittedDesktopTable.css';
 
 import SubmitHoursPopup from '../SubmitHoursPopup';
@@ -44,8 +43,15 @@ const Row = ({
   );
 };
 
+Row.propTypes = {
+  eventName: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  startTime: PropTypes.string.isRequired,
+  endTime: PropTypes.string.isRequired,
+};
+
 // need to convert timestamp to MM:HH AM/PM format
-const UnsubmittedDesktopTable = ({ unsubmittedHours }) => (
+const UnsubmittedDesktopTable = ({ filteredUnsubmittedHours }) => (
   <Table className="uh-table">
     <TableHeader>
       <TableColumnHeader className="uh-table-col-header">Event Name</TableColumnHeader>
@@ -55,7 +61,7 @@ const UnsubmittedDesktopTable = ({ unsubmittedHours }) => (
       <TableColumnHeader className="uh-table-col-header">Submit</TableColumnHeader>
     </TableHeader>
     <TableBody className="uh-table-body">
-      {unsubmittedHours && unsubmittedHours.map((e) => (
+      {filteredUnsubmittedHours && filteredUnsubmittedHours.map((e) => (
         <Row
           key={e.eventName}
           eventName={e.eventName}
@@ -68,9 +74,8 @@ const UnsubmittedDesktopTable = ({ unsubmittedHours }) => (
   </Table>
 );
 
-// use for
 UnsubmittedDesktopTable.propTypes = {
-  unsubmittedHours: PropTypes.arrayOf(Object).isRequired,
+  filteredUnsubmittedHours: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default UnsubmittedDesktopTable;

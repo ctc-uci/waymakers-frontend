@@ -1,15 +1,23 @@
 import { React, useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import Datetime from 'react-datetime';
 
+import styles from 'react-datetime/css/react-datetime.css';
 import useMobileWidth from '../../../../common/useMobileWidth';
 import TitledCard from '../../../../common/Card/TitledCard';
 import PendingHoursDesktop from './pendingHoursDesktop';
 import PendingHoursMobile from './pendingHoursMobile';
+import '../hours.css';
+import UseFilteredHours from '../useFilteredHours';
 
 const PendingHours = () => {
   const isMobile = useMobileWidth();
-  const [pendingHours, setPendingHours] = useState(null);
+  // NOT subject to change based on filtering
+  const [allPendingHours, setAllPendingHours] = useState(null);
+  // Filtered pending hours and filter interface
+  const [filteredPendingHours, filteredDate, setFilteredDate] = UseFilteredHours(allPendingHours);
+
   const [cookies] = useCookies(['userId']);
 
   const getPendingHours = async () => {
@@ -21,7 +29,7 @@ const PendingHours = () => {
           withCredentials: true,
         },
       );
-      setPendingHours(response.data);
+      setAllPendingHours(response.data);
     } catch (err) {
       console.log(err);
     }
@@ -31,17 +39,33 @@ const PendingHours = () => {
     getPendingHours();
   }, []);
 
-  if (pendingHours === null) {
+  if (filteredPendingHours === null) {
     return (
       <TitledCard title="Pending Hours">
+        <Datetime
+          onChange={(date) => setFilteredDate(date)}
+          value={filteredDate}
+          closeOnSelect
+          timeFormat={false}
+          dateFormat="MMMM YYYY"
+          inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
+        />
         <p className="medium">Loading...</p>
       </TitledCard>
     );
   }
 
-  if (pendingHours && pendingHours.length === 0) {
+  if (filteredPendingHours && filteredPendingHours.length === 0) {
     return (
       <TitledCard title="Pending Hours">
+        <Datetime
+          onChange={(date) => setFilteredDate(date)}
+          value={filteredDate}
+          closeOnSelect
+          timeFormat={false}
+          dateFormat="MMMM YYYY"
+          inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
+        />
         <p className="medium">There are no pending hours.</p>
       </TitledCard>
     );
@@ -49,9 +73,25 @@ const PendingHours = () => {
 
   return (
     <TitledCard title="Pending Hours">
+      <Datetime
+        onChange={(date) => setFilteredDate(date)}
+        value={filteredDate}
+        closeOnSelect
+        timeFormat={false}
+        dateFormat="MMMM YYYY"
+        inputProps={{ className: styles.rdt, placeholder: 'Select Date Filter' }}
+      />
       {isMobile
-        ? <PendingHoursMobile pendingHours={pendingHours} />
-        : <PendingHoursDesktop pendingHours={pendingHours} /> }
+        ? (
+          <PendingHoursMobile
+            filteredPendingHours={filteredPendingHours}
+          />
+        )
+        : (
+          <PendingHoursDesktop
+            filteredPendingHours={filteredPendingHours}
+          />
+        )}
     </TitledCard>
   );
 };

@@ -5,10 +5,11 @@ import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
+import '../hours.css';
 
-const PendingHoursMobile = ({ pendingHours }) => (
+const PendingHoursMobile = ({ filteredPendingHours }) => (
   <MobileTable>
-    {pendingHours.map((pendingHour) => (
+    {filteredPendingHours.map((pendingHour) => (
       <MobileTableRow>
         <MobileTableRowHeader>{pendingHour.eventName}</MobileTableRowHeader>
         <Divider />
@@ -30,7 +31,7 @@ const PendingHoursMobile = ({ pendingHours }) => (
 );
 
 PendingHoursMobile.propTypes = {
-  pendingHours: PropTypes.arrayOf(
+  filteredPendingHours: PropTypes.arrayOf(
     PropTypes.shape({
       eventName: PropTypes.string,
       location: PropTypes.string,

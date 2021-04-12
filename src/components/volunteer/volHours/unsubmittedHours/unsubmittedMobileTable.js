@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -7,7 +6,8 @@ import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
-import './unsubmittedHoursMobileTable.css';
+import '../hours.css';
+import './unsubmittedMobileTable.css';
 
 import SubmitHoursPopup from '../SubmitHoursPopup';
 
@@ -45,9 +45,16 @@ const Row = ({
   );
 };
 
-const UnsubmittedMobileTable = ({ unsubmittedHours }) => (
+Row.propTypes = {
+  eventName: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  startTime: PropTypes.string.isRequired,
+  endTime: PropTypes.string.isRequired,
+};
+
+const UnsubmittedMobileTable = ({ filteredUnsubmittedHours }) => (
   <MobileTable className="uh-table">
-    {unsubmittedHours && unsubmittedHours.map((e) => (
+    {filteredUnsubmittedHours && filteredUnsubmittedHours.map((e) => (
       <Row
         key={e.eventName}
         eventName={e.eventName}
@@ -60,7 +67,7 @@ const UnsubmittedMobileTable = ({ unsubmittedHours }) => (
 );
 
 UnsubmittedMobileTable.propTypes = {
-  unsubmittedHours: PropTypes.arrayOf(Object).isRequired,
+  filteredUnsubmittedHours: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default UnsubmittedMobileTable;
