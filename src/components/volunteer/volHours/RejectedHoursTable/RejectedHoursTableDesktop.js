@@ -10,6 +10,7 @@ import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 import trashcan from '../../../../assets/trashcan.svg';
 import StylelessButton from '../../../../common/StylelessButton';
 
+import useDeleteRejectedHours from './useDeleteRejectedHours';
 import ResubmitHoursPopup from './ResubmitHoursPopup';
 
 const ResubmitButton = styled.button`
@@ -23,9 +24,10 @@ const ResubmitButton = styled.button`
 `;
 
 const Row = ({
-  eventName, rejectedNotes, startTime, endTime,
+  logId, eventName, rejectedNotes, startTime, endTime,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteRejectedHours] = useDeleteRejectedHours();
   return (
     <TableRow>
       <TableContent>{eventName}</TableContent>
@@ -44,7 +46,9 @@ const Row = ({
           )}
           <StylelessButton
             type="button"
-            onClick={() => console.log('TODO: impl delete endpoint')}
+            onClick={() => deleteRejectedHours(logId)
+              .then(() => console.log('a'))
+              .catch((err) => console.error(err))}
             style={{ height: '30px' }}
           >
             <img
@@ -74,6 +78,7 @@ const RejectedHoursTableDesktop = ({ rejectedHours }) => (
       {rejectedHours && rejectedHours.map((rejectedHour) => (
         <Row
           key={rejectedHour.eventName}
+          logId={rejectedHour.id}
           eventName={rejectedHour.eventName}
           rejectedNotes={rejectedHour.rejectedNotes}
           startTime={rejectedHour.startTime}
@@ -87,11 +92,12 @@ const RejectedHoursTableDesktop = ({ rejectedHours }) => (
 RejectedHoursTableDesktop.propTypes = {
   rejectedHours: PropTypes.arrayOf(
     PropTypes.shape({
-      eventName: PropTypes.string,
-      location: PropTypes.string,
-      startTime: PropTypes.string,
-      endTime: PropTypes.string,
-      hours: PropTypes.string,
+      logId: PropTypes.string.isRequired,
+      eventName: PropTypes.string.isRequired,
+      location: PropTypes.string.isRequired,
+      startTime: PropTypes.string.isRequired,
+      endTime: PropTypes.string.isRequired,
+      hours: PropTypes.string.isRequired,
     }),
   ).isRequired,
 };
