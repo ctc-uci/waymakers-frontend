@@ -15,6 +15,9 @@ import {
 import {
   ValidatedField,
 } from '../../../../common/formikExtensions';
+import {
+  refreshPage,
+} from '../../../../common/utils';
 
 import useDivisions from '../useDivisions';
 import useRejectedEvents from './useRejectedHours';
@@ -97,6 +100,7 @@ const ResubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) =>
         // eslint-disable-next-line no-undef
         alert('success');
         setIsModalOpen(false);
+        refreshPage();
       }).error((err) => {
         // eslint-disable-next-line no-undef
         alert('error', err);

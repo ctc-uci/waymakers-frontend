@@ -9,7 +9,7 @@ import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 import '../hours.css';
 import './unsubmittedMobileTable.css';
 
-import SubmitHoursPopup from '../SubmitHoursPopup';
+import SubmitHoursPopup from './SubmitHoursPopup';
 
 const SubmitButton = styled.button`
   border-radius: 25px;

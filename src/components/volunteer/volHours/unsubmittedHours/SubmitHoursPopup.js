@@ -12,13 +12,16 @@ import { useCookies } from 'react-cookie';
 
 import {
   LightModal, LightModalHeader, LightModalBody, LightModalButton,
-} from '../../../common/LightModal';
+} from '../../../../common/LightModal';
 import {
   ValidatedField,
-} from '../../../common/formikExtensions';
+} from '../../../../common/formikExtensions';
+import {
+  refreshPage,
+} from '../../../../common/utils';
 
-import useDivisions from './useDivisions';
-import useUserEvents from './useUserEvents';
+import useDivisions from '../useDivisions';
+import useUserEvents from '../useUserEvents';
 
 // Using Yup to do schema validation
 const Schema = Yup.object().shape({
@@ -96,6 +99,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
         // eslint-disable-next-line no-undef
         alert('success');
         setIsModalOpen(false);
+        refreshPage();
       }).error((err) => {
         // eslint-disable-next-line no-undef
         alert('error', err);

@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -5,7 +6,7 @@ import PropTypes from 'prop-types';
 import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
-import { formatDate, DATE_FORMAT } from '../../../../common/utils';
+import { formatDate, DATE_FORMAT, refreshPage } from '../../../../common/utils';
 
 import trashcan from '../../../../assets/trashcan.svg';
 import StylelessButton from '../../../../common/StylelessButton';
@@ -55,7 +56,12 @@ const Row = ({
           <StylelessButton
             type="button"
             onClick={() => deleteRejectedHours(logId)
-              .then(() => console.log('a'))
+              .then(() => {
+                // TODO: better confirmation
+                // eslint-disable-next-line no-undef
+                alert('success');
+                refreshPage();
+              })
               .catch((err) => console.error(err))}
             style={{ height: '30px' }}
           >
