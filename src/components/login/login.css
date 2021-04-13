@@ -1,7 +1,171 @@
-.login h1 {
- background: purple;
-}
+@import '../../common/vars.css';
 
 .login-container {
-    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+
+    position: static;
+    z-index: 1;
+
+    background: var(--color-dark-blue);
+    border-radius: 37px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+
+    width: 25%;
+    height: 37%;
+    min-width: 650px;
+}
+
+.login-container p {
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
+.login-container .login-forms {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0% 12% 1% 12%;
+    padding-top: 5%;
+
+    height: 50%;
+}
+
+.login-container .login-forms .login-input-label {
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.login-container .login-forms .login-input-label ~ .login-input-label {
+    margin-top: 3%;
+}
+
+.login-container .login-forms .login-input-label .login-input {
+    border: none;
+    border-radius: 5px;
+    -webkit-appearance: none;
+    outline: none;
+    box-shadow: none;
+
+    color: rgba(0, 0, 0, 0.6);
+
+    padding-left: 3%;
+
+    height: 35px;
+}
+
+.login-container .login-forms .login-password-input {
+    position: relative;
+}
+
+.login-container .login-forms .login-password-input .login-password-showhide-button {
+    position: absolute;
+
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    border: none;
+
+    background: transparent;
+
+    right: 12px;
+    top: 37px;
+    margin-right: 0;
+
+    cursor: pointer;
+}
+
+.login-container .login-forms .sign-up {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+
+    color: white;
+
+    margin-top: 1%;
+}
+
+.login-container .error-message {
+    text-align: center;
+    
+    font-weight: bold;
+
+    color: #e63c3c;
+}
+
+.login-container a:link, 
+.login-container a:visited {
+    text-decoration: none;
+    color: white;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+.login-container .login-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    margin: 2% 27% 0% 27%;
+    height: 30%;
+}
+
+.login-container .login-buttons .login-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1.3rem;
+
+    border: none;
+    border-radius: 10px;
+    -webkit-appearance: none;
+    outline: none;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.46);
+
+    cursor: pointer;
+
+    color: white;
+    background: var(--color-green);
+
+    margin-bottom: 6%;
+
+    height: 29%;
+}
+
+.login-container .login-buttons .lwg-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1rem;
+
+    border: none;
+    border-radius: 10px;
+    -webkit-appearance: none;
+    outline: none;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.46);
+
+    cursor: pointer;
+
+    background: white;
+
+    margin-top: 6%;
+
+    height: 29%;
+}
+
+.login-container .login-buttons .lwg-button .google-logo {
+    height: 70%;
+    margin-right: 5%;
 }

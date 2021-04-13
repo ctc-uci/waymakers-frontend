@@ -14,12 +14,12 @@
     margin-top: 0%;
 }
 
-.prev-button {
+.day-header .prev-button {
     margin-top: 1.5%;
     margin-left: -6%;
 }
 
-.next-button {
+.day-header .next-button {
     margin-top: 1.5%;
     margin-left: 5%;
 }
