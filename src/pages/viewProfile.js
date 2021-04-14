@@ -39,7 +39,7 @@ const viewProfile = (props) => {
   const [email, setEmail] = useState('');
   const [number, setNumber] = useState('');
   const [address, setAddress] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [birthday, setBirthday] = useState(new Date());
 
   const [tier, setTier] = useState(0);
   const [status, setStatus] = useState('Volunteer');
@@ -84,12 +84,14 @@ const viewProfile = (props) => {
       locationstreet, locationcity, locationstate, locationzip,
     } = account;
 
+    console.log(account);
+
     setFirstName(account.firstname);
     setLastName(account.lastname);
-    setEmail('p@uci.edu');
-    setNumber('(555) 555-5555');
+    setEmail(account.email);
+    setNumber(account.phone);
     setAddress(`${locationstreet} ${locationcity}, ${locationstate} ${locationzip}`);
-    setBirthday(account.birthdate);
+    setBirthday(new Date(account.birthdate));
     setTier(account.tier);
     setStatus(permissions.permissions);
 
@@ -134,18 +136,22 @@ const viewProfile = (props) => {
           <h4 className="card-title">About</h4>
           <div className="card-body">
             <Card className="about-card">
-              <p>
+              <div className="info-section">
                 <img className="about-icons" src={cake} alt="" />
-                {`${birthday}`}
-              </p>
-              <p>
+                <p>{birthday !== '' && `${birthday.getMonth() + 1}/${birthday.getDate()}/${birthday.getFullYear()}`}</p>
+              </div>
+              <div className="info-section">
                 <img className="about-icons" src={people} alt="" />
-                {`${tier}`}
-              </p>
-              <p>
+                <p>{tier}</p>
+              </div>
+              {/* <p>
                 <img className="about-icons" src={building} alt="" />
                 {`${status}`}
-              </p>
+              </p> */}
+              <div className="info-section">
+                <img className="about-icons" src={building} alt="" />
+                <p>{status}</p>
+              </div>
             </Card>
           </div>
         </div>
@@ -154,18 +160,18 @@ const viewProfile = (props) => {
             <h4 className="card-title">Contact Info</h4>
             <div className="card-body">
               <Card className="contact-card">
-                <p>
+                <div className="info-section">
                   <img className="contact-icons" src={emailPic} alt="" />
-                  {` ${email}`}
-                </p>
-                <p>
+                  <p>{email}</p>
+                </div>
+                <div className="info-section">
                   <img className="contact-icons" src={phone} alt="" />
-                  {` ${number}`}
-                </p>
-                <p>
+                  <p>{number}</p>
+                </div>
+                <div className="info-section">
                   <img className="contact-icons" src={house} alt="" />
-                  {` ${address}`}
-                </p>
+                  <p>{address}</p>
+                </div>
               </Card>
             </div>
           </div>

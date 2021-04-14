@@ -35,23 +35,18 @@ const editProfile = (props) => {
 
   // Things to address:
   // - Updating issue with edit profile
-  // - How are we dealing with availability?
   // - Might need to update DB to include a field for phone number
   // - Email will come from auth in front end
   // - Is this the best way to do a put? Ideally we only wanna update what we actually changed.
   //    - Also make sure to figure out async for loop in backend
-  // - Given the way we chose to represent address, how do we wanna edit it?
-  //    - (have multiple fields to parse?)
-  //    - Keep as free form text?
-  // - How do we deal with bday since date format for PSQL is wack?
-  //    - use JS date object?
+
   const { cookies } = props;
 
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
 
   const [email, setEmail] = useState('');
-  // const [number, setNumber] = useState('');
+  const [number, setNumber] = useState('');
   const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -108,10 +103,12 @@ const editProfile = (props) => {
       locationstreet, locationcity, locationstate, locationzip,
     } = account;
 
+    console.log(account);
+
     setFirstname(account.firstname);
     setLastname(account.lastname);
-    setEmail('p@uci.edu');
-    // setNumber('(555) 555-5555');
+    setEmail(account.email);
+    setNumber(account.phone);
     setStreet(locationstreet);
     setCity(locationcity);
     setState(locationstate);
@@ -153,17 +150,17 @@ const editProfile = (props) => {
       seen.add(date.toString());
       return !duplicate;
     });
-
+    console.log(birthday.format());
     const userID = cookies.get('userId');
     const response = await axios.put(
       `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
         firstname,
         lastname,
-        birthdate: birthday.format(),
-        locationstreet: street,
-        locationcity: city,
-        locationstate: state,
-        locationzip: zip,
+        birthDate: birthday.format(),
+        locationStreet: street,
+        locationCity: city,
+        locationState: state,
+        locationZip: zip,
         tier,
         permission: status,
       }, { withCredentials: true },
@@ -186,7 +183,6 @@ const editProfile = (props) => {
   }
 
   return (
-    // <div>
     <div className="edit-page-container">
       <div className="profilePic">
         <img src={profCircle} alt="" width="200" height="200" />
@@ -209,6 +205,7 @@ const editProfile = (props) => {
                     <Datetime
                       initialValue={birthday}
                       onChange={(e) => setBirthday(e)}
+                      timeFormat={false}
                     />
                   </div>
                 </div>
@@ -236,7 +233,7 @@ const editProfile = (props) => {
                   </div>
                   <div className="contact-input">
                     <img className="contact-icons" src={phone} alt="" />
-                    <input className="profile-input-box profile-input-box-width" type="tel" value={firstname} name="number" onChange={(e) => setFirstName(e.target.value)} />
+                    <input className="profile-input-box profile-input-box-width" type="tel" value={number} name="number" onChange={(e) => setNumber(e.target.value)} />
                   </div>
                   <div className="contact-input">
                     <img className="contact-icons" src={house} alt="" />
@@ -248,15 +245,7 @@ const editProfile = (props) => {
           </div>
         </div>
       </div>
-      {/* <div>
-        <EditAvailability
-          availabilityTimes={availability}
-          setAvailabilityTimes={setAvailability}
-          startWeek={startWeek}
-        />
-      </div> */}
     </div>
-    // </div>
   );
 };
 
