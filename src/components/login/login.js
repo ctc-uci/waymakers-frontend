@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
@@ -11,6 +11,17 @@ import googleLogo from '../../assets/googleLogo.svg';
 
 import './login.css';
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+function useRedirectURL() {
+  const query = useQuery();
+  const redirectURL = query.get('redirect');
+  if (!redirectURL) { return '/'; }
+  return redirectURL;
+}
+
 const LogIn = (props) => {
   const { cookies } = props;
 
@@ -20,13 +31,14 @@ const LogIn = (props) => {
   const [error, setError] = useState('');
 
   const history = useHistory();
+  const redirectURL = useRedirectURL();
 
   async function login() {
     try {
-      const user = await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
+      await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
 
       const idToken = await GoogleAuthService.auth.currentUser.getIdToken();
-      console.log(`idToken: ${idToken}`);
+      // console.log(`idToken: ${idToken}`);
 
       // Setting a session cookie
       cookies.set('accessToken', idToken, {
@@ -34,8 +46,8 @@ const LogIn = (props) => {
         maxAge: 3600,
       });
 
-      console.log(user.user.uid);
-      history.push('/');
+      // console.log(user.user.uid);
+      history.push(redirectURL);
       // Signed in
     } catch (err) {
       setError(err.message);
@@ -53,9 +65,9 @@ const LogIn = (props) => {
         // const token = result.credential.accessToken;
       }
       // The signed-in user info.
-      const { user } = result;
-      console.log(user);
-      history.push('/');
+      // const { user } = result;
+      // console.log(user);
+      history.push(redirectURL);
     } catch (err) {
       setError(err.message);
     }
@@ -73,7 +85,7 @@ const LogIn = (props) => {
   };
 
   const handleKeyPress = (event) => {
-    console.log(event);
+    // console.log(event);
     if (event.charCode === 13) {
       handleSubmit(event);
     }
