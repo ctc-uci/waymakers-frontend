@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes, instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import { Route, useHistory } from 'react-router-dom';
+import { Route, useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const signInEndpoint = '/login';
@@ -34,6 +34,7 @@ const ProtectedRoute = ({ component, path, cookies }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     (async () => {
@@ -50,7 +51,8 @@ const ProtectedRoute = ({ component, path, cookies }) => {
     return <Route exact path={path} component={component} />;
   }
 
-  history.push(signInEndpoint);
+  // TODO: I don't like manually building URIs, seems easily broken
+  history.push(`${signInEndpoint}?redirect=${encodeURIComponent(location.pathname)}`);
 
   return false;
 };
