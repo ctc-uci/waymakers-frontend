@@ -3,9 +3,10 @@ import { useHistory } from 'react-router-dom';
 import {
   Card, Button, Alert,
 } from 'react-bootstrap';
-import axios from 'axios';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+
+import { WMKBackend } from '../../common/utils';
 
 import EditEvents from '../../components/events/edit-events/editEvents';
 import InventoryComponent from '../../components/dashboard/inventory-component/inventoryComponent';
@@ -38,10 +39,7 @@ const AdminDashboard = (props) => {
   // Fetching warehouse names from the server
   const getDivisionList = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/divisions`,
-        { withCredentials: true },
-      );
+      const response = await WMKBackend.get('/divisions');
       setDivisionList(response.data);
     } catch (err) {
       // eslint-disable-next-line

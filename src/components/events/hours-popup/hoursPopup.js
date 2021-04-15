@@ -2,16 +2,15 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { withCookies, Cookies } from 'react-cookie';
-import axios from 'axios';
-import './hoursPopup.css';
 import moment from 'moment';
+
+import { WMKBackend } from '../../../common/utils';
+
 import { getEvents } from '../redux/selectors';
+
 import EventLog from './event-log/eventLog';
 
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
+import './hoursPopup.css';
 
 const HoursPopup = ({ event, onClose, cookies }) => {
   const [name, setName] = useState(''); // TODO: Autofill with authenticated user's name
@@ -103,7 +102,7 @@ const HoursPopup = ({ event, onClose, cookies }) => {
             totalHours: hours[index],
             additionalNotes,
           };
-          addLogPromises.push(instance.post('logs/add', newLog));
+          addLogPromises.push(WMKBackend.post('/logs/add', newLog));
         });
         // axios call to send to backend
         await Promise.all(addLogPromises)

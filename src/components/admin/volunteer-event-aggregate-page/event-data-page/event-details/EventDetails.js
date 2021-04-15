@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
+import { WMKBackend } from '../../../../../common/utils';
+
 import clockIcon from '../../../../../assets/clock.svg';
 import locationPinIcon from '../../../../../assets/blueLocationPin.svg';
-import './EventDetails.css';
 
-const axios = require('axios');
+import './EventDetails.css';
 
 // const dayList = [
 //   'SUN', 'MON', 'TUE', 'WED',
@@ -18,11 +19,6 @@ const monthList = [
 ];
 
 const Overview = (prop) => {
-  const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-    withCredentials: true,
-  });
-
   const suffixDict = {
     1: 'st',
     2: 'nd',
@@ -32,7 +28,7 @@ const Overview = (prop) => {
   const [eventInfo, setEventInfo] = useState([]);
 
   const getEventInfo = async () => {
-    const currentEvent = await instance.get(`events/${prop.event.id}`);
+    const currentEvent = await WMKBackend.get(`/events/${prop.event.id}`);
     setEventInfo(currentEvent.data[0]);
   };
 

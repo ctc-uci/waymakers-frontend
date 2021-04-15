@@ -7,7 +7,6 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import Datetime from 'react-datetime';
-import axios from 'axios';
 
 import {
   LightModal, LightModalHeader, LightModalBody, LightModalButton,
@@ -16,7 +15,7 @@ import {
   ValidatedField,
 } from '../../../../common/formikExtensions';
 import {
-  refreshPage,
+  refreshPage, WMKBackend,
 } from '../../../../common/utils';
 
 import useDivisions from '../useDivisions';
@@ -59,11 +58,6 @@ const autofillEventInfo = (title, rejectedEvents, formik) => {
   formik.setFieldValue('totalHours', Math.ceil((new Date(selectedUserEvent.endTime) - new Date(selectedUserEvent.startTime)) / (1000 * 60 * 60)));
 };
 
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
-
 // TODO: Loading state
 const ResubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
   const [divisions] = useDivisions();
@@ -89,7 +83,7 @@ const ResubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) =>
         (rejectedEvent) => rejectedEvent.eventName === values.title,
       )[0];
 
-      instance.post('logs/resubmitRejected', {
+      WMKBackend.post('/logs/resubmitRejected', {
         logId: selectedUserEvent.id,
         logStart: values.startTime,
         logEnd: values.endTime,

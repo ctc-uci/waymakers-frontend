@@ -7,7 +7,6 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import Datetime from 'react-datetime';
-import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
 import {
@@ -17,7 +16,7 @@ import {
   ValidatedField,
 } from '../../../../common/formikExtensions';
 import {
-  refreshPage,
+  refreshPage, WMKBackend,
 } from '../../../../common/utils';
 
 import useDivisions from '../useDivisions';
@@ -59,11 +58,6 @@ const autofillEventInfo = (title, userEvents, formik) => {
   formik.setFieldValue('totalHours', Math.ceil((new Date(selectedUserEvent.endTime) - new Date(selectedUserEvent.startTime)) / (1000 * 60 * 60)));
 };
 
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
-
 // TODO: Loading state
 const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
   const [divisions] = useDivisions();
@@ -87,7 +81,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
         (userEvent) => userEvent.title === values.title,
       )[0];
 
-      instance.post('logs/add', {
+      WMKBackend.post('/logs/add', {
         userId: cookies.userId,
         eventId: selectedUserEvent.id,
         logStart: values.startTime,
