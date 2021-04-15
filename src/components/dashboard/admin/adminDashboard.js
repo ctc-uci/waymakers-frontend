@@ -8,10 +8,11 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import EditEvents from '../../events/edit-events/editEvents';
 import InventoryComponent from '../inventory-component/inventoryComponent';
-import GoogleAuthService from '../../../services/firebase/firebase';
-import './adminDashboard.css';
 
-const axios = require('axios');
+import GoogleAuthService from '../../../services/firebase/firebase';
+import { WMKBackend } from '../../../common/utils';
+
+import './adminDashboard.css';
 
 const AdminDashboard = (props) => {
   const { cookies } = props;
@@ -38,10 +39,7 @@ const AdminDashboard = (props) => {
   // Fetching warehouse names from the server
   const getDivisionList = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/divisions`,
-        { withCredentials: true },
-      );
+      const response = await WMKBackend.get('/divisions');
       setDivisionList(response.data);
     } catch (err) {
       // eslint-disable-next-line

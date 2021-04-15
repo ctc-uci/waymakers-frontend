@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 
 import GoogleAuthService from '../../services/firebase/firebase';
+import { WMKBackend } from '../../common/utils';
 
 import validationSchema from './validationSchema';
 import formInitialValues from './formInitialValues';
@@ -16,13 +17,6 @@ import StepThree from './stepThree';
 
 import horizontalArrow from '../../assets/horizontalArrow.svg';
 import './register.css';
-
-const axios = require('axios');
-
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
 
 const { formId, formField } = registerFormModel;
 
@@ -52,7 +46,7 @@ const Register = () => {
     try {
       const user = await GoogleAuthService.auth.createUserWithEmailAndPassword(email, password);
       console.log(user);
-      const res = await instance.post('register/create', {
+      const res = await WMKBackend.post('/register/create', {
         userID: user.user.uid,
         firstName,
         lastName,

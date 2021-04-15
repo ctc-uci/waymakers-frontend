@@ -6,9 +6,10 @@ import {
 import {
   startOfWeek, add, getHours, getDay,
 } from 'date-fns';
-import axios from 'axios';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+
+import { WMKBackend } from '../../../common/utils';
 
 import GoogleAuthService from '../../../services/firebase/firebase';
 import './volunteerDashboard.css';
@@ -69,11 +70,7 @@ const VolunteerDashboard = (props) => {
       console.log('getting availability');
       const userID = cookies.get('userId');
 
-      const availabilityResult = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
-          withCredentials: true,
-        },
-      );
+      const availabilityResult = await WMKBackend.get(`/availability/${userID}`);
 
       const { userAvailability } = availabilityResult.data;
       const dateList = userAvailability.map((dateString) => (stringToDate(dateString)));
@@ -102,13 +99,9 @@ const VolunteerDashboard = (props) => {
 
     console.log('POST route called');
 
-    await axios.post(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
-        dates: filteredDates,
-      }, {
-        withCredentials: true,
-      },
-    );
+    await WMKBackend.post(`/availability/${userID}`, {
+      dates: filteredDates,
+    });
 
     console.log('post complete');
 

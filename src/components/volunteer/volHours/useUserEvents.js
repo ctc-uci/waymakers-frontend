@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
+import { WMKBackend } from '../../../common/utils';
 
 const useUserEvents = () => {
   const [userEvents, setUserEvents] = useState([]);
@@ -13,7 +9,7 @@ const useUserEvents = () => {
   const [cookies] = useCookies(['userId']);
 
   const fetchUserEvents = () => {
-    instance.get(`userEvent/${cookies.userId}`)
+    WMKBackend.get(`/userEvent/${cookies.userId}`)
       .then((result) => setUserEvents(result.data))
       .catch((err) => {
         console.error(err);

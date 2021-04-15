@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+
+import { WMKBackend } from '../../../common/utils';
 
 import './editEvents.css';
 // import Event from '../event/event';
 // import EditEventPopup from './editEventPopup';
-
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
 
 const EditEvents = () => {
   const [events, setEvents] = useState([]);
@@ -18,7 +14,7 @@ const EditEvents = () => {
 
   async function getEvents() {
     try {
-      let allEvents = await instance.get('events');
+      let allEvents = await WMKBackend.get('/events');
 
       if (allEvents.status === 200) {
         allEvents = allEvents.data;
