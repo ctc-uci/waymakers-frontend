@@ -11,16 +11,21 @@ const verifyToken = async (cookies) => {
   const accessToken = cookies.get('accessToken');
   if (accessToken != null) {
     try {
-      const isVerified = await WMKBackend.get(`/auth/verifyToken/${accessToken}`);
+      const verifiedUserId = await WMKBackend.get(`/auth/verifyToken/${accessToken}`);
 
-      if (isVerified) {
-        cookies.set('userId', isVerified.data, {
+      if (verifiedUserId) {
+        const userPermissions = await WMKBackend.get(`/accounts/${verifiedUserId.data}`);
+        cookies.set('userId', verifiedUserId.data, {
+          path: '/',
+          maxAge: 3600,
+        });
+        cookies.set('userPermissions', userPermissions.data.permissions.permissions, {
           path: '/',
           maxAge: 3600,
         });
       }
 
-      return isVerified;
+      return verifiedUserId;
     } catch (error) {
       console.error('Error:', error);
     }
