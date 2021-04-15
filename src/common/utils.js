@@ -32,14 +32,11 @@ export const refreshPage = () => {
 
 let baseURL;
 
-if (process.env.REACT_APP_ENV === 'PRODUCTION') {
+if (process.env.NODE_ENV === 'production') {
   baseURL = `${process.env.REACT_APP_HOST}`;
 } else {
   baseURL = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}`;
 }
-
-console.log(process.env);
-console.log('baseURL: ', baseURL);
 
 export const WMKBackend = axios.create({
   baseURL,
