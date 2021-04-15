@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import './ConfigLoader';
+
 export const DATE_FORMAT = {
   MY_HOURS: 'events',
 };
@@ -30,11 +32,14 @@ export const refreshPage = () => {
 
 let baseURL;
 
-if (process.env.NODE_ENV !== 'PRODUCTION') {
-  baseURL = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}`;
-} else {
+if (process.env.REACT_APP_ENV === 'PRODUCTION') {
   baseURL = `${process.env.REACT_APP_HOST}`;
+} else {
+  baseURL = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}`;
 }
+
+console.log(process.env);
+console.log('baseURL: ', baseURL);
 
 export const WMKBackend = axios.create({
   baseURL,
