@@ -1,12 +1,10 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+
+import { WMKBackend } from '../../../../../common/utils';
+
 import './topVolunteersComponent.css';
 
 const topVolunteersComponent = ({ event }) => {
-  const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-    withCredentials: true,
-  });
   const [topVolunteers, setTopVolunteers] = useState([]);
 
   const paramQuery = {
@@ -16,7 +14,7 @@ const topVolunteersComponent = ({ event }) => {
   };
 
   const getTopVolunteers = async () => {
-    const volunteers = await instance.get('volunteerData/top/', paramQuery);
+    const volunteers = await WMKBackend.get('/volunteerData/top/', paramQuery);
     setTopVolunteers(volunteers.data);
   };
 

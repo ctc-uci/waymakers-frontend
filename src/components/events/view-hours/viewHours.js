@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { withCookies, Cookies } from 'react-cookie';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import HoursBox from './hoursBox';
 
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
+import { WMKBackend } from '../../../common/utils';
+
+import HoursBox from './hoursBox';
 
 const ViewHours = ({ cookies }) => {
   const [logs, setLogs] = useState([]);
 
   async function getLogs() {
     try {
-      let allLogs = await instance.get(`logs/${cookies.cookies.userId}`);
+      let allLogs = await WMKBackend.get(`/logs/${cookies.cookies.userId}`);
       console.log(allLogs.data);
       if (allLogs.status === 200) {
         allLogs = allLogs.data;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+
+import { WMKBackend } from '../../common/utils';
 
 import AdminDashboard from './adminDashboard';
 import VolunteerDashboard from './volunteerDashboard';
@@ -15,9 +15,7 @@ const Dashboard = ({ cookies }) => {
   useEffect(async () => {
     const userID = cookies.get('userId');
     setIsLoading(true);
-    const result = await axios.get(`${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
-      withCredentials: true,
-    });
+    const result = await WMKBackend.get(`/accounts/${userID}`);
 
     setPermissions(result.data.permissions.permissions);
 

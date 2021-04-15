@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 
+import { WMKBackend } from '../../../common/utils';
+
 import {
   addItem,
   addCategory,
@@ -8,8 +10,6 @@ import {
   addWarehouse,
 } from '../redux/actions';
 import { getCategories, getDivisions } from '../redux/selectors';
-
-const axios = require('axios');
 
 // note: this is only used in AddItemModal.js
 
@@ -42,13 +42,7 @@ const AddItem = (prop) => {
   useEffect(() => {
     // Fetches warehouses connected to the selected division
     const fetchWarehouses = async () => {
-      const response = await axios(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/warehouses`,
-        {
-          params: { division },
-          withCredentials: true,
-        },
-      );
+      const response = await WMKBackend('/warehouses', { params: { division } });
       setWarehouses(response.data);
     };
     fetchWarehouses();

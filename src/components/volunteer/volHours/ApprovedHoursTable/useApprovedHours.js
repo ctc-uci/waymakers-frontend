@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useCookies } from 'react-cookie';
+
+import { WMKBackend } from '../../../../common/utils';
 
 const useAllApprovedHours = () => {
   // NOT subject to change based on filtering
@@ -8,12 +9,10 @@ const useAllApprovedHours = () => {
 
   const [cookies] = useCookies(['userId']);
 
-  const fetchAllApprovedHours = () => axios.get(
-    `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/logs/approved`, {
-      params: { userId: cookies.userId },
-      withCredentials: true,
-    },
-  ).then((res) => {
+  const fetchAllApprovedHours = () => WMKBackend.get('/logs/approved', {
+    params: { userId: cookies.userId },
+    withCredentials: true,
+  }).then((res) => {
     setAllApprovedHours(res.data);
   }).catch((err) => {
     console.error(err);

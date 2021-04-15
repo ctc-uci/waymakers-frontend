@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {
   startOfWeek, add,
 } from 'date-fns';
-import axios from 'axios';
-import './adminAvailability.css';
 import ScheduleSelector from 'react-schedule-selector';
+
+import { WMKBackend } from '../../../../common/utils';
+
+import './adminAvailability.css';
 
 const AdminAvailability = () => {
   const startWeek = startOfWeek(new Date());
@@ -36,17 +38,9 @@ const AdminAvailability = () => {
 
   async function getAvailability() {
     try {
-      const allAvailabilityResult = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/counts`, {
-          withCredentials: true,
-        },
-      );
+      const allAvailabilityResult = await WMKBackend.get('/availability/counts');
 
-      const availabilityNamesResult = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/names`, {
-          withCredentials: true,
-        },
-      );
+      const availabilityNamesResult = await WMKBackend.get('/availability/names');
 
       // handling all users' availability
       let { usersAvailability } = allAvailabilityResult.data;

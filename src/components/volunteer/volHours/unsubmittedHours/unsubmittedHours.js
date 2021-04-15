@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from 'react';
-import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
-import '../hours.css';
+import { WMKBackend } from '../../../../common/utils';
+
 import { TitledCard } from '../../../../common/Card';
 
 import useMobileWidth from '../../../../common/useMobileWidth';
@@ -10,6 +10,8 @@ import UnsubmittedDesktopTable from './unsubmittedDesktopTable';
 import UnsubmittedMobileTable from './unsubmittedMobileTable';
 import UseFilteredHours from '../useFilteredHours';
 import DateTimeFilter from '../DateTimeFilter';
+
+import '../hours.css';
 
 const UnsubmittedHours = () => {
   const isMobile = useMobileWidth();
@@ -23,12 +25,10 @@ const UnsubmittedHours = () => {
   const [cookies] = useCookies(['userId']);
 
   useEffect(() => {
-    axios.get(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/logs/unsubmitted`, {
-        params: { userId: cookies.userId },
-        withCredentials: true,
-      },
-    ).then((res) => {
+    WMKBackend.get('/logs/unsubmitted', {
+      params: { userId: cookies.userId },
+      withCredentials: true,
+    }).then((res) => {
       setAllUnsubmittedHours(res.data);
     }).catch((err) => {
       console.error(err);

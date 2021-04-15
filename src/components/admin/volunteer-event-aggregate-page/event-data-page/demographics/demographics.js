@@ -3,18 +3,14 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import PieChart from './pie-chart/PieChart';
 
+import { WMKBackend } from '../../../../../common/utils';
+
 import leftArrow from '../../../../../assets/pieChartLeftArrow.svg';
 import rightArrow from '../../../../../assets/pieChartRightArrow.svg';
+
 import './demographics.css';
 
-const axios = require('axios');
-
 const Demographics = ({ event }) => {
-  const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-    withCredentials: true,
-  });
-
   // Get information for all volunteers
   const [allVolunteers, setAllVolunteers] = useState([]);
   // Determines which 3 pie charts we display
@@ -56,7 +52,7 @@ const Demographics = ({ event }) => {
 
   // Get all volunteers
   const getAllVolunteers = async () => {
-    const volunteers = await instance.get('volunteerData/all/', paramQuery);
+    const volunteers = await WMKBackend.get('/volunteerData/all/', paramQuery);
     const volunteersWithAge = volunteers.data.map((volunteer) => ({
       ...volunteer,
       age: moment(new Date()).diff(volunteer.birthdate, 'years'), // Get volunteer age from birthdate

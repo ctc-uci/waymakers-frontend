@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import EventDetails from './event-details/EventDetails';
 import TopVolunteersComponent from './top-volunteers/topVolunteersComponent';
 import ListOfVolunteers from './list-of-volunteers/listOfVolunteers';
 import Demographics from './demographics/demographics';
-import './eventPage.css';
 
-const axios = require('axios');
+import { WMKBackend } from '../../../../common/utils';
+
+import './eventPage.css';
 
 const EventDetailPage = () => {
   const event = useParams();
   const [eventName, setEventName] = useState([]);
-  const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-    withCredentials: true,
-  });
 
   const getEventInfo = async () => {
-    const currentEvent = await instance.get(`events/${event.id}`);
+    const currentEvent = await WMKBackend.get(`/events/${event.id}`);
     setEventName(currentEvent.data[0].title);
   };
 

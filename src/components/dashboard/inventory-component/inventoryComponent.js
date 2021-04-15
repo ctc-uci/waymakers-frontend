@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
-import './inventoryComponent.css';
+import { WMKBackend } from '../../../common/utils';
 
-const axios = require('axios');
+import './inventoryComponent.css';
 
 const InventoryComponent = ({ division }) => {
   const [topItems, setTopItems] = useState([]);
@@ -16,10 +16,7 @@ const InventoryComponent = ({ division }) => {
   // Fetching top items from the server
   const getTopItems = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inventory/top?warehouse=${warehouseIDMap[warehouseName]}`,
-        { withCredentials: true },
-      );
+      const response = await WMKBackend.get(`/inventory/top?warehouse=${warehouseIDMap[warehouseName]}`);
       setTopItems(response.data);
     } catch (err) {
       console.error(err);
@@ -47,10 +44,7 @@ const InventoryComponent = ({ division }) => {
   // Fetching warehouse names from the server
   const getWarehouseList = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/warehouses?division=${division}`,
-        { withCredentials: true },
-      );
+      const response = await WMKBackend.get(`/warehouses?division=${division}`);
       setWarehouseList(response.data);
 
       const warehouseMap = {};
