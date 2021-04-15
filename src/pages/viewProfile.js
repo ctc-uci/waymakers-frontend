@@ -84,8 +84,6 @@ const viewProfile = (props) => {
       locationstreet, locationcity, locationstate, locationzip,
     } = account;
 
-    console.log(account);
-
     setFirstName(account.firstname);
     setLastName(account.lastname);
     setEmail(account.email);

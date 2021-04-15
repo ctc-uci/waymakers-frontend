@@ -52,7 +52,7 @@ const editProfile = (props) => {
   const [state, setState] = useState('');
   const [zip, setZip] = useState(0);
   const [birthday, setBirthday] = useState(new Date());
-  const [address, setAddress] = useState('');
+  // const [address, setAddress] = useState('');
 
   const [tier, setTier] = useState(3);
   const [status, setStatus] = useState('Volunteer');
@@ -98,12 +98,11 @@ const editProfile = (props) => {
         withCredentials: true,
       },
     );
+    console.log(result.data);
     const { account, permissions } = result.data;
     const {
       locationstreet, locationcity, locationstate, locationzip,
     } = account;
-
-    console.log(account);
 
     setFirstname(account.firstname);
     setLastname(account.lastname);
@@ -113,7 +112,7 @@ const editProfile = (props) => {
     setCity(locationcity);
     setState(locationstate);
     setZip(locationzip);
-    setAddress(`${locationstreet} ${locationcity}, ${locationstate} ${locationzip}`);
+    // setAddress(`${locationstreet} ${locationcity}, ${locationstate} ${locationzip}`);
     setBirthday(moment(account.birthdate));
     setTier(account.tier);
     setStatus(permissions.permissions);
@@ -150,12 +149,13 @@ const editProfile = (props) => {
       seen.add(date.toString());
       return !duplicate;
     });
-    console.log(birthday.format());
     const userID = cookies.get('userId');
     const response = await axios.put(
       `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
         firstname,
         lastname,
+        email,
+        phone: number,
         birthDate: birthday.format(),
         locationStreet: street,
         locationCity: city,
@@ -209,13 +209,13 @@ const editProfile = (props) => {
                     />
                   </div>
                 </div>
-                <div className="about-input">
+                <div className="about-input tier-input">
                   <img className="about-icons" src={people} alt="" />
-                  <input className="profile-input-box profile-input-box-width" type="text" value={tier} name="tier" onChange={(e) => setTier(e.target.value)} />
+                  <span className="tier-box">{tier}</span>
                 </div>
-                <div className="about-input">
+                <div className="about-input status-input">
                   <img className="about-icons" src={building} alt="" />
-                  <input className="profile-input-box profile-input-box-width" type="text" value={status} name="status" onChange={(e) => setStatus(e.target.value)} />
+                  <span className="status-box">{status}</span>
                 </div>
               </form>
             </Card>
@@ -229,15 +229,30 @@ const editProfile = (props) => {
                 <form>
                   <div className="contact-input">
                     <img className="contact-icons" src={emailPic} alt="" />
-                    <input className="profile-input-box profile-input-box-width" type="email" value={email} name="email" onChange={(e) => setEmail(e.target.value)} />
+                    <input className="profile-input-box" type="email" value={email} name="email" onChange={(e) => setEmail(e.target.value)} />
                   </div>
                   <div className="contact-input">
                     <img className="contact-icons" src={phone} alt="" />
-                    <input className="profile-input-box profile-input-box-width" type="tel" value={number} name="number" onChange={(e) => setNumber(e.target.value)} />
+                    <input className="profile-input-box" type="tel" value={number} name="number" onChange={(e) => setNumber(e.target.value)} />
                   </div>
                   <div className="contact-input">
                     <img className="contact-icons" src={house} alt="" />
-                    <input className="profile-input-box profile-input-box-width" type="text" value={address} name="address" onChange={(e) => setAddress(e.target.value)} />
+                    {/* <span>Street: </span> */}
+                    <input className="profile-input-box" type="text" value={street} name="street" onChange={(e) => setStreet(e.target.value)} />
+                  </div>
+                  <div className="address-input-container">
+                    <div className="address-input">
+                      <span>City: </span>
+                      <input className="profile-input-box" type="text" value={city} name="city" onChange={(e) => setCity(e.target.value)} />
+                    </div>
+                    <div className="address-input">
+                      <span>State: </span>
+                      <input className="profile-input-box state-input" type="text" value={state} maxLength="2" name="state" onChange={(e) => setState(e.target.value)} />
+                    </div>
+                    <div className="address-input">
+                      <span>Zip Code: </span>
+                      <input className="profile-input-box zip-input" type="text" value={zip} maxLength="5" name="zip" onChange={(e) => setZip(e.target.value)} />
+                    </div>
                   </div>
                 </form>
               </Card>

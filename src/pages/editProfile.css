@@ -76,10 +76,28 @@
     font-size: 20px;
     padding: 5px;  
     margin-left: 10px;
+    width: 100%;
 }
 
-.profile-input-box-width {
-    width: 85%;
+.tier-box,
+.status-box {
+    font-size: 20px;
+    margin-left: 10px;
+    padding: 5px;  
+}
+
+.address-input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.state-input {
+    width: 30px;
+}
+
+.zip-input {
+    /* width: 50px; */
 }
 
 /* .rdt {
@@ -97,7 +115,7 @@
 
 .datetime-input-box {
     margin-left: 10px;
-    width: 85%;
+    width: 100%;
     background-color: var(--color-light-blue);
     border: solid;
     border-color: var(--color-dark-blue);
@@ -116,8 +134,17 @@
 }
 
 .about-input,
-.contact-input {
+.contact-input
+{
     display: flex;
+    align-items: center;
+    margin-top: 17px;
+    margin-bottom: 17px;
+}
+
+.address-input-container {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     margin-top: 17px;
     margin-bottom: 17px;
@@ -166,5 +193,24 @@
         font-size: 15px;
         width: 80%;
         margin-left: 8px;
+    }
+
+    .tier-box,
+    .status-box {
+        font-size: 15px;
+    }
+
+    .tier-input,
+    .status-input {
+        border: none;
+    }
+
+    .address-input-container {
+        margin: 5px;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 5px;
+        padding: 2px;
+        flex-wrap: wrap;
     }
 }
