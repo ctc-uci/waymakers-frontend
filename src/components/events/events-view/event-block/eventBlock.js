@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import * as IconAi from 'react-icons/ai';
 import * as IconGo from 'react-icons/go';
+import { fullCalendarEventToRegularEvent } from '../../util';
 
 import {
   deleteEvent,
@@ -15,7 +16,7 @@ import trashcan from '../../../../assets/trashcan.svg';
 import './eventBlock.css';
 
 const EventBlock = ({
-  path, eventInfo,
+  page, eventInfo,
 }) => {
   const dispatch = useDispatch();
 
@@ -24,8 +25,8 @@ const EventBlock = ({
     Outreach: 'var(--color-pink)',
     Other: 'var(--color-light-purple)',
   };
-  const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
 
+  const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
   const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
 
   const openPopup = () => {
@@ -37,7 +38,8 @@ const EventBlock = ({
   };
 
   const setEvent = (selectedEvent) => {
-    dispatch(changeSelectedEvent(selectedEvent));
+    const convertedEvent = fullCalendarEventToRegularEvent(selectedEvent);
+    dispatch(changeSelectedEvent(convertedEvent));
   };
 
   const onEventBlockClick = () => {
@@ -94,8 +96,8 @@ const EventBlock = ({
 
   // Renders diff blocks based on view and page/pathname
   if (eventInfo.view.type === 'timeGridWeek') {
-    switch (path) {
-      case '/volunteer/events':
+    switch (page) {
+      case 'volunteerDashboard':
         return (
           <div id="week-event-block" className="cursor-pointer" tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
             <div id="week-event-content">
@@ -105,14 +107,14 @@ const EventBlock = ({
             <div id="strip" style={{ backgroundColor: eventTypeColor }} />
           </div>
         );
-      case '/events':
+      case 'addModifyDeleteEventsPage':
         return (
           <div id="week-edit-event-block" className="cursor-pointer" tabIndex={0} onClick={onViewEventsPageBlockClick} onKeyDown={() => {}} role="button">
             {renderTrashButton()}
             <p id="week-edit-event-title">{eventInfo.event.title}</p>
           </div>
         );
-      case '/admin/aggregate':
+      case 'aggregatePage':
         return (
           <div id="week-event-block" className="cursor-pointer" tabIndex={0} onClick={onAdminEventBlockClick} onKeyDown={() => {}} role="button">
             <div id="week-event-content">
@@ -131,14 +133,14 @@ const EventBlock = ({
   const displayMinute = `:${minute < 10 ? '0' : ''}${minute}`;
 
   const onMonthBlockClick = () => {
-    switch (path) {
-      case '/volunteer/events':
+    switch (page) {
+      case 'volunteerDashboard':
         onEventBlockClick();
         break;
-      case '/events':
+      case 'addModifyDeleteEventsPage':
         onViewEventsPageBlockClick();
         break;
-      case '/admin/aggregate':
+      case 'aggregatePage':
         onAdminEventBlockClick();
         break;
       default: break;
@@ -155,7 +157,7 @@ const EventBlock = ({
 };
 
 EventBlock.propTypes = {
-  path: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired,
   eventInfo: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

@@ -1,17 +1,93 @@
-#top-item-box {
+.inventory-component {
+  background-color: var(--color-light-blue);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 15px 20px;
+  height: 300px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  background-color: #c4c4c46b;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.warehouse-section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.warehouse-dropdown {
+  border: none;
+  outline: none;
+  width: inherit;
+  padding: 5px;
+  font-family: "Assistant", Arial, Helvetica, sans-serif;
+  color: var(--text-color-dark);
+  background-color: var(--color-light-blue);
+  font-weight: 700;
+  font-size: 32px;
+  cursor: pointer;
+  text-align-last: center;
+}
+
+.top-items-section {
+  display: flex;
+  justify-content: space-between;
 }
 
 .top-item {
-  background-color: #C4C4C4;
-  flex: 1 0 calc(33.333% - 20px);
-  margin: 10px 10px 10px;
+  background-color: var(--color-dark-blue);
+  color: var(--text-color-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30%;
+  padding: 10px;
 }
 
-#view-inventory-button {
-  align-self: flex-end;
-  margin: 10px 0px 10px;
+.top-item-name {
+  font-weight: bold;
+  text-align: center;
+}
+
+.in-stock {
+  display: flex;
+  justify-content: space-between;
+}
+
+.in-stock-quantity {
+  display: inline;
+  border: 1px solid var(--text-color-light);
+  width: 30%;
+  text-align: center;
+}
+
+.needed {
+  display: flex;
+  justify-content: space-between;
+}
+
+.needed-quantity {
+  display: inline;
+  border: 1px solid var(--text-color-light);
+  width: 30%;
+  text-align: center;
+}
+
+.no-items-message {
+  text-align: center;
+}
+
+.view-inventory-section {
+  width: 100%;
+}
+
+.view-inventory-button {
+  background-color: var(--color-green);
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+  padding: 5px;
+  margin-left: 25%;
+  width: 50%;
 }

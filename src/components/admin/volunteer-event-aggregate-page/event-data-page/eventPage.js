@@ -1,18 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Overview from './overview/overview';
+
+import EventDetails from './event-details/EventDetails';
 import TopVolunteersComponent from './top-volunteers/topVolunteersComponent';
-import AllVolunteers from './all-volunteers/allVolunteers';
+import ListOfVolunteers from './list-of-volunteers/listOfVolunteers';
+import Demographics from './demographics/demographics';
+
+import { WMKBackend } from '../../../../common/utils';
+
 import './eventPage.css';
 
-const EventDetailPage = () => (
-  <div>
-    <Overview event={useParams()} />
-    <div className="volunteer-section">
-      <TopVolunteersComponent event={useParams()} className="top-volunteers" />
-      <AllVolunteers event={useParams()} className="all-volunteers" />
+const EventDetailPage = () => {
+  const event = useParams();
+  const [eventName, setEventName] = useState([]);
+
+  const getEventInfo = async () => {
+    const currentEvent = await WMKBackend.get(`/events/${event.id}`);
+    setEventName(currentEvent.data[0].title);
+  };
+
+  useEffect(() => {
+    getEventInfo();
+  }, []);
+  // TODO: Remove borders and add box shadows before we're done
+  // (they're commented out to help with alignment)
+  return (
+    <div className="event-page-info">
+      <h2 className="event-title">{eventName}</h2>
+      <div className="row1">
+        <EventDetails event={event} />
+        <Demographics event={event} />
+      </div>
+      <div className="row2">
+        <TopVolunteersComponent event={event} className="top-volunteers" />
+        <ListOfVolunteers event={event} className="all-volunteers" />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default EventDetailPage;

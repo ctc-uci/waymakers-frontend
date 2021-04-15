@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes, instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import { Route, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { Route, useHistory, useLocation } from 'react-router-dom';
+
+import { WMKBackend } from '../../common/utils';
 
 const signInEndpoint = '/login';
 
@@ -10,11 +11,7 @@ const verifyToken = async (cookies) => {
   const accessToken = cookies.get('accessToken');
   if (accessToken != null) {
     try {
-      const url = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/auth/verifyToken/${accessToken}`;
-      console.log(url);
-
-      const isVerified = await axios.get(url);
-      console.log('isVerified:', isVerified);
+      const isVerified = await WMKBackend.get(`/auth/verifyToken/${accessToken}`);
 
       if (isVerified) {
         cookies.set('userId', isVerified.data, {
@@ -36,6 +33,7 @@ const ProtectedRoute = ({ component, path, cookies }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     (async () => {
@@ -52,7 +50,8 @@ const ProtectedRoute = ({ component, path, cookies }) => {
     return <Route exact path={path} component={component} />;
   }
 
-  history.push(signInEndpoint);
+  // TODO: I don't like manually building URIs, seems easily broken
+  history.push(`${signInEndpoint}?redirect=${encodeURIComponent(location.pathname)}`);
 
   return false;
 };

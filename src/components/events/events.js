@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
-
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { setShowPopup, changePopupType } from './redux/actions';
 import EventsView from './events-view/eventsView';
-import AddEventPopup from './edit-events/addEventPopup';
 import './events.css';
 
 const Events = () => {
-  const [showAddPopup, setShowAddPopup] = useState(false);
+  const dispatch = useDispatch();
 
-  // Creating store within Provider tag
   return (
     <div className="events-page">
       <h1 className="title">Select Event to View/Edit Information</h1>
-      <button type="button" className="add-button" onClick={() => setShowAddPopup(true)}>Add Events</button>
-      {showAddPopup && <AddEventPopup onClose={() => setShowAddPopup(false)} />}
-      <EventsView />
+      <button type="button" className="add-button" onClick={() => { dispatch(changePopupType('AddEventForm')); dispatch(setShowPopup(true)); }}>Add Events</button>
+      <EventsView page="addModifyDeleteEventsPage" />
     </div>
   );
 };

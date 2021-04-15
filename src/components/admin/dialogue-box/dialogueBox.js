@@ -14,13 +14,13 @@ const DialogueBox = ({ event, onClose }) => {
     minute: '2-digit',
   };
 
-  const startDate = new Date(event.start).toLocaleString('us-en', formatConfig);
+  const startDate = new Date(event.startTime).toLocaleString('us-en', formatConfig);
 
   return (
     <div id="dialogue-box">
       <div id="top-info">
         <button id="close-button" type="button" aria-label="close data" onClick={onClose}>&#10006;</button>
-        <h4 id="event-type">{`${event.extendedProps.eventType} Event`}</h4>
+        <h4 id="event-type">{`${event.eventType} Event`}</h4>
         <h3 id="event-title">{event.title}</h3>
       </div>
       <p id="event-start-time">{`${startDate}`}</p>

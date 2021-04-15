@@ -1,17 +1,10 @@
 // Functions defined here create and dispatch action
 // objects that are used to modify the state
-
-// Creating an instance of axios with custom config
-const axios = require('axios');
-
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-  withCredentials: true,
-});
+import { WMKBackend } from '../../../common/utils';
 
 // Fetching items from server
 export const fetchItems = () => async (dispatch, getState) => {
-  const url = 'inventory';
+  const url = '/inventory';
   const paramsQuery = {
     params: {
       division: getState().items.selectedDivisionID,
@@ -22,7 +15,7 @@ export const fetchItems = () => async (dispatch, getState) => {
   };
 
   try {
-    const response = await instance.get(url, paramsQuery);
+    const response = await WMKBackend.get(url, paramsQuery);
     dispatch({ type: 'items/itemsLoaded', payload: response.data });
   } catch (err) {
     // eslint-disable-next-line
@@ -32,9 +25,9 @@ export const fetchItems = () => async (dispatch, getState) => {
 
 // Fetching categories from server
 export const fetchCategories = () => async (dispatch) => {
-  const url = 'category';
+  const url = '/category';
   try {
-    const response = await instance.get(url);
+    const response = await WMKBackend.get(url);
     dispatch({ type: 'categories/categoriesLoaded', payload: response.data });
   } catch (err) {
     // eslint-disable-next-line
@@ -44,9 +37,9 @@ export const fetchCategories = () => async (dispatch) => {
 
 // Fetching divisions from server
 export const fetchDivisions = () => async (dispatch) => {
-  const url = 'divisions';
+  const url = '/divisions';
   try {
-    const response = await instance.get(url);
+    const response = await WMKBackend.get(url);
     // Converting array of objects into an associative array
     const divisions = response.data.reduce(
       (obj, item) => Object.assign(obj, { [item.id]: item }), {},
@@ -64,7 +57,8 @@ export const fetchWarehouses = (division = -1) => async (dispatch) => {
     params: { division },
   };
   try {
-    const response = await instance.get('warehouses', paramsQuery);
+    const response = await WMKBackend.get('/warehouses', paramsQuery);
+    console.log(response.data);
     // Converting array of objects into an associative array
     const warehouses = response.data.reduce(
       (obj, item) => Object.assign(obj, { [item.id]: item }), {},
@@ -102,7 +96,7 @@ export const changeSelectedCategory = (newCategoryID, newCategoryLabel) => ({
 // Creates an items/itemAdded action
 export const addItem = (newItem) => async (dispatch) => {
   try {
-    const response = await instance.post('inventory', newItem);
+    const response = await WMKBackend.post('/inventory', newItem);
     dispatch({ type: 'items/itemAdded', payload: response.data });
   } catch (err) {
     // eslint-disable-next-line
@@ -132,7 +126,7 @@ export const editItem = (id, newValues) => ({
 // Creates a category/categoryAdded action
 export const addCategory = (newCategory) => async (dispatch) => {
   try {
-    const response = await instance.post('category', newCategory);
+    const response = await WMKBackend.post('/category', newCategory);
     dispatch({ type: 'categories/categoryAdded', payload: response.data });
   } catch (err) {
     // eslint-disable-next-line
@@ -154,7 +148,7 @@ export const undeleteCategory = (id) => ({
 // Creates a divisions/divisionAdded action
 export const addDivision = (newDivision) => async (dispatch) => {
   try {
-    const response = await instance.post('divisions', newDivision);
+    const response = await WMKBackend.post('/divisions', newDivision);
     dispatch({ type: 'divisions/divisionAdded', payload: response.data });
   } catch (err) {
     // eslint-disable-next-line
@@ -164,7 +158,7 @@ export const addDivision = (newDivision) => async (dispatch) => {
 
 export const addWarehouse = (newWarehouse) => async (dispatch) => {
   try {
-    const response = await instance.post('warehouses', newWarehouse);
+    const response = await WMKBackend.post('/warehouses', newWarehouse);
     dispatch({ type: 'divisions/warehouseAdded', payload: response.data });
   } catch (err) {
     // eslint-disable-next-line
@@ -193,7 +187,7 @@ export const saveEdits = () => async (dispatch, getState) => {
   const editedItems = { ...getState().edits.editedItems };
   Object.keys(editedItems).forEach(async (id) => {
     editPromises.push(
-      instance.put(`inventory/${id}`, editedItems[id]),
+      WMKBackend.put(`/inventory/${id}`, editedItems[id]),
     );
   });
 
@@ -201,7 +195,7 @@ export const saveEdits = () => async (dispatch, getState) => {
   const deletedItems = [...getState().edits.deletedItems];
   deletedItems.forEach(async (id) => {
     deletePromises.push(
-      instance.delete(`inventory/${id}`),
+      WMKBackend.delete(`/inventory/${id}`),
     );
   });
 
@@ -209,7 +203,7 @@ export const saveEdits = () => async (dispatch, getState) => {
   const deletedCategories = [...getState().edits.deletedCategories];
   deletedCategories.forEach(async (id) => {
     deletePromises.push(
-      instance.delete(`category/${id}`),
+      WMKBackend.delete(`/category/${id}`),
     );
   });
 

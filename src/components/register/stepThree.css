@@ -1,0 +1,65 @@
+@import '../../common/vars.css';
+
+.register-step-three {
+    color: white;
+
+    padding-left: 10%;
+    padding-right: 10%;
+
+    height: 500px;
+}
+
+.register-step-three p {
+    margin: 0;
+    padding: 0;
+}
+
+.register-step-three .birthday-section .birthday-title {
+    font-weight: 700;
+}
+
+.register-step-three .birthday-section .birthday-form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.register-step-three .birthday-section .birthday-form-group .birthday-label {
+    width: 31%;
+}
+
+.register-step-two .address-section .zone-form-group .birthday-label ~ .birthday-label {
+    margin-left: 3%;
+}
+
+.register-step-three .gender-section {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 5%;
+}
+
+.register-step-three .gender-section .gender-form-group .gender-dropdown {
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: none;
+
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.6);
+
+    padding-left: 10px;
+    
+    height: 35px;
+    width: 100%;
+}
+
+.register-step-three .gender-section .gender-form-group .gender-other {
+    margin-top: 3%;
+}
+
+.register-step-three .gender-section .gender-form-group .dropdown-error {
+    margin: 0;
+    padding: 0;
+    color: #DA6153;
+}

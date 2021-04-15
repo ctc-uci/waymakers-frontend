@@ -6,17 +6,18 @@ import {
   startOfWeek, add, getHours, getDay,
 } from 'date-fns';
 import { useHistory } from 'react-router-dom';
-import './editProfile.css';
-import axios from 'axios';
-
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
+import { WMKBackend } from '../common/utils';
+
 import EditAbout from '../components/profile/editAbout/editAbout.js';
 import EditContact from '../components/profile/editContact/editContact.js';
-import EditAvailability from '../components/profile/editAvailability/editAvailability';
+import EditAvailability from '../components/dashboard/availability-component/volunteerAvailability/editAvailability/editAvailability';
 
 import profCircle from '../assets/profCircle.png';
+
+import './editProfile.css';
 
 const editProfile = (props) => {
   // Idea: we have states for each of the information fields we're allowed to change
@@ -87,11 +88,7 @@ const editProfile = (props) => {
   useEffect(async () => {
     setLoading(true);
     const userID = cookies.get('userId');
-    const result = await axios.get(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
-        withCredentials: true,
-      },
-    );
+    const result = await WMKBackend.get(`/accounts/${userID}`);
     const { account, permissions } = result.data;
     const {
       locationstreet, locationcity, locationstate, locationzip,
@@ -110,11 +107,7 @@ const editProfile = (props) => {
     setStatus(permissions.permissions);
 
     // get req for availability
-    const availabilityResult = await axios.get(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
-        withCredentials: true,
-      },
-    );
+    const availabilityResult = await WMKBackend.get(`/availability/${userID}`);
 
     const { userAvailability } = availabilityResult.data;
 
@@ -143,27 +136,21 @@ const editProfile = (props) => {
     });
 
     const userID = cookies.get('userId');
-    await axios.put(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
-        firstname,
-        lastname,
-        birthdate: birthday,
-        locationstreet: street,
-        locationcity: city,
-        locationstate: state,
-        locationzip: zip,
-        tier,
-        permission: status,
-      }, { withCredentials: true },
-    );
+    await WMKBackend.put(`/accounts/${userID}`, {
+      firstname,
+      lastname,
+      birthdate: birthday,
+      locationstreet: street,
+      locationcity: city,
+      locationstate: state,
+      locationzip: zip,
+      tier,
+      permission: status,
+    });
 
-    await axios.post(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
-        dates: filteredDates,
-      }, {
-        withCredentials: true,
-      },
-    );
+    await WMKBackend.post(`/availability/${userID}`, {
+      dates: filteredDates,
+    });
 
     history.push('/profile');
   };

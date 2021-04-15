@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 // import '../components/profile/profile.js';
-import axios from 'axios';
 import { startOfWeek, add } from 'date-fns';
-
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
+import { WMKBackend } from '../common/utils';
+
 import About from '../components/profile/about/About';
 import Contact from '../components/profile/contact/Contact';
-import Availability from '../components/profile/availability/Availability';
+import viewAvailability from '../components/dashboard/availability-component/volunteerAvailability/viewAvailability/viewAvailability';
 
 import profCircle from '../assets/profCircle.png';
 
@@ -63,11 +63,7 @@ const viewProfile = (props) => {
   useEffect(async () => {
     setLoading(true);
     const userID = cookies.get('userId');
-    const result = await axios.get(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
-        withCredentials: true,
-      },
-    );
+    const result = await WMKBackend.get(`/accounts/${userID}`);
 
     const { account, permissions } = result.data;
     const {
@@ -84,11 +80,7 @@ const viewProfile = (props) => {
     setStatus(permissions.permissions);
 
     // get req for availability
-    const availabilityResult = await axios.get(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
-        withCredentials: true,
-      },
-    );
+    const availabilityResult = await WMKBackend.get(`/availability/${userID}`);
 
     const { userAvailability } = availabilityResult.data;
 
@@ -133,7 +125,7 @@ const viewProfile = (props) => {
           </div>
         </div>
         <div>
-          <Availability availabilities={availability} startWeek={startWeek} />
+          <viewAvailability availabilities={availability} startWeek={startWeek} />
         </div>
       </div>
     </div>

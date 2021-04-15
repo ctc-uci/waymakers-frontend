@@ -106,7 +106,7 @@ const ExampleLightModalWithFormik = ({ isModalOpen, setIsModalOpen }) => {
           <LightModalButton primary type="submit">
             Submit
           </LightModalButton>
-          <LightModalButton secondaryOutline onClick={() => setIsModalOpen(false)}>
+          <LightModalButton type="button" secondaryOutline onClick={() => console.log('hi')}>
             Cancel
           </LightModalButton>
         </LightModalBody>

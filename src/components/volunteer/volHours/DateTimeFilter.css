@@ -1,0 +1,19 @@
+.DateTimeFilter input {
+  border-radius: 25px;
+  margin-bottom: 5px;
+  background: #5D9A64;
+  color: white;
+  text-align: center;
+  border: none;
+  float: right;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.DateTimeFilter input::placeholder {
+  color: white;
+}
+
+.DateTimeFilter .rdtPicker {
+  right: 0;
+}

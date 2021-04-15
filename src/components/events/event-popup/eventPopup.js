@@ -34,8 +34,8 @@ const EventPopup = ({
   event, addEventToUserCalendar, removeEventFromUserCalendar, cookies, popupType,
 }) => {
   const dispatch = useDispatch();
-  const startDate = new Date(event.start);
-  const endDate = new Date(event.end);
+  const startDate = new Date(event.startTime);
+  const endDate = new Date(event.endTime);
 
   const cancelButton = (
     <button
@@ -155,12 +155,12 @@ const EventPopup = ({
   const renderButtons = () => {
     switch (popupType) {
       case 'ConfirmCancelPopup':
-        if (event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
+        if (event.eventAttendance < event.eventLimit) {
           return renderConfirmCancelButtons();
         }
         return renderEventFullButton();
       case 'AddEventPopup':
-        if (event.extendedProps.eventAttendance < event.extendedProps.eventLimit) {
+        if (event.eventAttendance < event.eventLimit) {
           return renderAddEventButton();
         }
         return renderEventFullButton();
@@ -203,26 +203,26 @@ const EventPopup = ({
           <p className="details-title">Details</p>
           <div className="event-detail">
             <img className="event-detail-icon" src={locationPinIcon} alt="location" />
-            <span className="event-detail-label">{event.extendedProps.location}</span>
+            <span className="event-detail-label">{event.location}</span>
           </div>
           <div className="event-detail">
             <img className="event-detail-icon" src={folderIcon} alt="folder" />
-            <span className="event-detail-label">{event.extendedProps.division}</span>
+            <span className="event-detail-label">{event.division}</span>
           </div>
           <div className="event-detail">
             <img className="event-detail-icon" src={peopleIcon} alt="people" />
             <span className="event-detail-label">
-              {parseInt(event.extendedProps.eventLimit, 10)
-               - parseInt(event.extendedProps.eventAttendance, 10)}
+              {parseInt(event.eventLimit, 10)
+               - parseInt(event.eventAttendance, 10)}
               /
-              {event.extendedProps.eventLimit}
+              {event.eventLimit}
               {' '}
               Spots Remaining
             </span>
           </div>
         </div>
         <div className="event-description">
-          <p>{event.extendedProps.description}</p>
+          <p>{event.description}</p>
         </div>
         {renderButtons()}
       </div>

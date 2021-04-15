@@ -1,0 +1,69 @@
+.admin-components {
+    margin: 30px auto;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+}
+
+.component-title {
+    color: var(--text-color-dark);
+    font-weight: bold;
+}
+
+.division-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.division-dropdown {
+    border: none;
+    outline: none;
+    width: inherit;
+    font-family: "Assistant", Arial, Helvetica, sans-serif;
+    color: var(--text-color-dark);
+    font-weight: 700;
+    font-size: 32px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.admin-components-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inventory-events-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 48%;
+}
+
+.upcoming-events-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.analytics-section {
+    width: 48%;
+}
+
+.inventory-section, .upcoming-events-section, .analytics-section, .availability-section {
+    margin-top: 30px;
+}
+
+.analytics-component {
+    height: 675px;
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.availability-component {
+    height: 600px;
+    width: 100%;
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
