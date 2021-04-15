@@ -26,6 +26,7 @@ import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggr
 import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
 import VolunteerEvents from './pages/volunteer-events/volunteerEvents';
+import NotFound404 from './pages/NotFound404';
 import store from './redux/store';
 
 import './index.css';
@@ -40,34 +41,25 @@ ReactDOM.render(
             <Route path="/login" component={LoginPage} />
             <div className="App">
               <Layout>
-                <Route path="/sandbox" component={Test} />
-
                 <Switch>
+                  <Route path="/sandbox" component={Test} />
                   <ProtectedRoute path="/" component={Dashboard} exact />
                   <ProtectedRoute path="/profile" component={viewProfile} />
                   <ProtectedRoute path="/editProfile" component={editProfile} />
-                </Switch>
-
-                <Switch>
                   <ProtectedRoute path="/admin/users" component={ManageUsers} />
                   <ProtectedRoute path="/admin/db" component={ManageDB} />
                   <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
                   <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
                   <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
-                </Switch>
-
-                <Switch>
                   <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
                   <ProtectedRoute path="/volunteer/hours" component={Hours} />
                   <ProtectedRoute path="/volunteer/tier" component={Tier} />
                   <ProtectedRoute path="/volunteer/forms" component={Forms} />
-                </Switch>
-
-                <Switch>
                   <ProtectedRoute path="/inventory" component={Inventory} />
                   <ProtectedRoute path="/reports" component={Reports} />
                   <ProtectedRoute path="/events/viewHours" component={viewHours} />
                   <ProtectedRoute path="/events" component={Events} />
+                  <Route component={NotFound404} />
                 </Switch>
               </Layout>
             </div>
