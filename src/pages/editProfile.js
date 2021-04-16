@@ -1,6 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/extensions */
 import React, { useState, useEffect } from 'react';
 import {
   startOfWeek, add, getHours, getDay,
@@ -8,11 +5,12 @@ import {
 import { useHistory } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import axios from 'axios';
 
 import { WMKBackend } from '../common/utils';
 
-import EditAbout from '../components/profile/editAbout/editAbout.js';
-import EditContact from '../components/profile/editContact/editContact.js';
+import EditAbout from '../components/profile/editAbout/editAbout';
+import EditContact from '../components/profile/editContact/editContact';
 import EditAvailability from '../components/dashboard/availability-component/volunteerAvailability/editAvailability/editAvailability';
 
 import profCircle from '../assets/profCircle.png';
@@ -40,7 +38,6 @@ const editProfile = (props) => {
 
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
-
   const [email, setEmail] = useState('');
   // const [number, setNumber] = useState('');
   const [street, setStreet] = useState('');
@@ -48,9 +45,12 @@ const editProfile = (props) => {
   const [state, setState] = useState('');
   const [zip, setZip] = useState(0);
   const [birthday, setBirthday] = useState('');
-
   const [tier, setTier] = useState(3);
   const [status, setStatus] = useState('Volunteer');
+
+  // User's current profile picture in the database
+  const [currentProfilePicture, setCurrentProfilePicture] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState(null); // File bing uploaded
 
   const [isLoading, setLoading] = useState(false);
 
@@ -85,6 +85,27 @@ const editProfile = (props) => {
     return [getDay(date), `${hours}:00:00`];
   };
 
+  // Uploads a user's profile picture and returns url
+  const uploadPicture = async () => {
+    // Gets Amazon upload URL
+    const res = await WMKBackend.get('/accounts/s3Url');
+    const uploadUrl = res.data;
+
+    console.log(uploadUrl);
+
+    // Upload image to amazon s3
+    await axios.put(uploadUrl, uploadedFile, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    // Get profile picture image
+    const imageUrl = uploadUrl.split('?')[0];
+    console.log(imageUrl);
+    return imageUrl;
+  };
+
   useEffect(async () => {
     setLoading(true);
     const userID = cookies.get('userId');
@@ -105,6 +126,7 @@ const editProfile = (props) => {
     setBirthday(account.birthdate);
     setTier(account.tier);
     setStatus(permissions.permissions);
+    setCurrentProfilePicture(account.profile_picture);
 
     // get req for availability
     const availabilityResult = await WMKBackend.get(`/availability/${userID}`);
@@ -124,35 +146,44 @@ const editProfile = (props) => {
   }, []);
 
   // Use axios PUT request to send new info to backend api, but only after form is "submitted"
-  const updateInfo = async () => {
+  const updateInfo = async (event) => {
+    event.persist();
+    const userID = cookies.get('userId');
     const dateList = availability.map((date) => (parseDate(date)));
-
     const seen = new Set();
-
     const filteredDates = dateList.filter((date) => {
       const duplicate = seen.has(date.toString());
       seen.add(date.toString());
       return !duplicate;
     });
 
-    const userID = cookies.get('userId');
-    await WMKBackend.put(`/accounts/${userID}`, {
-      firstname,
-      lastname,
-      birthdate: birthday,
-      locationstreet: street,
-      locationcity: city,
-      locationstate: state,
-      locationzip: zip,
-      tier,
-      permission: status,
-    });
+    try {
+      let newProfilePictureURL = currentProfilePicture;
+      if (uploadedFile) {
+        newProfilePictureURL = await uploadPicture();
+      }
 
-    await WMKBackend.post(`/availability/${userID}`, {
-      dates: filteredDates,
-    });
+      await WMKBackend.put(`/accounts/${userID}`, {
+        firstname,
+        lastname,
+        birthdate: birthday,
+        locationstreet: street,
+        locationcity: city,
+        locationstate: state,
+        locationzip: zip,
+        tier,
+        permission: status,
+        profilePicture: newProfilePictureURL,
+      });
 
-    history.push('/profile');
+      await WMKBackend.post(`/availability/${userID}`, {
+        dates: filteredDates,
+      });
+
+      history.push('/profile');
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   if (isLoading) {
@@ -163,8 +194,19 @@ const editProfile = (props) => {
     <div>
       <div className="page-container">
         <div className="profilePic">
-          <img src={profCircle} alt="" width="200" height="200" />
+          <img src={currentProfilePicture || profCircle} alt="" width="200" height="200" />
         </div>
+        <input
+          id="imageInput"
+          type="file"
+          onChange={(e) => {
+            e.persist();
+            const profilePic = e.target.files[0];
+            console.log(profilePic);
+            setCurrentProfilePicture(URL.createObjectURL(profilePic));
+            setUploadedFile(profilePic);
+          }}
+        />
         <div className="name">
           <h3>{`${firstname} ${lastname}`}</h3>
           <ul className="edit-save">

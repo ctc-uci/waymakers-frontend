@@ -34,6 +34,8 @@ const viewProfile = (props) => {
   const [tier, setTier] = useState(0);
   const [status, setStatus] = useState('Volunteer');
 
+  const [currentProfilePicture, setCurrentProfilePicture] = useState(null);
+
   const [availability, setAvailability] = useState([]);
 
   const [isLoading, setLoading] = useState(false);
@@ -78,6 +80,7 @@ const viewProfile = (props) => {
     setBirthday(account.birthdate);
     setTier(account.tier);
     setStatus(permissions.permissions);
+    setCurrentProfilePicture(account.profile_picture);
 
     // get req for availability
     const availabilityResult = await WMKBackend.get(`/availability/${userID}`);
@@ -106,7 +109,7 @@ const viewProfile = (props) => {
     <div>
       <div className="page-container">
         <div className="profilePic">
-          <img src={profCircle} alt="" width="200" height="200" />
+          <img src={currentProfilePicture || profCircle} alt="" width="200" height="200" />
         </div>
         <div className="name">
           <h3>{`${firstName} ${lastName}`}</h3>
