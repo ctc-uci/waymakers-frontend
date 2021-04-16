@@ -27,8 +27,6 @@
     cursor: pointer;
 }
 
-
-
 .profile {
     display: inline-block;
     width: 40px;
@@ -36,5 +34,36 @@
     vertical-align: top;
     background-color: white;
     border-radius: 50%;
+    border: 0;
+    margin-top: 4px;
     margin-right: 25px;
+    cursor: pointer;
+}
+
+.navbar-profile-menu-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    right: 0px;
+    padding-bottom: 5px;
+    margin-top: 15px;
+    width: 150px;
+    background-color: #f2fbfc;
+    color: var(--text-color-dark);
+    border: 1px solid var(--text-color-dark);
+    border-radius: 2px;
+}
+
+.navbar-profile-menu-link {
+    text-decoration: none;
+
+}
+
+.navbar-profile-menu-option {
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    font-size: 1.25em;
+    color: var(--text-color-dark);
+    border: 1px solid var(--text-color-dark);
+    width: 100%;
 }
