@@ -9,6 +9,7 @@ const signInEndpoint = '/login';
 
 const verifyToken = async (cookies) => {
   const accessToken = cookies.get('accessToken');
+  console.log(cookies);
   if (accessToken != null) {
     try {
       const isVerified = await WMKBackend.get(`/auth/verifyToken/${accessToken}`);
