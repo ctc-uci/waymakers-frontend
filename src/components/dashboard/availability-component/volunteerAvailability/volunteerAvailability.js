@@ -91,54 +91,54 @@ const VolunteerAvailability = (props) => {
 
   function renderAvailability() {
     return (
-      <>
-        {availabilityMode === 'view' ? (
-          <div className="availability-wrapper">
-            <h5 className="availability-title">Availability for the Week</h5>
-            <div className="availability-buttons-container">
-              <div
-                className="edit-button"
-                onClick={() => { setAvailabilityMode('edit'); }}
-                onKeyDown={() => { setAvailabilityMode('edit'); }}
-                role="button"
-                tabIndex={0}
-              >
-                Change Availability
-              </div>
-              <div
-                className="help-popup"
-                onClick={onHelpButtonClick}
-                onKeyDown={onHelpButtonClick}
-                role="button"
-                tabIndex={0}
-              >
-                ?
-              </div>
-
+      <div className="availability-wrapper">
+        <div className="availability-header">
+          <h2 className="availability-title">Availability for the Week</h2>
+          <div className="availability-buttons-container">
+            {availabilityMode === 'view'
+              ? (
+                <div
+                  className="availability-edit-button"
+                  onClick={() => { setAvailabilityMode('edit'); }}
+                  onKeyDown={() => { setAvailabilityMode('edit'); }}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Change Availability
+                </div>
+              )
+              : (
+                <div
+                  className="availability-save-button"
+                  onClick={updateAvailability}
+                  onKeyDown={updateAvailability}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Save Changes
+                </div>
+              )}
+            <div
+              className="help-popup-button"
+              onClick={onHelpButtonClick}
+              onKeyDown={onHelpButtonClick}
+              role="button"
+              tabIndex={0}
+            >
+              ?
             </div>
-            <ViewAvailability availabilities={availability} startWeek={startWeek} />
           </div>
-        )
+        </div>
+        { availabilityMode === 'view'
+          ? (<ViewAvailability availabilities={availability} startWeek={startWeek} />)
           : (
-            <div className="availability-wrapper">
-              <h5 className="availability-title">Availability for the Week</h5>
-              <div
-                className="save-button"
-                onClick={updateAvailability}
-                onKeyDown={updateAvailability}
-                role="button"
-                tabIndex={0}
-              >
-                Save Changes
-              </div>
-              <EditAvailability
-                availabilityTimes={availability}
-                setAvailabilityTimes={setAvailability}
-                startWeek={startWeek}
-              />
-            </div>
+            <EditAvailability
+              availabilityTimes={availability}
+              setAvailabilityTimes={setAvailability}
+              startWeek={startWeek}
+            />
           )}
-      </>
+      </div>
     );
   }
 
@@ -153,9 +153,9 @@ const VolunteerAvailability = (props) => {
   }
 
   return (
-    <div className="availability-section">
+    <div className="volunteer-availability-section">
       {renderAvailability()}
-      {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} />}
+      {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} type="volunteer" />}
     </div>
   );
 };

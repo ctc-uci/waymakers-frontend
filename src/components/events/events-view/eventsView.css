@@ -161,3 +161,11 @@ table thead {
     border: none;
 }
 
+@media screen and (max-width: 768px) {
+    #calendar {
+        max-height: 800px;
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+}
+

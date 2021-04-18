@@ -14,6 +14,8 @@ import CalendarPopup from './calendar-popup/calendarPopup';
 import CalendarDayHeader from './calendar-day-header/calendarDayHeader';
 import EventList from '../event-list/eventList';
 import EventLegend from '../../dashboard/event-legend/eventLegend';
+import useMobileWidth from '../../../common/useMobileWidth';
+
 import { filterEventsByView } from '../util';
 
 import {
@@ -49,6 +51,8 @@ const EventsView = ({
   const moreEventsColor = 'var(--text-color-dark)';
   const myEventsColor = 'var(--color-light-green)';
 
+  const isMobile = useMobileWidth();
+
   useEffect(() => {
     (async () => {
       await loadEvents();
@@ -72,9 +76,15 @@ const EventsView = ({
 
   useEffect(() => {
     if (view !== 'timeGridDay') {
-      calendarEl.current.getApi().changeView(view);
+      console.log(isMobile);
+      console.log(view);
+      if (isMobile && view === 'timeGridWeek') {
+        calendarEl.current.getApi().changeView('timeGridFourDay');
+      } else {
+        calendarEl.current.getApi().changeView(view);
+      }
     }
-  }, [useSelector(getView)]);
+  }, [useSelector(getView), isMobile]);
 
   // VIEW HEADER RENDERING FUNCTIONS
   const updateDate = (newDate) => {
@@ -84,6 +94,8 @@ const EventsView = ({
   };
 
   const renderWeekMonthHeader = (dayInfo) => {
+    const startDate = new Date(year, month - 1, day);
+    const endDate = new Date(year, month - 1, day + 3);
     const goToPrev = () => {
       calendarEl.current.getApi().prev();
       updateDate(calendarEl.current.getApi().getDate());
@@ -92,7 +104,15 @@ const EventsView = ({
       calendarEl.current.getApi().next();
       updateDate(calendarEl.current.getApi().getDate());
     };
-    return <CalendarDayHeader goToPrev={goToPrev} goToNext={goToNext} dayInfo={dayInfo} />;
+    return (
+      <CalendarDayHeader
+        goToPrev={goToPrev}
+        goToNext={goToNext}
+        dayInfo={dayInfo}
+        startOfRange={startDate}
+        endOfRange={endDate}
+      />
+    );
   };
 
   const renderDayViewHeader = () => {
@@ -192,8 +212,15 @@ const EventsView = ({
       return (
         <FullCalendar
           plugins={[timeGridPlugin, dayGridPlugin]}
-          initialView="timeGridWeek"
+          initialView="dayGridMonth"
           events={calendarEvents}
+          views={{
+            timeGridFourDay: {
+              type: 'timeGrid',
+              duration: { days: 4 },
+              buttonText: '4 day',
+            },
+          }}
           contentHeight={1000}
           expandRows="true"
           ref={calendarEl}

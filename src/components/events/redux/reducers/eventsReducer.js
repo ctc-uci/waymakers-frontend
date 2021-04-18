@@ -149,6 +149,17 @@ export default (state = initialState, action) => {
       };
     }
 
+    case 'events/dateSelected': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/dateSelected] Setting date to ${action.payload}`);
+      return {
+        ...state,
+        day: action.payload.day,
+        month: action.payload.month,
+        year: action.payload.year,
+      };
+    }
+
     case 'events/eventSelected': {
       // eslint-disable-next-line
       console.log(`[ACTION: events/eventSelected] Selecting event: ${action.payload}`);

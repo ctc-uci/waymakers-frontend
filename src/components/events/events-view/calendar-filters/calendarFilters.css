@@ -20,3 +20,13 @@
     color: var(--text-color-dark-green);
     border: none;
 }
+
+@media screen and (max-width: 768px) {
+
+    .calendar-filters {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+}

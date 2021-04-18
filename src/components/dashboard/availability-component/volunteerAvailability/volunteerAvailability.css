@@ -2,6 +2,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 85%;
+  margin: auto;
+}
+
+.availability-header {
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .availability-title {
@@ -14,14 +24,61 @@
   justify-content: flex-end;
 }
 
-.save-button, .edit-button, .help-popup {
+.availability-save-button, .availability-edit-button, .help-popup-button {
   align-self: flex-end;
 }
 
-.save-button, .edit-button {
+.availability-save-button, .availability-edit-button {
   background-color: var(--color-green);
   color: white;
+  height: 37px;
   border-radius: 15px;
-  padding: 5px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  margin: 5px;
+}
+
+.volunteer-availability-section .help-popup-button {
+  background-color: var(--color-green);
+  color: white;
+  border-radius: 50%;
+  height: 37px;
+  width: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 1.2rem;
+  margin: 5px;
+}
+
+@media screen and (max-width: 1300px) {
+  .volunteer-availability-section .availability-title {
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .volunteer-availability-section .availability-header {
+    margin-left: 5px;
+  }
+  
+  .volunteer-availability-section .availability-title {
+    font-size: 12px;
+  }
+
+  .availability-save-button, .availability-edit-button {
+    height: 15px;
+    padding: 0 5px;
+    font-size: 10px;
+    margin: 5px 0;
+  }
+
+  .volunteer-availability-section .help-popup-button {
+    height: 15px;
+    width: 15px;
+    font-size: 10px;
+  }
 }
