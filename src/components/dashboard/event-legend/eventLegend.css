@@ -2,10 +2,19 @@
 
  .legend-key-section {
     display: flex;
-    width: 85%;
+    width: 100%;
     /* margin: 20px auto auto auto; */
     margin-left: 0px;
     padding: 15px 20px;
+}
+
+.legend-info {
+    display: flex;
+    width: 100%;
+}
+
+.single-legend-element {
+    display: flex;
 }
 
 .key-text {
@@ -15,7 +24,7 @@
 }
 .volunteer-event-square {
     background-color: var(--color-golden-yellow);
-    width: 25px;
+    min-width: 25px;
     height: 25px;
     margin: 0 10px 0 25px;
 }
@@ -27,7 +36,7 @@
 
 .outreach-event-square {
     background-color: var(--color-pink);
-    width: 25px;
+    min-width: 25px;
     height: 25px;
     margin: 0 10px 0 25px;
 }
@@ -39,7 +48,7 @@
 
 .other-event-square {
     background-color: var(--color-light-purple);
-    width: 25px;
+    min-width: 25px;
     height: 25px;
     margin: 0 10px 0 25px;
 }
@@ -48,3 +57,14 @@
     font-size: 1.3rem;
     margin: 0 10px 0 0;
 }
+
+@media screen and (max-width: 768px) {
+    .legend-key-section {
+        /* width: 80%; */
+    }
+    .legend-key-section .legend-info {
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
+

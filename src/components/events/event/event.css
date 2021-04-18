@@ -6,8 +6,16 @@
     display: flex;
     color: var(--text-color-light);
     padding: 15px 20px;
+    flex: 1 1 90%;
     align-items: center;
-    flex: 1 1 98%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.event-list-container .event-color-label {
+    min-width: 14px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .more-events,

@@ -107,7 +107,7 @@ const Event = ({
           <p className="event-time">{`${startTime} - ${endTime}`}</p>
         </div>
       </div>
-      { (listType === 'all' || listType === 'my-events' || listType === 'more-events') && <div className={`${eventType}`} />}
+      { (listType === 'all' || listType === 'my-events' || listType === 'more-events') && <div className={`event-color-label ${eventType}`} />}
     </div>
   );
 };
