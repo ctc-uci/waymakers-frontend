@@ -18,6 +18,7 @@ const verifyToken = async (cookies) => {
         cookies.set('userId', isVerified.data, {
           path: '/',
           maxAge: 3600,
+          domain: `.${process.env.REACT_APP_COOKIE_DOMAIN}`,
         });
       }
 

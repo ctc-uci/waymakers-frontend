@@ -44,6 +44,7 @@ const LogIn = (props) => {
       cookies.set('accessToken', idToken, {
         path: '/',
         maxAge: 3600,
+        domain: `.${process.env.REACT_APP_COOKIE_DOMAIN}`,
       });
 
       // console.log(user.user.uid);
