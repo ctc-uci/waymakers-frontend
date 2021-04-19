@@ -225,8 +225,8 @@ const EventsView = ({
           expandRows="true"
           ref={calendarEl}
           headerToolbar={{
-            left: 'title',
-            center: '',
+            left: '',
+            center: 'title',
             right: '',
           }}
           dayHeaderContent={renderWeekMonthHeader}
@@ -241,7 +241,7 @@ const EventsView = ({
 
   return (
     <div className="events-view">
-      <div id="top-of-calendar">
+      <div className="top-of-calendar">
         <CalendarPopup page={page} />
         <CalendarFilters />
         { page === 'volunteerDashboard' && renderCheckboxes()}

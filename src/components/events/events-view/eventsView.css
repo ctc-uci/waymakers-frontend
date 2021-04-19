@@ -84,6 +84,7 @@ table thead {
 .fc-toolbar-title {
     color: var(--text-color-dark);
     font-weight: bold;
+    text-align: center;
 }
 
 /* To add 'week of' */
@@ -159,6 +160,10 @@ table thead {
 .test-headers{
     /* background: blue; */
     border: none;
+}
+
+.top-of-calendar {
+    margin-bottom: 20px;
 }
 
 @media screen and (max-width: 768px) {
