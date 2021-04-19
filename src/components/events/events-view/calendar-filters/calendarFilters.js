@@ -95,9 +95,11 @@ const MobileCalendarFilters = () => {
     <div className="calendar-filters">
       <ViewFilters />
       <Datetime
+        className="DateFilter"
         initialValue={currentDate}
         onChange={(e) => changeCurrentDate(e)}
         timeFormat={false}
+        dateFormat="MMMM DD YYYY"
       />
     </div>
   );

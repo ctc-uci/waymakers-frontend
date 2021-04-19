@@ -4,8 +4,20 @@
     flex-direction: column;
 }
 
-.volunteer-event .title {
+.volunteer-events-page .title {
     font-size: 2em;
     font-weight: bold;
     color: var(--color-dark-blue);
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .volunteer-events-page .title {
+        font-size: 2em;
+        font-weight: bold;
+        color: var(--color-dark-blue);
+        text-align: center;
+    }
+
 }
