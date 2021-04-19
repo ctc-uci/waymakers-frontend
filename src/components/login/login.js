@@ -41,13 +41,19 @@ const LogIn = (props) => {
       // console.log(`idToken: ${idToken}`);
 
       // Setting a session cookie
-      cookies.set('accessToken', idToken, {
-        path: '/',
-        maxAge: 3600,
-        domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
-        secure: true,
-        // domain: 'localhost',
-      });
+      if (process.env.NODE_ENV === 'production') {
+        cookies.set('accessToken', idToken, {
+          path: '/',
+          maxAge: 3600,
+          domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
+          secure: true,
+        });
+      } else {
+        cookies.set('accessToken', idToken, {
+          path: '/',
+          maxAge: 3600,
+        });
+      }
 
       // console.log(user.user.uid);
       history.push(redirectURL);

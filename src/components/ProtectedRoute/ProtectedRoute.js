@@ -10,19 +10,37 @@ const signInEndpoint = '/login';
 const verifyToken = async (cookies) => {
   const accessToken = cookies.get('accessToken');
   console.log(cookies);
+  // const domain = process.env.NODE_ENV === 'production'
+  //   ? `${process.env.REACT_APP_COOKIE_DOMAIN}`
+  //   : 'localhost';
+
   if (accessToken != null) {
     try {
       const isVerified = await WMKBackend.get(`/auth/verifyToken/${accessToken}`);
 
       if (isVerified) {
-        cookies.set('userId', isVerified.data, {
-          path: '/',
-          maxAge: 3600,
-          domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
-          // domain: 'localhost',
-          secure: true,
-        });
+        if (process.env.NODE_ENV === 'production') {
+          cookies.set('userId', isVerified.data, {
+            path: '/',
+            maxAge: 3600,
+            domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
+            secure: true,
+          });
+        } else {
+          cookies.set('userId', isVerified.data, {
+            path: '/',
+            maxAge: 3600,
+          });
+        }
       }
+      // if (isVerified) {
+      //   cookies.set('userId', isVerified.data, {
+      //     path: '/',
+      //     maxAge: 3600,
+      //     domain,
+      //     secure: true,
+      //   });
+      // }
 
       return isVerified;
     } catch (error) {
