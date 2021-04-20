@@ -28,3 +28,9 @@
 .row2 {
     padding-top: 2%;
 }
+
+@media screen and (max-width: 768px) {
+    .row1, .row2 {
+        flex-direction: column;
+    }
+}
