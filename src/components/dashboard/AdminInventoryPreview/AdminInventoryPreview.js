@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
 import useMobileWidth from '../../../common/useMobileWidth';
+import { WMKBackend } from '../../../common/utils';
 
 import './AdminInventoryPreview.css';
-import { WMKBackend } from '../../../common/utils';
 
 const AdminInventoryPreview = ({ division }) => {
   const [topItems, setTopItems] = useState([]);

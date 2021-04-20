@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { WMKBackend } from '../../../common/utils';
-
 import useMobileWidth from '../../../common/useMobileWidth';
 
 import './AdminEventsPreview.css';
