@@ -144,9 +144,6 @@ const LogIn = (props) => {
       {error !== ''
         ? <span className="error-message">{error}</span>
         : <br />}
-      <button type="button" onClick={() => console.log(cookies)}>
-        Chere
-      </button>
       <div className="login-buttons">
         <button type="submit" className="login-button" onClick={handleSubmit}>Login</button>
         <button type="button" className="lwg-button" onClick={loginWithGoogle}>

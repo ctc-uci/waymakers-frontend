@@ -10,9 +10,6 @@ const signInEndpoint = '/login';
 const verifyToken = async (cookies) => {
   const accessToken = cookies.get('accessToken');
   console.log(cookies);
-  // const domain = process.env.NODE_ENV === 'production'
-  //   ? `${process.env.REACT_APP_COOKIE_DOMAIN}`
-  //   : 'localhost';
 
   if (accessToken != null) {
     try {
@@ -33,14 +30,6 @@ const verifyToken = async (cookies) => {
           });
         }
       }
-      // if (isVerified) {
-      //   cookies.set('userId', isVerified.data, {
-      //     path: '/',
-      //     maxAge: 3600,
-      //     domain,
-      //     secure: true,
-      //   });
-      // }
 
       return isVerified;
     } catch (error) {
