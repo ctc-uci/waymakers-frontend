@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { WMKBackend } from '../../../../../common/utils';
-
+import { TitledCard } from '../../../../../common/Card';
 import clockIcon from '../../../../../assets/clock.svg';
 import locationPinIcon from '../../../../../assets/blueLocationPin.svg';
 
@@ -67,8 +67,7 @@ const Overview = (prop) => {
   return (
     <>
       {eventInfo.length !== 0 && (
-        <div className="event-details-aggregate">
-          <h2 className="event-details-title">Event Details</h2>
+        <TitledCard title="Event Details">
           <div className="overview-container">
             <p className="event-date">{prettifyDate()}</p>
             <div className="event-info">
@@ -81,7 +80,7 @@ const Overview = (prop) => {
             </div>
             <p className="event-description">{eventInfo.description}</p>
           </div>
-        </div>
+        </TitledCard>
       )}
     </>
   );
