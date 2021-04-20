@@ -2,21 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
+import useMobileWidth from '../../../common/useMobileWidth';
 import { WMKBackend } from '../../../common/utils';
 
-import './inventoryComponent.css';
+import './AdminInventoryPreview.css';
 
-const InventoryComponent = ({ division }) => {
+const AdminInventoryPreview = ({ division }) => {
   const [topItems, setTopItems] = useState([]);
   const [warehouseList, setWarehouseList] = useState([]);
   const [warehouseIndex, setWarehouseIndex] = useState(0);
   const [warehouseIDMap, setWarehouseIDMap] = useState({});
   const [warehouseName, setWarehouseName] = useState('');
 
+  const isMobile = useMobileWidth(1100);
+  const topAmount = isMobile ? 2 : 3;
+
   // Fetching top items from the server
   const getTopItems = async () => {
     try {
-      const response = await WMKBackend.get(`/inventory/top?warehouse=${warehouseIDMap[warehouseName]}`);
+      const response = await WMKBackend.get(`/inventory/top?warehouse=${warehouseIDMap[warehouseName]}&numItems=${topAmount}`);
       setTopItems(response.data);
     } catch (err) {
       console.error(err);
@@ -25,18 +29,18 @@ const InventoryComponent = ({ division }) => {
 
   const itemDisplay = (item) => (
     <div className="top-item">
-      <p className="top-item-name">
+      <p className="top-item-name medium">
         {item.name}
       </p>
       <div className="in-stock">
-        In Stock
+        <p className="medium">In Stock</p>
         {' '}
-        <p className="in-stock-quantity">{item.quantity}</p>
+        <p className="in-stock-quantity medium">{item.quantity}</p>
       </div>
       <div className="needed">
-        Needed
+        <p className="medium">Needed</p>
         {' '}
-        <p className="needed-quantity">{item.needed}</p>
+        <p className="needed-quantity medium">{item.needed}</p>
       </div>
     </div>
   );
@@ -97,7 +101,7 @@ const InventoryComponent = ({ division }) => {
     if (warehouseName) {
       getTopItems();
     }
-  }, [warehouseName]);
+  }, [warehouseName, isMobile]);
 
   const renderInfo = () => {
     if (warehouseList.length === 0) {
@@ -122,16 +126,18 @@ const InventoryComponent = ({ division }) => {
       { warehouseList.length > 0 && Menu() }
       {renderInfo()}
       <div className="view-inventory-section">
-        <Link to="/inventory">
-          <button type="button" className="view-inventory-button">View All</button>
-        </Link>
+        <button type="button" className="all-events-button">
+          <Link to="/inventory" className="button-anchor">
+            <p className="large">View All</p>
+          </Link>
+        </button>
       </div>
     </div>
   );
 };
 
-InventoryComponent.propTypes = {
+AdminInventoryPreview.propTypes = {
   division: PropTypes.number.isRequired,
 };
 
-export default InventoryComponent;
+export default AdminInventoryPreview;

@@ -13,25 +13,36 @@ const verifyToken = async (cookies) => {
 
   if (accessToken != null) {
     try {
-      const isVerified = await WMKBackend.get(`/auth/verifyToken/${accessToken}`);
+      const verifiedUserId = await WMKBackend.get(`/auth/verifyToken/${accessToken}`);
 
-      if (isVerified) {
+      if (verifiedUserId) {
+        const userPermissions = await WMKBackend.get(`/accounts/${verifiedUserId.data}`);
         if (process.env.NODE_ENV === 'production') {
-          cookies.set('userId', isVerified.data, {
+          cookies.set('userId', verifiedUserId.data, {
+            path: '/',
+            maxAge: 3600,
+            domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
+            secure: true,
+          });
+          cookies.set('userPermissions', userPermissions.data.permissions.permissions, {
             path: '/',
             maxAge: 3600,
             domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
             secure: true,
           });
         } else {
-          cookies.set('userId', isVerified.data, {
+          cookies.set('userId', verifiedUserId.data, {
+            path: '/',
+            maxAge: 3600,
+          });
+          cookies.set('userPermissions', userPermissions.data.permissions.permissions, {
             path: '/',
             maxAge: 3600,
           });
         }
       }
 
-      return isVerified;
+      return verifiedUserId;
     } catch (error) {
       console.error('Error:', error);
     }

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
-import { WMKBackend } from '../../common/utils';
-
 import AdminDashboard from './adminDashboard';
 import VolunteerDashboard from './volunteerDashboard';
 
@@ -13,16 +11,14 @@ const Dashboard = ({ cookies }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(async () => {
-    const userID = cookies.get('userId');
-    setIsLoading(true);
-    const result = await WMKBackend.get(`/accounts/${userID}`);
+    const userPermissions = cookies.get('userPermissions');
+    setPermissions(userPermissions);
 
-    setPermissions(result.data.permissions.permissions);
-
-    if (result.data.permissions.permissions === 'Volunteer') {
-      setCurrDashboard('volunteer');
-    } else {
+    // Defaulting to volunteer dashboard, unless explicitly admin
+    if (userPermissions === 'Admin') {
       setCurrDashboard('admin');
+    } else {
+      setCurrDashboard('volunteer');
     }
 
     setIsLoading(false);
