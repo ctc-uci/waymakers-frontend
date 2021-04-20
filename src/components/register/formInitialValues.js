@@ -19,6 +19,7 @@ const {
     birthYear,
     gender,
     genderOther,
+    termsOfUse,
   },
 } = checkoutFormModel;
 
@@ -40,4 +41,5 @@ export default {
   [birthYear.name]: '',
   [gender.name]: '',
   [genderOther.name]: '',
+  [termsOfUse.name]: false,
 };

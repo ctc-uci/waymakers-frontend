@@ -3,18 +3,18 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import Particles from 'react-particles-js';
 
-import LogIn from './login';
+import Register from '../../components/register/register';
 
-import './loginPage.css';
+import './registerPage.css';
 
-const LoginPage = (props) => {
+const RegisterPage = (props) => {
   const { cookies } = props;
 
   return (
-    <div className="login-page">
+    <div className="register-page">
       <h1 className="title">Waymakers Southern California</h1>
-      <h2 className="subtitle">Login</h2>
-      <LogIn props={cookies} />
+      <h2 className="subtitle">Sign Up to get Started!</h2>
+      <Register props={cookies} />
       <Particles
         className="particles"
         params={{
@@ -43,8 +43,8 @@ const LoginPage = (props) => {
   );
 };
 
-LoginPage.propTypes = {
+RegisterPage.propTypes = {
   cookies: instanceOf(Cookies).isRequired,
 };
 
-export default withCookies(LoginPage);
+export default withCookies(RegisterPage);

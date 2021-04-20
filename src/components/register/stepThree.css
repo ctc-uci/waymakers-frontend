@@ -35,8 +35,6 @@
 .register-step-three .gender-section {
     display: flex;
     flex-direction: column;
-
-    margin-bottom: 5%;
 }
 
 .register-step-three .gender-section .gender-form-group .gender-dropdown {
@@ -59,6 +57,53 @@
 }
 
 .register-step-three .gender-section .gender-form-group .dropdown-error {
+    margin: 0;
+    padding: 0;
+    color: #DA6153;
+}
+
+/* .register-step-three .terms-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+.register-step-three .terms-section .view-terms {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-step-three .terms-section .view-terms .terms-button {
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    border: none;
+    background: transparent;
+
+    text-decoration: underline;
+    color: var(--color-orange);
+
+    cursor: pointer;
+}
+
+.register-step-three .terms-section .tou-accept {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin-top: 35px;
+
+    cursor: pointer;
+}
+
+.register-step-three .terms-section .tou-accept .tou-checkbox {
+    margin-left: 0;
+}
+
+.register-step-three .terms-section .tou-error {
     margin: 0;
     padding: 0;
     color: #DA6153;

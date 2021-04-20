@@ -1,0 +1,66 @@
+.tou-modal {
+    color: black;
+
+    width: 600px;
+}
+
+.tou-modal p {
+    margin: 0;
+    padding: 0;
+}
+
+.tou-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.tou-modal .tou-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #E6E6E6;
+
+    height: 40px;
+    outline: 1px solid black;
+}
+
+.tou-modal .tou-header .tou-header-text {
+    color: black;
+    font-weight: 700;
+}
+
+.tou-modal .tou-body {
+    background: white;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.tou-modal .tou-body-title {
+    text-align: center;
+    font-weight: 700;
+    margin-left: 5%;
+    margin-right: 5%;
+
+    margin-top: 36px;
+    margin-bottom: 36px;
+}
+
+.tou-modal .tou-body-content {
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.tou-modal .tou-footer {
+    height: 40px;
+    background: #E6E6E6;
+
+    outline: 1px solid black;
+}

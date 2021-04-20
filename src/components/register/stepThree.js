@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { useFormikContext } from 'formik';
+import { Field, useFormikContext } from 'formik';
 
 import RegistrationTextField from './registrationTextField';
+import TermsOfUseModal from './TermsOfUseModal';
 
 import registrationError from '../../assets/registrationError.svg';
 
@@ -14,6 +15,7 @@ const formFieldShape = {
   birthYear: PropTypes.string,
   gender: PropTypes.string,
   genderOther: PropTypes.string,
+  termsOfUse: PropTypes.bool,
 };
 
 const StepThree = (props) => {
@@ -24,9 +26,11 @@ const StepThree = (props) => {
       birthYear,
       gender,
       genderOther,
+      termsOfUse,
     },
   } = props;
 
+  const [isTOUModalOpen, setTOUModalOpen] = useState(false);
   const meta = useFormikContext();
 
   return (
@@ -61,7 +65,7 @@ const StepThree = (props) => {
             <option className="gender-option" value="pfts" label="Prefer Not To Say" />
           </select>
           {meta.touched.gender && meta.errors.gender ? (
-            <p className="dropdown-error">
+            <p className="dropdown-error small">
               <img src={registrationError} alt=" " />
               {' '}
               {meta.errors.gender}
@@ -74,6 +78,42 @@ const StepThree = (props) => {
             placeholder="Specify Gender If Other"
           />
         </div>
+      </div>
+      {/* <div className="division-section">
+        <p className="medium">Division</p>
+        <div className="division-form-group">
+
+        </div>
+      </div> */}
+      <div className="terms-section">
+        <TermsOfUseModal isOpen={isTOUModalOpen} setIsOpen={setTOUModalOpen} />
+        <div className="view-terms">
+          <p className="medium">Terms of Use:</p>
+          <button
+            type="button"
+            className="terms-button"
+            onClick={() => setTOUModalOpen(true)}
+          >
+            <p className="medium">Read the data privacy agreement.</p>
+          </button>
+        </div>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label className="tou-accept" htmlFor={termsOfUse.name}>
+          <Field
+            type="checkbox"
+            className="tou-checkbox"
+            id={termsOfUse.name}
+            name={termsOfUse.name}
+          />
+          <p className="medium">I read and accept the Terms of Use</p>
+        </label>
+        {meta.touched.termsOfUse && meta.errors.termsOfUse ? (
+          <p className="tou-error small">
+            <img src={registrationError} alt=" " />
+            {' '}
+            {meta.errors.termsOfUse}
+          </p>
+        ) : <br />}
       </div>
     </div>
   );
