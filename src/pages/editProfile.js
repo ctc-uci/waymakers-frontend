@@ -1,3 +1,4 @@
+/* eslint-env browser */
 import React, { useState, useEffect } from 'react';
 import {
   startOfWeek, add, getHours, getDay,
@@ -6,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import axios from 'axios';
+import ReactCrop from 'react-image-crop';
 
 import { WMKBackend } from '../common/utils';
 
@@ -15,6 +17,7 @@ import EditAvailability from '../components/dashboard/availability-component/vol
 
 import profCircle from '../assets/profCircle.png';
 
+import 'react-image-crop/dist/ReactCrop.css';
 import './editProfile.css';
 
 const editProfile = (props) => {
@@ -51,6 +54,14 @@ const editProfile = (props) => {
   // User's current profile picture in the database
   const [currentProfilePicture, setCurrentProfilePicture] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null); // File bing uploaded
+
+  // Used for cropping profile pictures
+  const imagePreviewCanvasRef = React.createRef();
+  const [crop, setCrop] = useState({
+    aspect: 1,
+    width: 400,
+    height: 400,
+  });
 
   const [isLoading, setLoading] = useState(false);
 
@@ -186,6 +197,77 @@ const editProfile = (props) => {
     }
   };
 
+  // Converts a base 64 string (a sort of encoding) to a file
+  const base64StringtoFile = (base64String, filename) => {
+    console.log(updateInfo);
+    const arr = base64String.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n >= 0) {
+      u8arr[n] = bstr.charCodeAt(n);
+      n -= 1;
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+
+  // Gets the original file extension from a base 64 string
+  const extractImageFileExtensionFromBase64 = (base64Data) => (
+    base64Data.substring('data:image/'.length, base64Data.indexOf(';base64'))
+  );
+
+  // Converts an image to a canvas reference
+  const image64toCanvasRef = (canvasRef, image64, pixelCrop) => {
+    const canvas = canvasRef;
+    canvas.width = pixelCrop.width;
+    canvas.height = pixelCrop.height;
+    const ctx = canvas.getContext('2d');
+    const image = new Image();
+    image.src = image64;
+    image.onload = () => {
+      ctx.drawImage(
+        image,
+        pixelCrop.x,
+        pixelCrop.y,
+        pixelCrop.width,
+        pixelCrop.height,
+        0,
+        0,
+        pixelCrop.width,
+        pixelCrop.height,
+      );
+    };
+  };
+
+  const handleOnCrop = (c) => {
+    if (c.width <= 400 && c.height <= 400) setCrop(c);
+  };
+
+  const handleCropComplete = (c) => {
+    const canvasRef = imagePreviewCanvasRef.current;
+    console.log(imagePreviewCanvasRef);
+    image64toCanvasRef(canvasRef, currentProfilePicture, c);
+  };
+
+  const handlePreviewCroppedClick = (e) => {
+    e.preventDefault();
+    const canvasRef = imagePreviewCanvasRef.current;
+    const fileExtension = extractImageFileExtensionFromBase64(currentProfilePicture);
+    const fileName = `joe.${fileExtension}`;
+    const newFile = canvasRef.toDataURL(`image/${fileExtension}`);
+    setUploadedFile(base64StringtoFile(newFile, fileName));
+  };
+
+  const imageCropper = () => (
+    <ReactCrop
+      src={currentProfilePicture}
+      crop={crop}
+      onChange={handleOnCrop}
+      onComplete={handleCropComplete}
+    />
+  );
+
   if (isLoading) {
     return (<div>Loading user profile...</div>);
   }
@@ -195,6 +277,9 @@ const editProfile = (props) => {
       <div className="page-container">
         <div className="profilePic">
           <img src={currentProfilePicture || profCircle} alt="" width="200" height="200" />
+          {uploadedFile ? imageCropper() : null}
+          <canvas ref={imagePreviewCanvasRef} />
+          <img src={uploadedFile ? URL.createObjectURL(uploadedFile) : null} alt="uploaded" crossOrigin="anonymous" />
         </div>
         <input
           id="imageInput"
@@ -202,15 +287,20 @@ const editProfile = (props) => {
           onChange={(e) => {
             e.persist();
             const profilePic = e.target.files[0];
-            console.log(profilePic);
-            setCurrentProfilePicture(URL.createObjectURL(profilePic));
-            setUploadedFile(profilePic);
+            const reader = new window.FileReader();
+            reader.addEventListener('load', () => {
+              setCurrentProfilePicture(reader.result);
+            });
+            if (profilePic) {
+              reader.readAsDataURL(profilePic);
+              setUploadedFile(profilePic);
+            }
           }}
         />
         <div className="name">
           <h3>{`${firstname} ${lastname}`}</h3>
           <ul className="edit-save">
-            <button onClick={updateInfo} type="button">
+            <button onClick={handlePreviewCroppedClick} type="button">
               Save
             </button>
           </ul>
