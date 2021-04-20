@@ -13,9 +13,9 @@ import Register from './components/register/register';
 import LogIn from './components/login/login';
 import ManageUsers from './components/admin/manageusers/manageusers';
 import ManageDB from './components/admin/managedb/managedb';
-// import Profile from './components/profile/profile';
-import viewProfile from './pages/viewProfile';
-import editProfile from './pages/editProfile';
+import Profile from './pages/profile/profile';
+// import viewProfile from './pages/viewProfile';
+// import editProfile from './pages/editProfile';
 import Hours from './components/volunteer/volHours/hours';
 import Tier from './components/volunteer/tier/tier';
 import Forms from './components/volunteer/forms/forms';
@@ -42,8 +42,9 @@ ReactDOM.render(
                 <ProtectedRoute path="/" component={Dashboard} exact />
                 <Route path="/register" component={Register} />
                 <Route path="/login" component={LogIn} />
-                <ProtectedRoute path="/profile" component={viewProfile} />
-                <ProtectedRoute path="/editProfile" component={editProfile} />
+                {/* <ProtectedRoute path="/profile" component={viewProfile} /> */}
+                <ProtectedRoute path="/profile" component={Profile} />
+                {/* <ProtectedRoute path="/editProfile" component={editProfile} /> */}
               </Switch>
 
               <Switch>
