@@ -65,6 +65,7 @@
     "react-dom": "^17.0.1",
     "react-dropdown": "^1.9.2",
     "react-dropdown-date": "^2.2.4",
+    "react-hamburger-menu": "^1.2.1",
     "react-horizontal-scrolling-menu": "^0.7.8",
     "react-icons": "^4.2.0",
     "react-modal": "^3.12.1",
@@ -78,7 +79,7 @@
     "react-select": "^4.1.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.2.1",
+    "styled-components": "^5.2.3",
     "web-vitals": "^0.2.4",
     "yup": "^0.32.9"
   },
