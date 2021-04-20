@@ -1,6 +1,6 @@
 @import '../../common/vars.css';
 
-.register-page {
+.login-page {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,7 +13,12 @@
     background: linear-gradient(180deg, #FFFFFF 0%, #003E53 100%, rgba(0, 65, 87, 0.32) 100%);
 }
 
-.register-page .title {
+.login-page p {
+    margin: 0;
+    padding: 0;
+}
+
+.login-page .title {
     position: static;
     z-index: 1;
 
@@ -23,7 +28,7 @@
     margin: 5vh 0% 0% 0%;
 }
 
-.register-page .subtitle {
+.login-page .subtitle {
     position: static;
     z-index: 1;
 
@@ -33,7 +38,7 @@
     margin-bottom: 2vh;
 }
 
-.register-page .particles {
+.login-page .particles {
     position: absolute;
     bottom: 0;
 
@@ -41,4 +46,10 @@
 
     height: 100%;
     width: 100%;
+}
+
+@media screen and (max-width: 500px) {
+    .login-page .title {
+        text-align: center;
+    }
 }

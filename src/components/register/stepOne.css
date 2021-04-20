@@ -62,3 +62,13 @@
 .register-step-one .password-section .password-form-group .password-form-label .password-toggle:hover {
     text-decoration: underline;
 }
+
+@media screen and (max-width: 500px) {
+    .register-step-one .name-section .name-form-group {
+        flex-direction: column;
+    }
+
+    .register-step-one .name-section .name-form-group .name-form-label {
+        width: 100%;
+    }
+}

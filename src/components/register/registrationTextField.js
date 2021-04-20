@@ -28,7 +28,7 @@ const RegistrationTextField = (props) => {
         />
         <p className="small">{label}</p>
         {meta.touched && meta.error ? (
-          <p className="registration-error">
+          <p className="registration-error small">
             <img src={registrationError} alt=" " />
             {' '}
             {meta.error}
