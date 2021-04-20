@@ -93,5 +93,10 @@ export default {
       name: 'genderOther',
       label: 'Other',
     },
+    termsOfUse: {
+      name: 'termsOfUse',
+      label: 'Terms Of Use',
+      requiredErrorMsg: 'Please accept the Terms of Use',
+    },
   },
 };

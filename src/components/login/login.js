@@ -145,10 +145,12 @@ const LogIn = (props) => {
         ? <span className="error-message">{error}</span>
         : <br />}
       <div className="login-buttons">
-        <button type="submit" className="login-button" onClick={handleSubmit}>Login</button>
+        <button type="submit" className="login-button" onClick={handleSubmit}>
+          <p className="large">Login</p>
+        </button>
         <button type="button" className="lwg-button" onClick={loginWithGoogle}>
           <img className="google-logo" src={googleLogo} alt=" " />
-          Login with Google
+          <p className="medium">Login with Google</p>
         </button>
       </div>
     </div>

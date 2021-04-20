@@ -48,8 +48,10 @@ const StepTwo = (props) => {
         </div>
         <div className="zone-form-group">
           <RegistrationTextField labelClassName="city-label label" name={city.name} label={city.label} />
-          <RegistrationTextField labelClassName="state-label label " name={state.name} label={state.label} />
-          <RegistrationTextField labelClassName="zipcode-label label" name={zipcode.name} label={zipcode.label} />
+          <div className="state-zipcode">
+            <RegistrationTextField labelClassName="state-label label " name={state.name} label={state.label} />
+            <RegistrationTextField labelClassName="zipcode-label label" name={zipcode.name} label={zipcode.label} />
+          </div>
         </div>
       </div>
     </div>
