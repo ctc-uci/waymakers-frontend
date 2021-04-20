@@ -42,9 +42,7 @@ ReactDOM.render(
                 <ProtectedRoute path="/" component={Dashboard} exact />
                 <Route path="/register" component={Register} />
                 <Route path="/login" component={LogIn} />
-                {/* <ProtectedRoute path="/profile" component={viewProfile} /> */}
                 <ProtectedRoute path="/profile" component={Profile} />
-                {/* <ProtectedRoute path="/editProfile" component={editProfile} /> */}
               </Switch>
 
               <Switch>
