@@ -217,6 +217,7 @@ const editProfile = (props) => {
           id="imageInput"
           type="file"
           onChange={handleImageInputChange}
+          accept="image/jpg, image/png, image/jpeg"
         />
         <div className="name">
           <h3>{`${firstname} ${lastname}`}</h3>
