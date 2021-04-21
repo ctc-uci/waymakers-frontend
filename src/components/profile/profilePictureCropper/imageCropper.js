@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Cropper from 'react-easy-crop';
 import Slider from '@material-ui/core/Slider';
 import PropTypes from 'prop-types';
+import Resizer from 'react-image-file-resizer';
 
 import './imageCropper.css';
 
@@ -15,6 +16,21 @@ const ImageCropper = ({ imageSrc, setCropped }) => {
   const [croppedArea, setCroppedArea] = useState(null);
   const [zoom, setZoom] = useState(1);
 
+  const resizeFile = (file, fileExtension) => new Promise((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      400,
+      400,
+      fileExtension,
+      100,
+      0,
+      (uri) => {
+        resolve(uri);
+      },
+      'base64',
+    );
+  });
+
   const handleCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
     setCroppedArea(croppedAreaPixels);
   };
@@ -23,7 +39,7 @@ const ImageCropper = ({ imageSrc, setCropped }) => {
     const image = new Image();
     image.addEventListener('load', () => resolve(image));
     image.addEventListener('error', (error) => reject(error));
-    image.setAttribute('crossOrigin', 'anonymous'); // needed to avoid cross-origin issues on CodeSandbox
+    image.setAttribute('crossOrigin', 'anonymous');
     image.src = url;
   });
 
@@ -99,8 +115,11 @@ const ImageCropper = ({ imageSrc, setCropped }) => {
     console.log('done!');
     const fileExtension = extractImageFileExtensionFromBase64(imageSrc);
     const fileName = `test.${fileExtension}`;
-    const base64CroppedImage = await getCroppedImg(imageSrc, croppedArea, fileExtension);
-    setCropped(dataURLtoFile(base64CroppedImage, fileName));
+    const croppedImageBase64 = await getCroppedImg(imageSrc, croppedArea, fileExtension);
+    const croppedImageFile = dataURLtoFile(croppedImageBase64, fileName);
+    const croppedImageResizedBase64 = await resizeFile(croppedImageFile, fileExtension);
+    const croppedImageResizedFile = dataURLtoFile(croppedImageResizedBase64, fileName);
+    setCropped(croppedImageResizedFile);
   };
   return (
     <div className="crop-container">
