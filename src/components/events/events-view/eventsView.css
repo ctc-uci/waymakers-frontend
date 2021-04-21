@@ -171,6 +171,16 @@ table thead {
         max-height: 800px;
         overflow-x: scroll;
         overflow-y: scroll;
+        padding: 0px;
     }
+
+    .events-view{
+        width: 100%;
+    }
+
+    .header {
+        display: block;
+    }
+
 }
 

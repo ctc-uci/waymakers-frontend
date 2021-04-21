@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Datetime from 'react-datetime';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -80,7 +81,7 @@ const EventForm = () => {
   const event = useSelector(getSelectedEvent);
   const popupType = useSelector(getPopupType);
   const isModalOpen = useSelector(getShowPopup);
-
+  console.log(event);
   const handleAddEvent = async (values) => {
     const newEvent = createEventObject(values);
     dispatch(addEvent(newEvent));
@@ -90,7 +91,6 @@ const EventForm = () => {
   const handleModifyEvent = async (values) => {
     const editedEvent = { ...createEventObject(values), eventId: event.id };
     console.log(values.eventStartTime > values.eventEndTime);
-    // console.log(moment(values.endTime).diff(moment(values.startTime) > 0));
     dispatch(editEvent(event.id, editedEvent));
     dispatch(setShowPopup(false));
   };
@@ -138,7 +138,7 @@ const EventForm = () => {
             >
               Edit Event
             </LightModalButton>
-            <LightModalButton
+            {/* <LightModalButton
               secondaryOutline
               onClick={(e) => {
                 e.preventDefault();
@@ -146,7 +146,27 @@ const EventForm = () => {
               }}
             >
               Cancel
+            </LightModalButton> */}
+            <LightModalButton
+              type="submit"
+              secondary
+              onClick={() => {
+                formik.setFieldValue('action', 'duplicateEvent');
+              }}
+            >
+              Copy
             </LightModalButton>
+            <Link to={`/admin/event/${event.id}`}>
+              <LightModalButton
+                secondary
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(setShowPopup(false));
+                }}
+              >
+                View Event Data
+              </LightModalButton>
+            </Link>
           </>
         );
       case 'ModifyEventForm':
@@ -160,15 +180,6 @@ const EventForm = () => {
               }}
             >
               Save
-            </LightModalButton>
-            <LightModalButton
-              type="submit"
-              secondary
-              onClick={() => {
-                formik.setFieldValue('action', 'duplicateEvent');
-              }}
-            >
-              Duplicate
             </LightModalButton>
             <LightModalButton
               type="submit"

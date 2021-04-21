@@ -9,7 +9,7 @@ const Events = () => {
 
   return (
     <div className="events-page">
-      <h1 className="title">Select Event to View/Edit Information</h1>
+      <h1 className="title">Select an Event to View/Edit Information</h1>
       <button type="button" className="add-button" onClick={() => { dispatch(changePopupType('AddEventForm')); dispatch(setShowPopup(true)); }}>Add Events</button>
       <EventsView page="addModifyDeleteEventsPage" />
     </div>

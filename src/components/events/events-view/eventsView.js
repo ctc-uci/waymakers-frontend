@@ -7,6 +7,7 @@ import moment from 'moment';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction'; // needed for dayClick
 import EventCheckBoxes from './event-checkboxes/eventCheckBoxes';
 import CalendarFilters from './calendar-filters/calendarFilters';
 import EventBlock from './event-block/eventBlock';
@@ -62,7 +63,7 @@ const EventsView = ({
 
   // UPDATE CALENDAR USING REDUX
   useEffect(() => {
-    if (view !== 'timeGridDay') {
+    if (view !== 'timeGridDay' && !isMobile) {
       calendarEl.current.getApi().changeView(view, `${year}-${month < 10 ? '0' : ''}${month}-01`);
       calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
     }
@@ -71,6 +72,12 @@ const EventsView = ({
   useEffect(() => {
     if (view !== 'timeGridDay') {
       calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
+      if (isMobile && view === 'timeGridWeek') {
+        calendarEl.current.getApi().setOption('visibleRange', {
+          start: '2017-04-01',
+          end: '2017-04-05',
+        });
+      }
     }
   }, [useSelector(getDay)]);
 
@@ -190,7 +197,11 @@ const EventsView = ({
     const userEventIds = userEvents.map((event) => event.id);
     let events;
     events = filterEventsForCheckboxes(allEvents, userEvents, userEventIds);
-    events = filterEventsByView(display, view, events, day, month, year);
+    if (isMobile && view === 'timeGridWeek') {
+      events = filterEventsByView(display, 'timeGridFourDay', events, day, month, year);
+    } else {
+      events = filterEventsByView(display, view, events, day, month, year);
+    }
     events = colorEvents(userEventIds, events);
     return events;
   };
@@ -206,12 +217,16 @@ const EventsView = ({
     return <EventList events={events} listType={filter} page={page} view={view} />;
   };
 
+  const onDateClick = (info) => {
+    console.log(info);
+  };
+
   const renderCalendar = () => {
     const calendarEvents = filterEvents('cal');
     if (view !== 'timeGridDay') {
       return (
         <FullCalendar
-          plugins={[timeGridPlugin, dayGridPlugin]}
+          plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           events={calendarEvents}
           views={{
@@ -221,7 +236,7 @@ const EventsView = ({
               buttonText: '4 day',
             },
           }}
-          contentHeight={1000}
+          contentHeight={isMobile ? 800 : 1000}
           expandRows="true"
           ref={calendarEl}
           headerToolbar={{
@@ -233,6 +248,7 @@ const EventsView = ({
           eventContent={(eventInfo) => <EventBlock page={page} eventInfo={eventInfo} />}
           allDaySlot={false}
           slotDuration="00:60:00"
+          dateClick={onDateClick}
         />
       );
     }

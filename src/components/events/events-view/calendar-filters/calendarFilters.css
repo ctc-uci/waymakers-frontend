@@ -46,8 +46,23 @@
     .calendar-filters {
         display: flex;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: space-between;
         margin-bottom: 20px;
     }
 
+    .picker, #month, #year {
+      background-color: var(--color-green);
+      color: var(--text-color-light);
+      outline: none;
+      border-radius: 8px;
+      margin-left: 0px;
+      height: 25px;
+      padding: 0.25em;
+      border: none;
+      cursor: pointer;
+  }
+
+  .DateFilter {
+    /* margin-left: 10px; */
+  }
 }

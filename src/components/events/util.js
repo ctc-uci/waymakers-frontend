@@ -41,6 +41,14 @@ export const isDuringCurrentMonth = (event, day, month, year) => {
   return eventStart.isSame(currentDate, 'month');
 };
 
+export const isDuringCurrentMobileWeek = (event, day, month, year) => {
+  const currentDate = moment().date(day).month(month - 1).year(year);
+  const eventStartDate = new Date(event.startTime);
+  const eventStart = moment(eventStartDate);
+  const endDateRange = moment(currentDate).add(3, 'days');
+  return eventStart.isSameOrBefore(endDateRange, 'day') && eventStart.isSameOrAfter(currentDate);
+};
+
 // FILTERING HELPER FUNCTION
 export const filterEventsByView = (display, view, events, day, month, year) => {
   // Filter out events for the list based on view (month, day, week)
@@ -48,6 +56,8 @@ export const filterEventsByView = (display, view, events, day, month, year) => {
   if (display === 'list') {
     if (view === 'timeGridDay') {
       filteredEvents = events.filter((event) => isOnCurrentDay(event, day, month, year));
+    } else if (view === 'timeGridFourDay') {
+      filteredEvents = events.filter((event) => isDuringCurrentMobileWeek(event, day, month, year));
     } else if (view === 'timeGridWeek') {
       filteredEvents = events.filter((event) => isDuringCurrentWeek(event, day, month, year));
     } else {

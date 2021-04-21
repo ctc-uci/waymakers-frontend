@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import { YearPicker, MonthPicker } from 'react-dropdown-date';
 import { useSelector, useDispatch } from 'react-redux';
 import Datetime from 'react-datetime';
@@ -76,11 +76,6 @@ const DesktopCalendarFilters = () => {
 
 const MobileCalendarFilters = () => {
   const dispatch = useDispatch();
-  const [currentDate] = useState(new Date(
-    useSelector(getYear),
-    useSelector(getMonth) - 1,
-    useSelector(getDay),
-  ));
 
   const changeCurrentDate = (e) => {
     const newDate = new Date(e);
@@ -96,7 +91,13 @@ const MobileCalendarFilters = () => {
       <ViewFilters />
       <Datetime
         className="DateFilter"
-        initialValue={currentDate}
+        value={
+          new Date(
+            useSelector(getYear),
+            useSelector(getMonth) - 1,
+            useSelector(getDay),
+          )
+        }
         onChange={(e) => changeCurrentDate(e)}
         timeFormat={false}
         dateFormat="MMMM DD YYYY"
