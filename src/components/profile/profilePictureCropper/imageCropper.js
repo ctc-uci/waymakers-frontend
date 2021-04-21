@@ -16,6 +16,7 @@ const ImageCropper = ({ imageSrc, setCropped }) => {
   const [croppedArea, setCroppedArea] = useState(null);
   const [zoom, setZoom] = useState(1);
 
+  // Resizes a file to 400x400 and returns its resulting base64 string
   const resizeFile = (file, fileExtension) => new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,
@@ -31,10 +32,12 @@ const ImageCropper = ({ imageSrc, setCropped }) => {
     );
   });
 
+  // This function is called whenever the user sets a new crop on their profile picture
   const handleCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
     setCroppedArea(croppedAreaPixels);
   };
 
+  // Creates an image from a base64 url
   const createImage = (url) => new Promise((resolve, reject) => {
     const image = new Image();
     image.addEventListener('load', () => resolve(image));
@@ -43,10 +46,12 @@ const ImageCropper = ({ imageSrc, setCropped }) => {
     image.src = url;
   });
 
+  // Converts degrees to radians
   function getRadianAngle(degreeValue) {
     return (degreeValue * Math.PI) / 180;
   }
 
+  // Creates a cropped image from the original image and the user's crop
   const getCroppedImg = async (imageS, pixelCrop, fileExtension, rotation = 0) => {
     const image = await createImage(imageS);
     const canvas = document.createElement('canvas');
@@ -111,13 +116,19 @@ const ImageCropper = ({ imageSrc, setCropped }) => {
     return new File([u8arr], filename, { type: mime });
   };
 
+  // This function is called when the user saves their crop
   const handleSaveButtonClicked = async () => {
-    console.log('done!');
+    // Get file extension of the original uploaded image
     const fileExtension = extractImageFileExtensionFromBase64(imageSrc);
+    // File name (basically a placeholder)
     const fileName = `test.${fileExtension}`;
+    // Get the base64 string of the CROPPED image
     const croppedImageBase64 = await getCroppedImg(imageSrc, croppedArea, fileExtension);
+    // Convert the CROPPED image to an actual file
     const croppedImageFile = dataURLtoFile(croppedImageBase64, fileName);
+    // Resize the CROPPED image to 400x400 (resizeFile returns a base64 string)
     const croppedImageResizedBase64 = await resizeFile(croppedImageFile, fileExtension);
+    // Convert the CROPPED and RESIZED base64 string to an actual file
     const croppedImageResizedFile = dataURLtoFile(croppedImageResizedBase64, fileName);
     setCropped(croppedImageResizedFile);
   };
