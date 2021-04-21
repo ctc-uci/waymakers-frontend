@@ -1,6 +1,8 @@
 import React from 'react';
 import useEvent from './useEvent';
 
+import { TitledCard } from '../../../../../common/Card';
+
 import clockIcon from '../../../../../assets/clock.svg';
 import locationPinIcon from '../../../../../assets/blueLocationPin.svg';
 
@@ -56,37 +58,36 @@ const Overview = (prop) => {
   };
 
   if (eventMeta.isInitializing) {
-    return <div>isInitializing</div>;
+    return <TitledCard title="Event Details">isInitializing</TitledCard>;
   }
 
   if (eventMeta.isLoading) {
-    return <div>isLoading</div>;
+    return <TitledCard title="Event Details">isLoading</TitledCard>;
   }
 
   if (eventMeta.error) {
-    return <div>errored</div>;
+    return <TitledCard title="Event Details">errored</TitledCard>;
   }
 
   if (event.length === 0) {
-    return <div>no data</div>;
+    return <TitledCard title="Event Details">no data</TitledCard>;
   }
 
   return (
-    <div className="event-details-aggregate">
-      <h2 className="event-details-title">Event Details</h2>
-      <div className="overview-container">
-        <p className="event-date">{prettifyDate()}</p>
-        <div className="event-info">
+    <TitledCard title="Event Details">
+      <div className="event-details-container">
+        <p className="large">{prettifyDate()}</p>
+        <div className="event-info-container">
           <img className="event-info-icon" src={clockIcon} alt="time" />
-          <span className="event-info-detail">{prettifyTime()}</span>
+          <p>{prettifyTime()}</p>
         </div>
-        <div className="event-info">
+        <div className="event-info-container">
           <img className="event-info-icon" src={locationPinIcon} alt="location" />
-          <span className="event-info-detail">{event.location}</span>
+          <p>{event.location}</p>
         </div>
-        <p className="event-description">{event.description}</p>
+        <p>{event.description}</p>
       </div>
-    </div>
+    </TitledCard>
   );
 };
 
