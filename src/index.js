@@ -46,17 +46,17 @@ ReactDOM.render(
                   <ProtectedRoute path="/" component={Dashboard} exact />
                   <ProtectedRoute path="/profile" component={viewProfile} />
                   <ProtectedRoute path="/editProfile" component={editProfile} />
-                  <ProtectedRoute path="/admin/users" component={ManageUsers} />
-                  <ProtectedRoute path="/admin/db" component={ManageDB} />
-                  <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
-                  <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
-                  <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
+                  <ProtectedRoute path="/admin/users" component={ManageUsers} admin />
+                  <ProtectedRoute path="/admin/db" component={ManageDB} admin />
+                  <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} admin />
+                  <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} admin />
+                  <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} admin />
                   <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
                   <ProtectedRoute path="/volunteer/hours" component={Hours} />
                   <ProtectedRoute path="/volunteer/tier" component={Tier} />
                   <ProtectedRoute path="/volunteer/forms" component={Forms} />
-                  <ProtectedRoute path="/inventory" component={Inventory} />
-                  <ProtectedRoute path="/reports" component={Reports} />
+                  <ProtectedRoute path="/inventory" component={Inventory} admin />
+                  <ProtectedRoute path="/reports" component={Reports} admin />
                   <ProtectedRoute path="/events/viewHours" component={viewHours} />
                   <ProtectedRoute path="/events" component={Events} />
                   <Route component={NotFound404} />

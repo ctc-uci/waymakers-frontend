@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes, instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import { Route, useHistory, useLocation } from 'react-router-dom';
+import {
+  Redirect, Route, useHistory, useLocation,
+} from 'react-router-dom';
 
 import { WMKBackend } from '../../common/utils';
 
@@ -51,11 +53,15 @@ const verifyToken = async (cookies) => {
   return false;
 };
 
-const ProtectedRoute = ({ component, path, cookies }) => {
+const ProtectedRoute = ({
+  component, path, cookies, admin,
+}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   const location = useLocation();
+
+  const permission = cookies.get('userPermissions');
 
   useEffect(() => {
     (async () => {
@@ -67,6 +73,9 @@ const ProtectedRoute = ({ component, path, cookies }) => {
 
   if (isLoading) {
     return <h1 style={{ textAlign: 'center' }}>LOADING...</h1>;
+  }
+  if (admin && permission !== 'Admin') {
+    return <Redirect to={{ pathname: '/' }} />;
   }
   if (isAuthenticated) {
     return <Route exact path={path} component={component} />;
