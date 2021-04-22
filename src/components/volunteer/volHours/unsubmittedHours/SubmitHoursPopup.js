@@ -112,7 +112,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
     <LightModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
       <LightModalHeader title="Submit Hours" onClose={() => setIsModalOpen(false)} />
       <form onSubmit={formik.handleSubmit}>
-        <LightModalBody style={{ maxHeight: '600px', overflow: 'auto' }}>
+        <LightModalBody>
 
           <ValidatedField name="type" labelText="Type" formik={formik}>
             <input
