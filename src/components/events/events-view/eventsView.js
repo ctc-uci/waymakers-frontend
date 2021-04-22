@@ -88,6 +88,7 @@ const EventsView = ({
         calendarEl.current.getApi().changeView('timeGridFourDay');
       } else {
         calendarEl.current.getApi().changeView(view);
+        calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-01`);
       }
     }
   }, [useSelector(getView), isMobile]);
@@ -122,15 +123,16 @@ const EventsView = ({
   };
 
   const renderDayViewHeader = () => {
-    const currentDate = moment().date(day).month(month - 1).year(year);
-    const goToPrev = () => { updateDate(new Date(currentDate.add(-1, 'days'))); };
-    const goToNext = () => { updateDate(new Date(currentDate.add(1, 'days'))); };
+    const currentDate = moment(new Date(year, month - 1, day));
+    const goToPrev = () => { updateDate(new Date(moment(currentDate).subtract(1, 'days'))); };
+    const goToNext = () => { updateDate(new Date(moment(currentDate).add(1, 'days'))); };
 
     const currentDateAsDate = new Date(currentDate);
     const dayInfo = {
       view: { type: view },
       text: currentDateAsDate.toLocaleString('en-US', { month: 'long', year: 'numeric', day: 'numeric' }),
     };
+    console.log(currentDateAsDate);
     return (
       <CalendarDayHeader
         goToPrev={goToPrev}
