@@ -14,3 +14,7 @@
   display: flex;
   flex-flow: column;
 }
+
+.required-label {
+  color: #C84D39;
+}

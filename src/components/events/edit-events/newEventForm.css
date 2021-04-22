@@ -17,5 +17,43 @@
 }
 
 .view-data-container, .view-data-container:hover, .view-data-container:active, .view-data-container:visited, .view-data-container:focus {
-    text-decoration:none;
+    text-decoration: none;
+}
+
+.description-input {
+    height: 200px;
+    font-family: 'Assistant', sans-serif;
+    font-weight: normal;
+}
+
+.form-input-color,
+.datetime-input-container .form-control,
+select[disabled] {
+    color: var(--color-dark-blue);
+    background-color: var(--color-light-gray);
+    border: solid 0.5px var(--color-dark-blue);
+    border-radius: 3px;
+    padding: 5px;
+    opacity: inherit;
+}
+
+.datetime-input-container .form-control {
+    width: 80%;
+}
+
+.datetime-input-container .rdt {
+    margin-top: 10px;
+}
+
+.datetime-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.datetime-input-container .datetime-input-separator {
+    margin-right: 6%;
+    margin-top: 15%;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--color-dark-blue);
 }

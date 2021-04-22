@@ -243,6 +243,8 @@ const EventForm = () => {
         formik.setFieldValue('eventName', event.title);
         formik.setFieldValue('eventType', event.eventType);
         formik.setFieldValue('eventLocation', event.location);
+        formik.setFieldValue('eventStartDate', moment(event.startTime));
+        formik.setFieldValue('eventEndDate', moment(event.endTime));
         formik.setFieldValue('eventStartTime', moment(event.startTime));
         formik.setFieldValue('eventEndTime', moment(event.endTime));
         formik.setFieldValue('eventDescription', event.description);
@@ -261,25 +263,29 @@ const EventForm = () => {
         <LightModalBody>
 
           {/* Using LightModalValidatedField */}
-          <ValidatedField name="eventName" labelText="Name" formik={formik}>
+          <ValidatedField name="eventName" labelText="Name" isRequired formik={formik}>
             <input
               id="eventName"
               name="eventName"
               type="text"
+              className="form-input-color"
               onChange={formik.handleChange}
               value={formik.values.eventName}
               readOnly={popupType === 'ViewEventInfoPopup'}
+              required
             />
           </ValidatedField>
 
           {/* Using LightModalValidatedField */}
-          <ValidatedField name="eventType" labelText="Type" formik={formik}>
+          <ValidatedField name="eventType" labelText="Type" isRequired formik={formik}>
             <select
               id="eventType"
               name="eventType"
+              disabled={popupType === 'ViewEventInfoPopup'}
+              className="form-input-color"
               value={formik.values.eventType}
               onChange={formik.handleChange}
-              readOnly={popupType === 'ViewEventInfoPopup'}
+              required
             >
               <option value="Volunteer">Volunteer</option>
               <option value="Outreach">Outreach</option>
@@ -288,45 +294,74 @@ const EventForm = () => {
           </ValidatedField>
 
           {/* Using LightModalValidatedField */}
-          <ValidatedField name="eventLocation" labelText="Location" formik={formik}>
+          <ValidatedField name="eventLocation" labelText="Location" isRequired formik={formik}>
             <input
               id="eventLocation"
               name="eventLocation"
               type="text"
+              className="form-input-color"
               onChange={formik.handleChange}
               value={formik.values.eventLocation}
               readOnly={popupType === 'ViewEventInfoPopup'}
+              required
             />
           </ValidatedField>
 
-          {/* datetime input type */}
-          <ValidatedField name="eventStartTime" labelText="Start Time" formik={formik}>
-            <Datetime
-              id="eventStartTime"
-              name="eventStartTime"
-              // type="dateTime-local"
-              onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventStartTime', e); }}
-              value={formik.values.eventStartTime}
-              readOnly={popupType === 'ViewEventInfoPopup'}
-            />
-          </ValidatedField>
-
-          <ValidatedField name="eventEndTime" labelText="End Time" formik={formik}>
-            <Datetime
-              id="eventEndTime"
-              name="eventEndTime"
-              // type="dateTime-local"
-              onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
-              value={formik.values.eventEndTime}
-              readOnly={popupType === 'ViewEventInfoPopup'}
-            />
-          </ValidatedField>
+          <div className="datetime-input-container">
+            {/* datetime input type */}
+            <ValidatedField name="eventStartTime" labelText="Start" isRequired formik={formik}>
+              <Datetime
+                id="eventStartTime"
+                name="eventStartTime"
+                // type="dateTime-local"
+                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventStartTime', e); }}
+                value={formik.values.eventStartTime}
+                readOnly={popupType === 'ViewEventInfoPopup'}
+                timeFormat={false}
+                required
+              />
+              <Datetime
+                id="eventStartTime"
+                name="eventStartTime"
+                // type="dateTime-local"
+                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventStartTime', e); }}
+                value={formik.values.eventStartTime}
+                readOnly={popupType === 'ViewEventInfoPopup'}
+                dateFormat={false}
+                required
+              />
+            </ValidatedField>
+            <p className="datetime-input-separator">to</p>
+            <ValidatedField name="eventEndTime" labelText="End" isRequired formik={formik}>
+              <Datetime
+                id="eventEndTime"
+                name="eventEndTime"
+                // type="dateTime-local"
+                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
+                value={formik.values.eventEndTime}
+                readOnly={popupType === 'ViewEventInfoPopup'}
+                timeFormat={false}
+                required
+              />
+              <Datetime
+                id="eventEndTime"
+                name="eventEndTime"
+                // type="dateTime-local"
+                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
+                value={formik.values.eventEndTime}
+                readOnly={popupType === 'ViewEventInfoPopup'}
+                dateFormat={false}
+                required
+              />
+            </ValidatedField>
+          </div>
 
           <ValidatedField name="eventDescription" labelText="Description" formik={formik}>
-            <input
+            <textarea
               id="eventDescription"
               name="eventDescription"
               type="text"
+              className="description-input form-input-color"
               onChange={formik.handleChange}
               value={formik.values.eventDescription}
               readOnly={popupType === 'ViewEventInfoPopup'}
@@ -350,6 +385,7 @@ const EventForm = () => {
               id="eventLimit"
               name="eventLimit"
               type="number"
+              className="form-input-color"
               min="1"
               onChange={formik.handleChange}
               value={formik.values.eventLimit}
@@ -357,20 +393,22 @@ const EventForm = () => {
             />
           </ValidatedField>
 
-          <ValidatedField name="eventDivision" labelText="Division" formik={formik}>
+          <ValidatedField name="eventDivision" labelText="Division" isRequired formik={formik}>
             <select
               id="eventDivision"
               name="eventDivision"
+              className="form-input-color"
               value={formik.values.eventDivision}
               onChange={formik.handleChange}
-              readOnly={popupType === 'ViewEventInfoPopup'}
+              disabled={popupType === 'ViewEventInfoPopup'}
+              required
             >
               <option value="Crisis-Response-Team">Crisis Response Team</option>
               <option value="Gang-Services">Gang Services</option>
               <option value="Human-Trafficking">Human Trafficking</option>
             </select>
           </ValidatedField>
-
+          <br />
           {renderActionButtonSet(formik)}
         </LightModalBody>
       </form>
