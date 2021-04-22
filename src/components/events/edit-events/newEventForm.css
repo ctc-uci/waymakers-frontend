@@ -30,14 +30,18 @@
 .datetime-input-container .form-control,
 select[disabled] {
     color: var(--color-dark-blue);
-    background-color: var(--color-light-gray);
     border: solid 0.5px var(--color-dark-blue);
     border-radius: 3px;
     padding: 5px;
     opacity: inherit;
 }
 
-.datetime-input-container .form-control {
+.view-mode-input-color {
+    background-color: var(--color-light-gray);
+}
+
+.datetime-input-container .form-control,
+.datetime-input {
     width: 80%;
 }
 

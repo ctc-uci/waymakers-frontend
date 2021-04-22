@@ -253,6 +253,16 @@ const EventForm = () => {
     }
   }, [popupType]);
 
+  const getInputClassName = () => {
+    console.log('here');
+    return (popupType === 'ViewEventInfoPopup') ? 'form-input-color view-mode-input-color' : 'form-input-color';
+  };
+
+  const getDatetimeInputClassName = () => {
+    console.log('here');
+    return (popupType === 'ViewEventInfoPopup') ? 'view-mode-input-color form-input-color datetime-input' : 'form-input-color datetime-input';
+  };
+
   return (
     <LightModal isOpen={isModalOpen} setIsOpen={setShowPopup}>
       <LightModalHeader
@@ -268,7 +278,7 @@ const EventForm = () => {
               id="eventName"
               name="eventName"
               type="text"
-              className="form-input-color"
+              className={getInputClassName()}
               onChange={formik.handleChange}
               value={formik.values.eventName}
               readOnly={popupType === 'ViewEventInfoPopup'}
@@ -282,7 +292,7 @@ const EventForm = () => {
               id="eventType"
               name="eventType"
               disabled={popupType === 'ViewEventInfoPopup'}
-              className="form-input-color"
+              className={getInputClassName()}
               value={formik.values.eventType}
               onChange={formik.handleChange}
               required
@@ -299,7 +309,7 @@ const EventForm = () => {
               id="eventLocation"
               name="eventLocation"
               type="text"
-              className="form-input-color"
+              className={getInputClassName()}
               onChange={formik.handleChange}
               value={formik.values.eventLocation}
               readOnly={popupType === 'ViewEventInfoPopup'}
@@ -314,9 +324,11 @@ const EventForm = () => {
                 id="eventStartTime"
                 name="eventStartTime"
                 // type="dateTime-local"
+                initialValue={new Date()}
                 onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventStartTime', e); }}
                 value={formik.values.eventStartTime}
                 readOnly={popupType === 'ViewEventInfoPopup'}
+                inputProps={{ className: getDatetimeInputClassName() }}
                 timeFormat={false}
                 required
               />
@@ -324,6 +336,7 @@ const EventForm = () => {
                 id="eventStartTime"
                 name="eventStartTime"
                 // type="dateTime-local"
+                initialValue={new Date()}
                 onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventStartTime', e); }}
                 value={formik.values.eventStartTime}
                 readOnly={popupType === 'ViewEventInfoPopup'}
@@ -337,9 +350,11 @@ const EventForm = () => {
                 id="eventEndTime"
                 name="eventEndTime"
                 // type="dateTime-local"
+                initialValue={new Date()}
                 onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
                 value={formik.values.eventEndTime}
                 readOnly={popupType === 'ViewEventInfoPopup'}
+                inputProps={{ className: getDatetimeInputClassName() }}
                 timeFormat={false}
                 required
               />
@@ -347,6 +362,7 @@ const EventForm = () => {
                 id="eventEndTime"
                 name="eventEndTime"
                 // type="dateTime-local"
+                initialValue={new Date()}
                 onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
                 value={formik.values.eventEndTime}
                 readOnly={popupType === 'ViewEventInfoPopup'}
@@ -361,7 +377,7 @@ const EventForm = () => {
               id="eventDescription"
               name="eventDescription"
               type="text"
-              className="description-input form-input-color"
+              className={(popupType === 'ViewEventInfoPopup') ? 'form-input-color view-mode-input-color description-input' : 'form-input-color description-input'}
               onChange={formik.handleChange}
               value={formik.values.eventDescription}
               readOnly={popupType === 'ViewEventInfoPopup'}
@@ -385,7 +401,7 @@ const EventForm = () => {
               id="eventLimit"
               name="eventLimit"
               type="number"
-              className="form-input-color"
+              className={getInputClassName()}
               min="1"
               onChange={formik.handleChange}
               value={formik.values.eventLimit}
@@ -397,7 +413,7 @@ const EventForm = () => {
             <select
               id="eventDivision"
               name="eventDivision"
-              className="form-input-color"
+              className={getInputClassName()}
               value={formik.values.eventDivision}
               onChange={formik.handleChange}
               disabled={popupType === 'ViewEventInfoPopup'}
