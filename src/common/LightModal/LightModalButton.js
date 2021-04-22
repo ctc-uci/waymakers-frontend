@@ -15,7 +15,7 @@ const LightModalButton = styled.button`
   `}
 
   ${(props) => props.secondary && css`
-    background: #336473;
+    background: #003E53;
     color: white;
   `}
 
@@ -34,7 +34,7 @@ const LightModalButton = styled.button`
   ${(props) => props.secondaryOutline && css`
     background: none;
     color: #003E53;
-    border-color: #336473;
+    border-color: #003E53;
     border-width: 2px;
   `}
 

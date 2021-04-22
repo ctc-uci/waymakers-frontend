@@ -15,6 +15,8 @@ import {
   ValidatedField,
 } from '../../../common/formikExtensions';
 
+import './newEventForm.css';
+
 // import redux selectors
 import {
   getPopupType,
@@ -126,27 +128,21 @@ const EventForm = () => {
       case 'ViewEventInfoPopup':
         return (
           <>
+            <Link to={`/admin/event/${event.id}`} className="view-data-container">
+              <button type="submit" className="view-data-button">
+                View Event Analytics
+              </button>
+            </Link>
             <LightModalButton
-              primary
+              secondary
               type="button"
               onClick={(e) => {
-              // TODO: investigate why styled components has
-              // weird behavior with conditional rendering
                 e.preventDefault();
                 dispatch(changePopupType('ModifyEventForm'));
               }}
             >
               Edit Event
             </LightModalButton>
-            {/* <LightModalButton
-              secondaryOutline
-              onClick={(e) => {
-                e.preventDefault();
-                dispatch(setShowPopup(false));
-              }}
-            >
-              Cancel
-            </LightModalButton> */}
             <LightModalButton
               type="submit"
               secondary
@@ -156,17 +152,6 @@ const EventForm = () => {
             >
               Copy
             </LightModalButton>
-            <Link to={`/admin/event/${event.id}`}>
-              <LightModalButton
-                secondary
-                onClick={(e) => {
-                  e.preventDefault();
-                  dispatch(setShowPopup(false));
-                }}
-              >
-                View Event Data
-              </LightModalButton>
-            </Link>
           </>
         );
       case 'ModifyEventForm':
@@ -193,7 +178,6 @@ const EventForm = () => {
           </>
         );
       default:
-        console.log('No matching Popup Tye');
         return (
           <LightModalButton secondaryOutline onClick={() => dispatch(setShowPopup(false))}>
             Cancel
