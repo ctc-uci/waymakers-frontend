@@ -57,3 +57,9 @@ select[disabled] {
     font-weight: bold;
     color: var(--color-dark-blue);
 }
+
+@media screen and (max-width: 768px) {
+    .description-input {
+        height: 30px;
+    }
+}
