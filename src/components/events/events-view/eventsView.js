@@ -84,8 +84,6 @@ const EventsView = ({
 
   useEffect(() => {
     if (view !== 'timeGridDay') {
-      console.log(isMobile);
-      console.log(view);
       if (isMobile && view === 'timeGridWeek') {
         calendarEl.current.getApi().changeView('timeGridFourDay');
       } else {

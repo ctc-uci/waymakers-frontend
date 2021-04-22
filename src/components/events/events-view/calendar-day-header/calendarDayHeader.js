@@ -51,7 +51,6 @@ const CalendarDayHeader = ({
         </div>
       );
     }
-    console.log('time grid view');
     // timeGridDay view
     return (
       <div className="day-header">
