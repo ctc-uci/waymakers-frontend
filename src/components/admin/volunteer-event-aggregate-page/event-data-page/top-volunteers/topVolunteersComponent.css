@@ -1,30 +1,30 @@
 @import '../../../../../common/vars.css';
 
-.volunteers-container ul {
+/* .volunteers-list ul {
     padding: 0;
     margin: 0;
-}
+} */
 
 .volunteer-list li {
     list-style-type: none;
 }
 
-.top-volunteers {
+/* .top-volunteers {
     width: 25%;
     color: var(--text-color-dark);
     margin: 0;
     height: 100%;
     display: flex;
     flex-direction: column;
-}
+} */
 
-.top-volunteers .volunteers-container {
+.volunteers-container {
     background-color: var(--color-light-blue);
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
     /* border: 1px solid black; */
     border-radius: 5px;
-    padding: 5%;
-    height: 90%;
+    /* padding: 5%;
+    height: 90%; */
 }
 
 .top-volunteers .title {
@@ -38,7 +38,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-right: 10%;
+    /* margin-right: 10%; */
 }
 
 .top-volunteer-item + .top-volunteer-item {
@@ -58,7 +58,23 @@
     font-weight: bold;
 }
 
-.top-volunteers .volunteers-container .volunteer-list {
-    /* width: 80%; */
+.volunteer-list {
+    width: 100%;
     border-radius: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.volunteer-name {
+    display: flex;
+    flex-direction: column;
+}
+@media screen and (max-width: 768px) {
+    .volunteer-name {
+        display: flex;
+        flex-direction: row;
+    }
+    .first{
+        padding: 2px;
+    }
 }
