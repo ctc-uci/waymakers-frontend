@@ -7,7 +7,7 @@ import moment from 'moment';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction'; // needed for dayClick
+import interactionPlugin from '@fullcalendar/interaction';
 import EventCheckBoxes from './event-checkboxes/eventCheckBoxes';
 import CalendarFilters from './calendar-filters/calendarFilters';
 import EventBlock from './event-block/eventBlock';
@@ -34,6 +34,7 @@ import {
   changeDay,
   changeMonth,
   changeYear,
+  changeView,
   fetchEvents,
   fetchUserEvents,
 } from '../redux/actions';
@@ -218,7 +219,11 @@ const EventsView = ({
   };
 
   const onDateClick = (info) => {
-    console.log(info);
+    // Should only switch to day view on mobile month calendar
+    if (isMobile && view === 'dayGridMonth') {
+      updateDate(info.date);
+      dispatch(changeView('timeGridDay'));
+    }
   };
 
   const renderCalendar = () => {
@@ -226,7 +231,7 @@ const EventsView = ({
     if (view !== 'timeGridDay') {
       return (
         <FullCalendar
-          plugins={[timeGridPlugin, dayGridPlugin, interactionPlugin]}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           events={calendarEvents}
           views={{
