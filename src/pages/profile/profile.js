@@ -7,6 +7,9 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
 import Card from '../../common/Card/Card';
+import VolunteerAvailability from '../../components/dashboard/availability-component/volunteerAvailability/volunteerAvailability';
+import AdminAvailability from '../../components/dashboard/availability-component/adminAvailability/adminAvailability';
+import useMobileWidth from '../../common/useMobileWidth';
 
 import profCircle from '../../assets/profCircle.png';
 import cake from '../../assets/birthday.svg';
@@ -15,6 +18,9 @@ import building from '../../assets/student.svg';
 import emailPic from '../../assets/email.svg';
 import phone from '../../assets/phone.svg';
 import house from '../../assets/house.svg';
+import genderIcon from '../../assets/gender.svg';
+import stateIcon from '../../assets/stateIcon.svg';
+import locationPin from '../../assets/blueLocationPin.svg';
 
 import './profile.css';
 
@@ -35,9 +41,11 @@ const Profile = (props) => {
   const [birthday, setBirthday] = useState(new Date());
 
   const [tier, setTier] = useState(0);
-  const [status, setStatus] = useState('Volunteer');
+  const [gender, setGender] = useState('');
+  const [permissions, setPermissions] = useState('Volunteer');
 
   const [isLoading, setLoading] = useState(false);
+  const isMobile = useMobileWidth();
 
   // Use axios GET request to retreive info to backend api
   useEffect(async () => {
@@ -49,11 +57,12 @@ const Profile = (props) => {
       },
     );
 
-    const { account, permissions } = result.data;
+    const { account } = result.data;
     const {
       locationstreet, locationcity, locationstate, locationzip,
     } = account;
 
+    setPermissions(result.data.permissions.permissions);
     setFirstName(account.firstname);
     setLastName(account.lastname);
     setEmail(account.email);
@@ -64,7 +73,7 @@ const Profile = (props) => {
     setZip(locationzip);
     setBirthday(new Date(account.birthdate));
     setTier(account.tier);
-    setStatus(permissions.permissions);
+    setGender(account.gender);
 
     setLoading(false);
   }, []);
@@ -84,10 +93,38 @@ const Profile = (props) => {
         locationState: state,
         locationZip: zip,
         tier,
-        permission: status,
+        gender,
       }, { withCredentials: true },
     );
     console.log(`status: ${response.status}`);
+
+    setIsViewProfile(true);
+  };
+
+  const cancelEditInfo = async () => {
+    const userID = cookies.get('userId');
+    const result = await axios.get(
+      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
+        withCredentials: true,
+      },
+    );
+
+    const { account } = result.data;
+    const {
+      locationstreet, locationcity, locationstate, locationzip,
+    } = account;
+
+    setFirstName(account.firstname);
+    setLastName(account.lastname);
+    setEmail(account.email);
+    setNumber(account.phone);
+    setStreet(locationstreet);
+    setCity(locationcity);
+    setState(locationstate);
+    setZip(locationzip);
+    setBirthday(new Date(account.birthdate));
+    setTier(account.tier);
+    setGender(account.gender);
 
     setIsViewProfile(true);
   };
@@ -103,8 +140,8 @@ const Profile = (props) => {
           <div className="profile-page-container">
             <img src={profCircle} alt="" width="200" height="200" />
             <div className="name">
-              <h3>{`${firstName} ${lastName}`}</h3>
-              <button type="button" className="edit-save" onClick={() => { setIsViewProfile(false); }}>
+              <h3 className="profile-name">{`${firstName} ${lastName}`}</h3>
+              <button type="button" className="profile-edit-save profile-edit-button" onClick={() => { setIsViewProfile(false); }}>
                 <p className="large">Edit</p>
               </button>
             </div>
@@ -122,8 +159,8 @@ const Profile = (props) => {
                       <p>{tier}</p>
                     </div>
                     <div className="info-section">
-                      <img className="about-icons" src={building} alt="" />
-                      <p>{status}</p>
+                      <img className="about-icons" src={genderIcon} alt="" />
+                      <p>{gender}</p>
                     </div>
                   </Card>
                 </div>
@@ -143,13 +180,49 @@ const Profile = (props) => {
                       </div>
                       <div className="info-section">
                         <img className="contact-icons" src={house} alt="" />
-                        <p>{`${street} ${city}, ${state} ${zip}`}</p>
+                        <p>{street}</p>
                       </div>
+                      {isMobile
+                        ? (
+                          <>
+                            <div className="info-section">
+                              <img className="contact-icons" src={building} alt="" />
+                              <p>{city}</p>
+                            </div>
+                            <div className="location-section">
+                              <div className="info-section contact-info-section">
+                                <img className="contact-icons" src={stateIcon} alt="" />
+                                <p>{state}</p>
+                              </div>
+                              <div className="info-section contact-info-section">
+                                <img className="contact-icons" src={locationPin} alt="" />
+                                <p>{zip}</p>
+                              </div>
+                            </div>
+                          </>
+                        )
+                        : (
+                          <div className="location-section">
+                            <div className="info-section">
+                              <img className="contact-icons" src={building} alt="" />
+                              <p>{city}</p>
+                            </div>
+                            <div className="info-section">
+                              <img className="contact-icons" src={stateIcon} alt="" />
+                              <p>{state}</p>
+                            </div>
+                            <div className="info-section">
+                              <img className="contact-icons" src={locationPin} alt="" />
+                              <p>{zip}</p>
+                            </div>
+                          </div>
+                        )}
                     </Card>
                   </div>
                 </div>
               </div>
             </div>
+            {(permissions === 'Volunteer') ? <VolunteerAvailability /> : <AdminAvailability />}
           </div>
         )
         : (
@@ -159,9 +232,14 @@ const Profile = (props) => {
             </div>
             <div className="name">
               <h3 className="profile-name">{`${firstName} ${lastName}`}</h3>
-              <button className="edit-save" onClick={updateInfo} type="button">
-                <p className="large">Save</p>
-              </button>
+              <div className="profile-edit-mode-buttons">
+                <button className="profile-edit-save profile-save-button" onClick={updateInfo} type="button">
+                  <p className="large profile-save-button-text">Save</p>
+                </button>
+                <button className="profile-edit-save" onClick={cancelEditInfo} type="button">
+                  <p className="large">Cancel</p>
+                </button>
+              </div>
             </div>
             <div className="profile-cards">
               <div className="profile-card">
@@ -183,9 +261,9 @@ const Profile = (props) => {
                         <img className="about-icons" src={people} alt="" />
                         <span className="tier-box">{tier}</span>
                       </div>
-                      <div className="about-input status-input">
-                        <img className="about-icons" src={building} alt="" />
-                        <span className="status-box">{status}</span>
+                      <div className="about-input gender-input">
+                        <img className="about-icons" src={genderIcon} alt="" />
+                        <input className="profile-input-box" value={gender} name="gender" onChange={(e) => setGender(e.target.value)} />
                       </div>
                     </form>
                   </Card>
@@ -207,29 +285,50 @@ const Profile = (props) => {
                         </div>
                         <div className="contact-input">
                           <img className="contact-icons" src={house} alt="" />
-                          {/* <span>Street: </span> */}
                           <input className="profile-input-box" type="text" value={street} name="street" onChange={(e) => setStreet(e.target.value)} />
                         </div>
-                        <div className="address-input-container">
-                          <div className="address-input">
-                            <span>City: </span>
-                            <input className="profile-input-box" type="text" value={city} name="city" onChange={(e) => setCity(e.target.value)} />
-                          </div>
-                          <div className="address-input">
-                            <span>State: </span>
-                            <input className="profile-input-box state-input" type="text" value={state} maxLength="2" name="state" onChange={(e) => setState(e.target.value)} />
-                          </div>
-                          <div className="address-input">
-                            <span>Zip Code: </span>
-                            <input className="profile-input-box zip-input" type="text" value={zip} maxLength="5" name="zip" onChange={(e) => setZip(e.target.value)} />
-                          </div>
-                        </div>
+                        {isMobile
+                          ? (
+                            <>
+                              <div className="contact-input">
+                                <img className="contact-icons" src={building} alt="" />
+                                <input className="profile-input-box" type="city" value={city} name="city" onChange={(e) => setCity(e.target.value)} />
+                              </div>
+                              <div className="location-section">
+                                <div className="contact-input info-section contact-info-section info-section location-input location-margin">
+                                  <img className="contact-icons" src={stateIcon} alt="" />
+                                  <input className="profile-input-box" type="text" value={state} name="state" onChange={(e) => setState(e.target.value)} maxLength="2" />
+                                </div>
+                                <div className="contact-input info-section contact-info-section">
+                                  <img className="contact-icons" src={locationPin} alt="" />
+                                  <input className="profile-input-box" type="text" value={zip} name="zip" onChange={(e) => setZip(e.target.value)} maxLength="2" />
+                                </div>
+                              </div>
+                            </>
+                          )
+                          : (
+                            <div className="location-section">
+                              <div className="info-section location-input location-margin">
+                                <img className="contact-icons" src={building} alt="" />
+                                <input className="profile-input-box" type="text" value={city} name="city" onChange={(e) => setCity(e.target.value)} />
+                              </div>
+                              <div className="info-section location-input location-margin">
+                                <img className="contact-icons" src={stateIcon} alt="" />
+                                <input className="profile-input-box state-input" type="text" value={state} name="state" onChange={(e) => setState(e.target.value)} maxLength="2" />
+                              </div>
+                              <div className="info-section location-input location-margin">
+                                <img className="contact-icons" src={locationPin} alt="" />
+                                <input className="profile-input-box zip-input" type="text" value={zip} name="zip" onChange={(e) => setZip(e.target.value)} maxLength="2" />
+                              </div>
+                            </div>
+                          )}
                       </form>
                     </Card>
                   </div>
                 </div>
               </div>
             </div>
+            {(permissions === 'Volunteer') ? <VolunteerAvailability /> : <AdminAvailability />}
           </div>
         )}
     </>
