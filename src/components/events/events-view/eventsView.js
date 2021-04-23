@@ -37,6 +37,8 @@ import {
   changeView,
   fetchEvents,
   fetchUserEvents,
+  changePopupType,
+  setShowPopup,
 } from '../redux/actions';
 
 import './eventsView.css';
@@ -262,11 +264,28 @@ const EventsView = ({
 
   return (
     <div className="events-view">
-      <div className="top-of-calendar">
-        <CalendarPopup page={page} />
-        <CalendarFilters />
-        { page === 'volunteerDashboard' && renderCheckboxes()}
-      </div>
+      {page === 'addModifyDeleteEventsPage'
+        ? (
+          <div className="top-of-calendar">
+            <div className="calendar-add-date-filters">
+              <button
+                type="button"
+                className="add-button"
+                onClick={() => { dispatch(changePopupType('AddEventForm')); dispatch(setShowPopup(true)); }}
+              >
+                Add Events
+              </button>
+              <CalendarFilters />
+            </div>
+          </div>
+        )
+        : (
+          <div className="top-of-calendar">
+            <CalendarFilters />
+            { page === 'volunteerDashboard' && renderCheckboxes()}
+          </div>
+        )}
+      <CalendarPopup page={page} />
       <div id="calendar">
         {view === 'timeGridDay' && renderDayViewHeader()}
         {renderCalendar()}

@@ -146,24 +146,26 @@ table thead {
   background-color:inherit !important;
 }
 
-.button{
-    margin: 1%;
-}
-/* .blur{
-    filter: blur(3px);
-} */
-
-.selected{
-    color: lightblue;
-}
-
-.test-headers{
-    /* background: blue; */
-    border: none;
-}
-
-.top-of-calendar {
+.events-view .top-of-calendar {
     margin-bottom: 20px;
+    /* display: flex;
+    justify-content: space; */
+}
+
+.events-view .top-of-calendar .calendar-add-date-filters {
+    display: flex;
+    justify-content: space-between;
+}
+
+.events-view .top-of-calendar .calendar-add-date-filters .add-button {
+    background-color: var(--color-green);
+    color: var(--text-color-light);
+    outline: none;
+    border-radius: 5px;
+    padding: 0.5em;
+    border: none;
+    cursor: pointer;
+    width: 100px;
 }
 
 @media screen and (max-width: 768px) {
@@ -180,6 +182,23 @@ table thead {
 
     .header {
         display: block;
+    }
+
+    .events-view .top-of-calendar .calendar-add-date-filters {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .events-view .top-of-calendar .calendar-add-date-filters .add-button {
+        background-color: var(--color-green);
+        color: var(--text-color-light);
+        outline: none;
+        border-radius: 20px;
+        padding: 0.5em;
+        border: none;
+        cursor: pointer;
+        width: 100px;
     }
 
 }
