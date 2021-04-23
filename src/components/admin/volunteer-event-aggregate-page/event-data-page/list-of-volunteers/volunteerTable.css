@@ -1,6 +1,6 @@
 .overflow-volunteer-table {
     overflow: auto;
-    height: 500px;  /* TODO: change for the future*/
+    max-height: 250px;  /* TODO: change for the future*/
 }
 
 .volunteer-table {
@@ -45,4 +45,8 @@
     width: 25px;
     height: 25px;
     border-radius: 25px;
+}
+
+.volunteer-table .numHours {
+    text-align: end;
 }

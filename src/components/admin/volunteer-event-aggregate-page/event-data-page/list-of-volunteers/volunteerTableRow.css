@@ -1,0 +1,11 @@
+.table-header {
+    cursor: pointer;
+}
+
+.row .col-data {
+    padding-left: 12%;
+}
+
+.header-data {
+    text-align: right;
+}

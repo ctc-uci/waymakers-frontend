@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import VolunteerTable from './volunteerTable';
+import VolunteerTableMobile from './volunteerTableMobile';
+import useMobileWidth from '../../../../../common/useMobileWidth';
+import { TitledCard } from '../../../../../common/Card';
 
 import { WMKBackend } from '../../../../../common/utils';
 
 import './listOfVolunteers.css';
 
 const ListOfVolunteers = (prop) => {
+  const isMobile = useMobileWidth();
   const [allVolunteers, setAllVolunteers] = useState([]);
 
   const [sortingMethod, setSortingMethod] = useState('0');
@@ -44,8 +48,7 @@ const ListOfVolunteers = (prop) => {
 
   return (
     <div className="list-of-volunteer">
-      <h2 className="title">List of Volunteers:</h2>
-      <div className="card">
+      <TitledCard title="List of Volunteers">
         <div className="sort-by-dropdown">
           Sort by:
           <select className="sort-by" value={sortingMethod} onChange={(e) => setSortingMethod(e.target.value)}>
@@ -55,9 +58,12 @@ const ListOfVolunteers = (prop) => {
             <option className="sort-by-items" value="3">Least Hours</option>
           </select>
         </div>
-
-        <VolunteerTable data={allVolunteers} />
-
+        {isMobile
+          ? (
+            <VolunteerTableMobile data={allVolunteers} />
+          ) : (
+            <VolunteerTable data={allVolunteers} />
+          )}
         <div className="total-stats">
           <p>
             Total People:
@@ -70,7 +76,7 @@ const ListOfVolunteers = (prop) => {
             {totalHours}
           </p>
         </div>
-      </div>
+      </TitledCard>
     </div>
   );
 };

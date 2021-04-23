@@ -1,29 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Table, TableHeader, TableColumnHeader } from '../../../../../common/Table';
 import VolunteerTableRow from './volunteerTableRow';
 import './volunteerTable.css';
 
-const VolunteerTableHeader = () => (
-  <tr>
-    <th> </th>
-    <th>Name</th>
-    <th style={{ textAlign: 'end' }}>Number of Hours</th>
-    <th> </th>
-  </tr>
-);
+// const VolunteerTableHeader = () => (
+//   <tr>
+//     <th> </th>
+//     <th>Name</th>
+//     <th style={{ textAlign: 'end' }}>Number of Hours</th>
+//     <th> </th>
+//   </tr>
+// );
 
 const VolunteerTable = ({ data }) => (
   // TODO: Add nicer scrollbar
   <div className="overflow-volunteer-table">
-    <table className="volunteer-table">
-      <VolunteerTableHeader />
+    <Table className="volunteer-table">
+      {/* <VolunteerTableHeader /> */}
+      <TableHeader>
+        <TableColumnHeader>&nbsp;</TableColumnHeader>
+        <TableColumnHeader>Name</TableColumnHeader>
+        <TableColumnHeader className="numHours">Number of Hours</TableColumnHeader>
+        <TableColumnHeader>&nbsp;</TableColumnHeader>
+      </TableHeader>
       {data.map((volunteerEntry) => (
         <VolunteerTableRow
           key={volunteerEntry.userid}
           data={volunteerEntry}
         />
       ))}
-    </table>
+    </Table>
   </div>
 );
 
