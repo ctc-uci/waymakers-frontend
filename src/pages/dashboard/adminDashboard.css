@@ -31,6 +31,7 @@
 .admin-components-container {
     display: flex;
     justify-content: space-between;
+    
 }
 
 .inventory-events-section {
@@ -54,10 +55,8 @@
 }
 
 .analytics-component {
-    height: 675px;
-    background-color: var(--color-light-blue);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
+    height: 895px;
+    /* height: 100%; */
 }
 
 .availability-component {
@@ -66,4 +65,40 @@
     background-color: var(--color-light-blue);
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .admin-components {
+        width: 100%;
+    }
+    
+    .admin-components-container{
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+        width: 100%;
+
+    }
+
+    .inventory-events-section {
+        width: 100%;
+    }
+
+    .analytics-section {
+        width: 100%;
+    }
+
+    .availability-section {
+        width: 100%;
+    }
+
+    .division-section {
+        margin: auto;
+    }
+
+    .inventory-section{
+        margin-top: 0%;
+        
+    }
+
 }

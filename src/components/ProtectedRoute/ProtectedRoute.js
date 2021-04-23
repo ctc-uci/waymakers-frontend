@@ -1,27 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes, instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import { Route, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import {
+  Redirect, Route, useHistory, useLocation,
+} from 'react-router-dom';
+
+import { WMKBackend } from '../../common/utils';
 
 const signInEndpoint = '/login';
 
 const verifyToken = async (cookies) => {
   const accessToken = cookies.get('accessToken');
+  console.log(cookies);
+
   if (accessToken != null) {
     try {
-      const url = `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/auth/verifyToken/${accessToken}`;
+      const verifiedUserId = await WMKBackend.get(`/auth/verifyToken/${accessToken}`);
 
-      const isVerified = await axios.get(url);
-
-      if (isVerified) {
-        cookies.set('userId', isVerified.data, {
-          path: '/',
-          maxAge: 3600,
-        });
+      if (verifiedUserId) {
+        const userPermissions = await WMKBackend.get(`/accounts/${verifiedUserId.data}`);
+        if (process.env.NODE_ENV === 'production') {
+          cookies.set('userId', verifiedUserId.data, {
+            path: '/',
+            maxAge: 3600,
+            domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
+            secure: true,
+          });
+          cookies.set('userPermissions', userPermissions.data.permissions.permissions, {
+            path: '/',
+            maxAge: 3600,
+            domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
+            secure: true,
+          });
+        } else {
+          cookies.set('userId', verifiedUserId.data, {
+            path: '/',
+            maxAge: 3600,
+          });
+          cookies.set('userPermissions', userPermissions.data.permissions.permissions, {
+            path: '/',
+            maxAge: 3600,
+          });
+        }
       }
 
-      return isVerified;
+      return verifiedUserId;
     } catch (error) {
       console.error('Error:', error);
     }
@@ -30,10 +53,15 @@ const verifyToken = async (cookies) => {
   return false;
 };
 
-const ProtectedRoute = ({ component, path, cookies }) => {
+const ProtectedRoute = ({
+  component, path, cookies, admin,
+}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
+  const location = useLocation();
+
+  const permission = cookies.get('userPermissions');
 
   useEffect(() => {
     (async () => {
@@ -58,11 +86,15 @@ const ProtectedRoute = ({ component, path, cookies }) => {
       </h1>
     );
   }
+  if (admin && permission !== 'Admin') {
+    return <Redirect to={{ pathname: '/' }} />;
+  }
   if (isAuthenticated) {
     return <Route exact path={path} component={component} />;
   }
 
-  history.push(signInEndpoint);
+  // TODO: I don't like manually building URIs, seems easily broken
+  history.push(`${signInEndpoint}?redirect=${encodeURIComponent(location.pathname)}`);
 
   return false;
 };

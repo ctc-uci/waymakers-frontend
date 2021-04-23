@@ -1,50 +1,66 @@
 import React, { useState } from 'react';
-import './login.css';
-import {
-  Card, Button, Form, Alert,
-} from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+
 import GoogleAuthService from '../../services/firebase/firebase';
+
+import registrationShowPassword from '../../assets/registrationShowPassword.svg';
+import registrationHidePassword from '../../assets/registrationHidePassword.svg';
+import googleLogo from '../../assets/googleLogo.svg';
+
+import './login.css';
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+function useRedirectURL() {
+  const query = useQuery();
+  const redirectURL = query.get('redirect');
+  if (!redirectURL) { return '/'; }
+  return redirectURL;
+}
 
 const LogIn = (props) => {
   const { cookies } = props;
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const history = useHistory();
-
-  const updateEmail = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const updatePassword = (event) => {
-    setPassword(event.target.value);
-  };
+  const redirectURL = useRedirectURL();
 
   async function login() {
     try {
-      const user = await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
+      await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
 
       const idToken = await GoogleAuthService.auth.currentUser.getIdToken();
-      // console.log(`idToken: ${JSON.stringify(idToken)}`);
-      console.log(`idToken: ${idToken}`);
+      // console.log(`idToken: ${idToken}`);
 
       // Setting a session cookie
-      cookies.set('accessToken', idToken, {
-        path: '/',
-        maxAge: 3600,
-      });
+      if (process.env.NODE_ENV === 'production') {
+        cookies.set('accessToken', idToken, {
+          path: '/',
+          maxAge: 3600,
+          domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
+          secure: true,
+        });
+      } else {
+        cookies.set('accessToken', idToken, {
+          path: '/',
+          maxAge: 3600,
+        });
+      }
 
-      // eslint-disable-next-line
-      console.log(user.user.uid);
-      history.push('/');
+      // console.log(user.user.uid);
+      history.push(redirectURL);
       // Signed in
     } catch (err) {
-      console.log(err);
       setError(err.message);
+      console.log(error);
     }
   }
 
@@ -58,10 +74,9 @@ const LogIn = (props) => {
         // const token = result.credential.accessToken;
       }
       // The signed-in user info.
-      const { user } = result;
-      // eslint-disable-next-line
-      console.log(user);
-      history.push('/');
+      // const { user } = result;
+      // console.log(user);
+      history.push(redirectURL);
     } catch (err) {
       setError(err.message);
     }
@@ -78,31 +93,65 @@ const LogIn = (props) => {
     }
   };
 
+  const handleKeyPress = (event) => {
+    // console.log(event);
+    if (event.charCode === 13) {
+      handleSubmit(event);
+    }
+  };
+
   return (
-    <div className="d-flex align-items-center justify-content-center">
-      <div className="w-100 login-container">
-        <Card className="w-100">
-          <Card.Body>
-            <h2 className="text-center mb-4">Log In</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control placeholder="Enter email" type="email" onChange={updateEmail} required />
-              </Form.Group>
-              <Form.Group id="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control placeholder="Enter password" type="password" onChange={updatePassword} required />
-              </Form.Group>
-              <Button className="w-100" type="submit" variant="primary">Log In</Button>
-              <Button className="mt-3 w-100" type="button" onClick={loginWithGoogle}>Sign In With Google</Button>
-            </Form>
-          </Card.Body>
-        </Card>
-        <div className="w-100 text-center mt-2">
-          {'Don\'t have an account? '}
-          <Link to="/register">Register</Link>
+    <div className="login-container">
+      <form className="login-forms">
+        <label className="login-input-label" htmlFor="login-email">
+          <p className="medium">Email</p>
+          <input
+            type="text"
+            className="login-input"
+            name="login-email"
+            placeholder="Email"
+            onChange={(event) => { setEmail(event.target.value); }}
+          />
+        </label>
+        <label className="login-input-label login-password-input" htmlFor="login-password">
+          <p className="medium">Password</p>
+          <input
+            type={showPassword ? 'text' : 'password'}
+            className="login-input"
+            name="login-password"
+            placeholder="Password"
+            onChange={(event) => { setPassword(event.target.value); }}
+            onKeyPress={handleKeyPress}
+          />
+          <button
+            type="button"
+            className="login-password-showhide-button"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword
+              ? <img src={registrationHidePassword} alt="Hide" />
+              : <img src={registrationShowPassword} alt="Show" />}
+          </button>
+        </label>
+        <div className="sign-up">
+          <p className="small">Don&apos;t have an account? </p>
+          {' '}
+          <Link to="/register">
+            <p className="small" style={{ fontWeight: 700 }}>Sign up.</p>
+          </Link>
         </div>
+      </form>
+      {error !== ''
+        ? <span className="error-message">{error}</span>
+        : <br />}
+      <div className="login-buttons">
+        <button type="submit" className="login-button" onClick={handleSubmit}>
+          <p className="large">Login</p>
+        </button>
+        <button type="button" className="lwg-button" onClick={loginWithGoogle}>
+          <img className="google-logo" src={googleLogo} alt=" " />
+          <p className="medium">Login with Google</p>
+        </button>
       </div>
     </div>
   );

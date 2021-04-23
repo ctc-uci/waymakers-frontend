@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import {
   startOfWeek, add, getHours, getDay,
 } from 'date-fns';
-import axios from 'axios';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import disableScroll from 'disable-scroll';
+
+import { WMKBackend } from '../../../../common/utils';
+
 import ViewAvailability from './viewAvailability/viewAvailability';
 import EditAvailability from './editAvailability/editAvailability';
 import HelpPopup from '../help-popup/helpPopup';
@@ -49,11 +51,7 @@ const VolunteerAvailability = (props) => {
     try {
       const userID = cookies.get('userId');
 
-      const availabilityResult = await axios.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
-          withCredentials: true,
-        },
-      );
+      const availabilityResult = await WMKBackend.get(`/availability/${userID}`);
 
       const { userAvailability } = availabilityResult.data;
       const dateList = userAvailability.map((dateString) => (stringToDate(dateString)));
@@ -75,13 +73,9 @@ const VolunteerAvailability = (props) => {
 
     const userID = cookies.get('userId');
 
-    await axios.post(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/availability/${userID}`, {
-        dates: filteredDates,
-      }, {
-        withCredentials: true,
-      },
-    );
+    await WMKBackend.post(`/availability/${userID}`, {
+      dates: filteredDates,
+    });
 
     setAvailabilityMode('view');
   };
@@ -97,54 +91,56 @@ const VolunteerAvailability = (props) => {
 
   function renderAvailability() {
     return (
-      <>
-        {availabilityMode === 'view' ? (
-          <div className="availability-wrapper">
-            <h5 className="availability-title">Availability for the Week</h5>
-            <div className="availability-buttons-container">
-              <div
-                className="edit-button"
-                onClick={() => { setAvailabilityMode('edit'); }}
-                onKeyDown={() => { setAvailabilityMode('edit'); }}
-                role="button"
-                tabIndex={0}
-              >
-                Change Availability
-              </div>
-              <div
-                className="help-popup"
-                onClick={onHelpButtonClick}
-                onKeyDown={onHelpButtonClick}
-                role="button"
-                tabIndex={0}
-              >
-                ?
-              </div>
-
+      <div className="volunteer-availability-wrapper">
+        <div className="availability-header">
+          <h2 className="availability-title">Availability for the Week</h2>
+          <div className="availability-buttons-container">
+            {availabilityMode === 'view'
+              ? (
+                <div
+                  className="availability-edit-button"
+                  onClick={() => { setAvailabilityMode('edit'); }}
+                  onKeyDown={() => { setAvailabilityMode('edit'); }}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Change Availability
+                </div>
+              )
+              : (
+                <div
+                  className="availability-save-button"
+                  onClick={updateAvailability}
+                  onKeyDown={updateAvailability}
+                  role="button"
+                  tabIndex={0}
+                >
+                  Save Changes
+                </div>
+              )}
+            <div
+              className="help-popup-button"
+              onClick={onHelpButtonClick}
+              onKeyDown={onHelpButtonClick}
+              role="button"
+              tabIndex={0}
+            >
+              ?
             </div>
-            <ViewAvailability availabilities={availability} startWeek={startWeek} />
           </div>
-        )
-          : (
-            <div className="availability-wrapper">
-              <h5 className="availability-title">Availability for the Week</h5>
-              <div
-                className="save-button"
-                onClick={updateAvailability}
-                onKeyDown={updateAvailability}
-                role="button"
-                tabIndex={0}
-              >
-                Save Changes
-              </div>
+        </div>
+        <div className="volunteer-avail-card">
+          { availabilityMode === 'view'
+            ? (<ViewAvailability availabilities={availability} startWeek={startWeek} />)
+            : (
               <EditAvailability
                 availabilityTimes={availability}
                 setAvailabilityTimes={setAvailability}
                 startWeek={startWeek}
               />
-            </div>
-          )}
-      </>
+            )}
+        </div>
+      </div>
     );
   }
 
@@ -159,9 +155,9 @@ const VolunteerAvailability = (props) => {
   }
 
   return (
-    <div className="availability-section">
+    <div className="volunteer-availability-section">
       {renderAvailability()}
-      {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} />}
+      {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} type="volunteer" />}
     </div>
   );
 };

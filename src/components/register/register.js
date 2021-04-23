@@ -1,86 +1,137 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-undef */
 import React, { useState } from 'react';
-import './register.css';
-import {
-  Card, Button, Form, Alert,
-} from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
+import { Formik, Form } from 'formik';
+
 import GoogleAuthService from '../../services/firebase/firebase';
+import { WMKBackend } from '../../common/utils';
+
+import validationSchema from './validationSchema';
+import formInitialValues from './formInitialValues';
+import registerFormModel from './registerFormModel';
+
+import StepOne from './stepOne';
+import StepTwo from './stepTwo';
+import StepThree from './stepThree';
+
+import horizontalArrow from '../../assets/horizontalArrow.svg';
+import './register.css';
+
+const { formId, formField } = registerFormModel;
+
+function renderStepContent(step) {
+  switch (step) {
+    case 0:
+      return <StepOne formField={formField} />;
+    case 1:
+      return <StepTwo formField={formField} />;
+    case 2:
+      return <StepThree formField={formField} />;
+    default:
+      return <div>Not Found</div>;
+  }
+}
 
 const Register = () => {
   const history = useHistory();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [registerStage, setRegisterStage] = useState(0);
+  const currentValidationSchema = validationSchema[registerStage];
 
-  const updateEmail = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const updatePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const updateConfirmPassword = (event) => {
-    setConfirmPassword(event.target.value);
-  };
-
-  async function register() {
+  const register = async ({
+    firstName, lastName, email, password,
+    phoneNumber, address1, address2, city, state, zipcode,
+    birthDay, birthMonth, birthYear, gender, genderOther,
+  }) => {
     try {
       const user = await GoogleAuthService.auth.createUserWithEmailAndPassword(email, password);
-      // eslint-disable-next-line
       console.log(user);
-      history.push('/');
-      // Signed in
+      const res = await WMKBackend.post('/register/create', {
+        userID: user.user.uid,
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        address1,
+        address2,
+        city,
+        state,
+        zipcode,
+        birthDate: `${birthYear}-${birthMonth}-${birthDay}`,
+        gender: gender === 'other' ? genderOther : gender,
+        division: 1,
+      });
+      console.log(res);
     } catch (err) {
-      setError(err.message);
+      alert(err);
     }
-  }
+  };
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
+  const handleSubmit = async (values, actions) => {
+    if (registerStage === 2) {
+      // alert(JSON.stringify(values, null, 2));
+      try {
+        await register(values);
+        history.push('/');
+      } catch (err) {
+        alert(err);
+      }
+    } else {
+      setRegisterStage(registerStage + 1);
+      actions.setTouched([]);
+      actions.setSubmitting(false);
     }
-    try {
-      setError('');
-      // Call firebase register function
-      register();
-    } catch (err) {
-      setError('Failed to create an account');
-    }
-  }
+  };
 
   return (
-    <div className="d-flex align-items-center justify-content-center">
-      <div className="w-100 register-container">
-        <Card className="w-100">
-          <Card.Body>
-            <h2 className="text-center mb-4">Register</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control placeholder="Enter email" type="email" onChange={updateEmail} required />
-              </Form.Group>
-              <Form.Group id="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control placeholder="Enter password" type="password" onChange={updatePassword} required />
-              </Form.Group>
-              <Form.Group id="password-confirm">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control placeholder="Re-enter password" type="password" onChange={updateConfirmPassword} required />
-              </Form.Group>
-              <Button className="w-100" type="submit" variant="primary">Register</Button>
-            </Form>
-          </Card.Body>
-        </Card>
-        <div className="w-100 text-center mt-2">
-          {'Already have an account? '}
-          <Link to="/login">Log In</Link>
-        </div>
+    <div className="register-container">
+      <Formik
+        initialValues={formInitialValues}
+        validationSchema={currentValidationSchema}
+        onSubmit={handleSubmit}
+      >
+        {() => (
+          <Form id={formId} key="register">
+            {renderStepContent(registerStage)}
+            <div className="form-navigation">
+              {registerStage > 0
+                ? (
+                  <button
+                    type="button"
+                    className="back-button"
+                    aria-label="back"
+                    onClick={() => setRegisterStage(registerStage - 1)}
+                  >
+                    <img src={horizontalArrow} className="back-arrow" alt="back" />
+                  </button>
+                )
+                : <div />}
+              <div className="stage-dots">
+                {[0, 1, 2].map((stage) => (
+                  <div className={`stage-dot ${registerStage === stage ? 'current-stage' : ''}`} />
+                ))}
+              </div>
+              {registerStage < 2
+                ? (
+                  <button type="submit" className="next-button" aria-label="next">
+                    <img src={horizontalArrow} className="next-arrow" alt="next" />
+                  </button>
+                )
+                : (
+                  <button type="submit" className="signup-button" aria-label="submit">
+                    <p className="large">Sign Up</p>
+                  </button>
+                )}
+            </div>
+          </Form>
+        )}
+      </Formik>
+      <div className="sign-in">
+        Already have an account?
+        {' '}
+        <Link to="/login">
+          <strong>Login.</strong>
+        </Link>
       </div>
     </div>
   );

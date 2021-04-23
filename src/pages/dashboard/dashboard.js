@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
@@ -13,18 +11,14 @@ const Dashboard = ({ cookies }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(async () => {
-    const userID = cookies.get('userId');
-    setIsLoading(true);
-    const result = await axios.get(`${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
-      withCredentials: true,
-    });
+    const userPermissions = cookies.get('userPermissions');
+    setPermissions(userPermissions);
 
-    setPermissions(result.data.permissions.permissions);
-
-    if (result.data.permissions.permissions === 'Volunteer') {
-      setCurrDashboard('volunteer');
-    } else {
+    // Defaulting to volunteer dashboard, unless explicitly admin
+    if (userPermissions === 'Admin') {
       setCurrDashboard('admin');
+    } else {
+      setCurrDashboard('volunteer');
     }
 
     setIsLoading(false);

@@ -1,0 +1,107 @@
+.upcoming-events-component {
+    /* height: 300px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.upcoming-events-title {
+    color: var(--text-color-dark);
+    margin: 0;
+    line-height: 1;
+}
+
+.upcoming-events-section {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 35px;
+}
+
+.upcoming-event {
+    background-color: var(--color-dark-blue);
+    color: var(--text-color-light);
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    padding: 10px;
+    border-radius: 5px;
+    height: 200px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin: 5px;
+}
+
+.upcoming-event-name {
+    font-weight: bold;
+    text-align: left;
+}
+
+.upcoming-event-date {
+    text-align: left;
+}
+
+.upcoming-event-time {
+    text-align: left;
+}
+
+.all-events-section {
+    width: 100%;
+}
+
+.all-events-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-green);
+    color: var(--text-color-light);
+    text-decoration: none;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    padding: 5px;
+    margin-left: 25%;
+    width: 50%;
+    height: 43px;
+
+    margin-top: 40px;
+    margin-bottom: 15px;
+
+    cursor: pointer;
+}
+
+.all-events-button .button-anchor {
+    text-decoration: none;
+    color: var(--text-color-light);
+}
+
+.upcoming-events-component p {
+    margin: 0.25em;
+}
+
+@media screen and (max-width: 1100px) {
+    .upcoming-event {
+      width: 50%;
+      margin: 0 5px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .upcoming-event{
+        width: 50%;
+        height: 10em;
+    }
+
+    .upcoming-event ~ .upcoming-event {
+        margin-left: 0.6em;
+    } 
+
+    .all-events-button{
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2em;
+    }
+
+  
+}

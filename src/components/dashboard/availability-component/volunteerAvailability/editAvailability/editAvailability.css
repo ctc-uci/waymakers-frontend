@@ -1,12 +1,33 @@
 .editAvailCard {
-    padding: 30px;
-    margin: 25px;
-    /* margin: auto; */
-    max-width: 850px;
-    min-width: 750px;
-    min-height: 250px;
+    width: 100%;
     background-color: white;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+    margin: 30px auto;
+}
+
+.editAvailCard .grid-cell {
+    border-left: 1px solid black;
+    border-right: 1px solid black; 
+    border-bottom: 1px solid black;
+    width: 100%;
+    height: 50px;
+}
+
+@media screen and (max-width: 1300px) {
+    .editAvailCard {
+        width: 100%;
+    }
+    .editAvailCard .grid-cell {
+        height: 35px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .editAvailCard {
+        width: 100%;
+        padding: 0;
+        margin: 5px;
+    }
 }

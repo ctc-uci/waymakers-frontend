@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-env browser */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Datetime from 'react-datetime';
@@ -6,10 +8,12 @@ import moment from 'moment';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
+import { WMKBackend } from '../../common/utils';
 import Card from '../../common/Card/Card';
 import VolunteerAvailability from '../../components/dashboard/availability-component/volunteerAvailability/volunteerAvailability';
 import AdminAvailability from '../../components/dashboard/availability-component/adminAvailability/adminAvailability';
 import useMobileWidth from '../../common/useMobileWidth';
+import ImageCropper from '../../components/profile/profilePictureCropper/imageCropper';
 
 import profCircle from '../../assets/profCircle.png';
 import cake from '../../assets/birthday.svg';
@@ -21,6 +25,7 @@ import house from '../../assets/house.svg';
 import genderIcon from '../../assets/gender.svg';
 import stateIcon from '../../assets/stateIcon.svg';
 import locationPin from '../../assets/blueLocationPin.svg';
+import cameraIcon from '../../assets/cameraIcon.svg';
 
 import './profile.css';
 
@@ -47,15 +52,39 @@ const Profile = (props) => {
   const [isLoading, setLoading] = useState(false);
   const isMobile = useMobileWidth();
 
+  const [currentProfilePicture, setCurrentProfilePicture] = useState(null);
+
+  const reader = new FileReader();
+  const [uploadedFile, setUploadedFile] = useState(null); // Base64 string of the file bing uploaded
+  const [uploadedFilePreview, setUploadedFilePreview] = useState(null);
+  const [isCropperOpen, setIsCropperOpen] = useState(false);
+
+  // Uploads a user's profile picture and returns url
+  const uploadPicture = async () => {
+    // Gets Amazon upload URL
+    // const { res: { data: uploadUrl } } = await WMKBackend.get('/accounts/s3Url');
+    const { data: uploadUrl } = await WMKBackend.get('/accounts/s3Url');
+    // const uploadUrl = res.data;
+    console.log(uploadUrl);
+
+    // Upload image to amazon s3
+    await axios.put(uploadUrl, uploadedFile, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    // Get profile picture image
+    const imageUrl = uploadUrl.split('?')[0];
+    console.log(imageUrl);
+    return imageUrl;
+  };
+
   // Use axios GET request to retreive info to backend api
   useEffect(async () => {
     setLoading(true);
     const userID = cookies.get('userId');
-    const result = await axios.get(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
-        withCredentials: true,
-      },
-    );
+    const result = await WMKBackend.get(`/accounts/${userID}`);
 
     const { account } = result.data;
     const {
@@ -74,15 +103,29 @@ const Profile = (props) => {
     setBirthday(new Date(account.birthdate));
     setTier(account.tier);
     setGender(account.gender);
+    setCurrentProfilePicture(account.profile_picture);
+    // setpfpLink(account.profile_picture);
 
     setLoading(false);
   }, []);
 
+  const handleImageInputChange = (e) => {
+    reader.addEventListener('load', () => {
+      setUploadedFile(reader.result);
+      setIsCropperOpen(true);
+    });
+    if (e.target.files) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    e.target.value = null;
+  };
+
   // Use axios PUT request to send new info to backend api, but only after form is "submitted"
   const updateInfo = async () => {
     const userID = cookies.get('userId');
-    const response = await axios.put(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
+
+    try {
+      const payload = {
         firstName,
         lastName,
         email,
@@ -94,9 +137,16 @@ const Profile = (props) => {
         locationZip: zip,
         tier,
         gender,
-      }, { withCredentials: true },
-    );
-    console.log(`status: ${response.status}`);
+        profilePicture: currentProfilePicture,
+      };
+
+      if (uploadedFile) {
+        payload.profilePicture = await uploadPicture();
+      }
+      await WMKBackend.put(`/accounts/${userID}`, payload);
+    } catch (e) {
+      console.error(e);
+    }
 
     setIsViewProfile(true);
   };
@@ -107,6 +157,7 @@ const Profile = (props) => {
       `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
         withCredentials: true,
       },
+
     );
 
     const { account } = result.data;
@@ -125,6 +176,8 @@ const Profile = (props) => {
     setBirthday(new Date(account.birthdate));
     setTier(account.tier);
     setGender(account.gender);
+    setCurrentProfilePicture(account.profile_picture);
+    // setpfpLink(account.profile_picture);
 
     setIsViewProfile(true);
   };
@@ -138,7 +191,9 @@ const Profile = (props) => {
       {isViewProfile
         ? (
           <div className="profile-page-container">
-            <img src={profCircle} alt="" width="200" height="200" />
+            <div className="profile-pic">
+              <img className="pfp" src={currentProfilePicture || profCircle} alt="" width="200" height="200" />
+            </div>
             <div className="name">
               <h3 className="profile-name">{`${firstName} ${lastName}`}</h3>
               <button type="button" className="profile-edit-save profile-edit-button" onClick={() => { setIsViewProfile(false); }}>
@@ -227,9 +282,31 @@ const Profile = (props) => {
         )
         : (
           <div className="profile-page-container">
-            <div className="profilePic">
-              <img src={profCircle} alt="" width="200" height="200" />
+            <ImageCropper
+              imageSrc={uploadedFile}
+              setCropped={setUploadedFile}
+              setPreview={setUploadedFilePreview}
+              isOpen={isCropperOpen}
+              setIsOpen={setIsCropperOpen}
+            />
+            <div className="profile-picture-section">
+              <label htmlFor="image-input">
+                <img
+                  className="profile-picture"
+                  src={uploadedFilePreview || currentProfilePicture || profCircle}
+                  alt=""
+                />
+                <img src={cameraIcon} className="upload-button" alt="upload" />
+              </label>
             </div>
+            <input
+              id="image-input"
+              className="default-file-input"
+              type="file"
+              onChange={handleImageInputChange}
+              accept="image/jpg, image/png, image/jpeg"
+              hidden
+            />
             <div className="name">
               <h3 className="profile-name">{`${firstName} ${lastName}`}</h3>
               <div className="profile-edit-mode-buttons">

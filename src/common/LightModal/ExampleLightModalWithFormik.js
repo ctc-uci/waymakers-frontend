@@ -91,7 +91,126 @@ const ExampleLightModalWithFormik = ({ isModalOpen, setIsModalOpen }) => {
               value={formik.values.lastName}
             />
           </ValidatedField>
-
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values.lastName}
+            />
+          </ValidatedField>
           {/* datetime input type */}
           <ValidatedField name="dateTime" labelText="Date and Time" formik={formik}>
             <input

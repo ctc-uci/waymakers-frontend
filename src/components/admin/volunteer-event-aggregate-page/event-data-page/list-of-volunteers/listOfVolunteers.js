@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import VolunteerTable from './volunteerTable';
+
+import { WMKBackend } from '../../../../../common/utils';
+
 import './listOfVolunteers.css';
 
-const axios = require('axios');
-
 const ListOfVolunteers = (prop) => {
-  const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/`,
-    withCredentials: true,
-  });
-
   const [allVolunteers, setAllVolunteers] = useState([]);
 
   const [sortingMethod, setSortingMethod] = useState('0');
@@ -24,7 +20,7 @@ const ListOfVolunteers = (prop) => {
   };
 
   const getAllVolunteers = async () => {
-    const volunteers = await instance.get('volunteerData/all/', paramQuery);
+    const volunteers = await WMKBackend.get('/volunteerData/all/', paramQuery);
     // TODO: remove this temporary overflow test
     setAllVolunteers([...volunteers.data,
       ...volunteers.data, ...volunteers.data, ...volunteers.data,

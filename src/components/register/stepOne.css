@@ -1,0 +1,74 @@
+@import '../../common/vars.css';
+
+.register-step-one {
+    color: white;
+    
+    padding-left: 10%;
+    padding-right: 10%;
+
+    height: 500px;
+}
+
+.register-step-one p {
+    padding: 0;
+    margin: 0;
+}
+
+.register-step-one .section-title {
+    font-weight: 700;
+}
+
+.register-step-one .name-section {
+    display: flex;
+    flex-direction: column;
+
+    /* margin-bottom: 3.5%; */
+}
+.register-step-one .name-section .name-form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* width: auto; */
+}
+
+.register-step-one .name-section .name-form-group .name-form-label {
+    width: 48%;
+}
+
+.register-step-one .email-section {
+    margin-bottom: 3%;
+}
+
+.register-step-one .password-section {
+    margin-bottom: 3%;
+}
+
+.register-step-one .password-section .password-form-group .password-form-label .password-toggle {
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+
+    font-size: 0.82em;
+
+    background: inherit;
+
+    padding: 0;
+    margin-left: auto;
+
+    width: fit-content;
+}
+
+.register-step-one .password-section .password-form-group .password-form-label .password-toggle:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 500px) {
+    .register-step-one .name-section .name-form-group {
+        flex-direction: column;
+    }
+
+    .register-step-one .name-section .name-form-group .name-form-label {
+        width: 100%;
+    }
+}
