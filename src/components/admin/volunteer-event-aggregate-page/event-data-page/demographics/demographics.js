@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { TitledCard } from '../../../../../common/Card';
 import PieChart from './pie-chart/PieChart';
 
 import { WMKBackend } from '../../../../../common/utils';
-
 import leftArrow from '../../../../../assets/pieChartLeftArrow.svg';
 import rightArrow from '../../../../../assets/pieChartRightArrow.svg';
 
@@ -19,10 +19,10 @@ const Demographics = ({ event }) => {
   // Attribute is the name of column stored in the actual database
   // Label is the name of the pie chart
   const pieChartLabels = [
-    { attribute: 'gender', label: 'gender' },
-    { attribute: 'age', label: 'age group' },
-    { attribute: 'tier', label: 'volunteer tier' },
-    { attribute: 'sum', label: 'number of hours' },
+    { attribute: 'gender', label: 'Gender' },
+    { attribute: 'age', label: 'Age Range' },
+    { attribute: 'tier', label: 'Volunteer Tier' },
+    { attribute: 'sum', label: 'Number of Hours' },
   ];
 
   const getDemographicData = (attribute) => {
@@ -90,8 +90,7 @@ const Demographics = ({ event }) => {
   );
 
   return (
-    <div className="demographics">
-      <h2 className="demographics-title">Demographics</h2>
+    <TitledCard title="Demographics">
       <div className="demographics-charts">
         <DemoGraphicsLeftArrow />
         <div className="pie-charts">
@@ -102,13 +101,13 @@ const Demographics = ({ event }) => {
                   demoInfo={getDemographicData(attribute)}
                   label={label}
                 />
-                <span className="chart-label">{label}</span>
+                <p className="medium">{label}</p>
               </div>
             ))}
         </div>
         <DemographicsRightArrow />
       </div>
-    </div>
+    </TitledCard>
   );
 };
 

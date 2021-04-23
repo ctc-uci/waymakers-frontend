@@ -1,3 +1,12 @@
+.event-page-info {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .event-title {
     font-family: 'Assistant';
     font-weight: bold;
@@ -22,15 +31,31 @@
     flex-direction: row;
     justify-content: space-evenly;
     width: 80%;
-    height: 45%;
+}
+
+.row1 {
+    height: 420px;
 }
 
 .row2 {
     padding-top: 2%;
 }
 
+.row1 .titled-card-container .card {
+    height: 100%;
+}
+
 @media screen and (max-width: 768px) {
     .row1, .row2 {
         flex-direction: column;
+    }
+
+    .row1 {
+        height: fit-content;
+    }
+
+    .row1 .titled-card-container {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
