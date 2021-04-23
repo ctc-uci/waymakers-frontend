@@ -148,8 +148,6 @@ table thead {
 
 .events-view .top-of-calendar {
     margin-bottom: 20px;
-    /* display: flex;
-    justify-content: space; */
 }
 
 .events-view .top-of-calendar .calendar-add-date-filters {
@@ -178,10 +176,6 @@ table thead {
 
     .events-view{
         width: 100%;
-    }
-
-    .header {
-        display: block;
     }
 
     .events-view .top-of-calendar .calendar-add-date-filters {

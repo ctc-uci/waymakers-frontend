@@ -6,12 +6,10 @@ import * as IconGo from 'react-icons/go';
 import { fullCalendarEventToRegularEvent } from '../../util';
 
 import {
-  deleteEvent,
   setShowPopup,
   changeSelectedEvent,
   changePopupType,
 } from '../../redux/actions';
-import trashcan from '../../../../assets/trashcan.svg';
 
 import './eventBlock.css';
 
@@ -63,11 +61,6 @@ const EventBlock = ({
     openPopup();
   };
 
-  const onDeleteClick = (e) => {
-    e.stopPropagation();
-    dispatch(deleteEvent(eventInfo.event.id));
-  };
-
   const onAdminEventBlockClick = () => {
     setEvent(eventInfo.event);
     openPopup();
@@ -88,12 +81,6 @@ const EventBlock = ({
     return <button type="button" className="cursor-pointer" onClick={(e) => { onAddButtonClick(e); }}>+</button>;
   };
 
-  // TODO: Add delete confirmation before deleting event
-  const renderTrashButton = () => {
-    const trashIcon = <img className="trash-icon" src={trashcan} alt="trashcan" />;
-    return <button type="button" className="cursor-pointer" onClick={(e) => onDeleteClick(e)}>{trashIcon}</button>;
-  };
-
   // Renders diff blocks based on view and page/pathname
   if (eventInfo.view.type === 'timeGridWeek') {
     switch (page) {
@@ -110,7 +97,6 @@ const EventBlock = ({
       case 'addModifyDeleteEventsPage':
         return (
           <div id="week-edit-event-block" className="cursor-pointer" tabIndex={0} onClick={onViewEventsPageBlockClick} onKeyDown={() => {}} role="button">
-            {renderTrashButton()}
             <p id="week-edit-event-title">{eventInfo.event.title}</p>
           </div>
         );
