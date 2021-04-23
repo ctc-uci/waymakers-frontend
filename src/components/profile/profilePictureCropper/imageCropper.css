@@ -1,0 +1,53 @@
+.cropper-container {
+	height: 600px;
+	width: 600px;
+	padding: 10px;
+
+	background: white;
+	border: 1px solid black;
+}
+
+.cropper-container p {
+	margin: 0;
+	padding: 0;
+}
+
+.cropper-overlay {
+	position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgba(231, 231, 231, 0.5);
+    z-index: 1001;
+}
+
+.cropper-container .cropper {
+	height: 500px;
+	position: relative;
+}
+
+.cropper-container .slider {
+	height: 10%;
+	display: flex;
+	align-items: center;
+	margin: auto;
+	width: 60%;
+}
+
+.cropper-container .button-section {
+	display: flex;
+	justify-content: center;
+}
+
+.cropper-container .save-crop-button {
+	cursor: pointer;
+}
+
+.cropper-container .cancel-button {
+	cursor: pointer;
+	margin-left: 15px;
+}

@@ -22,7 +22,7 @@
 }
 
 /* Style navigation menu links */
-.navbar-mobile-menu-container .mobile-navbar-link, button {
+.navbar-mobile-menu-container .mobile-navbar-link {
   font-family: 'Assistant', Arial, Helvetica, sans-serif;
   font-size: 25px;
   font-weight: bold;
@@ -50,4 +50,12 @@
 .navbar-mobile-logout-button {
   color: var(--color-dark-orange);
   background: transparent;
+  font-family: 'Assistant', Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid var(--text-color-dark);
+  width: 100%;
+  padding: 10px 0px;
 }

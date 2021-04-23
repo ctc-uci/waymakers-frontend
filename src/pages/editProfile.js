@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/extensions */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-env browser */
 import React, { useState, useEffect } from 'react';
 import {
   startOfWeek, add, getHours, getDay,
@@ -8,14 +7,17 @@ import {
 import { useHistory } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import axios from 'axios';
 
 import { WMKBackend } from '../common/utils';
 
-import EditAbout from '../components/profile/editAbout/editAbout.js';
-import EditContact from '../components/profile/editContact/editContact.js';
+import EditAbout from '../components/profile/editAbout/editAbout';
+import EditContact from '../components/profile/editContact/editContact';
 import EditAvailability from '../components/dashboard/availability-component/volunteerAvailability/editAvailability/editAvailability';
+import ImageCropper from '../components/profile/profilePictureCropper/imageCropper';
 
 import profCircle from '../assets/profCircle.png';
+import cameraIcon from '../assets/cameraIcon.svg';
 
 import './editProfile.css';
 
@@ -37,10 +39,10 @@ const editProfile = (props) => {
   // - How do we deal with bday since date format for PSQL is wack?
   //    - use JS date object?
   const { cookies } = props;
+  const reader = new FileReader();
 
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
-
   const [email, setEmail] = useState('');
   // const [number, setNumber] = useState('');
   const [street, setStreet] = useState('');
@@ -48,9 +50,15 @@ const editProfile = (props) => {
   const [state, setState] = useState('');
   const [zip, setZip] = useState(0);
   const [birthday, setBirthday] = useState('');
-
   const [tier, setTier] = useState(3);
   const [status, setStatus] = useState('Volunteer');
+
+  // User's current profile picture in the database
+  const [pfpLink, setpfpLink] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState(null); // Base64 string of the file bing uploaded
+  const [uploadedFilePreview, setUploadedFilePreview] = useState(null);
+  // const [croppedImage, setCroppedImage] = useState(null); // Cropped image FILE
+  const [isCropperOpen, setIsCropperOpen] = useState(false);
 
   const [isLoading, setLoading] = useState(false);
 
@@ -85,6 +93,27 @@ const editProfile = (props) => {
     return [getDay(date), `${hours}:00:00`];
   };
 
+  // Uploads a user's profile picture and returns url
+  const uploadPicture = async () => {
+    // Gets Amazon upload URL
+    // const { res: { data: uploadUrl } } = await WMKBackend.get('/accounts/s3Url');
+    const { data: uploadUrl } = await WMKBackend.get('/accounts/s3Url');
+    // const uploadUrl = res.data;
+    console.log(uploadUrl);
+
+    // Upload image to amazon s3
+    await axios.put(uploadUrl, uploadedFile, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    // Get profile picture image
+    const imageUrl = uploadUrl.split('?')[0];
+    console.log(imageUrl);
+    return imageUrl;
+  };
+
   useEffect(async () => {
     setLoading(true);
     const userID = cookies.get('userId');
@@ -93,7 +122,7 @@ const editProfile = (props) => {
     const {
       locationstreet, locationcity, locationstate, locationzip,
     } = account;
-
+    console.log(account.profile_picture);
     setFirstname(account.firstname);
     setLastname(account.lastname);
     setEmail('p@uci.edu');
@@ -105,6 +134,7 @@ const editProfile = (props) => {
     setBirthday(account.birthdate);
     setTier(account.tier);
     setStatus(permissions.permissions);
+    setpfpLink(account.profile_picture);
 
     // get req for availability
     const availabilityResult = await WMKBackend.get(`/availability/${userID}`);
@@ -123,36 +153,57 @@ const editProfile = (props) => {
     setLoading(false);
   }, []);
 
+  const handleImageInputChange = (e) => {
+    reader.addEventListener('load', () => {
+      setUploadedFile(reader.result);
+      setIsCropperOpen(true);
+    });
+    if (e.target.files) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    e.target.value = null;
+  };
+
   // Use axios PUT request to send new info to backend api, but only after form is "submitted"
   const updateInfo = async () => {
+    const userID = cookies.get('userId');
     const dateList = availability.map((date) => (parseDate(date)));
-
     const seen = new Set();
-
     const filteredDates = dateList.filter((date) => {
       const duplicate = seen.has(date.toString());
       seen.add(date.toString());
       return !duplicate;
     });
 
-    const userID = cookies.get('userId');
-    await WMKBackend.put(`/accounts/${userID}`, {
-      firstname,
-      lastname,
-      birthdate: birthday,
-      locationstreet: street,
-      locationcity: city,
-      locationstate: state,
-      locationzip: zip,
-      tier,
-      permission: status,
-    });
+    try {
+      const payload = {
+        firstname,
+        lastname,
+        birthdate: birthday,
+        locationstreet: street,
+        locationcity: city,
+        locationstate: state,
+        locationzip: zip,
+        tier,
+        permission: status,
+        profilePicture: pfpLink,
+      };
 
-    await WMKBackend.post(`/availability/${userID}`, {
-      dates: filteredDates,
-    });
+      if (uploadedFile) {
+        payload.profilePicture = await uploadPicture();
+      }
+      console.log(payload);
 
-    history.push('/profile');
+      await WMKBackend.put(`/accounts/${userID}`, payload);
+
+      await WMKBackend.post(`/availability/${userID}`, {
+        dates: filteredDates,
+      });
+
+      history.push('/profile');
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   if (isLoading) {
@@ -160,44 +211,64 @@ const editProfile = (props) => {
   }
 
   return (
-    <div>
-      <div className="page-container">
-        <div className="profilePic">
-          <img src={profCircle} alt="" width="200" height="200" />
-        </div>
-        <div className="name">
-          <h3>{`${firstname} ${lastname}`}</h3>
-          <ul className="edit-save">
-            <button onClick={updateInfo} type="button">
-              Save
-            </button>
-          </ul>
-        </div>
-        <div className="abt-contact">
-          <div className="abtCard">
-            <EditAbout
-              tier={tier}
-              setTier={setTier}
-              status={status}
-              setStatus={setStatus}
-            />
-          </div>
-          <div className="contactCard">
-            <EditContact
-              email={email}
-              setEmail={setEmail}
-              firstname={firstname}
-              setFirstname={setFirstname}
-            />
-          </div>
-        </div>
-        <div>
-          <EditAvailability
-            availabilityTimes={availability}
-            setAvailabilityTimes={setAvailability}
-            startWeek={startWeek}
+    <div className="page-container">
+      <ImageCropper
+        imageSrc={uploadedFile}
+        setCropped={setUploadedFile}
+        setPreview={setUploadedFilePreview}
+        isOpen={isCropperOpen}
+        setIsOpen={setIsCropperOpen}
+      />
+      <div className="profile-picture-section">
+        <label htmlFor="image-input">
+          <img
+            className="profile-picture"
+            src={uploadedFilePreview || pfpLink || profCircle}
+            alt=""
+          />
+          <img src={cameraIcon} className="upload-button" alt="upload" />
+        </label>
+      </div>
+      <input
+        id="image-input"
+        className="default-file-input"
+        type="file"
+        onChange={handleImageInputChange}
+        accept="image/jpg, image/png, image/jpeg"
+        hidden
+      />
+      <div className="name">
+        <h3>{`${firstname} ${lastname}`}</h3>
+        <ul className="edit-save">
+          <button onClick={updateInfo} type="button">
+            Save
+          </button>
+        </ul>
+      </div>
+      <div className="abt-contact">
+        <div className="abtCard">
+          <EditAbout
+            tier={tier}
+            setTier={setTier}
+            status={status}
+            setStatus={setStatus}
           />
         </div>
+        <div className="contactCard">
+          <EditContact
+            email={email}
+            setEmail={setEmail}
+            firstname={firstname}
+            setFirstname={setFirstname}
+          />
+        </div>
+      </div>
+      <div>
+        <EditAvailability
+          availabilityTimes={availability}
+          setAvailabilityTimes={setAvailability}
+          startWeek={startWeek}
+        />
       </div>
     </div>
   );
