@@ -13,6 +13,8 @@ import viewAvailability from '../components/dashboard/availability-component/vol
 
 import profCircle from '../assets/profCircle.png';
 
+import './viewProfile.css';
+
 const viewProfile = (props) => {
   // Notes for Preston:
   //  - explain async better?
@@ -33,6 +35,8 @@ const viewProfile = (props) => {
 
   const [tier, setTier] = useState(0);
   const [status, setStatus] = useState('Volunteer');
+
+  const [currentProfilePicture, setCurrentProfilePicture] = useState(null);
 
   const [availability, setAvailability] = useState([]);
 
@@ -78,6 +82,7 @@ const viewProfile = (props) => {
     setBirthday(account.birthdate);
     setTier(account.tier);
     setStatus(permissions.permissions);
+    setCurrentProfilePicture(account.profile_picture);
 
     // get req for availability
     const availabilityResult = await WMKBackend.get(`/availability/${userID}`);
@@ -103,30 +108,28 @@ const viewProfile = (props) => {
   // Passing user info as props to About, Contact and (eventually) availability components
   // Also, remove the two buttons later
   return (
-    <div>
-      <div className="page-container">
-        <div className="profilePic">
-          <img src={profCircle} alt="" width="200" height="200" />
+    <div className="page-container">
+      <div className="profile-pic">
+        <img className="pfp" src={currentProfilePicture || profCircle} alt="" width="200" height="200" />
+      </div>
+      <div className="name">
+        <h3>{`${firstName} ${lastName}`}</h3>
+        <ul className="edit-save">
+          <button type="button" onClick={() => { history.push('/editProfile'); }}>
+            Edit
+          </button>
+        </ul>
+      </div>
+      <div className="abt-contact">
+        <div className="abtCard">
+          <About bday={birthday} tier={tier} status={status} />
         </div>
-        <div className="name">
-          <h3>{`${firstName} ${lastName}`}</h3>
-          <ul className="edit-save">
-            <button type="button" onClick={() => { history.push('/editProfile'); }}>
-              Edit
-            </button>
-          </ul>
+        <div className="contactCard">
+          <Contact email={email} number={number} address={address} />
         </div>
-        <div className="abt-contact">
-          <div className="abtCard">
-            <About bday={birthday} tier={tier} status={status} />
-          </div>
-          <div className="contactCard">
-            <Contact email={email} number={number} address={address} />
-          </div>
-        </div>
-        <div>
-          <viewAvailability availabilities={availability} startWeek={startWeek} />
-        </div>
+      </div>
+      <div>
+        <viewAvailability availabilities={availability} startWeek={startWeek} />
       </div>
     </div>
   );
