@@ -112,7 +112,7 @@
 }
 
 .zip-input {
-  width: 50px;
+  width: 60px;
 }
 
 .rdt input {
@@ -246,8 +246,7 @@
     font-size: 15px;
   }
 
-  .tier-input,
-  .gender-input {
+  .tier-input {
     border: none;
   }
 

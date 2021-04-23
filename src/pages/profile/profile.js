@@ -261,7 +261,7 @@ const Profile = (props) => {
                         <img className="about-icons" src={people} alt="" />
                         <span className="tier-box">{tier}</span>
                       </div>
-                      <div className="about-input gender-input">
+                      <div className="about-input gender-input contact-input">
                         <img className="about-icons" src={genderIcon} alt="" />
                         <input className="profile-input-box" value={gender} name="gender" onChange={(e) => setGender(e.target.value)} />
                       </div>
