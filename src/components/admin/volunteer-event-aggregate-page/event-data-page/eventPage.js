@@ -26,7 +26,7 @@ const EventDetailPage = () => {
   // (they're commented out to help with alignment)
   return (
     <div className="event-page-info">
-      <h2 className="event-title">{eventName}</h2>
+      <h1 className="event-title">{eventName}</h1>
       <div className="row1">
         <EventDetails event={event} />
         {/* <div className="demo"> */}

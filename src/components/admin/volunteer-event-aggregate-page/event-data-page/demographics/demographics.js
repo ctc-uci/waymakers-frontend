@@ -90,26 +90,22 @@ const Demographics = ({ event }) => {
   );
 
   return (
-    // <div className="demographics">
-    <TitledCard title="Demographics" cardClassName="demographic-card">
-      <div className="demographics-charts">
-        <DemoGraphicsLeftArrow />
-        <div className="pie-charts">
-          {pieChartLabels.slice(startDisplayIndex, startDisplayIndex + 3)
-            .map(({ attribute, label }) => (
-              <div className="pie-chart-and-label">
-                <PieChart
-                  demoInfo={getDemographicData(attribute)}
-                  label={label}
-                />
-                <p className="medium">{label}</p>
-              </div>
-            ))}
-        </div>
-        <DemographicsRightArrow />
+    <TitledCard title="Demographics" className="demographic-card-container" cardClassName="demographic-card">
+      <DemoGraphicsLeftArrow />
+      <div className="pie-charts">
+        {pieChartLabels.slice(startDisplayIndex, startDisplayIndex + 3)
+          .map(({ attribute, label }) => (
+            <div className="pie-chart-and-label">
+              <PieChart
+                demoInfo={getDemographicData(attribute)}
+                label={label}
+              />
+              <p className="medium">{label}</p>
+            </div>
+          ))}
       </div>
+      <DemographicsRightArrow />
     </TitledCard>
-    // </div>
   );
 };
 

@@ -48,7 +48,7 @@ const ListOfVolunteers = (prop) => {
 
   return (
     // <div className="list-of-volunteer">
-    <TitledCard title="List of Volunteers" cardClassName="list-of-volunteer">
+    <TitledCard title="List of Volunteers" className="list-of-volunteer-container" cardClassName="list-of-volunteer">
       <div className="sort-by-dropdown">
         Sort by:
         <select className="sort-by" value={sortingMethod} onChange={(e) => setSortingMethod(e.target.value)}>

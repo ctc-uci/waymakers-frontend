@@ -1,8 +1,11 @@
+.list-of-volunteer-container {
+    flex-grow: 1;
+}
+
 .list-of-volunteer  {
     display: flex;
     flex-flow: column;
     color: var(--text-color-dark);
-    width: 900px;
     height: 100%;
 }
 
