@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Datetime from 'react-datetime';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
@@ -186,6 +187,12 @@ const Profile = (props) => {
     return (<div>Loading user profile...</div>);
   }
 
+  const deleteAccount = async () => {
+    // const userID = cookies.get('userId');
+    // const result = await WMKBackend.delete(`/accounts/${userID}`);
+    // console.log(result.status);
+  };
+
   return (
     <>
       {isViewProfile
@@ -277,7 +284,7 @@ const Profile = (props) => {
                 </div>
               </div>
             </div>
-            {(permissions === 'Volunteer') ? <VolunteerAvailability /> : <AdminAvailability />}
+            {(permissions === 'Volunteer') ? <div className="availability-third"><VolunteerAvailability /></div> : <AdminAvailability />}
           </div>
         )
         : (
@@ -405,7 +412,10 @@ const Profile = (props) => {
                 </div>
               </div>
             </div>
-            {(permissions === 'Volunteer') ? <VolunteerAvailability /> : <AdminAvailability />}
+            {(permissions === 'Volunteer') ? <div className="availability-third"><VolunteerAvailability /></div> : <AdminAvailability />}
+            <Link to="/login">
+              <button type="button" className="profile-delete-button" onClick={deleteAccount}>Delete Account</button>
+            </Link>
           </div>
         )}
     </>

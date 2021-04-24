@@ -250,6 +250,21 @@
   border-radius: 50%;
 }
 
+.profile-delete-button {
+  text-decoration: underline;
+  border: none;
+  background-color: transparent;
+  color: #E11C1C;
+  cursor: pointer;
+  font-size: 30px;
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+.availability-third {
+  width: 100vw;
+}
+
 @media screen and (max-width: 768px) {
   .profile-page-container .profile-cards {
     display: flex;
