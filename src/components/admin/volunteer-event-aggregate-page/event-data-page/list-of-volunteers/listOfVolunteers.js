@@ -47,37 +47,37 @@ const ListOfVolunteers = (prop) => {
   }, [sortingMethod]);
 
   return (
-    <div className="list-of-volunteer">
-      <TitledCard title="List of Volunteers">
-        <div className="sort-by-dropdown">
-          Sort by:
-          <select className="sort-by" value={sortingMethod} onChange={(e) => setSortingMethod(e.target.value)}>
-            <option className="sort-by-items" value="0">A-Z</option>
-            <option className="sort-by-items" value="1">Z-A</option>
-            <option className="sort-by-items" value="2">Most Hours</option>
-            <option className="sort-by-items" value="3">Least Hours</option>
-          </select>
-        </div>
-        {isMobile
-          ? (
-            <VolunteerTableMobile data={allVolunteers} />
-          ) : (
-            <VolunteerTable data={allVolunteers} />
-          )}
-        <div className="total-stats">
-          <p>
-            Total People:
-            {' '}
-            {allVolunteers.length}
-          </p>
-          <p>
-            Total Hours:
-            {' '}
-            {totalHours}
-          </p>
-        </div>
-      </TitledCard>
-    </div>
+    // <div className="list-of-volunteer">
+    <TitledCard title="List of Volunteers" cardClassName="list-of-volunteer">
+      <div className="sort-by-dropdown">
+        Sort by:
+        <select className="sort-by" value={sortingMethod} onChange={(e) => setSortingMethod(e.target.value)}>
+          <option className="sort-by-items" value="0">A-Z</option>
+          <option className="sort-by-items" value="1">Z-A</option>
+          <option className="sort-by-items" value="2">Most Hours</option>
+          <option className="sort-by-items" value="3">Least Hours</option>
+        </select>
+      </div>
+      {isMobile
+        ? (
+          <VolunteerTableMobile data={allVolunteers} />
+        ) : (
+          <VolunteerTable data={allVolunteers} />
+        )}
+      <div className="total-stats">
+        <p>
+          Total People:
+          {' '}
+          {allVolunteers.length}
+        </p>
+        <p>
+          Total Hours:
+          {' '}
+          {totalHours}
+        </p>
+      </div>
+    </TitledCard>
+    // </div>
   );
 };
 

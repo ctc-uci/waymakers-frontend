@@ -90,7 +90,8 @@ const Demographics = ({ event }) => {
   );
 
   return (
-    <TitledCard title="Demographics">
+    // <div className="demographics">
+    <TitledCard title="Demographics" cardClassName="demographic-card">
       <div className="demographics-charts">
         <DemoGraphicsLeftArrow />
         <div className="pie-charts">
@@ -108,6 +109,7 @@ const Demographics = ({ event }) => {
         <DemographicsRightArrow />
       </div>
     </TitledCard>
+    // </div>
   );
 };
 

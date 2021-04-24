@@ -43,7 +43,7 @@ const topVolunteersComponent = ({ event }) => {
   );
 
   return (
-    <TitledCard title="Top Volunteers">
+    <TitledCard title="Top Volunteers" cardClassName="volunteer-card">
       {/* <div className="top-volunteers"> */}
       {/* <div className="volunteers-container"> */}
       <ul className="volunteer-list">

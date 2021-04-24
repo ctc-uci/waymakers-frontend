@@ -31,7 +31,7 @@ const Overview = (prop) => {
   }
 
   return (
-    <TitledCard title="Event Details">
+    <TitledCard title="Event Details" className="event-card">
       <div className="event-details-container">
         <p className="large">
           {startTime.isSame(endTime, 'day')

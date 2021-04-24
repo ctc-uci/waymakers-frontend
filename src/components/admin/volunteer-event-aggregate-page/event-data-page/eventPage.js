@@ -29,7 +29,9 @@ const EventDetailPage = () => {
       <h2 className="event-title">{eventName}</h2>
       <div className="row1">
         <EventDetails event={event} />
+        {/* <div className="demo"> */}
         <Demographics event={event} />
+        {/* </div> */}
       </div>
       <div className="row2">
         <TopVolunteersComponent event={event} className="top-volunteers" />

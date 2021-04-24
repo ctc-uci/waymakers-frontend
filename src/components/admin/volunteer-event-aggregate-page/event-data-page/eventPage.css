@@ -1,6 +1,6 @@
 .event-page-info {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,7 +19,7 @@
 .row1, .row2 {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     width: 80%;
 }
 

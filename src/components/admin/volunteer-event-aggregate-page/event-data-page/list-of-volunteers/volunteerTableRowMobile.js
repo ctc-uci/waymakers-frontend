@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {
   MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../../common/MobileTable';
+import toggleOpen from '../../../../../assets/datatoggleopen.svg';
+import toggleClose from '../../../../../assets/datatoggleclose.svg';
 
 const VolunteerTableRowMobile = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +23,7 @@ const VolunteerTableRowMobile = ({ data }) => {
           Number of Hours:
           {' '}
           {data.sum}
-          <span style={{ float: 'right' }}>{isOpen ? '^' : 'v'}</span>
+          <img alt="" src={isOpen ? toggleClose : toggleOpen} style={{ float: 'right' }} />
         </MobileTableContent>
         {isOpen
           ? (

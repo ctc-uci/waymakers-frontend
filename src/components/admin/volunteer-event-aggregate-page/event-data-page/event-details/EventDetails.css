@@ -10,3 +10,7 @@
     width: 23px;
     margin-right: 8px;
 }
+
+.event-card .titled-card-title {
+    white-space: nowrap;
+}
