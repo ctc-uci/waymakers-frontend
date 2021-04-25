@@ -113,6 +113,7 @@ const Profile = (props) => {
   }, []);
 
   const handleImageInputChange = (e) => {
+    console.log(e);
     reader.addEventListener('load', () => {
       setUploadedFile(reader.result);
       setIsCropperOpen(true);
@@ -145,12 +146,12 @@ const Profile = (props) => {
 
       if (uploadedFile) {
         payload.profilePicture = await uploadPicture();
+        setCurrentProfilePicture(payload.profilePicture);
       }
       await WMKBackend.put(`/accounts/${userID}`, payload);
     } catch (e) {
       console.error(e);
     }
-
     setIsViewProfile(true);
   };
 
@@ -160,7 +161,6 @@ const Profile = (props) => {
       `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
         withCredentials: true,
       },
-
     );
 
     const { account } = result.data;
