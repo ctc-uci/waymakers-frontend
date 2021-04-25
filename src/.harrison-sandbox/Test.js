@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ExampleLightModalWithFormik from "../common/LightModal/ExampleLightModalWithFormik";
 import { TitledCard } from '../common/Card';
 import ExampleGenericTableWithUseMobile from '../common/Table/ExampleGenericTableWithUseMobile';
+import VerificationPage from '../pages/login/verificationPage';
 
 const Test = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +22,11 @@ const Test = () => {
       <TitledCard title="This is the title">
         Content inside the card
       </TitledCard>
+      <VerificationPage
+        userID="mvLAsKySfcN9aSoQE5MnArYHrJE2"
+        firstName="Billy"
+        email="junkoemail248@gmail.com"
+      />
     </>
   );
 };

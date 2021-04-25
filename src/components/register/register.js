@@ -60,8 +60,25 @@ const Register = () => {
         birthDate: `${birthYear}-${birthMonth}-${birthDay}`,
         gender: gender === 'other' ? genderOther : gender,
         division: 1,
+        verified: false,
       });
       console.log(res);
+
+      const verifyStatus = await WMKBackend.post('/register/sendVerification', {
+        userID: user.user.uid,
+        firstName,
+        email,
+      });
+      console.log(verifyStatus);
+
+      history.push({
+        pathname: '/verification',
+        state: {
+          userID: user.user.uid,
+          firstName,
+          email,
+        },
+      });
     } catch (err) {
       alert(err);
     }
@@ -72,7 +89,6 @@ const Register = () => {
       // alert(JSON.stringify(values, null, 2));
       try {
         await register(values);
-        history.push('/');
       } catch (err) {
         alert(err);
       }

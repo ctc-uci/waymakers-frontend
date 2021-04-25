@@ -11,6 +11,7 @@ import Layout from './components/layout/layout';
 import Dashboard from './pages/dashboard/dashboard';
 import RegisterPage from './pages/login/registerPage';
 import LoginPage from './pages/login/loginPage';
+import VerificationPage from './pages/login/verificationPage';
 import ManageUsers from './components/admin/manageusers/manageusers';
 import ManageDB from './components/admin/managedb/managedb';
 // import Profile from './components/profile/profile';
@@ -39,6 +40,7 @@ ReactDOM.render(
           <Switch>
             <Route path="/register" component={RegisterPage} />
             <Route path="/login" component={LoginPage} />
+            <Route path="/verification" component={VerificationPage} />
             <div className="App">
               <Layout>
                 <Switch>
@@ -58,8 +60,8 @@ ReactDOM.render(
                   <ProtectedRoute path="/inventory" component={Inventory} admin />
                   <ProtectedRoute path="/reports" component={Reports} admin />
                   <ProtectedRoute path="/events/viewHours" component={viewHours} />
-                  <ProtectedRoute path="/events" component={Events} />
-                  <Route component={NotFound404} />
+                  <ProtectedRoute path="/events" component={Events} admin />
+                  <Route path="*" component={NotFound404} />
                 </Switch>
               </Layout>
             </div>
