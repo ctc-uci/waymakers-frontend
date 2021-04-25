@@ -16,7 +16,17 @@ const topVolunteersComponent = ({ event }) => {
 
   const getTopVolunteers = async () => {
     const volunteers = await WMKBackend.get('/volunteerData/top/', paramQuery);
-    setTopVolunteers(volunteers.data);
+
+    // always have 4 top volunteers
+    const fourPlaceholderVolunteers = [...Array(4)].map((i) => ({
+      firstname: 'N/A',
+      lastname: 'N/A',
+      sum: '--',
+      userid: `notRealVolunteer${i}`,
+    }));
+    const top4VolunteerData = [...volunteers.data, ...fourPlaceholderVolunteers].slice(0, 4);
+
+    setTopVolunteers(top4VolunteerData);
   };
 
   useEffect(() => {
