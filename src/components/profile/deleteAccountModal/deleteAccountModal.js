@@ -26,7 +26,7 @@ const DeleteAccountModal = ({ isModalOpen, setIsModalOpen, cookies }) => {
       <div className="delete-account-modal-container">
         <button type="button" className="delete-modal-close-button" onClick={() => setIsModalOpen(false)}>X</button>
         <p className="large title bold">Are you sure you want to delete your account?</p>
-        <p className="body medium bold">This cannot be undone.</p>
+        <p className="body medium bold">Warning: This cannot be undone.</p>
         <Link to="/login">
           <button type="button" className="delete-account-button" onClick={() => deleteAccount()}>Delete Account</button>
         </Link>
