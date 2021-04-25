@@ -88,9 +88,9 @@ table thead {
 }
 
 /* To add 'week of' */
-.fc-toolbar-title::before {
+/* .fc-toolbar-title::before {
     content: "Week of ";
-}
+} */
 
 /* Remove today button */
 .fc-today-button {
