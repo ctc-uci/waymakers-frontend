@@ -11,13 +11,12 @@
     align-self: flex-start;
     color: var(--text-color-dark);
     margin-bottom: 0;
+    padding-left: 16px;
 }
 
 .row1, .row2 {
     display: flex;
     flex-direction: row;
-    /* justify-content: space-evenly; */
-    /* width: 80%; */
 }
 
 .row1 {
@@ -39,10 +38,5 @@
 
     .row1 {
         height: fit-content;
-    }
-
-    .row1 .titled-card-container {
-        margin-left: 0;
-        margin-right: 0;
     }
 }

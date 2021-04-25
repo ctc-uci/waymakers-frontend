@@ -45,6 +45,10 @@
     border-top: 1px solid var(--color-dark-blue);
 }
 
+.volunteer-card-container {
+    min-width: 200px;
+}
+
 .volunteer-card {
     height: 100%;
     display: flex;
@@ -83,8 +87,5 @@
     }
     .first{
         padding: 2px;
-    }
-    .volunteer-card {
-        width: 100%;
     }
 }

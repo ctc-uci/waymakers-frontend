@@ -60,8 +60,6 @@
     font-weight: bold;
 }
 
-@media screen and (max-width: 768px) {
-    .list-of-volunteer {
-        width: 100%;
-    }
-}
+/* @media screen and (max-width: 768px) {
+
+} */

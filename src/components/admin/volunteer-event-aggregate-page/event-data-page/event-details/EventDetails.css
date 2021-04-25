@@ -14,3 +14,7 @@
 .event-card .titled-card-title {
     white-space: nowrap;
 }
+
+.event-card {
+    min-width: 200px;
+}
