@@ -4,6 +4,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
 import GoogleAuthService from '../../services/firebase/firebase';
+import { WMKBackend } from '../../common/utils';
 
 import registrationShowPassword from '../../assets/registrationShowPassword.svg';
 import registrationHidePassword from '../../assets/registrationHidePassword.svg';
@@ -35,6 +36,15 @@ const LogIn = (props) => {
 
   async function login() {
     try {
+      const res = await WMKBackend.get('/register/isVerified', {
+        params: {
+          email,
+        },
+      });
+      console.log('@login:', res);
+      if (!res.data) {
+        throw new Error('User is not verified');
+      }
       await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
 
       const idToken = await GoogleAuthService.auth.currentUser.getIdToken();
