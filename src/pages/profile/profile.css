@@ -13,7 +13,7 @@
   position: relative;
 }
 
-.profile-page-container .profile-edit-save {
+.profile-page-container .name .profile-edit-save {
   text-decoration: underline;
   border: none;
   background-color: transparent;
@@ -94,28 +94,21 @@
   width: 100%;
 }
 
-.tier-box,
-.status-box {
+.about-input.tier-input .tier-box {
     font-size: 20px;
     margin-left: 10px;
     padding: 5px;  
 }
 
-.address-input {
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-.state-input {
+.info-section.location-input.location-margin .state-input {
     width: 30px;
 }
 
-.zip-input {
+.info-section.location-input.location-margin .zip-input {
   width: 60px;
 }
 
-.rdt input {
+.about-input .datetime-input-box .rdt input {
     width: 100%;
     color: var(--color-dark-blue);
     background-color: transparent;
@@ -145,18 +138,10 @@
     margin-right: 10px;
 }
 
-.about-input,
+.about-card form .about-input,
 .contact-input
 {
     display: flex;
-    align-items: center;
-    margin-top: 17px;
-    margin-bottom: 17px;
-}
-
-.address-input-container {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-top: 17px;
     margin-bottom: 17px;
@@ -240,14 +225,10 @@
   z-index: 900;
 }
 
-.page-container .profile-pic .pfp {
+.profile-page-container .profile-pic .pfp {
   border-radius: 50%;
   width: 200px;
   height: 200px;
-}
-
-.pfp {
-  border-radius: 50%;
 }
 
 .profile-delete-button {
@@ -289,15 +270,15 @@
     margin-left: 0px;
   }
 
-  .datetime-input-box {
+  .about-input .datetime-input-box {
     border: none;
   }
 
-  .rdt input {
+  .about-input .datetime-input-box .rdt input {
       font-size: 15px;
   }
 
-  .about-input, .contact-input {
+  .about-card form .about-input, .contact-input {
       margin: 5px;
       border-style: solid;
       border-width: 1px;
@@ -317,22 +298,12 @@
     margin-left: 8px;
   }
 
-  .tier-box,
-  .status-box {
+  .about-input.tier-input .tier-box {
     font-size: 15px;
   }
 
   .tier-input {
     border: none;
-  }
-
-  .address-input-container {
-    margin: 5px;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 5px;
-    padding: 2px;
-    flex-wrap: wrap;
   }
 
   .profile-edit-mode-buttons,
@@ -345,11 +316,11 @@
     position: relative;
   }
 
-  .profile-name {
+  .profile-page-container .name .profile-name {
     margin: 0px;
   }
 
-  .profile-save-button-text {
+  .profile-edit-save.profile-save-button .profile-save-button-text {
     margin-bottom: 0px;
   }
 

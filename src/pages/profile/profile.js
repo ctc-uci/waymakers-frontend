@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Datetime from 'react-datetime';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
 
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
@@ -15,6 +14,7 @@ import VolunteerAvailability from '../../components/dashboard/availability-compo
 import AdminAvailability from '../../components/dashboard/availability-component/adminAvailability/adminAvailability';
 import useMobileWidth from '../../common/useMobileWidth';
 import ImageCropper from '../../components/profile/profilePictureCropper/imageCropper';
+import DeleteAccountModal from '../../components/profile/deleteAccountModal/deleteAccountModal';
 
 import profCircle from '../../assets/profCircle.png';
 import cake from '../../assets/birthday.svg';
@@ -59,6 +59,8 @@ const Profile = (props) => {
   const [uploadedFile, setUploadedFile] = useState(null); // Base64 string of the file bing uploaded
   const [uploadedFilePreview, setUploadedFilePreview] = useState(null);
   const [isCropperOpen, setIsCropperOpen] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Uploads a user's profile picture and returns url
   const uploadPicture = async () => {
@@ -187,12 +189,6 @@ const Profile = (props) => {
     return (<div>Loading user profile...</div>);
   }
 
-  const deleteAccount = async () => {
-    // const userID = cookies.get('userId');
-    // const result = await WMKBackend.delete(`/accounts/${userID}`);
-    // console.log(result.status);
-  };
-
   return (
     <>
       {isViewProfile
@@ -289,6 +285,7 @@ const Profile = (props) => {
         )
         : (
           <div className="profile-page-container">
+            <DeleteAccountModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
             <ImageCropper
               imageSrc={uploadedFile}
               setCropped={setUploadedFile}
@@ -413,9 +410,7 @@ const Profile = (props) => {
               </div>
             </div>
             {(permissions === 'Volunteer') ? <div className="availability-third"><VolunteerAvailability /></div> : <AdminAvailability />}
-            <Link to="/login">
-              <button type="button" className="profile-delete-button" onClick={deleteAccount}>Delete Account</button>
-            </Link>
+            <button type="button" className="profile-delete-button" onClick={() => setIsModalOpen(true)}>Delete Account</button>
           </div>
         )}
     </>
