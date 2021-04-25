@@ -2,13 +2,14 @@
 
 .event-details-container .event-info-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .event-details-container .event-info-container .event-info-icon {
     height: 23px;
     width: 23px;
     margin-right: 8px;
+    margin-top: 16px;
 }
 
 .event-card .titled-card-title {
@@ -16,5 +17,5 @@
 }
 
 .event-card {
-    min-width: 200px;
+    min-width: 250px;
 }

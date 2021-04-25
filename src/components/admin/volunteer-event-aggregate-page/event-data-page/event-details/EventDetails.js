@@ -33,14 +33,12 @@ const Overview = (prop) => {
   return (
     <TitledCard title="Event Details" className="event-card">
       <div className="event-details-container">
-        <p className="large">
-          {startTime.isSame(endTime, 'day')
-            ? startTime.format('MMMM Do')
-            : `${startTime.format('MMMM Do')} - ${endTime.format('MMMM Do')}`}
-        </p>
         <div className="event-info-container">
           <img className="event-info-icon" src={clockIcon} alt="time" />
-          <p>{`${startTime.format('hh:mm A')} to ${endTime.format('hh:mm A')}`}</p>
+          <div>
+            <p>{`${startTime.format('ddd MMM Do hh:mm A')} to`}</p>
+            <p>{endTime.format('ddd MMM Do hh:mm A')}</p>
+          </div>
         </div>
         <div className="event-info-container">
           <img className="event-info-icon" src={locationPinIcon} alt="location" />
