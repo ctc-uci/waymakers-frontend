@@ -9,18 +9,10 @@
     flex-direction: row;
 }
 
-/* .demographics-charts {
-    display: flex;
-    align-items: center;
-    min-width: 750px;
-    height: 100%;
-    width: 100%;
-} */
-
 .pie-charts {
     display: flex;
     flex-direction: row;
-    /* align-items: center; */
+    align-items: center;
     justify-content: center;
     height: 100%;
     width: 100%;
@@ -32,7 +24,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
     margin-right: 10px;
     margin-left: 10px;
 }
@@ -57,11 +48,6 @@
 }
 
 @media screen and (max-width: 768px) {
-    .demographics-charts {
-        width: 100%;
-        height: 600px;
-    }
-
     .pie-chart-and-label {
         justify-content: center;
         width: 90%;

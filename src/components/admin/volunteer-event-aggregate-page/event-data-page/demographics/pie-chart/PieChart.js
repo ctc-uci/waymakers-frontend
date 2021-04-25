@@ -29,7 +29,7 @@ const PieChart = ({ demoInfo }) => (
         <>
           <Pie
             data={demoInfo}
-            width={width * 1.1}
+            width={width}
             height={height}
             margin={{
               top: 20,
