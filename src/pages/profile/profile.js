@@ -11,7 +11,6 @@ import { withCookies, Cookies } from 'react-cookie';
 import { WMKBackend } from '../../common/utils';
 import Card from '../../common/Card/Card';
 import VolunteerAvailability from '../../components/dashboard/availability-component/volunteerAvailability/volunteerAvailability';
-import AdminAvailability from '../../components/dashboard/availability-component/adminAvailability/adminAvailability';
 import useMobileWidth from '../../common/useMobileWidth';
 import ImageCropper from '../../components/profile/profilePictureCropper/imageCropper';
 import DeleteAccountModal from '../../components/profile/deleteAccountModal/deleteAccountModal';
@@ -48,7 +47,6 @@ const Profile = (props) => {
 
   const [tier, setTier] = useState(0);
   const [gender, setGender] = useState('');
-  const [permissions, setPermissions] = useState('Volunteer');
 
   const [isLoading, setLoading] = useState(false);
   const isMobile = useMobileWidth();
@@ -79,7 +77,6 @@ const Profile = (props) => {
 
     // Get profile picture image
     const imageUrl = uploadUrl.split('?')[0];
-    console.log(imageUrl);
     return imageUrl;
   };
 
@@ -94,7 +91,6 @@ const Profile = (props) => {
       locationstreet, locationcity, locationstate, locationzip,
     } = account;
 
-    setPermissions(result.data.permissions.permissions);
     setFirstName(account.firstname);
     setLastName(account.lastname);
     setEmail(account.email);
@@ -107,7 +103,6 @@ const Profile = (props) => {
     setTier(account.tier);
     setGender(account.gender);
     setCurrentProfilePicture(account.profile_picture);
-    // setpfpLink(account.profile_picture);
 
     setLoading(false);
   }, []);
@@ -180,7 +175,6 @@ const Profile = (props) => {
     setTier(account.tier);
     setGender(account.gender);
     setCurrentProfilePicture(account.profile_picture);
-    // setpfpLink(account.profile_picture);
 
     setIsViewProfile(true);
   };
@@ -280,7 +274,9 @@ const Profile = (props) => {
                 </div>
               </div>
             </div>
-            {(permissions === 'Volunteer') ? <div className="availability-third"><VolunteerAvailability /></div> : <AdminAvailability />}
+            <div className="availability-third">
+              <VolunteerAvailability />
+            </div>
           </div>
         )
         : (
@@ -409,7 +405,9 @@ const Profile = (props) => {
                 </div>
               </div>
             </div>
-            {(permissions === 'Volunteer') ? <div className="availability-third"><VolunteerAvailability /></div> : <AdminAvailability />}
+            <div className="availability-third">
+              <VolunteerAvailability />
+            </div>
             <button type="button" className="profile-delete-button" onClick={() => setIsModalOpen(true)}>Delete Account</button>
           </div>
         )}

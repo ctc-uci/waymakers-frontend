@@ -329,4 +329,9 @@
     flex-direction: row;
     align-items: center;
   }
+
+  .availability-third {
+    width: 100vw;
+    margin-top: 20px;
+  }
 }
