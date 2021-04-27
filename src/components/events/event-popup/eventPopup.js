@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Modal from 'react-modal';
 import { withCookies, Cookies } from 'react-cookie';
 import { connect, useDispatch } from 'react-redux';
 import {
@@ -31,7 +32,7 @@ const monthList = [
 
 // TODO: Scale eventPopup based on viewport height
 const EventPopup = ({
-  event, addEventToUserCalendar, removeEventFromUserCalendar, cookies, popupType,
+  event, addEventToUserCalendar, removeEventFromUserCalendar, cookies, popupType, isOpen,
 }) => {
   const dispatch = useDispatch();
   const startDate = new Date(event.startTime);
@@ -180,53 +181,59 @@ const EventPopup = ({
   };
 
   return (
-    <div className="popup">
-      <button
-        className="exit-button"
-        type="button"
-        aria-label="close"
-        onClick={() => { dispatch(setShowPopup(false)); }}
-      >
-        <img className="x-icon" src={cross} alt="close" />
-      </button>
-      <div className="event-image">
-        <p>Image</p>
+    <Modal
+      className="volunteer-event-popup"
+      isOpen={isOpen}
+      onRequestClose={() => {
+        dispatch(setShowPopup(false));
+      }}
+    >
+      <div className="popup">
+        <button
+          className="exit-button"
+          type="button"
+          aria-label="close"
+          onClick={() => { dispatch(setShowPopup(false)); }}
+        >
+          <img className="x-icon" src={cross} alt="close" />
+        </button>
+        <div className={`event-type-${event.eventType.toLowerCase()}`} />
+        <div className="event-info">
+          <div className="popup-header">
+            <p className="event-time">
+              {prettifyDate()}
+            </p>
+            <p className="event-name">{event.title}</p>
+          </div>
+          <div className="details-section">
+            <p className="details-title">Details</p>
+            <div className="event-detail">
+              <img className="event-detail-icon" src={locationPinIcon} alt="location" />
+              <span className="event-detail-label">{event.location}</span>
+            </div>
+            <div className="event-detail">
+              <img className="event-detail-icon" src={folderIcon} alt="folder" />
+              <span className="event-detail-label">{event.division}</span>
+            </div>
+            <div className="event-detail">
+              <img className="event-detail-icon" src={peopleIcon} alt="people" />
+              <span className="event-detail-label">
+                {parseInt(event.eventLimit, 10)
+                - parseInt(event.eventAttendance, 10)}
+                /
+                {event.eventLimit}
+                {' '}
+                Spots Remaining
+              </span>
+            </div>
+          </div>
+          <div className="event-description">
+            <p>{event.description}</p>
+          </div>
+          {renderButtons()}
+        </div>
       </div>
-      <div className="event-info">
-        <div className="popup-header">
-          <p className="event-time">
-            {prettifyDate()}
-          </p>
-          <p className="event-name">{event.title}</p>
-        </div>
-        <div className="details-section">
-          <p className="details-title">Details</p>
-          <div className="event-detail">
-            <img className="event-detail-icon" src={locationPinIcon} alt="location" />
-            <span className="event-detail-label">{event.location}</span>
-          </div>
-          <div className="event-detail">
-            <img className="event-detail-icon" src={folderIcon} alt="folder" />
-            <span className="event-detail-label">{event.division}</span>
-          </div>
-          <div className="event-detail">
-            <img className="event-detail-icon" src={peopleIcon} alt="people" />
-            <span className="event-detail-label">
-              {parseInt(event.eventLimit, 10)
-               - parseInt(event.eventAttendance, 10)}
-              /
-              {event.eventLimit}
-              {' '}
-              Spots Remaining
-            </span>
-          </div>
-        </div>
-        <div className="event-description">
-          <p>{event.description}</p>
-        </div>
-        {renderButtons()}
-      </div>
-    </div>
+    </Modal>
   );
 };
 
@@ -236,6 +243,7 @@ EventPopup.propTypes = {
   addEventToUserCalendar: PropTypes.func.isRequired,
   removeEventFromUserCalendar: PropTypes.func.isRequired,
   popupType: PropTypes.string.isRequired,
+  isOpen: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
