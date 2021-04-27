@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch, connect } from 'react-redux';
 
 import EventPopup from '../../event-popup/eventPopup';
-import HoursPopup from '../../hours-popup/hoursPopup';
+import SubmitHoursPopup from '../../../volunteer/volHours/unsubmittedHours/SubmitHoursPopup';
 import DialogueBox from '../../../admin/dialogue-box/dialogueBox';
 import EventForm from '../../edit-events/newEventForm';
 
@@ -30,20 +30,23 @@ const CalendarPopup = ({
   function renderPopup() {
     const selectedEvent = useSelector(getSelectedEvent);
     const popupType = useSelector(getPopupType);
-    if (useSelector(getShowPopup)) {
+    const popupIsOpen = useSelector(getShowPopup);
+
+    if (popupIsOpen) {
       // Event is NOT on the user's calendar
       switch (page) {
         case 'volunteerDashboard':
           // Event is on the user's calendar already
           if (popupType === 'LogHoursForm') {
             return (
-              <HoursPopup
-                onClose={onClosePopup}
-                event={selectedEvent}
+              <SubmitHoursPopup
+                isModalOpen={popupIsOpen}
+                setIsModalOpen={(open) => dispatch(setShowPopup(open))}
+                eventTitle={selectedEvent.title}
               />
             );
           }
-          return <EventPopup event={selectedEvent} />;
+          return <EventPopup event={selectedEvent} isOpen={popupIsOpen} />;
         case 'addModifyDeleteEventsPage':
           return (
             <EventForm />
