@@ -1,0 +1,65 @@
+.verification-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.verification-container p {
+    text-align: center;
+}
+
+.verification-container .wmk-verification-logo {
+    display: block;
+    max-width: 385px;
+    max-height: 185px;
+    width: auto;
+    height: auto;
+}
+
+.verification-container .resend-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1.3rem;
+
+    border: none;
+    border-radius: 10px;
+    -webkit-appearance: none;
+    outline: none;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.46);
+
+    cursor: pointer;
+
+    color: white;
+    background: var(--color-green);
+
+    margin-top: 50px;
+
+    height: 40px;
+    width: 300px;
+}
+
+.verification-container .verify-footnote {
+    color: #757575
+}
+
+@media screen and (max-width: 768px) {
+    .verification-container .wmk-verification-logo {
+        max-width: 260px;
+    }
+
+    .verification-container h1 {
+        font-size: 20px;
+    }
+
+    .verification-container p {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+}
