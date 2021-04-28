@@ -84,7 +84,7 @@ const DesktopNavbar = (props) => {
         </div>
       )}
       {isAdmin && <Link to="/inventory" className="desktop-navbar-link">Inventory</Link>}
-      {isAdmin && <Link to="/users" className="desktop-navbar-link">User Directory</Link>}
+      {isAdmin && <Link to="/admin/users" className="desktop-navbar-link">User Directory</Link>}
       {/* <div className="desktop-navbar-pfp" /> */}
       <button
         type="button"

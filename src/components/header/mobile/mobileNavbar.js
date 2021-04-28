@@ -58,7 +58,7 @@ const MobileNavbar = (props) => {
       <Link to="/inventory" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
         Inventory
       </Link>
-      <Link to="/users" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+      <Link to="/admin/users" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
         User Directory
       </Link>
       <button
