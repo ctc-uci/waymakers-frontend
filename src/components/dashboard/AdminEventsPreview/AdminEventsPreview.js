@@ -5,13 +5,9 @@ import { WMKBackend } from '../../../common/utils';
 import useMobileWidth from '../../../common/useMobileWidth';
 
 import './AdminEventsPreview.css';
-// import Event from '../event/event';
-// import EditEventPopup from './editEventPopup';
 
 const AdminEventsPreview = () => {
   const [events, setEvents] = useState([]);
-  // const [editPopup, setEditPopup] = useState(false);
-  // const [selectedEvent, setSelectedEvent] = useState(null);
   const isMobile = useMobileWidth(1100);
   const sliceNum = isMobile ? 2 : 3;
 
@@ -54,48 +50,7 @@ const AdminEventsPreview = () => {
     );
   };
 
-  // Passed into Event component for the Edit button => shows the popup
-  // const onEditEventClick = (event) => {
-  //   setSelectedEvent(event);
-  //   setEditPopup(true);
-  // };
-
-  // const renderEvents = () => {
-  //   const upcomingEvents = events.sort((a, b) => b.startTime - a.startTime).slice(0, 3);
-  //   return upcomingEvents.map((event) => (
-  //     <Event
-  //       key={event.id}
-  //       event={event}
-  //       onEditEventClick={onEditEventClick}
-  //     />
-  //   ));
-  // };
-
-  // function renderEditPopup() {
-  //   if (editPopup) {
-  //     return (
-  //       <EditEventPopup
-  //         event={selectedEvent}
-  //         onClose={() => {
-  //           setEditPopup(false);
-  //           getEvents();
-  //         }}
-  //       />
-  //     );
-  //   }
-  //   return null;
-  // }
-
   return (
-    // <div className="editEventsContainer">
-    //   <div id="middle-section" className="top-item-box">
-    //     {renderEditPopup()}
-    //     {renderEvents()}
-    //     <Link to="/events">
-    //       <button className="all-events" type="button">View All</button>
-    //     </Link>
-    //   </div>
-    // </div>
     <div className="upcoming-events-component">
       <h4 className="upcoming-events-title">Upcoming Events</h4>
       <div className="upcoming-events-section">
@@ -104,13 +59,6 @@ const AdminEventsPreview = () => {
         ))}
       </div>
       <div className="all-events-section">
-        {/* <Link to="/events">
-          <button type="button" className="all-events-button">
-            <p className="large">
-              Edit Events
-            </p>
-          </button>
-        </Link> */}
         <button type="button" className="all-events-button">
           <Link to="/events" className="button-anchor">
             <p className="large">Edit Events</p>

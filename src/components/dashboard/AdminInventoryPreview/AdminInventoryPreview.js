@@ -27,8 +27,8 @@ const AdminInventoryPreview = ({ division }) => {
     }
   };
 
-  const itemDisplay = (item) => (
-    <div className="top-item">
+  const itemDisplay = (item, index) => (
+    <div className="top-item" key={index}>
       <p className="top-item-name medium">
         {item.name}
       </p>
@@ -114,8 +114,8 @@ const AdminInventoryPreview = ({ division }) => {
     }
     return (
       <div className="top-items-section">
-        {topItems.map((item) => (
-          itemDisplay(item)
+        {topItems.map((item, index) => (
+          itemDisplay(item, index)
         ))}
       </div>
     );

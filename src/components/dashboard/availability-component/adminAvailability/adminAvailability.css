@@ -1,13 +1,11 @@
-.adminAvailCard {
-  width: 95%;
+.admin-availability-container {
   background-color: white;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  margin: 30px auto;
 }
 
-.adminAvailCard .grid-cell {
+.admin-availability-container .grid-cell {
   border-left: 1px solid black;
   border-right: 1px solid black; 
   border-bottom: 1px solid black; 
@@ -15,24 +13,22 @@
   height: 50px;
 }
 
-.adminAvailCard .availability-wrapper {
-  margin-bottom: 50px;
-}
-
-.adminAvailCard .availability-header {
+.admin-availability-container .availability-header {
   display: flex;
-  flex: 1 1 100%;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
+  align-items: center;
+  height: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.adminAvailCard .availability-title {
+.admin-availability-container .availability-title {
   font-weight: bold;
   color: var(--text-color-dark);
 }
 
-.adminAvailCard .help-popup-button {
+.admin-availability-container .help-popup-button {
   background-color: var(--color-light-orange);
   color: white;
   border-radius: 50%;
@@ -43,11 +39,13 @@
   justify-content: center;
   font-size: 1.2rem;
   margin: 5px;
+  cursor: pointer;
 }
 
-.adminAvailCard .schedule-table {
-  width: 80%;
-  margin: 10px auto;
+.admin-availability-container .schedule-table {
+  height: 800px;
+  overflow-y: scroll;
+  overflow-x: hidden;;
 }
 
 .schedule-selector-wrapper {
@@ -100,16 +98,8 @@
 }
 
 @media screen and (max-width: 1300px) {
-  .adminAvailCard .availability-title {
-    font-size: 35px;
-  }
-
-  .adminAvailCard .grid-cell {
+  .admin-availability-container .grid-cell {
     height: 35px;
-  }
-
-  .adminAvailCard {
-    width: 90%;
   }
 
   .admin-avail-date, .num-available-title {
@@ -143,26 +133,27 @@
 }
 
 @media screen and (max-width: 768px) {
-  .adminAvailCard .schedule-table {
-    width: 100vw;
+  .admin-availability-container .schedule-table {
     overflow-x: scroll;
-    margin-left: 20px;
-  }
-
-  .schedule-selector-wrapper {
-    width: 160%;
-  }
-
-  .adminAvailCard .availability-header {
-    margin-left: 5px;
+    margin-bottom: 10px;
+    height: 500px;
   }
   
-  .adminAvailCard .availability-wrapper {
+  .admin-availability-container .schedule-selector-wrapper {
+    width: 500px;
+  }
+  
+  .admin-availability-container .availability-wrapper {
     width: 100%;
   }
 
-  .adminAvailCard .availability-title {
-    font-size: 12px;
+  .admin-availability-container h4 {
+    padding: 0;
+    margin: 0;
+  }
+
+  .admin-availability-container .availability-title {
+    width: 70%;
   }
 
   .availability-save-button, .availability-edit-button {
@@ -170,12 +161,6 @@
     padding: 0 5px;
     font-size: 10px;
     margin: 5px 0;
-  }
-
-  .adminAvailCard .help-popup-button {
-    height: 15px;
-    width: 15px;
-    font-size: 10px;
   }
 
   .avail-names-section {

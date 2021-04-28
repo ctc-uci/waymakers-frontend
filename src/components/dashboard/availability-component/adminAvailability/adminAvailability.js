@@ -224,43 +224,41 @@ const AdminAvailability = () => {
   }
 
   return (
-    <>
-      <div className="adminAvailCard">
-        <div className="availability-wrapper">
-          <div className="availability-header">
-            <h2 className="availability-title">Availability for the Week</h2>
-            <div
-              className="help-popup-button"
-              onClick={onHelpButtonClick}
-              onKeyDown={onHelpButtonClick}
-              role="button"
-              tabIndex={0}
-            >
-              ?
-            </div>
-          </div>
-          <div className="schedule-table">
-            <div className="schedule-selector-wrapper">
-              <ScheduleSelector
-                selection={allAvailability}
-                selectionScheme="square"
-                startDate={startWeek}
-                numDays={7}
-                minTime={7}
-                maxTime={19}
-                hourlyChunks={1}
-                rowGap={0}
-                columnGap={0}
-                dateFormat="ddd"
-                renderDateCell={renderCell}
-              />
-            </div>
-          </div>
+    <div className="admin-availability-container">
+      <div className="availability-header">
+        <h4 className="availability-title">
+          Volunteer On-Call Availability
+        </h4>
+        <div
+          className="help-popup-button"
+          onClick={onHelpButtonClick}
+          onKeyDown={onHelpButtonClick}
+          role="button"
+          tabIndex={0}
+        >
+          ?
         </div>
-        { currentDate && displayNames() }
-        {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} type="admin" />}
       </div>
-    </>
+      <div className="schedule-table">
+        <div className="schedule-selector-wrapper">
+          <ScheduleSelector
+            selection={allAvailability}
+            selectionScheme="square"
+            startDate={startWeek}
+            numDays={7}
+            minTime={0}
+            maxTime={24}
+            hourlyChunks={1}
+            rowGap={0}
+            columnGap={0}
+            dateFormat="ddd"
+            renderDateCell={renderCell}
+          />
+        </div>
+      </div>
+      { currentDate && displayNames() }
+      {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} type="admin" />}
+    </div>
   );
 };
 

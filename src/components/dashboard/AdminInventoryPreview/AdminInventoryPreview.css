@@ -27,7 +27,7 @@
 .top-items-section {
   display: flex;
   justify-content: space-between;
-  margin-top: 25px;
+  margin-top: 22px;
 }
 
 .top-item {
@@ -37,7 +37,9 @@
   flex-direction: column;
   justify-content: space-between;
   width: 30%;
-  padding: 10px;
+  height: 220px;
+  padding-left: 10px;
+  padding-right: 10px;
 
   border-radius: 5px;
   margin: 5px;
@@ -60,8 +62,6 @@
 .top-item .in-stock-quantity {
   display: inline;
   border: 1px solid var(--text-color-light);
-  /* width: 25%;
-  height: 25%; */
   line-height: 1.5em;
   width: 30px;
   height: 30px;
@@ -135,6 +135,7 @@
 @media screen and (max-width: 768px) {
   .top-item{
     width: 50%;
+    height: 180px;
   }
 
   .top-item ~ .top-item {
@@ -166,5 +167,4 @@
     line-height: 2em;
 
   }
-
 }
