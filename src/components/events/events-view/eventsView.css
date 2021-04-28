@@ -168,6 +168,15 @@ table thead {
     width: 100px;
 }
 
+.filters-help-button {
+    display: flex;
+}
+
+.filters-help-button .help-button {
+    border-radius: 15px;
+    border: none;
+}
+
 @media screen and (max-width: 768px) {
     #calendar {
         max-height: 800px;
