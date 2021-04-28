@@ -41,7 +41,7 @@ const Register = () => {
   const register = async ({
     firstName, lastName, email, password,
     phoneNumber, address1, address2, city, state, zipcode,
-    birthDay, birthMonth, birthYear, gender,
+    birthDay, birthMonth, birthYear, gender, genderOther,
   }) => {
     try {
       const user = await GoogleAuthService.auth.createUserWithEmailAndPassword(email, password);
@@ -58,10 +58,27 @@ const Register = () => {
         state,
         zipcode,
         birthDate: `${birthYear}-${birthMonth}-${birthDay}`,
-        gender,
+        gender: gender === 'other' ? genderOther : gender,
         division: 1,
+        verified: false,
       });
       console.log(res);
+
+      const verifyStatus = await WMKBackend.post('/register/sendVerification', {
+        userID: user.user.uid,
+        firstName,
+        email,
+      });
+      console.log(verifyStatus);
+
+      history.push({
+        pathname: '/verification',
+        state: {
+          userID: user.user.uid,
+          firstName,
+          email,
+        },
+      });
     } catch (err) {
       alert(err);
     }
@@ -72,7 +89,6 @@ const Register = () => {
       // alert(JSON.stringify(values, null, 2));
       try {
         await register(values);
-        history.push('/');
       } catch (err) {
         alert(err);
       }
@@ -119,7 +135,7 @@ const Register = () => {
                 )
                 : (
                   <button type="submit" className="signup-button" aria-label="submit">
-                    Sign Up
+                    <p className="large">Sign Up</p>
                   </button>
                 )}
             </div>

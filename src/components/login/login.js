@@ -4,6 +4,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
 import GoogleAuthService from '../../services/firebase/firebase';
+import { WMKBackend } from '../../common/utils';
 
 import registrationShowPassword from '../../assets/registrationShowPassword.svg';
 import registrationHidePassword from '../../assets/registrationHidePassword.svg';
@@ -35,16 +36,34 @@ const LogIn = (props) => {
 
   async function login() {
     try {
+      const res = await WMKBackend.get('/register/isVerified', {
+        params: {
+          email,
+        },
+      });
+      console.log('@login:', res);
+      if (!res.data) {
+        throw new Error('User is not verified');
+      }
       await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
 
       const idToken = await GoogleAuthService.auth.currentUser.getIdToken();
       // console.log(`idToken: ${idToken}`);
 
       // Setting a session cookie
-      cookies.set('accessToken', idToken, {
-        path: '/',
-        maxAge: 3600,
-      });
+      if (process.env.NODE_ENV === 'production') {
+        cookies.set('accessToken', idToken, {
+          path: '/',
+          maxAge: 3600,
+          domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
+          secure: true,
+        });
+      } else {
+        cookies.set('accessToken', idToken, {
+          path: '/',
+          maxAge: 3600,
+        });
+      }
 
       // console.log(user.user.uid);
       history.push(redirectURL);
@@ -136,10 +155,12 @@ const LogIn = (props) => {
         ? <span className="error-message">{error}</span>
         : <br />}
       <div className="login-buttons">
-        <button type="submit" className="login-button" onClick={handleSubmit}>Login</button>
+        <button type="submit" className="login-button" onClick={handleSubmit}>
+          <p className="large">Login</p>
+        </button>
         <button type="button" className="lwg-button" onClick={loginWithGoogle}>
           <img className="google-logo" src={googleLogo} alt=" " />
-          Login with Google
+          <p className="medium">Login with Google</p>
         </button>
       </div>
     </div>

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
-import { WMKBackend } from '../../../common/utils';
 import useMobileWidth from '../../../common/useMobileWidth';
+import { WMKBackend } from '../../../common/utils';
 
 import './AdminInventoryPreview.css';
 
@@ -14,33 +14,22 @@ const AdminInventoryPreview = ({ division }) => {
   const [warehouseIDMap, setWarehouseIDMap] = useState({});
   const [warehouseName, setWarehouseName] = useState('');
 
-  const isMobile = useMobileWidth();
+  const isMobile = useMobileWidth(1100);
   const topAmount = isMobile ? 2 : 3;
 
   // Fetching top items from the server
 
   const getTopItems = async () => {
     try {
-      // const response = await WMKBackend.get(
-      //  `/inventory/top?warehouse=${warehouseIDMap[warehouseName]}`);
-      const response = await WMKBackend.get(
-        `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/inventory/top`,
-        {
-          withCredentials: true,
-          params: {
-            warehouse: warehouseIDMap[warehouseName],
-            numItems: topAmount,
-          },
-        },
-      );
+      const response = await WMKBackend.get(`/inventory/top?warehouse=${warehouseIDMap[warehouseName]}&numItems=${topAmount}`);
       setTopItems(response.data);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const itemDisplay = (item) => (
-    <div className="top-item">
+  const itemDisplay = (item, index) => (
+    <div className="top-item" key={index}>
       <p className="top-item-name medium">
         {item.name}
       </p>
@@ -126,8 +115,8 @@ const AdminInventoryPreview = ({ division }) => {
     }
     return (
       <div className="top-items-section">
-        {topItems.map((item) => (
-          itemDisplay(item)
+        {topItems.map((item, index) => (
+          itemDisplay(item, index)
         ))}
       </div>
     );

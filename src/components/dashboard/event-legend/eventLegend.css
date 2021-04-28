@@ -66,9 +66,5 @@
         flex-direction: column;
         justify-content: space-between;
     }
-
-    .single-legend-element + .single-legend-element {
-        margin-top: 20px;;
-    }
 }
 

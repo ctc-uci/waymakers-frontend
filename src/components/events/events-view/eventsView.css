@@ -3,6 +3,7 @@
     margin: auto;
     padding: 1em;
     background: white;
+    z-index: -1;
 }
 
 /* table {
@@ -13,6 +14,7 @@
 /* Change background color of calendar while keeping vertical lines */
 .fc-view-harness.fc-view-harness-active {
     background-color: var( --color-light-blue);
+    z-index: 0;
 }
 
 .fc-scrollgrid {

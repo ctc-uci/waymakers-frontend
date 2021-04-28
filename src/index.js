@@ -9,13 +9,12 @@ import Test from './.harrison-sandbox/Test';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Layout from './components/layout/layout';
 import Dashboard from './pages/dashboard/dashboard';
-import RegisterPage from './components/register/registerPage';
-import LoginPage from './components/login/loginPage';
+import RegisterPage from './pages/login/registerPage';
+import LoginPage from './pages/login/loginPage';
+import VerificationPage from './pages/login/verificationPage';
 import ManageUsers from './components/admin/manageusers/manageusers';
 import ManageDB from './components/admin/managedb/managedb';
-// import Profile from './components/profile/profile';
-import viewProfile from './pages/viewProfile';
-import editProfile from './pages/editProfile';
+import Profile from './pages/profile/profile';
 import Hours from './components/volunteer/volHours/hours';
 import Tier from './components/volunteer/tier/tier';
 import Forms from './components/volunteer/forms/forms';
@@ -39,27 +38,27 @@ ReactDOM.render(
           <Switch>
             <Route path="/register" component={RegisterPage} />
             <Route path="/login" component={LoginPage} />
+            <Route path="/verification" component={VerificationPage} />
             <div className="App">
               <Layout>
                 <Switch>
                   <Route path="/sandbox" component={Test} />
                   <ProtectedRoute path="/" component={Dashboard} exact />
-                  <ProtectedRoute path="/profile" component={viewProfile} />
-                  <ProtectedRoute path="/editProfile" component={editProfile} />
-                  <ProtectedRoute path="/admin/users" component={ManageUsers} />
-                  <ProtectedRoute path="/admin/db" component={ManageDB} />
-                  <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} />
-                  <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} />
-                  <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} />
+                  <ProtectedRoute path="/profile" component={Profile} />
+                  <ProtectedRoute path="/admin/users" component={ManageUsers} admin />
+                  <ProtectedRoute path="/admin/db" component={ManageDB} admin />
+                  <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} admin />
+                  <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} admin />
+                  <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} admin />
                   <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
                   <ProtectedRoute path="/volunteer/hours" component={Hours} />
                   <ProtectedRoute path="/volunteer/tier" component={Tier} />
                   <ProtectedRoute path="/volunteer/forms" component={Forms} />
-                  <ProtectedRoute path="/inventory" component={Inventory} />
-                  <ProtectedRoute path="/reports" component={Reports} />
+                  <ProtectedRoute path="/inventory" component={Inventory} admin />
+                  <ProtectedRoute path="/reports" component={Reports} admin />
                   <ProtectedRoute path="/events/viewHours" component={viewHours} />
-                  <ProtectedRoute path="/events" component={Events} />
-                  <Route component={NotFound404} />
+                  <ProtectedRoute path="/events" component={Events} admin />
+                  <Route path="*" component={NotFound404} />
                 </Switch>
               </Layout>
             </div>

@@ -34,7 +34,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* margin: auto; */
     width: 90%;
     height: 100%;
 }
@@ -47,27 +46,21 @@
     height: 99%;
 }
 
-.events-section .event-lists .event-list {
-    /* height: 100%; */
-    /* max-height: 650px; */
-}
-
 .events-section .events-container {
     height: 650px;
     overflow-y: hidden;
 }
 
 .dashboard-event-legend {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center; */
-    /* height: 1%; */
     align-self: flex-start;
     margin-left: 5%;
 }
 
-.volunteer-dashboard-page-container .availability-third {
-  width: 100vw;
+.volunteer-dashboard-page-container .availability-section {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 25px;
 }
 
 .help-popup {
@@ -83,73 +76,6 @@
     margin-left: 15px;
 }
 
-/* CSS From DashboardEventSection.js */
-
-/* .events-section {
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-    width: 85%;
-    height: 850px;
-} */
-
-/* .event-list-component {
-    flex: 0 1 48%;
-}
-
-.key-section {
-    display: flex;
-    width: 85%;
-    margin: 20px auto auto auto;
-    padding: 15px 20px;
-}
-
-.key-text {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin: 0 10px 0 0;
-}
-
-.volunteer-event-square {
-    background-color: var(--color-yellow);
-    width: 25px;
-    height: 25px;
-    margin: 0 10px 0 25px;
-}
-
-.volunteer-event-text {
-    font-size: 1.3rem;
-    margin: 0 10px 0 0;
-}
-
-.outreach-event-square {
-    background-color: var(--color-light-pink);
-    width: 25px;
-    height: 25px;
-    margin: 0 10px 0 25px;
-}
-
-.outreach-event-text {
-    font-size: 1.3rem;
-    margin: 0 10px 0 0;
-}
-
-.other-event-square {
-    background-color: var(--color-lavender);
-    width: 25px;
-    height: 25px;
-    margin: 0 10px 0 25px;
-}
-
-.other-event-text {
-    font-size: 1.3rem;
-    margin: 0 10px 0 0;
-}
-
-.dashboard-event-legend {
-    width: 100%;
-} */
-
 @media screen and (max-width: 768px) {
     .volunteer-dashboard-page-container {
         display: flex;
@@ -157,8 +83,9 @@
         align-items: center;
     }
     .volunteer-dashboard-page-container .event-list-component {
-        width: 90%;
+        width: 100%;
         height: 100%;
+        margin-bottom: 30px;
     }
     .events-section .event-lists {
         flex-direction: column;
@@ -168,7 +95,7 @@
         max-height: 360px;
     }
     .events-section .event-lists .event-list {
-        width: 95%;
+        width: 100%;
     }
     .dashboard-event-legend{
         align-self: center;
@@ -179,8 +106,4 @@
         padding-left: 0;
         padding-right: 0;
     }
-    /* .dashboard-event-legend .legend-key-section .legend-info {
-        width: 100%;
-        height: 100%;
-    } */
 }

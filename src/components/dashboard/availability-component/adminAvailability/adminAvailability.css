@@ -1,6 +1,4 @@
-.adminAvailCard {
-  padding: 30px;
-  width: 95%;
+.admin-availability-container {
   background-color: white;
   display: flex;
   justify-content: flex-start;
@@ -8,26 +6,30 @@
   margin-bottom: 30px;
 }
 
-.adminAvailCard .grid-cell {
-  border: 1px solid black;
+.admin-availability-container .grid-cell {
+  border-left: 1px solid black;
+  border-right: 1px solid black; 
+  border-bottom: 1px solid black; 
   width: 100%;
   height: 50px;
 }
 
-.adminAvailCard .availability-header {
+.admin-availability-container .availability-header {
   display: flex;
-  flex: 1 1 100%;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
+  align-items: center;
+  height: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-.adminAvailCard .availability-title {
+.admin-availability-container .availability-title {
   font-weight: bold;
   color: var(--text-color-dark);
 }
 
-.adminAvailCard .help-popup-button {
+.admin-availability-container .help-popup-button {
   background-color: var(--color-light-orange);
   color: white;
   border-radius: 50%;
@@ -38,11 +40,24 @@
   justify-content: center;
   font-size: 1.2rem;
   margin: 5px;
+  cursor: pointer;
+}
+
+.admin-availability-container .schedule-table {
+  height: 800px;
+  overflow-y: scroll;
+  overflow-x: hidden;;
+}
+
+.schedule-selector-wrapper {
+  width: 100%;
 }
 
 .avail-names-section {
   border: 2px solid #003E53;
   padding: 30px;
+  width: 75%;
+  margin: auto;
 }
 
 .admin-avail-title-section {
@@ -53,23 +68,29 @@
 }
 
 .names-table {
-  width: 90%;
+  border-collapse: collapse;
+  width: 100%;
   margin: auto;
 }
 
 .names-table tbody {
-  width: 80%;
+  width: 90%;
 }
 
 .names-table td {
-  height: 65px;
+  height: 60px;
   text-align: center;
-  padding: 10px;
+  padding: 2px;
+}
+
+.names-table tr:first-of-type {
+  margin: 50px 10px;
+  border: none;
 }
 
 .names-table tr {
-  margin: 0 30px;
-  border-bottom: 1px solid #003E53;
+  margin: 50px 10px;
+  border-top: 1px solid #003E53;
 }
 
 .no-members-message {
@@ -78,22 +99,62 @@
 }
 
 @media screen and (max-width: 1300px) {
-  .adminAvailCard .availability-title {
-    font-size: 25px;
+  .admin-availability-container .grid-cell {
+    height: 35px;
   }
 
-  .adminAvailCard .grid-cell {
-    height: 35px;
+  .admin-avail-date, .num-available-title {
+    font-weight: 800;
+    font-size: 22px;
+  }
+
+  .names-table, .no-members-message {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .admin-avail-date, .num-available-title {
+    font-weight: 800;
+    font-size: 18px;
+  }
+
+  .names-table td {
+    height: 50px;
+  }
+
+  .names-table, .no-members-message {
+    font-size: 12px;
+  }
+
+  .no-members-message {
+    margin-top: 10px;
+    margin-left: 10px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .adminAvailCard .availability-header {
-    margin-left: 5px;
+  .admin-availability-container .schedule-table {
+    overflow-x: scroll;
+    margin-bottom: 10px;
+    height: 500px;
   }
   
-  .adminAvailCard .availability-title {
-    font-size: 12px;
+  .admin-availability-container .schedule-selector-wrapper {
+    width: 500px;
+  }
+  
+  .admin-availability-container .availability-wrapper {
+    width: 100%;
+  }
+
+  .admin-availability-container h4 {
+    padding: 0;
+    margin: 0;
+  }
+
+  .admin-availability-container .availability-title {
+    width: 70%;
   }
 
   .availability-save-button, .availability-edit-button {
@@ -103,9 +164,23 @@
     margin: 5px 0;
   }
 
-  .adminAvailCard .help-popup-button {
-    height: 15px;
-    width: 15px;
-    font-size: 10px;
+  .avail-names-section {
+    border: 2px solid #003E53;
+    padding: 10px;
+    width: 95%;
+    margin: auto;
+  }
+
+  .names-table td {
+    height: 30px;
+  }
+
+  .admin-avail-date, .num-available-title {
+    font-weight: 800;
+    font-size: 12px;
+  }
+
+  .names-table, .no-members-message {
+    font-size: 9px;
   }
 }

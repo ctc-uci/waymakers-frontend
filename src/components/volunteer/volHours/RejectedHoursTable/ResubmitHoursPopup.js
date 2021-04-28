@@ -113,8 +113,7 @@ const ResubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) =>
     <LightModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
       <LightModalHeader title="Resubmit Hours" onClose={() => setIsModalOpen(false)} />
       <form onSubmit={formik.handleSubmit}>
-        {/* TODO: find an better solution for overflow */}
-        <LightModalBody style={{ maxHeight: '600px', overflow: 'auto' }}>
+        <LightModalBody>
 
           <ValidatedField name="rejectedNotes" labelText="Rejected Notes" formik={formik}>
             <textarea

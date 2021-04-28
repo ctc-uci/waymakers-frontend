@@ -89,7 +89,13 @@ const EventList = ({
   const renderSeeMore = () => (
     <div className="events-see-more">
       <Link to="/volunteer/events" className="see-more-link">
-        <button type="button" className="see-more-button" href="/volunteer/events">See More</button>
+        <button
+          type="button"
+          className="see-more-button"
+          href="/volunteer/events"
+        >
+          <p className="large">View Calendar</p>
+        </button>
       </Link>
     </div>
   );
