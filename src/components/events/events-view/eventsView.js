@@ -276,7 +276,10 @@ const EventsView = ({
               >
                 Add Events
               </button>
-              <CalendarFilters />
+              <div className="filters-help-button">
+                <CalendarFilters />
+                <button type="button" className="help-button">?</button>
+              </div>
             </div>
           </div>
         )
