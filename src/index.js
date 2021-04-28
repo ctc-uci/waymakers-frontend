@@ -39,8 +39,8 @@ ReactDOM.render(
             <Route path="/register" component={RegisterPage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/verification" component={VerificationPage} />
-            <div className="App">
-              <Layout>
+            <Layout>
+              <div className="App">
                 <Switch>
                   <Route path="/sandbox" component={Test} />
                   <ProtectedRoute path="/" component={Dashboard} exact />
@@ -60,8 +60,8 @@ ReactDOM.render(
                   <ProtectedRoute path="/events" component={Events} admin />
                   <Route path="*" component={NotFound404} />
                 </Switch>
-              </Layout>
-            </div>
+              </div>
+            </Layout>
           </Switch>
         </Router>
       </Provider>
