@@ -22,8 +22,8 @@ const ViewAvailability = ({ availabilities, startWeek }) => {
         selectionScheme="square"
         startDate={startWeek}
         numDays={7}
-        minTime={7}
-        maxTime={19}
+        minTime={0}
+        maxTime={24}
         hourlyChunks={1}
         selectedColor="rgba(121, 156, 168, 1)"
         rowGap={0}

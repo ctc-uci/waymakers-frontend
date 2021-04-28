@@ -2,4 +2,6 @@
 
 .layout {
   background: white;
+  max-width: 1600px;
+  margin: 0 auto;
 }

@@ -56,8 +56,11 @@
     margin-left: 5%;
 }
 
-.volunteer-dashboard-page-container .availability-third {
-  width: 100vw;
+.volunteer-dashboard-page-container .availability-section {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 25px;
 }
 
 .help-popup {

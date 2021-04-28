@@ -1,4 +1,4 @@
-.admin-components {
+.admin-dashboard {
     margin: 30px auto;
     width: 85%;
     display: flex;
@@ -30,34 +30,24 @@
 
 .admin-components-container {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    
 }
 
 .inventory-events-section {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
-    width: 48%;
 }
 
-.upcoming-events-container {
-    display: flex;
-    flex-direction: column;
+.admin-dashboard .admin-components-container .inventory-section {
+    width: 50%;
 }
 
-.analytics-section {
-    width: 48%;
+.admin-dashboard .admin-components-container .upcoming-events-container {
+    width: 50%;
 }
 
-.inventory-section, .upcoming-events-section, .analytics-section, .availability-section {
-    margin-top: 30px;
-}
-
-.analytics-component {
-    height: 895px;
-    /* height: 100%; */
-}
 
 .availability-component {
     height: 600px;
@@ -68,7 +58,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    .admin-components {
+    .admin-dashboard {
         width: 100%;
     }
     
@@ -80,16 +70,17 @@
 
     }
 
-    .inventory-events-section {
+    .admin-dashboard .admin-components-container .inventory-section {
         width: 100%;
     }
 
-    .analytics-section {
+    .admin-dashboard .admin-components-container .upcoming-events-container {
         width: 100%;
     }
 
-    .availability-section {
-        width: 100%;
+    .admin-dashboard .availability-section {
+        margin-left: 5%;
+        margin-right: 5%;
     }
 
     .division-section {

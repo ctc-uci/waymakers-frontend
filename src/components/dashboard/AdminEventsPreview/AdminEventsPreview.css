@@ -1,5 +1,4 @@
 .upcoming-events-component {
-    /* height: 300px; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -8,14 +7,14 @@
 .upcoming-events-title {
     color: var(--text-color-dark);
     margin: 0;
-    line-height: 1;
+    margin-top: 8px;
 }
 
 .upcoming-events-section {
     display: flex;
     justify-content: space-between;
 
-    margin-top: 35px;
+    margin-top: 27px;
 }
 
 .upcoming-event {
@@ -24,9 +23,9 @@
     display: flex;
     flex-direction: column;
     width: 30%;
-    padding: 10px;
     border-radius: 5px;
-    height: 200px;
+    height: 213px;
+    padding-top: 10px;
     padding-right: 5px;
     padding-left: 5px;
     margin: 5px;
@@ -89,7 +88,7 @@
 @media screen and (max-width: 768px) {
     .upcoming-event{
         width: 50%;
-        height: 10em;
+        height: 180px;
     }
 
     .upcoming-event ~ .upcoming-event {
