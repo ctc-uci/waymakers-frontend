@@ -21,7 +21,7 @@ const HelpPopup = ({ isModalOpen, setIsModalOpen, isAdmin }) => (
           ? (
             <>
               <p>
-                Click on an event block to view, edit, copy or delete the event.
+                Click on an event block to view, edit, copy, or delete the event.
               </p>
               <p>
                 Use the view dropdown to switch between month, week, and day view on the calendar.
