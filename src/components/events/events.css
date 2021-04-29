@@ -3,6 +3,8 @@
 }
 
 .events-page .title {
+    font-size: 2em;
+    font-weight: bold;
     color: var(--color-dark-blue);
 }
 

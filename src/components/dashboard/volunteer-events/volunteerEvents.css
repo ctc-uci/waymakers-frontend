@@ -4,8 +4,9 @@
     flex-direction: column;
 }
 
-.volunteer-event .title {
+.volunteer-events-page .title {
     font-size: 2em;
     font-weight: bold;
     color: var(--color-dark-blue);
+    margin-bottom: 20px;
 }
