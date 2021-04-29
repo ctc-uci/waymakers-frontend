@@ -63,6 +63,7 @@ const popupTypeToTitleMap = {
   AddEventForm: 'Add Event Information',
   ViewEventInfoPopup: 'View Event Information',
   ModifyEventForm: 'Edit Event Information',
+  CopyEventForm: 'Create Copy',
 };
 
 const createEventObject = (values) => ({
@@ -146,8 +147,10 @@ const EventForm = () => {
             <LightModalButton
               type="submit"
               secondary
-              onClick={() => {
-                formik.setFieldValue('action', 'duplicateEvent');
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(changePopupType('CopyEventForm'));
+                // formik.setFieldValue('action', 'duplicateEvent');
               }}
             >
               Copy
@@ -171,6 +174,28 @@ const EventForm = () => {
               danger
               onClick={() => {
                 formik.setFieldValue('action', 'deleteEvent');
+              }}
+            >
+              Delete
+            </LightModalButton>
+          </>
+        );
+      case 'CopyEventForm':
+        return (
+          <>
+            <LightModalButton
+              type="submit"
+              primary
+              onClick={() => {
+                formik.setFieldValue('action', 'duplicateEvent');
+              }}
+            >
+              Save
+            </LightModalButton>
+            <LightModalButton
+              danger
+              onClick={() => {
+                dispatch(setShowPopup(false));
               }}
             >
               Delete
@@ -396,7 +421,7 @@ const EventForm = () => {
           </ValidatedField>
            */}
 
-          <ValidatedField name="eventLimit" labelText="Limit" formik={formik}>
+          <ValidatedField name="eventLimit" labelText="Limit" isRequired formik={formik}>
             <input
               id="eventLimit"
               name="eventLimit"

@@ -69,6 +69,7 @@
 #month-event-block{
     width: 100%;
     overflow-x: hidden;
+    overflow-y: hidden;
     display: inline;
     margin-left: 0.2em;
     height: 100%;
@@ -96,4 +97,20 @@
 
 #week-edit-event-title, #week-event-title {
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fc-event-main {
+    padding-top: 0px;
+    margin-top: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 768px) {
+    #monthViewEventTitle {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }

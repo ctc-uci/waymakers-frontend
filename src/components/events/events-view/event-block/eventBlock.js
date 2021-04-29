@@ -82,7 +82,7 @@ const EventBlock = ({
   };
 
   // Renders diff blocks based on view and page/pathname
-  if (eventInfo.view.type === 'timeGridWeek') {
+  if (eventInfo.view.type === 'timeGridWeek' || eventInfo.view.type === 'timeGridFourDay') {
     switch (page) {
       case 'volunteerDashboard':
         return (
