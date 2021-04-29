@@ -162,7 +162,7 @@ table thead {
     background-color: var(--color-green);
     color: var(--text-color-light);
     outline: none;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 0.5em;
     border: none;
     cursor: pointer;
@@ -206,17 +206,6 @@ table thead {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-    }
-
-    .events-view .top-of-calendar .calendar-add-date-filters .add-button {
-        background-color: var(--color-green);
-        color: var(--text-color-light);
-        outline: none;
-        border-radius: 20px;
-        padding: 0.5em;
-        border: none;
-        cursor: pointer;
-        width: 100px;
     }
 
     .filter-help-header {
