@@ -46,7 +46,7 @@ export const isDuringCurrentMobileWeek = (event, day, month, year) => {
   const eventStartDate = new Date(event.startTime);
   const eventStart = moment(eventStartDate);
   const endDateRange = moment(currentDate).add(3, 'days');
-  return eventStart.isSameOrBefore(endDateRange, 'day') && eventStart.isSameOrAfter(currentDate);
+  return eventStart.isSameOrBefore(endDateRange, 'day') && eventStart.isSameOrAfter(currentDate, 'day');
 };
 
 // FILTERING HELPER FUNCTION
