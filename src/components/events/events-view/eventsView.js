@@ -16,6 +16,7 @@ import CalendarDayHeader from './calendar-day-header/calendarDayHeader';
 import EventList from '../event-list/eventList';
 import EventLegend from '../../dashboard/event-legend/eventLegend';
 import useMobileWidth from '../../../common/useMobileWidth';
+import HelpPopup from './help-popup/helpPopup';
 
 import { filterEventsByView } from '../util';
 
@@ -51,6 +52,7 @@ const EventsView = ({
   const dispatch = useDispatch();
   const [showMoreEvents, setShowMoreEvents] = useState(true);
   const [showMyEvents, setShowMyEvents] = useState(true);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const calendarEl = useRef(null);
   const moreEventsColor = 'var(--text-color-dark)';
   const myEventsColor = 'var(--color-light-green)';
@@ -276,17 +278,24 @@ const EventsView = ({
               >
                 Add Events
               </button>
-              <CalendarFilters />
+              <div className="filter-help-header">
+                <CalendarFilters />
+                <button type="button" className="help-button" onClick={() => setIsHelpModalOpen(true)}>?</button>
+              </div>
             </div>
           </div>
         )
         : (
           <div className="top-of-calendar">
-            <CalendarFilters />
+            <div className="filter-help-header">
+              <CalendarFilters />
+              <button type="button" className="help-button" onClick={() => setIsHelpModalOpen(true)}>?</button>
+            </div>
             { page === 'volunteerDashboard' && renderCheckboxes()}
           </div>
         )}
       <CalendarPopup page={page} />
+      <HelpPopup isModalOpen={isHelpModalOpen} setIsModalOpen={setIsHelpModalOpen} isAdmin={page === 'addModifyDeleteEventsPage'} />
       <div id="calendar">
         {view === 'timeGridDay' && renderDayViewHeader()}
         {renderCalendar()}
