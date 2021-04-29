@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 import { Provider } from 'react-redux';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import './common/ConfigLoader';
 import Test from './.harrison-sandbox/Test';
@@ -25,7 +26,8 @@ import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggr
 import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
 import VolunteerEvents from './pages/volunteer-events/volunteerEvents';
-import NotFound404 from './pages/NotFound404';
+import NotFound404 from './pages/NotFound404/NotFound404';
+import InternalServerError from './pages/InternalServerError/InternalServerError';
 import store from './redux/store';
 
 import './index.css';
@@ -34,36 +36,43 @@ ReactDOM.render(
   <React.StrictMode>
     <CookiesProvider>
       <Provider store={store}>
-        <Router>
-          <Switch>
-            <Route path="/register" component={RegisterPage} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/verification" component={VerificationPage} />
-            <div className="App">
-              <Layout>
-                <Switch>
-                  <Route path="/sandbox" component={Test} />
-                  <ProtectedRoute path="/" component={Dashboard} exact />
-                  <ProtectedRoute path="/profile" component={Profile} />
-                  <ProtectedRoute path="/admin/users" component={ManageUsers} admin />
-                  <ProtectedRoute path="/admin/db" component={ManageDB} admin />
-                  <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} admin />
-                  <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} admin />
-                  <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} admin />
-                  <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
-                  <ProtectedRoute path="/volunteer/hours" component={Hours} />
-                  <ProtectedRoute path="/volunteer/tier" component={Tier} />
-                  <ProtectedRoute path="/volunteer/forms" component={Forms} />
-                  <ProtectedRoute path="/inventory" component={Inventory} admin />
-                  <ProtectedRoute path="/reports" component={Reports} admin />
-                  <ProtectedRoute path="/events/viewHours" component={viewHours} />
-                  <ProtectedRoute path="/events" component={Events} admin />
-                  <Route path="*" component={NotFound404} />
-                </Switch>
-              </Layout>
-            </div>
-          </Switch>
-        </Router>
+        <ErrorBoundary
+          FallbackComponent={InternalServerError}
+          onError={(error, info) => {
+            console.log('@InternalServerError 500:', error, info);
+          }}
+        >
+          <Router>
+            <Switch>
+              <Route path="/register" component={RegisterPage} />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/verification" component={VerificationPage} />
+              <div className="App">
+                <Layout>
+                  <Switch>
+                    <Route path="/sandbox" component={Test} />
+                    <ProtectedRoute path="/" component={Dashboard} exact />
+                    <ProtectedRoute path="/profile" component={Profile} />
+                    <ProtectedRoute path="/admin/users" component={ManageUsers} admin />
+                    <ProtectedRoute path="/admin/db" component={ManageDB} admin />
+                    <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} admin />
+                    <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} admin />
+                    <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} admin />
+                    <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
+                    <ProtectedRoute path="/volunteer/hours" component={Hours} />
+                    <ProtectedRoute path="/volunteer/tier" component={Tier} />
+                    <ProtectedRoute path="/volunteer/forms" component={Forms} />
+                    <ProtectedRoute path="/inventory" component={Inventory} admin />
+                    <ProtectedRoute path="/reports" component={Reports} admin />
+                    <ProtectedRoute path="/events/viewHours" component={viewHours} />
+                    <ProtectedRoute path="/events" component={Events} admin />
+                    <Route path="*" component={NotFound404} />
+                  </Switch>
+                </Layout>
+              </div>
+            </Switch>
+          </Router>
+        </ErrorBoundary>
       </Provider>
     </CookiesProvider>
   </React.StrictMode>,
