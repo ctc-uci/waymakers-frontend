@@ -76,8 +76,8 @@ const createEventObject = (values) => ({
   eventLimit: values.eventLimit,
   startTime: moment(values.eventStartTime).format(),
   endTime: moment(values.eventEndTime).format(),
-  isAllDay: (new Date(values.eventStartTime)).getDate()
-    < (new Date(values.eventEndTime)).getDate(),
+  isAllDay: (moment(values.eventStartTime))
+    .isBefore(moment(values.eventEndTime), 'day'),
 });
 
 const EventForm = () => {
