@@ -95,20 +95,47 @@ const Event = ({
   };
 
   return (
-    <div className="event-list-container" tabIndex={0} onClick={renderEventBlockPopup} onKeyDown={() => {}} role="button">
-      <div className={`event-container ${listType}`}>
-        {renderButton()}
-        <div className="event-date-section">
-          <h3 className="event-day">{day}</h3>
-          <p className="event-month">{month}</p>
+    // <div
+    //   className="event-list-container"
+    //   tabIndex={0}
+    //   onClick={(e) => { e.preventDefault(); renderEventBlockPopup(); }}
+    //   onKeyDown={() => {}}
+    //   role="button"
+    // >
+    //   <div className={`event-container ${listType}`}>
+    //     {renderButton()}
+    //     <div className="event-date-section">
+    //       <h3 className="event-day">{day}</h3>
+    //       <p className="event-month">{month}</p>
+    //     </div>
+    //     <div className="event-info-section">
+    //       <h3 className="event-block-title">{event.title}</h3>
+    //       <p className="event-time">{`${startTime} - ${endTime}`}</p>
+    //     </div>
+    //   </div>
+    //   { (listType === 'all' || listType === 'my-events' ||
+    // listType === 'more-events') && <div className={`event-color-label ${eventType}`} />}
+    // </div>
+    <button
+      className="test"
+      onClick={(e) => { e.preventDefault(); renderEventBlockPopup(); }}
+      type="button"
+    >
+      <div className="event-list-container">
+        <div className={`event-container ${listType}`}>
+          {renderButton()}
+          <div className="event-date-section">
+            <h3 className="event-day">{day}</h3>
+            <p className="event-month">{month}</p>
+          </div>
+          <div className="event-info-section">
+            <h3 className="event-block-title">{event.title}</h3>
+            <p className="event-time">{`${startTime} - ${endTime}`}</p>
+          </div>
         </div>
-        <div className="event-info-section">
-          <h3 className="event-block-title">{event.title}</h3>
-          <p className="event-time">{`${startTime} - ${endTime}`}</p>
-        </div>
+        { (listType === 'all' || listType === 'my-events' || listType === 'more-events') && <div className={`event-color-label ${eventType}`} />}
       </div>
-      { (listType === 'all' || listType === 'my-events' || listType === 'more-events') && <div className={`event-color-label ${eventType}`} />}
-    </div>
+    </button>
   );
 };
 

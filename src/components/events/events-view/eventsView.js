@@ -94,7 +94,7 @@ const EventsView = ({
         calendarEl.current.getApi().changeView(view);
       }
       calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
-      calendarEl.current.getApi().setOption('height', view === 'timeGridWeek' ? 1600 : 800);
+      calendarEl.current.getApi().setOption('height', view === 'timeGridWeek' ? 1600 : 1000);
     }
   }, [useSelector(getView), isMobile]);
 

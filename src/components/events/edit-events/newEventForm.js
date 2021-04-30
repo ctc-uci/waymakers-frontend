@@ -84,7 +84,6 @@ const EventForm = () => {
   const event = useSelector(getSelectedEvent);
   const popupType = useSelector(getPopupType);
   const isModalOpen = useSelector(getShowPopup);
-  console.log(event);
   const handleAddEvent = async (values) => {
     const newEvent = createEventObject(values);
     dispatch(addEvent(newEvent));
@@ -278,15 +277,13 @@ const EventForm = () => {
     }
   }, [popupType]);
 
-  const getInputClassName = () => {
-    console.log('here');
-    return (popupType === 'ViewEventInfoPopup') ? 'form-input-color view-mode-input-color' : 'form-input-color';
-  };
+  const getInputClassName = () => (
+    (popupType === 'ViewEventInfoPopup') ? 'form-input-color view-mode-input-color' : 'form-input-color'
+  );
 
-  const getDatetimeInputClassName = () => {
-    console.log('here');
-    return (popupType === 'ViewEventInfoPopup') ? 'view-mode-input-color form-input-color datetime-input' : 'form-input-color datetime-input';
-  };
+  const getDatetimeInputClassName = () => (
+    (popupType === 'ViewEventInfoPopup') ? 'view-mode-input-color form-input-color datetime-input' : 'form-input-color datetime-input'
+  );
 
   return (
     <LightModal isOpen={isModalOpen} setIsOpen={setShowPopup}>
