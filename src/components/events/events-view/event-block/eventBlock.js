@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as IconAi from 'react-icons/ai';
 import * as IconGo from 'react-icons/go';
-// import { fullCalendarEventToRegularEvent } from '../../util';
 
 import {
   setShowPopup,
@@ -31,6 +30,7 @@ const EventBlock = ({
   const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
   const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
   const allRegularEvents = useSelector(getEvents);
+  const isAllDayEvent = eventInfo.event.allDay;
 
   const openPopup = () => {
     dispatch(setShowPopup(true));
@@ -81,11 +81,14 @@ const EventBlock = ({
   };
 
   const renderEventButton = () => {
-    if (isUserEvent) {
+    if (isUserEvent && !isAllDayEvent) {
       const checkIcon = <IconAi.AiOutlineCheck size={10} color="black" />;
       return <button type="button" className="cursor-pointer">{checkIcon}</button>;
     }
-    return <button type="button" className="cursor-pointer" onClick={(e) => { onAddButtonClick(e); }}>+</button>;
+    if (!isAllDayEvent) {
+      return <button type="button" className="cursor-pointer" onClick={(e) => { onAddButtonClick(e); }}>+</button>;
+    }
+    return null;
   };
 
   // Renders diff blocks based on view and page/pathname

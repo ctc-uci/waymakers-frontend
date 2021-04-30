@@ -259,6 +259,7 @@ const EventsView = ({
           // allDaySlot
           slotDuration="00:60:00"
           dateClick={onDateClick}
+          allDayText=""
         />
       );
     }

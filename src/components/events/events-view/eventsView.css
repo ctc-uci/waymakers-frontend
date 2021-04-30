@@ -190,6 +190,17 @@ table thead {
     cursor: pointer;
 }
 
+.fc-timegrid-axis,
+.fc-scrollgrid-shrink {
+    background-color: white;
+}
+
+.fc .fc-scrollgrid-section > * {
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
 @media screen and (max-width: 768px) {
     #calendar {
         max-height: 800px;
