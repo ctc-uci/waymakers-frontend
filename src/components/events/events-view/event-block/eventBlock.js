@@ -96,12 +96,13 @@ const EventBlock = ({
     switch (page) {
       case 'volunteerDashboard':
         return (
-          <div id="week-event-block" className="cursor-pointer" tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
+          <div id="week-event-block" className={eventInfo.event.allDay ? 'cursor-pointer all-day-week-event-content' : 'cursor-pointer'} tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
             <div id="week-event-content">
               <p id="week-event-title">{eventInfo.event.title}</p>
+              {eventInfo.event.allDay && <div id="all-day-strip" style={{ backgroundColor: eventTypeColor }} />}
               {renderEventButton()}
             </div>
-            <div id="strip" style={{ backgroundColor: eventTypeColor }} />
+            {!eventInfo.event.allDay && <div id="strip" style={{ backgroundColor: eventTypeColor }} />}
           </div>
         );
       case 'addModifyDeleteEventsPage':

@@ -23,6 +23,10 @@
     padding: 0.2em;
 }
 
+.all-day-week-event-content {
+    flex-direction: row;
+}
+
 #week-edit-event-content{
     display: inline;
 }
@@ -104,6 +108,19 @@
 .fc-event-main {
     padding-top: 0px;
     margin-top: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#all-day-strip {
+    width: 10px;
+    height: 100%;
+    border-top-right-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-right: 0px;
+    right: 0px;
+    position: absolute;
+    top: 0;
     overflow: hidden;
     text-overflow: ellipsis;
 }
