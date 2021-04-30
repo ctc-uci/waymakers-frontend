@@ -258,8 +258,8 @@ const EventForm = () => {
         formik.setFieldValue('eventName', '');
         formik.setFieldValue('eventType', 'Volunteer');
         formik.setFieldValue('eventLocation', '');
-        formik.setFieldValue('eventStartTime', null);
-        formik.setFieldValue('eventEndTime', null);
+        formik.setFieldValue('eventStartTime', new Date());
+        formik.setFieldValue('eventEndTime', new Date());
         formik.setFieldValue('eventDescription', '');
         formik.setFieldValue('eventDivision', 'Crisis-Response-Team');
         formik.setFieldValue('eventLimit', '');
@@ -287,6 +287,8 @@ const EventForm = () => {
   };
 
   const updateNewDate = (e, startOrEnd, value) => {
+    console.log(e);
+    console.log(value);
     const newDate = new Date(e);
     const newValue = new Date(value);
     newValue.setDate(newDate.getDate());
@@ -406,7 +408,7 @@ const EventForm = () => {
             </ValidatedField>
           </div>
 
-          <ValidatedField name="eventDescription" labelText="Description" formik={formik}>
+          <ValidatedField name="eventDescription" labelText="Description" formik={formik} isRequired>
             <textarea
               id="eventDescription"
               name="eventDescription"
