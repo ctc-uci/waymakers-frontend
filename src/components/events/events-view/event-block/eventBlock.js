@@ -41,29 +41,13 @@ const EventBlock = ({
   };
 
   const setEvent = (selectedEvent) => {
-    console.log('HIIIIIIIIII');
     const calendarEventId = selectedEvent.id;
-    console.log(calendarEventId);
     const regularEvent = allRegularEvents
       .filter((event) => parseInt(event.id, 10) === parseInt(calendarEventId, 10));
-    console.log(regularEvent[0]);
-
-    // const convertedEvent = fullCalendarEventToRegularEvent(selectedEvent);
-    // console.log(convertedEvent);
-    // console.log(selectedEvent.id);
     dispatch(changeSelectedEvent(regularEvent[0]));
   };
 
-  const getEventById = (calendarEvent) => {
-    console.log('HIIIIIIIIII');
-    const calendarEventId = calendarEvent.id;
-    console.log(calendarEventId);
-    const regularEvent = allRegularEvents.filter((event) => event.id === calendarEventId);
-    console.log(regularEvent);
-  };
-
   const onEventBlockClick = () => {
-    getEventById(eventInfo.event);
     setEvent(eventInfo.event);
     if (isUserEvent) {
       if (eventInfo.isPast) {
