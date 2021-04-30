@@ -1,4 +1,5 @@
 // redux/selectors.js
+import moment from 'moment';
 
 // Get all events from database
 export const getEvents = (store) => {
@@ -6,6 +7,13 @@ export const getEvents = (store) => {
     return store.events.eventsList;
   }
   return [];
+};
+
+const getEndDate = (event) => {
+  if (event.isAllDay === true) {
+    return new Date(moment(event.endTime).add(1, 'day'));
+  }
+  return new Date(event.endTime);
 };
 
 // Get Events with fields needed for FullCalendar API
@@ -20,7 +28,7 @@ export const getEventsForFullCalendar = (store) => {
     division: event.division,
     eventType: event.eventType,
     start: event.startTime,
-    end: event.endTime,
+    end: getEndDate(event),
     location: event.location,
     description: event.description,
     id: event.id,
@@ -47,7 +55,7 @@ export const getUserEventsForFullCalendar = (store) => {
     division: event.division,
     eventType: event.eventType,
     start: event.startTime,
-    end: event.endTime,
+    end: getEndDate(event),
     location: event.location,
     description: event.description,
     id: event.id,
