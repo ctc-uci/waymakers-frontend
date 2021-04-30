@@ -64,7 +64,6 @@ export default (state = initialState, action) => {
     case 'events/eventEdited': {
       // eslint-disable-next-line
       console.log(`[ACTION: events/eventEdited] Editing event with content ${action.payload}`);
-      console.log(action.payload);
       // Update that event
       let updatedList = [...state.eventsList];
       updatedList = updatedList.filter((event) => event.id !== action.payload[0].id);

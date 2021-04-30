@@ -93,6 +93,7 @@ const EventForm = () => {
 
   const handleModifyEvent = async (values) => {
     const editedEvent = { ...createEventObject(values), eventId: event.id };
+    console.log(editedEvent);
     console.log(values.eventStartTime > values.eventEndTime);
     dispatch(editEvent(event.id, editedEvent));
     dispatch(setShowPopup(false));

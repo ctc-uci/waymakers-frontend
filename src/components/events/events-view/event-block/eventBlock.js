@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as IconAi from 'react-icons/ai';
 import * as IconGo from 'react-icons/go';
-import { fullCalendarEventToRegularEvent } from '../../util';
+// import { fullCalendarEventToRegularEvent } from '../../util';
 
 import {
   setShowPopup,
   changeSelectedEvent,
   changePopupType,
 } from '../../redux/actions';
+
+import {
+  getEvents,
+} from '../../redux/selectors';
 
 import './eventBlock.css';
 
@@ -26,6 +30,7 @@ const EventBlock = ({
 
   const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
   const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
+  const allRegularEvents = useSelector(getEvents);
 
   const openPopup = () => {
     dispatch(setShowPopup(true));
@@ -36,11 +41,29 @@ const EventBlock = ({
   };
 
   const setEvent = (selectedEvent) => {
-    const convertedEvent = fullCalendarEventToRegularEvent(selectedEvent);
-    dispatch(changeSelectedEvent(convertedEvent));
+    console.log('HIIIIIIIIII');
+    const calendarEventId = selectedEvent.id;
+    console.log(calendarEventId);
+    const regularEvent = allRegularEvents
+      .filter((event) => parseInt(event.id, 10) === parseInt(calendarEventId, 10));
+    console.log(regularEvent[0]);
+
+    // const convertedEvent = fullCalendarEventToRegularEvent(selectedEvent);
+    // console.log(convertedEvent);
+    // console.log(selectedEvent.id);
+    dispatch(changeSelectedEvent(regularEvent[0]));
+  };
+
+  const getEventById = (calendarEvent) => {
+    console.log('HIIIIIIIIII');
+    const calendarEventId = calendarEvent.id;
+    console.log(calendarEventId);
+    const regularEvent = allRegularEvents.filter((event) => event.id === calendarEventId);
+    console.log(regularEvent);
   };
 
   const onEventBlockClick = () => {
+    getEventById(eventInfo.event);
     setEvent(eventInfo.event);
     if (isUserEvent) {
       if (eventInfo.isPast) {

@@ -1,6 +1,7 @@
 import moment from 'moment';
 
 export const fullCalendarEventToRegularEvent = (event) => {
+  console.log(event);
   const convertedEvent = {
     title: event.title,
     division: event.extendedProps.division,
