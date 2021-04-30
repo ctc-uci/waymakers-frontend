@@ -126,6 +126,8 @@ const EditProfile = ({
         setCurrentProfilePicture(payload.profilePicture);
       }
       await WMKBackend.put(`/accounts/${userID}`, payload);
+
+      localStorage.setItem('profilePicture', payload.profilePicture);
     } catch (e) {
       console.error(e);
     }
