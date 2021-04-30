@@ -8,7 +8,7 @@
     background-color: var(--color-green);
     color: var(--text-color-light);
     outline: none;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-left: 10px;
     height: 25px;
     padding: 0.25em;
@@ -23,7 +23,7 @@
 }
 
 .calendar-filters .DateFilter input {
-    border-radius: 25px;
+    border-radius: 10px;
     background: #5D9A64;
     color: white;
     text-align: center;

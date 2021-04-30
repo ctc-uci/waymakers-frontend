@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as IconAi from 'react-icons/ai';
 import * as IconGo from 'react-icons/go';
-import { fullCalendarEventToRegularEvent } from '../../util';
 
 import {
   setShowPopup,
   changeSelectedEvent,
   changePopupType,
 } from '../../redux/actions';
+
+import {
+  getEvents,
+} from '../../redux/selectors';
 
 import './eventBlock.css';
 
@@ -26,6 +29,8 @@ const EventBlock = ({
 
   const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
   const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
+  const allRegularEvents = useSelector(getEvents);
+  const isAllDayEvent = eventInfo.event.allDay;
 
   const openPopup = () => {
     dispatch(setShowPopup(true));
@@ -36,8 +41,10 @@ const EventBlock = ({
   };
 
   const setEvent = (selectedEvent) => {
-    const convertedEvent = fullCalendarEventToRegularEvent(selectedEvent);
-    dispatch(changeSelectedEvent(convertedEvent));
+    const calendarEventId = selectedEvent.id;
+    const regularEvent = allRegularEvents
+      .filter((event) => parseInt(event.id, 10) === parseInt(calendarEventId, 10));
+    dispatch(changeSelectedEvent(regularEvent[0]));
   };
 
   const onEventBlockClick = () => {
@@ -74,11 +81,14 @@ const EventBlock = ({
   };
 
   const renderEventButton = () => {
-    if (isUserEvent) {
+    if (isUserEvent && !isAllDayEvent) {
       const checkIcon = <IconAi.AiOutlineCheck size={10} color="black" />;
       return <button type="button" className="cursor-pointer">{checkIcon}</button>;
     }
-    return <button type="button" className="cursor-pointer" onClick={(e) => { onAddButtonClick(e); }}>+</button>;
+    if (!isAllDayEvent) {
+      return <button type="button" className="cursor-pointer" onClick={(e) => { onAddButtonClick(e); }}>+</button>;
+    }
+    return null;
   };
 
   // Renders diff blocks based on view and page/pathname
@@ -86,12 +96,13 @@ const EventBlock = ({
     switch (page) {
       case 'volunteerDashboard':
         return (
-          <div id="week-event-block" className="cursor-pointer" tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
+          <div id="week-event-block" className={eventInfo.event.allDay ? 'cursor-pointer all-day-week-event-content' : 'cursor-pointer'} tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
             <div id="week-event-content">
               <p id="week-event-title">{eventInfo.event.title}</p>
+              {eventInfo.event.allDay && <div id="all-day-strip" style={{ backgroundColor: eventTypeColor }} />}
               {renderEventButton()}
             </div>
-            <div id="strip" style={{ backgroundColor: eventTypeColor }} />
+            {!eventInfo.event.allDay && <div id="strip" style={{ backgroundColor: eventTypeColor }} />}
           </div>
         );
       case 'addModifyDeleteEventsPage':
