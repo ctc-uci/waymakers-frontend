@@ -62,6 +62,10 @@ select[disabled] {
     color: var(--color-dark-blue);
 }
 
+.date-picker-right > label > div > .rdtPicker {
+    right: 0;
+}
+
 @media screen and (max-width: 768px) {
     .description-input {
         height: 30px;

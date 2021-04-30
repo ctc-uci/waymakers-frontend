@@ -370,31 +370,33 @@ const EventForm = () => {
               />
             </ValidatedField>
             <p className="datetime-input-separator">to</p>
-            <ValidatedField name="eventEndTime" labelText="End" isRequired formik={formik}>
-              <Datetime
-                id="eventEndTime"
-                name="eventEndTime"
-                // type="dateTime-local"
-                initialValue={new Date()}
-                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
-                value={formik.values.eventEndTime}
-                readOnly={popupType === 'ViewEventInfoPopup'}
-                inputProps={{ className: getDatetimeInputClassName() }}
-                timeFormat={false}
-                required
-              />
-              <Datetime
-                id="eventEndTime"
-                name="eventEndTime"
-                // type="dateTime-local"
-                initialValue={new Date()}
-                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
-                value={formik.values.eventEndTime}
-                readOnly={popupType === 'ViewEventInfoPopup'}
-                dateFormat={false}
-                required
-              />
-            </ValidatedField>
+            <div className="date-picker-right">
+              <ValidatedField name="eventEndTime" labelText="End" isRequired formik={formik}>
+                <Datetime
+                  id="eventEndTime"
+                  name="eventEndTime"
+                  // type="dateTime-local"
+                  initialValue={new Date()}
+                  onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
+                  value={formik.values.eventEndTime}
+                  readOnly={popupType === 'ViewEventInfoPopup'}
+                  inputProps={{ className: getDatetimeInputClassName() }}
+                  timeFormat={false}
+                  required
+                />
+                <Datetime
+                  id="eventEndTime"
+                  name="eventEndTime"
+                  // type="dateTime-local"
+                  initialValue={new Date()}
+                  onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
+                  value={formik.values.eventEndTime}
+                  readOnly={popupType === 'ViewEventInfoPopup'}
+                  dateFormat={false}
+                  required
+                />
+              </ValidatedField>
+            </div>
           </div>
 
           <ValidatedField name="eventDescription" labelText="Description" formik={formik}>
