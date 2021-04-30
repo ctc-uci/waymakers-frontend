@@ -29,15 +29,22 @@
     cursor: pointer;
 }
 
-.profile {
+.desktop-navbar .profile-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin-right: 25px;
+    border-radius: 50%;
+}
+
+.desktop-navbar .profile-picture {
     display: inline-block;
     width: 40px;
     height: 40px;
-    vertical-align: top;
-    background-color: white;
     border-radius: 50%;
     border: 0;
-    margin-right: 25px;
     cursor: pointer;
 }
 
@@ -58,7 +65,6 @@
 
 .navbar-profile-menu-link {
     text-decoration: none;
-
 }
 
 .navbar-logout-button, .navbar-profile-menu-link {

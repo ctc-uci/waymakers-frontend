@@ -7,7 +7,7 @@ import moment from 'moment';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
+// import interactionPlugin from '@fullcalendar/interaction';
 import EventCheckBoxes from './event-checkboxes/eventCheckBoxes';
 import CalendarFilters from './calendar-filters/calendarFilters';
 import EventBlock from './event-block/eventBlock';
@@ -237,7 +237,8 @@ const EventsView = ({
     if (view !== 'timeGridDay') {
       return (
         <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          // plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          plugins={[dayGridPlugin, timeGridPlugin]}
           initialView="dayGridMonth"
           events={calendarEvents}
           views={{

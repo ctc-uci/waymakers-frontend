@@ -1,9 +1,13 @@
-import React, { useState, useRef } from 'react';
+/* eslint-disable no-undef */
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+
+import { WMKBackend } from '../../../common/utils';
 import handleOutsideClick from '../../../common/handleOutsideClick';
 import GoogleAuthService from '../../../services/firebase/firebase';
+
 import SubmitHoursPopup from '../../volunteer/volHours/unsubmittedHours/SubmitHoursPopup';
 
 import './desktopNavbar.css';
@@ -18,6 +22,15 @@ const DesktopNavbar = (props) => {
   const [submitHoursOpen, setSubmitHoursOpen] = useState(false);
   const ref = useRef();
   const history = useHistory();
+
+  useEffect(async () => {
+    if (!localStorage.getItem('profilePicture')) {
+      const userID = cookies.get('userId');
+      const { data: { account } } = await WMKBackend.get(`/accounts/${userID}`);
+      localStorage.setItem('profilePicture', account.profile_picture);
+      console.log(localStorage);
+    }
+  }, []);
 
   // Close profile menu when user clicks outside of it
   handleOutsideClick(ref, () => {
@@ -85,13 +98,15 @@ const DesktopNavbar = (props) => {
       )}
       {isAdmin && <Link to="/inventory" className="desktop-navbar-link">Inventory</Link>}
       {isAdmin && <Link to="/users" className="desktop-navbar-link">User Directory</Link>}
-      {/* <div className="desktop-navbar-pfp" /> */}
-      <button
-        type="button"
-        label="profile-picture"
-        className="profile"
+      <div
+        className="profile-button"
+        role="button"
         onClick={toggleMenuOpen}
-      />
+        onKeyPress={toggleMenuOpen}
+        tabIndex="0"
+      >
+        <img src={localStorage.getItem('profilePicture')} className="profile-picture" alt="pfp" />
+      </div>
       {open && profileMenu}
     </div>
   );

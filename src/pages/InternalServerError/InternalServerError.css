@@ -1,0 +1,62 @@
+.error-500-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.error-500-page h1, h3 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.error-500-page .go-home-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: 0;
+    border: 0;
+    border-radius: 15px;
+
+    color: white;
+    background: var(--color-green);
+
+    margin-top: 50px;
+    margin-bottom: 100px;
+
+    height: 40px;
+    width: 200px;
+}
+
+@media screen and (max-width: 1920px) {
+    .error-500-page .graphic-500 {
+        width: 1000px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .error-500-page .graphic-500 {
+        width: 700px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .error-500-page .graphic-500 {
+        width: 500px;
+        overflow-x: hidden;
+    }
+
+    .error-500-page h1, h3 {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .error-500-page .graphic-500 {
+        width: 200px;
+        overflow-x: hidden;
+    }
+}
