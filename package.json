@@ -49,6 +49,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "cookie-parser": "^1.4.5",
+    "core-js": "^3.11.1",
     "cors": "^2.8.5",
     "date-fns": "^2.16.1",
     "disable-scroll": "^0.6.0",
