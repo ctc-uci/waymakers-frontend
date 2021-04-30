@@ -60,6 +60,12 @@
     font-weight: bold;
 }
 
+/* Not a super fan of this name*/
+.list-of-volunteer .pagination-indicator {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
 /* @media screen and (max-width: 768px) {
 
 } */

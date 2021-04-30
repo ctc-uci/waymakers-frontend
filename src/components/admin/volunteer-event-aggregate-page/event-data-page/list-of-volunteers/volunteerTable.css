@@ -1,6 +1,6 @@
 .overflow-volunteer-table {
     overflow: auto;
-    max-height: 250px;  /* TODO: change for the future*/
+    flex-grow: 1;
 }
 
 .volunteer-table {
