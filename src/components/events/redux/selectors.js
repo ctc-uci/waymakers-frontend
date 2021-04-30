@@ -14,6 +14,7 @@ export const getEventsForFullCalendar = (store) => {
   if (events.length === 0) {
     return [];
   }
+  console.log(events);
   return events.map((event) => ({
     title: event.title,
     division: event.division,
@@ -25,6 +26,7 @@ export const getEventsForFullCalendar = (store) => {
     id: event.id,
     eventLimit: event.eventLimit,
     eventAttendance: event.eventAttendance,
+    allDay: event.isAllDay,
   }));
 };
 
@@ -51,6 +53,7 @@ export const getUserEventsForFullCalendar = (store) => {
     id: event.id,
     eventLimit: event.eventLimit,
     eventAttendance: event.eventAttendance,
+    allDay: event.isAllDay,
   }));
 };
 

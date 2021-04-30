@@ -74,9 +74,10 @@ const createEventObject = (values) => ({
   eventDescription: values.eventDescription,
   division: values.eventDivision.replace(/-/g, ' '),
   eventLimit: values.eventLimit,
-  startTime: values.eventStartTime.format(),
-  endTime: values.eventEndTime.format(),
-  isAllDay: false, // default to false right now
+  startTime: moment(values.eventStartTime).format(),
+  endTime: moment(values.eventEndTime).format(),
+  isAllDay: (new Date(values.eventStartTime)).getDate()
+    < (new Date(values.eventEndTime)).getDate(),
 });
 
 const EventForm = () => {
@@ -84,7 +85,6 @@ const EventForm = () => {
   const event = useSelector(getSelectedEvent);
   const popupType = useSelector(getPopupType);
   const isModalOpen = useSelector(getShowPopup);
-  console.log(event);
   const handleAddEvent = async (values) => {
     const newEvent = createEventObject(values);
     dispatch(addEvent(newEvent));
@@ -268,10 +268,8 @@ const EventForm = () => {
         formik.setFieldValue('eventName', event.title);
         formik.setFieldValue('eventType', event.eventType);
         formik.setFieldValue('eventLocation', event.location);
-        formik.setFieldValue('eventStartDate', moment(event.startTime));
-        formik.setFieldValue('eventEndDate', moment(event.endTime));
-        formik.setFieldValue('eventStartTime', moment(event.startTime));
-        formik.setFieldValue('eventEndTime', moment(event.endTime));
+        formik.setFieldValue('eventStartTime', new Date(event.startTime));
+        formik.setFieldValue('eventEndTime', new Date(event.endTime));
         formik.setFieldValue('eventDescription', event.description);
         formik.setFieldValue('eventDivision', event.division.replace(/\s+/g, '-'));
         formik.setFieldValue('eventLimit', event.eventLimit);
@@ -286,6 +284,17 @@ const EventForm = () => {
   const getDatetimeInputClassName = () => {
     console.log('here');
     return (popupType === 'ViewEventInfoPopup') ? 'view-mode-input-color form-input-color datetime-input' : 'form-input-color datetime-input';
+  };
+
+  const updateNewDate = (e, startOrEnd, value) => {
+    const newDate = new Date(e);
+    const newValue = new Date(value);
+    newValue.setDate(newDate.getDate());
+    newValue.setMonth(newDate.getMonth());
+    newValue.setFullYear(newDate.getFullYear());
+    if (popupType !== 'ViewEventInfoPopup') {
+      formik.setFieldValue(startOrEnd, newValue);
+    }
   };
 
   return (
@@ -350,7 +359,7 @@ const EventForm = () => {
                 name="eventStartTime"
                 // type="dateTime-local"
                 initialValue={new Date()}
-                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventStartTime', e); }}
+                onChange={(e) => updateNewDate(e, 'eventStartTime', formik.values.eventStartTime)}
                 value={formik.values.eventStartTime}
                 readOnly={popupType === 'ViewEventInfoPopup'}
                 inputProps={{ className: getDatetimeInputClassName() }}
@@ -362,7 +371,7 @@ const EventForm = () => {
                 name="eventStartTime"
                 // type="dateTime-local"
                 initialValue={new Date()}
-                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventStartTime', e); }}
+                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventStartTime', new Date(e)); }}
                 value={formik.values.eventStartTime}
                 readOnly={popupType === 'ViewEventInfoPopup'}
                 dateFormat={false}
@@ -376,7 +385,7 @@ const EventForm = () => {
                 name="eventEndTime"
                 // type="dateTime-local"
                 initialValue={new Date()}
-                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
+                onChange={(e) => updateNewDate(e, 'eventEndTime', formik.values.eventEndTime)}
                 value={formik.values.eventEndTime}
                 readOnly={popupType === 'ViewEventInfoPopup'}
                 inputProps={{ className: getDatetimeInputClassName() }}
@@ -388,7 +397,7 @@ const EventForm = () => {
                 name="eventEndTime"
                 // type="dateTime-local"
                 initialValue={new Date()}
-                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', e); }}
+                onChange={(e) => { if (popupType !== 'ViewEventInfoPopup') formik.setFieldValue('eventEndTime', new Date(e)); }}
                 value={formik.values.eventEndTime}
                 readOnly={popupType === 'ViewEventInfoPopup'}
                 dateFormat={false}
