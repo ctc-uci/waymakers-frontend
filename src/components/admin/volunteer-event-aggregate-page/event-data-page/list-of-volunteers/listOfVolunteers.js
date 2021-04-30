@@ -3,7 +3,8 @@ import VolunteerTable from './volunteerTable';
 import VolunteerTableMobile from './volunteerTableMobile';
 import useMobileWidth from '../../../../../common/useMobileWidth';
 import { TitledCard } from '../../../../../common/Card';
-
+import back from '../../../../../assets/pageBack.svg';
+import forward from '../../../../../assets/pageForward.svg';
 import { WMKBackend } from '../../../../../common/utils';
 
 import './listOfVolunteers.css';
@@ -89,6 +90,7 @@ const ListOfVolunteers = (prop) => {
 
   useEffect(() => {
     getAllVolunteers();
+    console.log(allVolunteers);
   }, []);
 
   return (
@@ -106,20 +108,25 @@ const ListOfVolunteers = (prop) => {
         ) : (
           <VolunteerTable data={paginatedVolunteers} />
         )}
+      <br />
       <div className="pagination-indicator">
-        <button type="button" onClick={() => { setPaginatedIndex((old) => Math.max(0, old - 1)); }}>{'<'}</button>
-        <div>{paginatedIndex + 1}</div>
+        <button type="button" onClick={() => { setPaginatedIndex((old) => Math.max(0, old - 1)); }}>
+          <img src={back} alt="back page" />
+        </button>
+        <div>{totalNumberOfPages === 0 ? 0 : paginatedIndex + 1}</div>
         <div>/</div>
         <div>{totalNumberOfPages}</div>
-        <button type="button" onClick={() => { setPaginatedIndex((old) => Math.min(totalNumberOfPages - 1, old + 1)); }}>{'>'}</button>
+        <button type="button" onClick={() => { setPaginatedIndex((old) => Math.min(totalNumberOfPages - 1, old + 1)); }}>
+          <img src={forward} alt="next page" />
+        </button>
       </div>
       <div className="total-stats">
-        <p>
+        <p className="large bold">
           Total People:
           {' '}
           {allVolunteers.length}
         </p>
-        <p>
+        <p className="large bold">
           Total Hours:
           {' '}
           {totalHours}
