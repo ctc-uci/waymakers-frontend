@@ -94,6 +94,7 @@ const EventsView = ({
         calendarEl.current.getApi().changeView(view);
       }
       calendarEl.current.getApi().gotoDate(`${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`);
+      calendarEl.current.getApi().setOption('height', view === 'timeGridWeek' ? 1600 : 800);
     }
   }, [useSelector(getView), isMobile]);
 
@@ -246,7 +247,8 @@ const EventsView = ({
               buttonText: '4 day',
             },
           }}
-          contentHeight={isMobile ? 800 : 1000}
+          // contentHeight={isMobile ? 800 : 800}
+          contentHeight={800}
           expandRows="true"
           ref={calendarEl}
           headerToolbar={{
