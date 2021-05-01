@@ -25,7 +25,7 @@
 
 @media screen and (max-width: 768px) {
     .editAvailCard {
-        width: 500px;
+        width: 100%;
         padding: 0;
         margin: 5px;
     }
