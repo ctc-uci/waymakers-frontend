@@ -1,13 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as IconIo from 'react-icons/io';
+import moment from 'moment';
 
 import './calendarDayHeader.css';
 
-const CalendarDayHeader = ({ goToPrev, goToNext, dayInfo }) => {
+const CalendarDayHeader = ({
+  goToPrev,
+  goToNext,
+  dayInfo,
+  startOfRange,
+  endOfRange,
+}) => {
   const renderDayHeader = () => {
-    const prevButton = () => <button className="cal-btn prev-button cursor-pointer" type="button" onClick={goToPrev} aria-label="previous"><IconIo.IoIosArrowBack size={20} /></button>;
-    const nextButton = () => <button className="cal-btn next-button cursor-pointer" type="button" onClick={goToNext} aria-label="next"><IconIo.IoIosArrowForward size={20} /></button>;
+    const prevButton = () => <button id="prev-button" className="day-button cursor-pointer" type="button" onClick={goToPrev} aria-label="previous"><IconIo.IoIosArrowBack size={20} /></button>;
+    const nextButton = () => <button id="next-button" className="day-button cursor-pointer" type="button" onClick={goToNext} aria-label="next"><IconIo.IoIosArrowForward size={20} /></button>;
     if (dayInfo.view.type === 'timeGridWeek') {
       const currentDay = dayInfo.text.substring(0, 3);
       return (
@@ -18,6 +25,19 @@ const CalendarDayHeader = ({ goToPrev, goToNext, dayInfo }) => {
             <p id="header-day">{new Date(dayInfo.date).toLocaleString('en-us', { weekday: 'short' })}</p>
           </div>
           {currentDay === 'Sat' && nextButton()}
+        </div>
+      );
+    }
+    if (dayInfo.view.type === 'timeGridFourDay') {
+      const currentDay = moment(dayInfo.date);
+      return (
+        <div className="week-header">
+          {currentDay.isSame(moment(startOfRange)) && prevButton()}
+          <div className="week-day-header-content">
+            <p id="header-date">{dayInfo.date.getDate()}</p>
+            <p id="header-day">{new Date(dayInfo.date).toLocaleString('en-us', { weekday: 'short' })}</p>
+          </div>
+          {currentDay.isSame(moment(endOfRange)) && nextButton()}
         </div>
       );
     }
@@ -34,9 +54,9 @@ const CalendarDayHeader = ({ goToPrev, goToNext, dayInfo }) => {
     // timeGridDay view
     return (
       <div className="day-header">
-        <button className="day-button cursor-pointer" type="button" onClick={goToPrev} aria-label="previous"><IconIo.IoIosArrowBack size={20} /></button>
+        {prevButton()}
         <p id="day-view-title">{dayInfo.text}</p>
-        <button className="day-button cursor-pointer" type="button" onClick={goToNext} aria-label="next"><IconIo.IoIosArrowForward size={20} /></button>
+        {nextButton()}
       </div>
     );
   };
@@ -52,6 +72,13 @@ CalendarDayHeader.propTypes = {
   goToPrev: PropTypes.func.isRequired,
   goToNext: PropTypes.func.isRequired,
   dayInfo: PropTypes.objectOf(PropTypes.any).isRequired,
+  startOfRange: PropTypes.objectOf(Date),
+  endOfRange: PropTypes.objectOf(Date),
+};
+
+CalendarDayHeader.defaultProps = {
+  startOfRange: new Date(),
+  endOfRange: new Date(),
 };
 
 export default CalendarDayHeader;

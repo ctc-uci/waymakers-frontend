@@ -4,16 +4,6 @@
     flex-direction: row;
 }
 
-.cal-btn{
-    background: transparent;
-    box-shadow: 0px 0px 0px transparent;
-    border: 0px solid transparent;
-    text-shadow: 0px 0px 0px transparent;
-    color: var(--text-color-dark);
-    position: absolute;
-    margin-top: 0%;
-}
-
 .day-header .prev-button {
     margin-top: 1.5%;
     margin-left: -6%;
@@ -74,3 +64,20 @@
     font-weight: bold;
     color: var(--color-dark-blue);
 }
+
+@media screen and (max-width: 768px) {
+    #prev-button{
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    #next-button{
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+
+    .month-header p {
+        font-size: 0.85em;
+    }
+}
+

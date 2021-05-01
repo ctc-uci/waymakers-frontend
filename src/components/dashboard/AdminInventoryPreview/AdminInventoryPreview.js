@@ -18,6 +18,7 @@ const AdminInventoryPreview = ({ division }) => {
   const topAmount = isMobile ? 2 : 3;
 
   // Fetching top items from the server
+
   const getTopItems = async () => {
     try {
       const response = await WMKBackend.get(`/inventory/top?warehouse=${warehouseIDMap[warehouseName]}&numItems=${topAmount}`);

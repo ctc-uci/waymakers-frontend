@@ -1,4 +1,4 @@
-import React from 'react';
+import { React } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';

@@ -127,6 +127,10 @@ export const changeYear = (newYear) => async (dispatch) => {
   dispatch({ type: 'events/yearSelected', payload: newYear });
 };
 
+export const changeDate = (newDate) => async (dispatch) => {
+  dispatch({ type: 'events/dateSelected', payload: newDate });
+};
+
 export const changeSelectedEvent = (event) => async (dispatch) => {
   dispatch({ type: 'events/eventSelected', payload: event });
 };

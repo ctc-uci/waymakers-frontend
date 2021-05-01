@@ -86,6 +86,7 @@
   height: 30px;
   line-height: 1.5em;
   text-align: center;
+  vertical-align: middle;
 }
 
 .no-items-message {
@@ -93,10 +94,14 @@
 }
 
 .view-inventory-section {
+  /* display: flex; */
+  /* justify-content: center; */
   width: 100%;
 }
 
 .view-inventory-button {
+  /* display: flex; */
+  /* justify-content: center; */
   background-color: var(--color-green);
   color: var(--text-color-light);
   border: none;
