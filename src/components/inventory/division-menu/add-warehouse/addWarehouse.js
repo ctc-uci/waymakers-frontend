@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
 import { connect, useDispatch } from 'react-redux';
 import { addWarehouse } from '../../redux/actions';
 import { getWarehouses } from '../../redux/selectors';
+import { LightModal } from '../../../../common/LightModal';
 import './addWarehouse.css';
 
-Modal.setAppElement('#root');
 const AddWarehouseButton = (prop) => {
   const dispatch = useDispatch();
   const [popup, setPopup] = useState(false);
@@ -28,43 +27,44 @@ const AddWarehouseButton = (prop) => {
   };
 
   return (
-    <div className="add-warehouse-button-wrapper">
+    <div className="add-warehouse">
       <button type="button" className="add-warehouse-button" onClick={() => setPopup(true)}>+</button>
-      <>
-        <Modal
-          className="add-warehouse-popup"
-          isOpen={popup}
-          onRequestClose={() => setPopup(false)}
-          style={{ size: '100px' }}
-        >
-          <button type="button" className="close-warehouse" onClick={() => setPopup(false)}>x</button>
-          <form className="add-warehouse-form" onSubmit={handleOnSubmit}>
-            <input
-              type="text"
-              className="add-warehouse-input"
-              name="add-warehouse-input"
-              placeholder="Warehouse Name"
-              onChange={(e) => setWarehouse(e.target.value)}
-            />
-            <select
-              name="category"
-              value={selectedDivision}
-              onChange={(e) => {
-                setSelectedDivision(e.target.value);
-              }}
-            >
-              {/* Creating dropdown menu items from divisions list */}
-              {/* division.div_name is displayed, but the value of the option will be the ID */}
-              {Object.entries(prop.divisionList)
-                .sort((a, b) => (a.id > b.id ? 1 : -1))
-                .map(([id, division]) => (
-                  id > -1 && <option key={id} value={id}>{division.div_name}</option>
-                ))}
-            </select>
-            <button type="submit" className="submit-button">Add Warehouse</button>
-          </form>
-        </Modal>
-      </>
+      {/* Popup form for when button is clicked */}
+      <LightModal
+        className="add-warehouse-popup"
+        isOpen={popup}
+        onRequestClose={() => setPopup(false)}
+      >
+        <form className="add-warehouse-form" onSubmit={handleOnSubmit}>
+          <p className="add-warehouse-title">Add new warehouse?</p>
+          <input
+            type="text"
+            className="add-warehouse-input"
+            name="add-warehouse-input"
+            placeholder="Warehouse Name"
+            onChange={(e) => setWarehouse(e.target.value)}
+          />
+          <select
+            name="category"
+            value={selectedDivision}
+            onChange={(e) => {
+              setSelectedDivision(e.target.value);
+            }}
+          >
+            {/* Creating dropdown menu items from divisions list */}
+            {/* division.div_name is displayed, but the value of the option will be the ID */}
+            {Object.entries(prop.divisionList)
+              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .map(([id, division]) => (
+                id > -1 && <option key={id} value={id}>{division.div_name}</option>
+              ))}
+          </select>
+          <div className="confirmation">
+            <button type="button" className="warehouse-form-button" onClick={() => setPopup(false)}>Close</button>
+            <button type="submit" className="warehouse-form-button submit-warehouse">Yes</button>
+          </div>
+        </form>
+      </LightModal>
     </div>
   );
 };

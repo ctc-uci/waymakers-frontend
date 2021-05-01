@@ -19,11 +19,7 @@ const DivisionMenu = (prop) => {
   });
 
   const handleArrowClick = () => {
-    if (open) {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
+    setOpen(!open);
   };
 
   const handleDivisionClick = (e, divName) => {

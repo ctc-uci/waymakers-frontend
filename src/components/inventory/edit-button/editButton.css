@@ -2,21 +2,86 @@
 
 .edit-button {
     border: none;
-    right: 20%;
-    top: 23%;
+    display: flex;
+    justify-content: center;
     background: none;
     text-decoration: underline;
     font-family: 'Assistant', Arial, Helvetica, sans-serif;
     font-size: larger;
     color: var(--text-color-dark);
-    font-weight: bold;
+    font-weight: 400;
+    height: 38px;
+    padding: 5px 20px;
     cursor: pointer;
 }
 
-.edit-button-wrapper {
+.edit-button-pair {
     display: flex;
     flex-direction: row;
-    width: 115px;
-    margin-left: 1150px;
-    position: absolute;
+}
+
+.edit-button > * {
+    pointer-events: none;
+}
+
+.start-edits-icon {
+    height: 25px;
+    width: 25px;
+    margin-top: 3px;
+    background: url('../../../assets/startEdits.png');
+    background-repeat: no-repeat;
+}
+
+.save-edits-icon {
+    height: 25px;
+    width: 25px;
+    margin-top: 2px;
+    margin-right: 3px;
+    background: url('../../../assets/saveButton.png');
+    background-repeat: no-repeat;
+}
+
+.edit-button#start-edit {
+    color: #fff;
+    text-decoration: none;
+    background-color: var(--color-green);
+    box-shadow: 0px 2px 4px #afafaf;
+}
+
+.edit-button#save-edit {
+    color: #fff;
+    text-decoration: none;
+    background-color: var(--color-dark-blue);
+    box-shadow: 0px 2px 4px #afafaf;
+}
+
+.edit-button#cancel-edit {
+    color: var(--color-dark-orange);
+    font-weight: 800;
+}
+
+
+@media screen and (max-width: 768px) {
+    .edit-button {
+        padding: 2px 14px;
+        font-size: 1em;
+        color: var(--text-color-dark);
+        font-weight: bold;
+        cursor: pointer;
+        height: 32px;
+        line-height: 28px;
+    }
+    
+    .start-edits-icon {
+        height: 22px;
+        width: 22px;
+        margin-right: 5px;
+    }
+    
+    .save-edits-icon {
+        height: 22px;
+        width: 22px;
+        margin-top: 2px;
+        margin-right: 5px;
+    }
 }

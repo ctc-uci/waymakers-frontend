@@ -6,28 +6,32 @@ import { Provider } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import './common/ConfigLoader';
+
 import Test from './.harrison-sandbox/Test';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import Layout from './components/layout/layout';
+
 import Dashboard from './pages/dashboard/dashboard';
 import RegisterPage from './pages/login/registerPage';
 import LoginPage from './pages/login/loginPage';
 import VerificationPage from './pages/login/verificationPage';
+import InventoryPage from './pages/inventory/inventoryPage';
+import VolunteerEvents from './pages/volunteer-events/volunteerEvents';
+import NotFound404 from './pages/NotFound404/NotFound404';
+import InternalServerError from './pages/InternalServerError/InternalServerError';
+
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import Layout from './components/layout/layout';
 import ManageUsers from './components/admin/manageusers/manageusers';
 import ManageDB from './components/admin/managedb/managedb';
 import Profile from './pages/profile/profile';
 import Hours from './components/volunteer/volHours/hours';
 import Tier from './components/volunteer/tier/tier';
 import Forms from './components/volunteer/forms/forms';
-import Inventory from './components/inventory/inventory';
 import Reports from './components/reports/reports';
 import Events from './components/events/events';
 import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggregate-page/volunteerEventAggregatePage';
 import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
-import VolunteerEvents from './pages/volunteer-events/volunteerEvents';
-import NotFound404 from './pages/NotFound404/NotFound404';
-import InternalServerError from './pages/InternalServerError/InternalServerError';
+
 import store from './redux/store';
 
 import './index.css';
@@ -62,7 +66,7 @@ ReactDOM.render(
                     <ProtectedRoute path="/volunteer/hours" component={Hours} />
                     <ProtectedRoute path="/volunteer/tier" component={Tier} />
                     <ProtectedRoute path="/volunteer/forms" component={Forms} />
-                    <ProtectedRoute path="/inventory" component={Inventory} admin />
+                    <ProtectedRoute path="/inventory" component={InventoryPage} admin />
                     <ProtectedRoute path="/reports" component={Reports} admin />
                     <ProtectedRoute path="/events/viewHours" component={viewHours} />
                     <ProtectedRoute path="/events" component={Events} admin />

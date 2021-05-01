@@ -4,11 +4,11 @@ import { connect, useDispatch } from 'react-redux';
 import { WMKBackend } from '../../../common/utils';
 
 import {
-  addItem,
-  addCategory,
-  addDivision,
-  addWarehouse,
-} from '../redux/actions';
+  LightModalHeader,
+  LightModalBody,
+  LightModalButton,
+} from '../../../common/LightModal';
+import { addItem } from '../redux/actions';
 import { getCategories, getDivisions } from '../redux/selectors';
 
 // note: this is only used in AddItemModal.js
@@ -24,20 +24,12 @@ const AddItem = (prop) => {
   const [needed, setNeeded] = useState(0);
   // category of item
   const [category, setCategory] = useState('');
-  // name of category to add
-  const [label, setLabel] = useState('');
   // division of item
   const [division, setDivision] = useState('');
-  // name of division to add
-  const [divisionLabel, setDivisionLabel] = useState('');
   // list of warehouses attached to the currently selected division
   const [warehouses, setWarehouses] = useState([]);
   // currently selected warehouse
   const [warehouse, setWarehouse] = useState('');
-  // label of new warehouse
-  const [newWarehouse, setNewWarehouse] = useState('');
-  // division of new warehouse
-  const [newWarehouseDivision, setNewWarehouseDivision] = useState(-1);
 
   useEffect(() => {
     // Fetches warehouses connected to the selected division
@@ -56,139 +48,110 @@ const AddItem = (prop) => {
     }));
   };
 
-  const onSubmitAddCategory = () => {
-    // Create an add category action
-    dispatch(addCategory({
-      label,
-    }));
-  };
-  const onSubmitAddDivision = () => {
-    // Create an add division action
-    dispatch(addDivision({
-      divisionLabel,
-    }));
-  };
-
-  const onSubmitAddWarehouse = () => {
-    // Create an add warehouse action
-    dispatch(addWarehouse({
-      warehouseLabel: newWarehouse,
-      division: newWarehouseDivision,
-    }));
-  };
-
   return (
     <>
-      {/** ADD ITEM BUTTON */}
-      <form className="d-flex flex-column" onSubmit={onSubmitAddItem}>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Item Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="number"
-          className="form-control"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-        />
-        <input
-          type="number"
-          className="form-control"
-          value={needed}
-          onChange={(e) => setNeeded(e.target.value)}
-        />
-        <select
-          className="form-control"
-          id="categories"
-          name="categories"
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="" selected>No category</option>
-          {/* Creating dropdown menu items from categories list */}
-          {/* category.label is displayed, but the value of the option will be the ID */}
-          {prop.categories
-            .filter((cat) => cat.id > 0)
-            .map((cat) => (
-              <option value={cat.id}>{cat.label}</option>
+      <LightModalHeader title="Add a New Item" onClose={() => prop.setIsOpen(false)} />
+      <LightModalBody>
+        <form className="add-item-form" onSubmit={onSubmitAddItem}>
+          <div className="add-item-input-title">
+            Name
+            <span className="add-item-mandatory"> *</span>
+          </div>
+          <input
+            type="text"
+            className="add-item-input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <div className="add-item-input-title">
+            In Stock
+            <span className="add-item-mandatory"> *</span>
+          </div>
+          <input
+            type="number"
+            className="add-item-input"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+          <div className="add-item-input-title">
+            # Needed
+            <span className="add-item-mandatory"> *</span>
+          </div>
+          <input
+            type="number"
+            className="add-item-input"
+            value={needed}
+            onChange={(e) => setNeeded(e.target.value)}
+          />
+          <div className="add-item-input-title">
+            Division
+            <span className="add-item-mandatory"> *</span>
+          </div>
+          <select
+            className="add-item-form"
+            id="divisions"
+            name="divisions"
+            onChange={(e) => setDivision(e.target.value)}
+          >
+            <option value="" selected disabled>Select Division...</option>
+            {/* Creating dropdown menu items from divisions list */}
+            {/* division.div_name is displayed, but the value of the option will be the ID */}
+            {Object.entries(prop.divisions)
+              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .map(([id, divi]) => (
+                <option value={id}>{divi.div_name}</option>
+              ))}
+          </select>
+          <div className="add-item-input-title">
+            Warehouse
+            <span className="add-item-mandatory"> *</span>
+          </div>
+          <select
+            className="add-item-form"
+            id="warehouses"
+            name="warehouses"
+            onChange={(e) => setWarehouse(e.target.value)}
+          >
+            <option value="" selected disabled>Select Warehouse...</option>
+            {warehouses.map((wh) => (
+              <option value={wh.id}>{wh.warehouse_name}</option>
             ))}
-        </select>
-        <select
-          className="form-control"
-          id="divisions"
-          name="divisions"
-          onChange={(e) => setDivision(e.target.value)}
-        >
-          <option value="" selected disabled>Select Division</option>
-          {/* Creating dropdown menu items from divisions list */}
-          {/* division.div_name is displayed, but the value of the option will be the ID */}
-          {Object.entries(prop.divisions)
-            .sort((a, b) => (a.id > b.id ? 1 : -1))
-            .map(([id, divi]) => (
-              <option value={id}>{divi.div_name}</option>
-            ))}
-        </select>
-        <select
-          className="form-control"
-          id="warehouses"
-          name="warehouses"
-          onChange={(e) => setWarehouse(e.target.value)}
-        >
-          <option value="" selected disabled>Select Warehouse (Required)</option>
-          {warehouses.map((wh) => (
-            <option value={wh.id}>{wh.warehouse_name}</option>
-          ))}
-        </select>
-        <button type="submit" className="btn btn-success">Add</button>
-      </form>
-      {/** ADD CATEGORY BUTTON */}
-      <form className="d-flex flex-column" onSubmit={onSubmitAddCategory}>
-        <input
-          type="text"
-          placeholder="Category Label"
-          className="form-control"
-          value={label}
-          onChange={(e) => setLabel(e.target.value)}
-        />
-        <button type="submit" className="btn btn-success">Add Category</button>
-      </form>
-      {/** ADD DIVISION BUTTON */}
-      <form className="d-flex flex-column" onSubmit={onSubmitAddDivision}>
-        <input
-          type="text"
-          placeholder="Division Label"
-          className="form-control"
-          value={divisionLabel}
-          onChange={(e) => setDivisionLabel(e.target.value)}
-        />
-        <button type="submit" className="btn btn-success">Add Division</button>
-      </form>
-      {/** ADD Warehouse BUTTON */}
-      <form className="d-flex flex-column" onSubmit={onSubmitAddWarehouse}>
-        <select
-          className="form-control"
-          id="divisions"
-          name="divisions"
-          onChange={(e) => setNewWarehouseDivision(e.target.value)}
-        >
-          <option value="" selected disabled>Select Division</option>
-          {Object.entries(prop.divisions)
-            .sort((a, b) => (a.id > b.id ? 1 : -1))
-            .map(([id, divi]) => (
-              <option value={id}>{divi.div_name}</option>
-            ))}
-        </select>
-        <input
-          type="text"
-          placeholder="Warehouse label"
-          className="form-control"
-          value={newWarehouse}
-          onChange={(e) => setNewWarehouse(e.target.value)}
-        />
-        <button type="submit" className="btn btn-success">Add Warehouse</button>
-      </form>
+          </select>
+          <div className="add-item-input-title">
+            Category
+          </div>
+          <select
+            className="add-item-form add-item-last-field"
+            id="categories"
+            name="categories"
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="" selected>No category</option>
+            {/* Creating dropdown menu items from categories list */}
+            {/* category.label is displayed, but the value of the option will be the ID */}
+            {prop.categories
+              .filter((cat) => cat.id > 0)
+              .map((cat) => (
+                <option value={cat.id}>{cat.label}</option>
+              ))}
+          </select>
+          <LightModalButton
+            primary
+            type="submit"
+            className="add-item-submit"
+          >
+            Submit
+          </LightModalButton>
+          <LightModalButton
+            secondaryOutline
+            type="button"
+            onClick={() => prop.setIsOpen(false)}
+            className="add-item-cancel"
+          >
+            Cancel
+          </LightModalButton>
+        </form>
+      </LightModalBody>
     </>
   );
 };

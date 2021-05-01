@@ -7,12 +7,12 @@
 
 .warehouse-menu-container {
   display: flex;
-  justify-content: space-between;
-  padding-bottom: 15px;
-  padding-right: 3%;
+  justify-content: center;
   width: 56%;
   font-family: var(font-family);
   color: var(--text-color-dark);
+  width: fit-content;
+  position: relative;
 }
 
 .warehouse-menu--top {
@@ -21,7 +21,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  font-size: 36px;
+  font-size: 2.25em;
   font-weight: 700;
   line-height: 55px;
 }
@@ -62,8 +62,6 @@
   box-shadow: 2px 2px 6px;
   background-color: solid #FFFF;
   position: absolute;
-  left: 0; 
-  right: 0; 
   margin-left: auto; 
   margin-right: auto;
   width: 300px;
@@ -72,8 +70,6 @@
 }
 
 .warehouse-menu--list-item {
-  display: flex;
-  align-items: flex-start;
   text-align: center;
   border: none;
   background-color: #FFFF;
@@ -99,55 +95,87 @@
   width: inherit;
   font-size: 32px;
   font-weight: 700;
+  font-family: 'Assistant', Arial, Helvetica, sans-serif;
 }
 
 .warehouse-menu--list-item:focus {
   text-decoration: underline;
 }
 
-.add-warehouse-button {
-  background-color: var(--color-green);
-  color: var(--text-color-light);
-  font-size: 150%;
-  font-weight: 800;
-  border: 0;
-  border-radius: 30px;
-  height: 30px;
-  width: 30px;
-  margin-top: 15px;
-  line-height: 25px;
-  text-align: center;
-}
+@media screen and (max-width: 375px) {
+  .warehouse-container {
+    width: 300px;
+  }
 
-.dashboard {
-  color: var(--text-color-dark);
-  background-color: var(--color-light-blue);
-  margin: 0;
-  line-height: 1;
-  outline: none;
-  border: none;
-  text-align: left;
-  font-weight: normal;
-  font-size: 24px;
-  cursor: pointer;
-}
+  .warehouse-menu--top {
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 40px;
+  }
 
-.warehouse-menu-container {
-  padding-bottom: 15px;
-  display: flex;
-  justify-content: center;
-}
+  .warehouse-menu--open {
+    margin-left: 12px;
+    margin-top: 3px;
+    border: solid var(--text-color-dark);
+    background-color: transparent;
+    border-width: 0 2px 2px 0;
+    height: 14px;
+    width: 4px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    cursor: pointer;
+  }
+  
+  .warehouse-menu--close {
+    margin-left: 12px;
+    margin-top: 3px;
+    border: solid var(--text-color-dark);
+    background-color: transparent;
+    border-width: 0 2px 2px 0;
+    height: 14px;
+    width: 10px;
+    flex-direction: row;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    cursor: pointer;
+  }
 
-.add-warehouse-button {
-  background-color: var(--color-green);
-  color: var(--text-color-light);
-  font-size: 150%;
-  font-weight: 800;
-  border: 0;
-  border-radius: 30px;
-  height: 30px;
-  width: 30px;
-  margin-top: 15px;
-  line-height: 25px;
-  text-align: center;
+  .warehouse-menu--list {
+    text-align: center;
+    border: none;
+    outline: none;
+    box-shadow: 1px 2px 4px;
+    background-color: solid #FFFF;
+    position: absolute;
+    left: -10%;
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
+    width: 180px;
+    z-index: 1;
+    margin-top: 42px;
+  }
+  
+  .warehouse-menu--list-item {
+    font-size: 1.25em;
+  }
+  
+  .warehouse-menu--no-warehouses {
+    display: flex;
+    align-items: flex-start;
+    text-align: center;
+    border: none;
+    background-color: #FFFF;
+    color: var(--text-color-dark);
+    width: inherit;
+    font-weight: 700;
+    font-size: 1.25em;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+  }
+  
 }
