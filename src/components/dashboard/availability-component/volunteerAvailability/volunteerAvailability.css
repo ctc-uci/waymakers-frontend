@@ -3,6 +3,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 85%;
+  margin: auto;
+}
+
+.availability-header {
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .volunteer-availability .availability-header {

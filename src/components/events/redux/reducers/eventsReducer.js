@@ -22,7 +22,7 @@ export const initialState = {
   year: new Date().getFullYear(),
   day: new Date().getDate(),
   selectedEvent: {},
-  view: 'dayGridMonth',
+  view: 'timeGridWeek',
   popupType: '',
 };
 
@@ -64,7 +64,6 @@ export default (state = initialState, action) => {
     case 'events/eventEdited': {
       // eslint-disable-next-line
       console.log(`[ACTION: events/eventEdited] Editing event with content ${action.payload}`);
-      console.log(action.payload);
       // Update that event
       let updatedList = [...state.eventsList];
       updatedList = updatedList.filter((event) => event.id !== action.payload[0].id);
@@ -146,6 +145,17 @@ export default (state = initialState, action) => {
       return {
         ...state,
         year: action.payload,
+      };
+    }
+
+    case 'events/dateSelected': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/dateSelected] Setting date to ${action.payload}`);
+      return {
+        ...state,
+        day: action.payload.day,
+        month: action.payload.month,
+        year: action.payload.year,
       };
     }
 

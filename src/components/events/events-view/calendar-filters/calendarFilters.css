@@ -1,15 +1,16 @@
 #event-date-picker {
     display: flex;
     justify-content: flex-end;
-    margin-right: 1em;
+    /* margin-right: 1em; */
 }
 
 .picker, #month, #year {
     background-color: var(--color-green);
     color: var(--text-color-light);
     outline: none;
-    border-radius: 8px;
+    border-radius: 15px;
     margin-left: 10px;
+    height: 25px;
     padding: 0.25em;
     border: none;
     cursor: pointer;
@@ -19,4 +20,37 @@
     background: var(--color-pastel-green);
     color: var(--text-color-dark-green);
     border: none;
+}
+
+.calendar-filters .DateFilter input {
+    border-radius: 10px;
+    background: #5D9A64;
+    color: white;
+    text-align: center;
+    border: none;
+    float: right;
+    cursor: pointer;
+    padding: 4px;
+  }
+  
+  .DateFilter input::placeholder {
+    color: white;
+  }
+  
+  .DateFilter .rdtPicker {
+    right: 0;
+  }
+
+@media screen and (max-width: 768px) {
+
+  .calendar-filters {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      /* margin-bottom: 20px; */
+  }
+
+  .DateFilter {
+    margin-left: 10px;
+  }
 }
