@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
 import { connect, useDispatch } from 'react-redux';
 import { addCategory } from '../redux/actions';
 import { getCategories } from '../redux/selectors';
+import { LightModal } from '../../../common/LightModal';
 import './addCategory.css';
 
-Modal.setAppElement('#root');
 const AddCategoryButton = () => {
   const dispatch = useDispatch();
   const [popup, setPopup] = useState(false);
@@ -19,28 +18,29 @@ const AddCategoryButton = () => {
   };
 
   return (
-    <div style={{ paddingRight: '10px' }}>
+    <div className="add-category">
       <button type="button" className="add-category-button" onClick={() => setPopup(true)}>+</button>
-      <>
-        <Modal
-          className="add-category-popup"
-          isOpen={popup}
-          onRequestClose={() => setPopup(false)}
-          style={{ size: '100px' }}
-        >
-          <button type="button" className="close-category" onClick={() => setPopup(false)}>x</button>
-          <form className="add-category-form" onSubmit={handleOnSubmit}>
-            <input
-              type="text"
-              className="add-category-input"
-              name="add-category-input"
-              placeholder="Category Name"
-              onChange={(e) => setLabel(e.target.value)}
-            />
-            <button type="submit" className="submit-button">Add Category</button>
-          </form>
-        </Modal>
-      </>
+      {/* Popup form for when button is clicked */}
+      <LightModal
+        className="add-category-popup"
+        isOpen={popup}
+        onRequestClose={() => setPopup(false)}
+      >
+        <form className="add-category-form" onSubmit={handleOnSubmit}>
+          <p className="add-category-title">Create new category?</p>
+          <input
+            type="text"
+            className="add-category-input"
+            name="add-category-input"
+            placeholder="Category Name"
+            onChange={(e) => setLabel(e.target.value)}
+          />
+          <div className="confirmation">
+            <button type="button" className="category-form-button" onClick={() => setPopup(false)}>Cancel</button>
+            <button type="submit" className="category-form-button submit-category">Yes</button>
+          </div>
+        </form>
+      </LightModal>
     </div>
   );
 };

@@ -182,6 +182,8 @@ export const cancelEdits = () => ({
 export const saveEdits = () => async (dispatch, getState) => {
   const editPromises = [];
   const deletePromises = [];
+  const currentCategoryID = getState().items.selectedCategoryID;
+  console.log(currentCategoryID);
 
   // Populating edited list with PUT requests for each edited item
   const editedItems = { ...getState().edits.editedItems };
@@ -206,6 +208,11 @@ export const saveEdits = () => async (dispatch, getState) => {
       WMKBackend.delete(`/category/${id}`),
     );
   });
+  console.log(deletedCategories);
+  if (currentCategoryID in deletedCategories) {
+    console.log('this ran');
+    changeSelectedCategory(null, '');
+  }
 
   // Perform all delete requests concurrently
   await Promise.all(deletePromises)

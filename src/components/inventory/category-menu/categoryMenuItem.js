@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteCategory, undeleteCategory, changeSelectedCategory } from '../redux/actions';
 import { getEditing } from '../redux/selectors';
 import './categoryMenu.css';
+import deleteIcon from '../../../assets/deleteIcon.svg';
+import undoIcon from '../../../assets/undeleteIcon.svg';
 
 // Returns a button for a single category
 const CategoryMenuItem = (props) => {
@@ -53,11 +55,13 @@ const CategoryMenuItem = (props) => {
       <button key={props.category.id} type="button" className="category-button--edit" onClick={selCategory}>
         {label}
         <button
-          className={deleted ? 'category-icon--undo' : 'category-icon--delete'}
+          className="category-icon"
           type="button"
           aria-label="icon"
           onClick={onClickFunction}
-        />
+        >
+          <img src={deleted ? undoIcon : deleteIcon} alt="" />
+        </button>
       </button>
     );
   };

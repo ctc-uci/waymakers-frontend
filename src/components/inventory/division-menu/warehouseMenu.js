@@ -33,11 +33,7 @@ const WarehouseMenu = (prop) => {
 
   // Handles opening and closing the dropdown whenever the button is pressed
   const handleArrowClick = () => {
-    if (open) {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
+    setOpen(!open);
   };
 
   const handleWarehouseClick = (e, warehouseName) => {
@@ -87,8 +83,9 @@ const WarehouseMenu = (prop) => {
   return (
     <div className="warehouse-container">
       <div ref={ref} className="warehouse-menu-container">
-        {!useSelector(getEditing) ? <div> </div> : (
+        {useSelector(getEditing) && (
           <AddWarehouseButton
+            // className="test"
             divisionList={prop.divisionList}
             selectedDivision={prop.selectedDivision}
           />

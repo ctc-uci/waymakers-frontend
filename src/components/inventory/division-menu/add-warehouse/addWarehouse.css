@@ -1,70 +1,114 @@
 @import '../../../../common/vars.css';
 
-.add-warehouse-button-wrapper {
-    float: left;
+/* NOTE: assuming styling is similar to "Add Category" popup for now */
+
+.add-warehouse {
+    left: -45px;
+    position: absolute;
 }
 
 .add-warehouse-button {
-    margin-right: 5px;
     background-color: var(--color-green);
     color: var(--text-color-light);
-    font-size: 150%;
+    font-size: 125%;
     font-weight: 800;
     border: 0;
-    border-radius: 50px;
-    height: 40px;
-    width: 40px;
+    border-radius: 32px;
+    height: 32px;
+    width: 32px;
+    margin-top: 13px;
+    cursor: pointer;
 }
 
-.add-warehouse-popup {
-    display: flex;
-    justify-content: center;
-    align-items:center;
-    flex-direction: column;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    right: 50%;
-    bottom: 50%;
-    border: 1.6px solid var(--color-green);
-    background: var(--color-green);
-    padding: 100px;
+.add-warehouse-popup .light-modal-container{  
     border-radius: 10px;
+    border-style: none;
 }
 
-.close-warehouse {
-    position: absolute;
-    top:0;
-    left:0;
-    margin-top: 2%;
-    margin-left: 5%;
-    border: 0;
-    background: none;
-    font-size: 150%;
+.add-warehouse-title {
+    font-size: 22px;
+    font-weight: 800;
+    padding-bottom: 5px;
 }
 
 .add-warehouse-form {
     display: flex;
-    position: relative;
     flex-direction: column;
-    justify-content: space;
+    align-items: center;
+    justify-self: center;
+    width: 250px;
+    height: 215px;
+    padding: 10px;
+}
+
+.add-warehouse-form p {
+    margin-block-start: 20px;
+    margin-block-end: 0px;
+    text-align: center;
 }
 
 .add-warehouse-input {
-    border-radius: 4px;
-    border: none;
-    padding: 5px;
-}
-
-.submit-button {
     margin-top: 10px;
-    border-radius: 4px;
-    border-color: var(--text-color-dark);
-    border-width: 2px;
+    margin-bottom: 10px;
+    border: 2px solid var(--color-dark-blue);
+    padding: 5px;
     color: var(--text-color-dark);
+    font-size: 18px;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    text-align: center;
+    width: 75%;
 }
 
-.submit-button:hover {
-    background-color: var(--text-color-dark);
-    color: var(--text-color-light)
+.add-warehouse-form select {
+    margin-bottom: 10px;
+    width: 202px;
+    border: 2px solid var(--color-dark-blue);
+    padding: 5px;
+    color: var(--text-color-dark);
+    font-size: 16px;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    text-align-last: center;
+}
+
+.add-warehouse-form .confirmation {
+    margin-bottom: 10px;
+}
+
+.warehouse-form-button {
+    margin: 5px;
+    margin-bottom: 20px;
+    border: 4px solid var(--color-dark-orange);
+    border-radius: 15px;
+    background-color: var(--color-dark-orange);
+    color: var(--text-color-light);
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.submit-warehouse {
+    margin-left: 20px;
+    border: 4px solid var(--color-green);
+    background-color: var(--color-green);
+}
+
+.warehouse-form-button:hover {
+    opacity: .85;
+}
+
+@media screen and (max-width: 375px) {
+    .add-warehouse-button-wrapper {
+        left: -38px;
+    }
+
+    .add-warehouse-button {
+        font-size: 1.25em;
+        font-weight: 200;
+        border-radius: 30px;
+        height: 26px;
+        width: 26px;
+        margin-top: 9px;
+    }
 }

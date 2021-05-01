@@ -1,11 +1,11 @@
 .item-search {
-    width: 70%;
+    width: 90%;
     height: 40px;
     text-align: left;
     padding-left: 15px;
     background-color: rgba(0, 171, 198, 0.1);
     border: 0px;
-    border-radius: 3px;
+    border-radius: 3px; 
     font-family: "Assistant", Arial, Helvetica, sans-serif;
     font-size: 18px;
     color: #000;
@@ -15,4 +15,16 @@
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+@media screen and (max-width: 375px) {
+    .search-container {
+        margin-top: 8px;
+        width: 85%;
+    }
+
+    .item-search {
+        height: 35px;
+        font-size: 0.9em;
+    }
 }
