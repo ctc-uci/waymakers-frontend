@@ -47,7 +47,7 @@ const EventPopup = ({
         dispatch(setShowPopup(false));
       }}
     >
-      Cancel
+      <p className="large">Cancel</p>
     </button>
   );
 
@@ -82,14 +82,14 @@ const EventPopup = ({
   const renderConfirmCancelButtons = () => (
     <div className="multi-event-option">
       <button
-        className="button confirm-button"
+        className="button confirm-button button"
         type="button"
         aria-label="confirm add event"
         onClick={() => {
           addEvent();
         }}
       >
-        Confirm
+        <p className="large">Confirm</p>
       </button>
       {cancelButton}
     </div>
@@ -98,14 +98,14 @@ const EventPopup = ({
   const renderAddEventButton = () => (
     <div className="single-event-option">
       <button
-        className="add-intent-button"
+        className="add-intent-button button"
         type="button"
         aria-label="Add To My Events"
         onClick={() => {
           dispatch(changePopupType('ConfirmCancelPopup'));
         }}
       >
-        Add to My Events
+        <p className="large">Add To My Events</p>
       </button>
     </div>
   );
@@ -113,12 +113,12 @@ const EventPopup = ({
   const renderAddMyHoursButton = () => (
     <div className="single-event-option">
       <button
-        className="add-intent-button"
+        className="add-intent-button button"
         type="button"
         aria-label="Add to My Hours"
         onClick={() => dispatch(changePopupType('LogHoursForm'))}
       >
-        Add to My Hours
+        <p className="large">Add To My Hours</p>
       </button>
     </div>
   );
@@ -126,14 +126,14 @@ const EventPopup = ({
   const renderRemoveFromMyEvent = () => (
     <div className="single-event-option">
       <button
-        className="remove-intent-button"
+        className="remove-intent-button button"
         type="button"
         aria-label="Remove From My events"
         onClick={() => {
           removeEvent();
         }}
       >
-        Remove From My Events
+        <p className="large">Remove From My Events</p>
       </button>
     </div>
   );

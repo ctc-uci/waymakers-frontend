@@ -12,7 +12,8 @@
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 
     /* width: 25%; */
-    height: 37%;
+    /* height: 37%; */
+    height: 450px;
     /* min-width: 650px; */
 
     width: 650px;
@@ -31,7 +32,7 @@
     margin: 0% 12% 1% 12%;
     padding-top: 5%;
 
-    height: 50%;
+    height: 220px;
 }
 
 .login-container .login-forms .login-input-label {
@@ -185,5 +186,14 @@
 @media screen and (max-width: 500px) {
     .login-container {
         width: 341px;
+    }
+
+    .login-container .error-message {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .login-container .login-buttons {
+        margin: 2% 20% 2% 20%;
     }
 }

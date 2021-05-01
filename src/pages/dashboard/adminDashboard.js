@@ -34,22 +34,20 @@ const AdminDashboard = () => {
 
   // Creating dropdown selector for division menu
   const Menu = () => (
-    <div className="division-section">
-      <select
-        name="division"
-        className="division-dropdown"
-        value={currDivision - 1}
-        onChange={(e) => {
-          setCurrDivision(parseInt(e.target.value, 10) + 1);
-        }}
-      >
-        {Object.entries(divisionList)
-          .sort((a, b) => (a.id > b.id ? 1 : -1))
-          .map(([id, division]) => (
-            <option key={id} value={id}>{division.div_name}</option>
-          ))}
-      </select>
-    </div>
+    <select
+      name="division"
+      className="division-dropdown"
+      value={currDivision - 1}
+      onChange={(e) => {
+        setCurrDivision(parseInt(e.target.value, 10) + 1);
+      }}
+    >
+      {Object.entries(divisionList)
+        .sort((a, b) => (a.id > b.id ? 1 : -1))
+        .map(([id, division]) => (
+          <option key={id} value={id}>{division.div_name}</option>
+        ))}
+    </select>
   );
 
   if (isLoading) {

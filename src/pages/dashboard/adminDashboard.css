@@ -26,6 +26,7 @@
     font-size: 32px;
     cursor: pointer;
     text-align: left;
+    background: white;
 }
 
 .admin-components-container {
@@ -85,7 +86,7 @@
     }
 
     .division-section {
-        margin: auto;
+        margin-left: 10px;
     }
 
     .inventory-section{

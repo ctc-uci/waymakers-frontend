@@ -28,9 +28,15 @@ const ViewFilters = () => {
   };
   return (
     <select className="picker view-picker" name="views" id="views" onChange={(e) => { setView(e.target.value); }}>
-      <option className="picker view-picker" value="timeGridDay" selected={useSelector(getView) === 'timeGridDay' ? 'selected' : ''}>Day View</option>
-      <option className="picker view-picker" value="timeGridWeek" selected={useSelector(getView) === 'timeGridWeek' ? 'selected' : ''}>Week View</option>
-      <option className="picker view-picker" value="dayGridMonth" selected={useSelector(getView) === 'dayGridMonth' ? 'selected' : ''}>Month View</option>
+      <option className="picker view-picker" value="timeGridDay" selected={useSelector(getView) === 'timeGridDay' ? 'selected' : ''}>
+        Day View
+      </option>
+      <option className="picker view-picker" value="timeGridWeek" selected={useSelector(getView) === 'timeGridWeek' ? 'selected' : ''}>
+        Week View
+      </option>
+      <option className="picker view-picker" value="dayGridMonth" selected={useSelector(getView) === 'dayGridMonth' ? 'selected' : ''}>
+        Month View
+      </option>
     </select>
   );
 };

@@ -8,12 +8,13 @@
     background-color: var(--color-green);
     color: var(--text-color-light);
     outline: none;
-    border-radius: 15px;
+    border-radius: 10px;
     margin-left: 10px;
-    height: 25px;
+    height: 40px;
     padding: 0.25em;
     border: none;
     cursor: pointer;
+    font-size: 20px;
 }
 
 .view-picker {
@@ -42,15 +43,24 @@
   }
 
 @media screen and (max-width: 768px) {
-
   .calendar-filters {
       display: flex;
       align-items: center;
       justify-content: space-evenly;
-      /* margin-bottom: 20px; */
+  }
+
+  .view-picker {
+    border-radius: 15px;
+    font-size: 18px;
+    height: 30px;
   }
 
   .DateFilter {
     margin-left: 10px;
+  }
+
+  .calendar-filters .DateFilter input {
+    height: 23px;
+    border-radius: 15px;
   }
 }

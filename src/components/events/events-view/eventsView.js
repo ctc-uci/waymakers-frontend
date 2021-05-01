@@ -280,7 +280,7 @@ const EventsView = ({
                 className="add-button"
                 onClick={() => { dispatch(changePopupType('AddEventForm')); dispatch(setShowPopup(true)); }}
               >
-                Add Events
+                <p className="large">Add Event</p>
               </button>
               <div className="filter-help-header">
                 <CalendarFilters />

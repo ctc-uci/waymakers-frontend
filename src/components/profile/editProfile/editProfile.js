@@ -9,6 +9,7 @@ import moment from 'moment';
 
 import useMobileWidth from '../../../common/useMobileWidth';
 import { WMKBackend } from '../../../common/utils';
+
 import DeleteAccountModal from '../deleteAccountModal/deleteAccountModal';
 import ImageCropper from '../profilePictureCropper/imageCropper';
 import VolunteerAvailability from '../../dashboard/availability-component/volunteerAvailability/volunteerAvailability';
@@ -136,11 +137,7 @@ const EditProfile = ({
 
   const cancelEditInfo = async () => {
     const userID = cookies.get('userId');
-    const result = await axios.get(
-      `${process.env.REACT_APP_HOST}:${process.env.REACT_APP_PORT}/accounts/${userID}`, {
-        withCredentials: true,
-      },
-    );
+    const result = await WMKBackend.get(`/accounts/${userID}`);
 
     const { account } = result.data;
 

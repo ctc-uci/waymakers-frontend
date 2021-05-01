@@ -27,7 +27,7 @@ const EventList = ({
 
   const onAddButtonClick = (event) => {
     setEvent(event);
-    setEventPopupType('ConfirmCancelPopup');
+    setEventPopupType('AddEventPopup');
     openPopup();
   };
 

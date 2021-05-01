@@ -16,7 +16,7 @@ const HelpPopup = ({ onHelpButtonClick, type }) => (
       </div>
       { type === 'volunteer'
         ? (
-          <p>
+          <p className="medium">
             <b>How it works:</b>
             <br />
             Click and drag to add your availability for the week.
@@ -36,7 +36,7 @@ const HelpPopup = ({ onHelpButtonClick, type }) => (
           </p>
         )
         : (
-          <p>
+          <p className="medium">
             Times with darker shades indicate more volunteers.
             Click on a time box to see the volunteers available
             in the volunteer dialog box. Inside the volunteer infomation box,

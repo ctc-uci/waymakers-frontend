@@ -13,7 +13,11 @@ const TermsOfUseModal = ({ isOpen, setIsOpen }) => (
     overlayClassName="tou-modal-overlay"
   >
     <div className="tou-header">
+      <br />
       <p className="medium tou-header-text">Data Privacy Consent Statement</p>
+      <button type="button" className="close-tou-button" onClick={() => setIsOpen(false)}>
+        <p className="large">X</p>
+      </button>
     </div>
     <div className="tou-body">
       <p className="medium tou-body-title">
