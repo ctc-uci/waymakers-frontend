@@ -13,7 +13,7 @@ import './volunteerTable.css';
 //   </tr>
 // );
 
-const VolunteerTable = ({ data }) => (
+const VolunteerTable = ({ data, profilePicture }) => (
   // TODO: Add nicer scrollbar
   <div className="overflow-volunteer-table">
     <Table className="volunteer-table">
@@ -28,6 +28,7 @@ const VolunteerTable = ({ data }) => (
         <VolunteerTableRow
           key={volunteerEntry.userid}
           data={volunteerEntry}
+          profilePicture={profilePicture}
         />
       ))}
     </Table>
@@ -37,6 +38,7 @@ const VolunteerTable = ({ data }) => (
 VolunteerTable.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.array.isRequired,
+  profilePicture: PropTypes.node.isRequired,
 };
 
 export default VolunteerTable;

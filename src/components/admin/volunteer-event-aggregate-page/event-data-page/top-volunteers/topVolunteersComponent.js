@@ -5,7 +5,7 @@ import { WMKBackend } from '../../../../../common/utils';
 import './topVolunteersComponent.css';
 import TitledCard from '../../../../../common/Card/TitledCard';
 
-const topVolunteersComponent = ({ event }) => {
+const topVolunteersComponent = ({ event, profilePicture }) => {
   const [topVolunteers, setTopVolunteers] = useState([]);
 
   const paramQuery = {
@@ -35,7 +35,7 @@ const topVolunteersComponent = ({ event }) => {
 
   const TopVolunteerItem = (volunteer) => (
     <li className="top-volunteer-item">
-      <img src="https://placehold.it/75x75" alt="Profile Pic" className="avatar" />
+      <img src={profilePicture || 'https://placehold.it/75x75'} alt="Profile Pic" className="avatar" />
       <div className="volunteer-info">
         <p className="volunteer-name">
           <div className="first">

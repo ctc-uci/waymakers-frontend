@@ -8,13 +8,14 @@ import {
 import './volunteerTable.css';
 import VolunteerTableRowMobile from './volunteerTableRowMobile';
 
-const VolunteerTableMobile = ({ data }) => (
+const VolunteerTableMobile = ({ data, profilePicture }) => (
   <div className="overflow-volunteer-table">
     <MobileTable title="List of Volunteers" className="volunteer-table">
       {data.map((volunteerEntry) => (
         <VolunteerTableRowMobile
           key={volunteerEntry.userid}
           data={volunteerEntry}
+          profilePicture={profilePicture}
         />
       ))}
 
@@ -25,6 +26,7 @@ const VolunteerTableMobile = ({ data }) => (
 VolunteerTableMobile.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.object.isRequired,
+  profilePicture: PropTypes.node.isRequired,
 };
 
 export default VolunteerTableMobile;

@@ -1,15 +1,3 @@
-.table-header {
-    cursor: pointer;
-}
-
-.row .col-data {
-    padding-left: 12%;
-}
-
-.header-data {
-    text-align: right;
-}
-
 .prof-pic {
     width: 40px;
     height: 40px;
@@ -17,4 +5,5 @@
     background-color:#4242426b;
     display: block;
     margin-right: 2%;
+    vertical-align: middle;
 }

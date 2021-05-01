@@ -1,25 +1,26 @@
 import { React, useState } from 'react';
 import PropTypes from 'prop-types';
+import './volunteerTableRowMobile.css';
 import {
   MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../../common/MobileTable';
 import toggleOpen from '../../../../../assets/datatoggleopen.svg';
 import toggleClose from '../../../../../assets/datatoggleclose.svg';
 
-const VolunteerTableRowMobile = ({ data }) => {
+const VolunteerTableRowMobile = ({ data, profilePicture }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <MobileTableRow style={{ cursor: 'pointer' }} onClick={() => { setIsOpen((prev) => !prev); }}>
         <MobileTableRowHeader>
-          <div className="profile-pic" style={{ display: 'inline-block' }} />
+          <img src={profilePicture || 'https://placehold.it/75x75'} alt="Profile Pic" className="prof-pic" style={{ display: 'inline-block' }} />
           {' '}
           {data.lastname}
           {' '}
           {data.firstname}
         </MobileTableRowHeader>
-        <MobileTableContent>
+        <MobileTableContent style={{ paddingLeft: '60px' }}>
           Number of Hours:
           {' '}
           {data.sum}
@@ -63,6 +64,7 @@ const VolunteerTableRowMobile = ({ data }) => {
 VolunteerTableRowMobile.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.object.isRequired,
+  profilePicture: PropTypes.node.isRequired,
 };
 
 export default VolunteerTableRowMobile;

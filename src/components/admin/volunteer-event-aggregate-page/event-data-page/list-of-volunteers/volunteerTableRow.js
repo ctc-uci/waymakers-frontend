@@ -4,14 +4,14 @@ import './volunteerTableRow.css';
 import toggleOpen from '../../../../../assets/datatoggleopen.svg';
 import toggleClose from '../../../../../assets/datatoggleclose.svg';
 
-const VolunteerTableRow = ({ data }) => {
+const VolunteerTableRow = ({ data, profilePicture }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <tr className="table-header" onClick={() => { setIsOpen((prev) => !prev); }}>
         <td>
-          <div className="profile-pic" />
+          <img src={profilePicture || 'https://placehold.it/75x75'} alt="Profile Pic" className="prof-pic" />
         </td>
         <td className="name">
           {data.firstname}
@@ -62,5 +62,6 @@ const VolunteerTableRow = ({ data }) => {
 VolunteerTableRow.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   data: PropTypes.object.isRequired,
+  profilePicture: PropTypes.node.isRequired,
 };
 export default VolunteerTableRow;

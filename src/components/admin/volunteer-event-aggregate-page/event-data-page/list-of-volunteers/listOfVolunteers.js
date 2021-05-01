@@ -104,9 +104,9 @@ const ListOfVolunteers = (prop) => {
       </div>
       {isMobile
         ? (
-          <VolunteerTableMobile data={paginatedVolunteers} />
+          <VolunteerTableMobile data={paginatedVolunteers} profilePicture={prop.profilePicture} />
         ) : (
-          <VolunteerTable data={paginatedVolunteers} />
+          <VolunteerTable data={paginatedVolunteers} profilePicture={prop.profilePicture} />
         )}
       <br />
       <div className="pagination-indicator">
