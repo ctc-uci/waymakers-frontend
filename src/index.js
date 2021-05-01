@@ -51,6 +51,7 @@ ReactDOM.render(
               <Route path="/register" component={RegisterPage} />
               <Route path="/login" component={LoginPage} />
               <Route path="/verification" component={VerificationPage} />
+              <Route path="/internalservererror" component={InternalServerError} />
               <div className="App">
                 <Layout>
                   <Switch>

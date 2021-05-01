@@ -1,5 +1,5 @@
+/* eslint-disable react/no-unused-prop-types */
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import Error500Graphic1 from '../../assets/error500graphic1.svg';
@@ -7,7 +7,7 @@ import Error500Graphic2 from '../../assets/error500graphic2.png';
 
 import './InternalServerError.css';
 
-const InternalServerError = ({ resetErrorBoundary }) => {
+const InternalServerError = () => {
   const history = useHistory();
   const [graphic, setGraphic] = useState(null);
 
@@ -31,7 +31,6 @@ const InternalServerError = ({ resetErrorBoundary }) => {
         type="button"
         className="go-home-button"
         onClick={() => {
-          resetErrorBoundary();
           history.push('/');
         }}
       >
@@ -39,10 +38,6 @@ const InternalServerError = ({ resetErrorBoundary }) => {
       </button>
     </div>
   );
-};
-
-InternalServerError.propTypes = {
-  resetErrorBoundary: PropTypes.func.isRequired,
 };
 
 export default InternalServerError;
