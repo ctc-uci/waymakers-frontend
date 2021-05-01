@@ -46,7 +46,8 @@
 .admin-availability-container .schedule-table {
   height: 800px;
   overflow-y: scroll;
-  overflow-x: hidden;;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .schedule-selector-wrapper {

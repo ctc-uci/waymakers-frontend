@@ -137,6 +137,7 @@ const LogIn = (props) => {
             type="button"
             className="login-password-showhide-button"
             onClick={() => setShowPassword(!showPassword)}
+            tabIndex={-1}
           >
             {showPassword
               ? <img src={registrationHidePassword} alt="Hide" />

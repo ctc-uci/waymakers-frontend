@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { getEditing } from '../redux/selectors';
 import { changeSelectedWarehouse } from '../redux/actions';
+
 import handleOutsideClick from '../../../common/handleOutsideClick';
 import AddWarehouseButton from './add-warehouse/addWarehouse';
+
+import DownwardChevron from '../../../assets/downwardchevron.svg';
+
 import './warehouseMenu.css';
 
 const WarehouseMenu = (prop) => {
@@ -85,20 +90,14 @@ const WarehouseMenu = (prop) => {
       <div ref={ref} className="warehouse-menu-container">
         {useSelector(getEditing) && (
           <AddWarehouseButton
-            // className="test"
             divisionList={prop.divisionList}
             selectedDivision={prop.selectedDivision}
           />
         )}
-        <div className="warehouse-menu--top">
+        <button type="button" className="warehouse-menu--top" onClick={handleArrowClick}>
           {currentWarehouse}
-          <button
-            type="button"
-            aria-label="arrow"
-            onClick={handleArrowClick}
-            className={open ? 'warehouse-menu--close' : 'warehouse-menu--open'}
-          />
-        </div>
+          <img src={DownwardChevron} className={open ? 'warehouse-menu--close' : 'warehouse-menu--open'} alt="arrow" />
+        </button>
         {open && renderWarehouseList(prop.warehouseList)}
       </div>
     </div>

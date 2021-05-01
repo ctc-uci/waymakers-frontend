@@ -10,6 +10,8 @@ const ViewAvailability = ({ availabilities, startWeek }) => {
       className="grid-cell"
       style={{ backgroundColor: `${selected ? '#799CA8' : '#F2FBFC'}` }}
       ref={refSetter}
+      role="button"
+      tabIndex="0"
     >
       {' '}
     </div>
@@ -25,7 +27,7 @@ const ViewAvailability = ({ availabilities, startWeek }) => {
         minTime={0}
         maxTime={24}
         hourlyChunks={1}
-        selectedColor="rgba(121, 156, 168, 1)"
+        // selectedColor="rgba(121, 156, 168, 1)"
         rowGap={0}
         columnGap={0}
         dateFormat="ddd"

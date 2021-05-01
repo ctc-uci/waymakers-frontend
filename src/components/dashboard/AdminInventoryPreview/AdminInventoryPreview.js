@@ -127,7 +127,7 @@ const AdminInventoryPreview = ({ division }) => {
       { warehouseList.length > 0 && Menu() }
       {renderInfo()}
       <div className="view-inventory-section">
-        <button type="button" className="all-events-button">
+        <button type="button" className="all-items-button">
           <Link to="/inventory" className="button-anchor">
             <p className="large">View All</p>
           </Link>

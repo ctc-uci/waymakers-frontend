@@ -15,7 +15,7 @@ const EventCheckBoxes = ({
       <div className="check-box">
         <Checkbox
           checked={showMoreEvents}
-          icon={<Icon.ImCheckmark color="white" size={14} />}
+          icon={<Icon.ImCheckmark color="white" size={20} />}
           borderColor="#174A41"
           borderRadius={4}
           style={{
@@ -25,7 +25,7 @@ const EventCheckBoxes = ({
             alignSelf: 'stretch',
             cursor: 'pointer',
           }}
-          size={20}
+          size={30}
           label="More Events"
           labelStyle={{
             color: 'var(--text-color-dark)',
@@ -46,7 +46,7 @@ const EventCheckBoxes = ({
       <div className="check-box">
         <Checkbox
           checked={showMyEvents}
-          icon={<Icon.ImCheckmark color="white" size={14} />}
+          icon={<Icon.ImCheckmark color="white" size={20} />}
           borderColor="var(--color-light-green)"
           // borderWidth={0}
           borderRadius={4}
@@ -57,7 +57,7 @@ const EventCheckBoxes = ({
             alignSelf: 'stretch',
             cursor: 'pointer',
           }}
-          size={20}
+          size={30}
           label="My Events"
           labelStyle={{
             color: 'var(--text-color-dark)',

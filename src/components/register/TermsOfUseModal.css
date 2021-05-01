@@ -23,12 +23,19 @@
 
 .tou-modal .tou-header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background: #E6E6E6;
 
     height: 40px;
     outline: 1px solid black;
+}
+
+.tou-modal .tou-header .close-tou-button {
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    background: inherit;
 }
 
 .tou-modal .tou-header .tou-header-text {
