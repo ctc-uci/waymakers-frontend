@@ -22,7 +22,7 @@ export const initialState = {
   year: new Date().getFullYear(),
   day: new Date().getDate(),
   selectedEvent: {},
-  view: 'dayGridMonth',
+  view: 'timeGridWeek',
   popupType: '',
 };
 
