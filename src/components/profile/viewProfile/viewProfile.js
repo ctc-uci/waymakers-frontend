@@ -5,7 +5,7 @@ import useMobileWidth from '../../../common/useMobileWidth';
 import VolunteerAvailability from '../../dashboard/availability-component/volunteerAvailability/volunteerAvailability';
 
 import Card from '../../../common/Card/Card';
-import profCircle from '../../../assets/profCircle.png';
+import profilePlaceholder from '../../../assets/profileplaceholder.jpg';
 import cake from '../../../assets/birthday.svg';
 import people from '../../../assets/volunteer-tier.svg';
 import building from '../../../assets/student.svg';
@@ -39,7 +39,7 @@ const ViewProfile = ({ states, setIsViewProfile }) => {
   return (
     <div className="profile-page-container">
       <div className="profile-pic">
-        <img className="pfp" src={currentProfilePicture || profCircle} alt="" width="200" height="200" />
+        <img className="pfp" src={currentProfilePicture || profilePlaceholder} alt="" width="200" height="200" />
       </div>
       <div className="name">
         <h3 className="profile-name">{`${firstName} ${lastName}`}</h3>
