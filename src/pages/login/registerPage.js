@@ -1,20 +1,34 @@
 import React from 'react';
-import { instanceOf } from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import Particles from 'react-particles-js';
 
 import Register from '../../components/register/register';
+import RegisterFromGoogle from '../../components/register/registerFromGoogle/registerFromGoogle';
 
 import './registerPage.css';
 
 const RegisterPage = (props) => {
   const { cookies } = props;
+  let fromGoogle;
+  if (props.location.state) {
+    fromGoogle = props.location.state.fromGoogle;
+  }
+
+  let subtitle;
+  if (fromGoogle) {
+    subtitle = 'Continue with your Registration to get Started!';
+  } else {
+    subtitle = 'Sign Up to get Started!';
+  }
 
   return (
     <div className="register-page">
       <h1 className="title">Waymakers Southern California</h1>
-      <h2 className="subtitle">Sign Up to get Started!</h2>
-      <Register props={cookies} />
+      <h2 className="subtitle">{subtitle}</h2>
+      {fromGoogle
+        ? <RegisterFromGoogle props={cookies} />
+        : <Register props={cookies} />}
       <Particles
         className="particles"
         params={{
@@ -43,8 +57,21 @@ const RegisterPage = (props) => {
   );
 };
 
+RegisterPage.defaultProps = {
+  location: {
+    state: {
+      fromGoogle: false,
+    },
+  },
+};
+
 RegisterPage.propTypes = {
   cookies: instanceOf(Cookies).isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      fromGoogle: PropTypes.bool,
+    }),
+  }),
 };
 
 export default withCookies(RegisterPage);

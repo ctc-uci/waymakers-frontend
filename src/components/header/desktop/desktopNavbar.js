@@ -1,12 +1,11 @@
 /* eslint-disable no-undef */
-import React, { useState, useEffect, useRef } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
-import { WMKBackend } from '../../../common/utils';
+import { logout } from '../../../common/utils';
 import handleOutsideClick from '../../../common/handleOutsideClick';
-import GoogleAuthService from '../../../services/firebase/firebase';
 
 import SubmitHoursPopup from '../../volunteer/volHours/unsubmittedHours/SubmitHoursPopup';
 
@@ -16,39 +15,30 @@ const DesktopNavbar = (props) => {
   // dummy isAdmin & isVolunteer vars; change with addition of logic to get user perms
   const { cookies } = props;
   const userPerms = cookies.get('userPermissions');
-  const isAdmin = (userPerms === 'Admin');
-  const isVolunteer = (userPerms === 'Volunteer');
+  const isAdmin = userPerms === 'Admin';
+  const isVolunteer = userPerms === 'Volunteer';
+
   const [open, setOpen] = useState(false);
   const [submitHoursOpen, setSubmitHoursOpen] = useState(false);
+  // const [profilePicture, setProfiePicture] = useState(null);
   const ref = useRef();
-  const history = useHistory();
 
-  useEffect(async () => {
-    if (!localStorage.getItem('profilePicture')) {
-      const userID = cookies.get('userId');
-      const { data: { account } } = await WMKBackend.get(`/accounts/${userID}`);
-      localStorage.setItem('profilePicture', account.profile_picture);
-      console.log(localStorage);
-    }
-  }, []);
+  // useEffect(() => {
+  //   setProfiePicture(localStorage.getItem('profilePicture'));
+  // }, [localStorage.getItem('profilePicture')]);
 
   // Close profile menu when user clicks outside of it
   handleOutsideClick(ref, () => {
     setOpen(false);
   });
 
-  async function logout() {
+  async function handleLogout() {
     try {
       setOpen(false);
-      await GoogleAuthService.auth.signOut();
-      history.push('/login');
-      // Removing session cookie
-      cookies.remove('accessToken');
-      cookies.remove('userId');
-      cookies.remove('userPermissions');
+      await logout();
       // Sign-out successful
     } catch (err) {
-      console.log('Logout failed');
+      console.log('Logout failed', err);
     }
   }
 
@@ -63,7 +53,7 @@ const DesktopNavbar = (props) => {
         type="button"
         label="navbar-logout-button"
         className="navbar-logout-button"
-        onClick={logout}
+        onClick={handleLogout}
       >
         Log Out
       </button>

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
@@ -12,16 +13,32 @@ import googleLogo from '../../assets/googleLogo.svg';
 
 import './login.css';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+const useQuery = () => (
+  new URLSearchParams(useLocation().search)
+);
 
-function useRedirectURL() {
+const useRedirectURL = () => {
   const query = useQuery();
   const redirectURL = query.get('redirect');
   if (!redirectURL) { return '/'; }
   return redirectURL;
-}
+};
+
+const setAccessToken = (cookies, idToken) => {
+  if (process.env.NODE_ENV === 'production') {
+    cookies.set('accessToken', idToken, {
+      path: '/',
+      maxAge: 3600,
+      domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
+      secure: true,
+    });
+  } else {
+    cookies.set('accessToken', idToken, {
+      path: '/',
+      maxAge: 3600,
+    });
+  }
+};
 
 const LogIn = (props) => {
   const { cookies } = props;
@@ -47,23 +64,15 @@ const LogIn = (props) => {
       }
       await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
 
-      const idToken = await GoogleAuthService.auth.currentUser.getIdToken();
-      // console.log(`idToken: ${idToken}`);
+      const user = await GoogleAuthService.auth.currentUser;
+      const idToken = await user.getIdToken();
 
       // Setting a session cookie
-      if (process.env.NODE_ENV === 'production') {
-        cookies.set('accessToken', idToken, {
-          path: '/',
-          maxAge: 3600,
-          domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
-          secure: true,
-        });
-      } else {
-        cookies.set('accessToken', idToken, {
-          path: '/',
-          maxAge: 3600,
-        });
-      }
+      setAccessToken(cookies, idToken);
+
+      // set profile picture
+      const { data: { account } } = await WMKBackend.get(`/accounts/${user.uid}`);
+      localStorage.setItem('profilePicture', account.profile_picture);
 
       // console.log(user.user.uid);
       history.push(redirectURL);
@@ -77,18 +86,37 @@ const LogIn = (props) => {
   async function loginWithGoogle() {
     try {
       const provider = new GoogleAuthService.firebase.auth.GoogleAuthProvider();
-      await GoogleAuthService.auth.signInWithRedirect(provider);
-      const result = await GoogleAuthService.firebase.getRedirectResult();
-      if (result.credential) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        // const token = result.credential.accessToken;
+      await GoogleAuthService.auth.signInWithPopup(provider);
+
+      const user = await GoogleAuthService.auth.currentUser;
+      console.log(user);
+
+      const userID = user.uid;
+      const { data } = await WMKBackend.get(`/register/${userID}`);
+      console.log(data);
+      if (!data) {
+        // first time creating account or not created account on our end yet;
+        return history.push({
+          pathname: '/register',
+          state: {
+            fromGoogle: true,
+          },
+        });
       }
-      // The signed-in user info.
-      // const { user } = result;
-      // console.log(user);
-      history.push(redirectURL);
+
+      const idToken = await user.getIdToken();
+
+      // Setting a session cookie
+      setAccessToken(cookies, idToken);
+
+      // set profile picture
+      const { data: { account } } = await WMKBackend.get(`/accounts/${user.uid}`);
+      localStorage.setItem('profilePicture', account.profile_picture);
+
+      return history.push(redirectURL);
     } catch (err) {
       setError(err.message);
+      return null;
     }
   }
 

@@ -12,11 +12,17 @@ import {
 
 const signInEndpoint = '/login';
 
-// const getCookie = (key) => {
-//   console.log(document.cookie);
-//   const b = document.cookie.match(`(^|;)\\s*${key}\\s*=\\s*([^;]+)`);
-//   return b ? b.pop() : '';
-// };
+const productionCookieConfig = {
+  path: '/',
+  maxAge: 3600,
+  domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
+  secure: true,
+};
+
+const devCookieConfig = {
+  path: '/',
+  maxAge: 3600,
+};
 
 const verifyToken = async (cookies) => {
   let accessToken = cookies.get('accessToken');
@@ -35,29 +41,13 @@ const verifyToken = async (cookies) => {
     try {
       const verifiedUserId = await WMKBackend.get(`/auth/verifyToken/${accessToken}`);
       if (verifiedUserId) {
-        const userPermissions = await WMKBackend.get(`/accounts/${verifiedUserId.data}`);
+        const user = await WMKBackend.get(`/accounts/${verifiedUserId.data}`);
         if (process.env.NODE_ENV === 'production') {
-          cookies.set('userId', verifiedUserId.data, {
-            path: '/',
-            maxAge: 3600,
-            domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
-            secure: true,
-          });
-          cookies.set('userPermissions', userPermissions.data.permissions.permissions, {
-            path: '/',
-            maxAge: 3600,
-            domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
-            secure: true,
-          });
+          cookies.set('userId', verifiedUserId.data, productionCookieConfig);
+          cookies.set('userPermissions', user.data.permissions.permissions, productionCookieConfig);
         } else {
-          cookies.set('userId', verifiedUserId.data, {
-            path: '/',
-            maxAge: 3600,
-          });
-          cookies.set('userPermissions', userPermissions.data.permissions.permissions, {
-            path: '/',
-            maxAge: 3600,
-          });
+          cookies.set('userId', verifiedUserId.data, devCookieConfig);
+          cookies.set('userPermissions', user.data.permissions.permissions, devCookieConfig);
         }
       }
 
