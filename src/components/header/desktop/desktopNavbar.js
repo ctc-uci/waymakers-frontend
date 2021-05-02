@@ -9,6 +9,8 @@ import handleOutsideClick from '../../../common/handleOutsideClick';
 
 import SubmitHoursPopup from '../../volunteer/volHours/unsubmittedHours/SubmitHoursPopup';
 
+import profilePlaceholder from '../../../assets/profileplaceholder.jpg';
+
 import './desktopNavbar.css';
 
 const DesktopNavbar = (props) => {
@@ -93,7 +95,7 @@ const DesktopNavbar = (props) => {
         onKeyPress={toggleMenuOpen}
         tabIndex="0"
       >
-        <img src={localStorage.getItem('profilePicture')} className="profile-picture" alt="pfp" />
+        <img src={localStorage.getItem('profilePicture') || profilePlaceholder} className="profile-picture" alt="pfp" />
       </div>
       {open && profileMenu}
     </div>
