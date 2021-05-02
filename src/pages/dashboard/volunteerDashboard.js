@@ -78,7 +78,6 @@ const VolunteerDashboard = (props) => {
 
   const renderMyEventList = () => {
     let myEvents = useSelector(getUserEvents);
-    console.log(myEvents);
     myEvents = myEvents
       .filter((event) => new Date(event.startTime) >= new Date())
       .sort((e1, e2) => new Date(e1.startTime) - new Date(e2.startTime))
@@ -91,12 +90,12 @@ const VolunteerDashboard = (props) => {
       <TitledCard title="My Stats">
         <div className="my-stats-section">
           <h1>
-            {numVolunteerHours}
+            {numVolunteerHours || 0}
             &nbsp;
             Volunteer Hours
           </h1>
           <h1>
-            {numOutreachHours}
+            {numOutreachHours || 0}
             &nbsp;
             Outreach Hours
           </h1>
