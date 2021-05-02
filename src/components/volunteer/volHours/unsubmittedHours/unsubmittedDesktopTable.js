@@ -5,10 +5,9 @@ import {
   Table, TableHeader, TableColumnHeader, TableBody, TableRow, TableContent,
 } from '../../../../common/Table';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
-import '../hours.css';
-import './unsubmittedDesktopTable.css';
-
 import SubmitHoursPopup from './SubmitHoursPopup';
+
+import './unsubmittedDesktopTable.css';
 
 const SubmitButton = styled.button`
   border-radius: 25px;

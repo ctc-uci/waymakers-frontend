@@ -90,8 +90,6 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
         additionalNotes: values.additionalNotes,
       }).then(() => {
         // TODO: confirmation of success
-        // eslint-disable-next-line no-undef
-        alert('success');
         setIsModalOpen(false);
         refreshPage();
       }).error((err) => {

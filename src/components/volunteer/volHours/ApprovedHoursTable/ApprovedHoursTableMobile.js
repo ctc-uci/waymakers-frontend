@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
-import '../hours.css';
 
 const ApprovedHoursTableMobile = ({ filteredApprovedHours }) => (
   <MobileTable>

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   Table, TableHeader, TableColumnHeader, TableBody, TableContent, TableRow,
 } from '../../../../common/Table';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
-import '../hours.css';
 
 const ApprovedHoursTableDesktop = ({ filteredApprovedHours }) => (
   <Table>

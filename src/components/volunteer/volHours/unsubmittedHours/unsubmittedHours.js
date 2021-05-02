@@ -11,8 +11,6 @@ import UnsubmittedMobileTable from './unsubmittedMobileTable';
 import UseFilteredHours from '../useFilteredHours';
 import DateTimeFilter from '../DateTimeFilter';
 
-import '../hours.css';
-
 const UnsubmittedHours = () => {
   const isMobile = useMobileWidth();
   // NOT subject to change based on filtering
