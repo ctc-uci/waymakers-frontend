@@ -26,6 +26,8 @@
     position: static;
     z-index: 1;
 
+    text-align: center;
+
     font-size: 1.7rem;
     font-weight: bold;
     margin-bottom: 2vh;

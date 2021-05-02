@@ -1,9 +1,9 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-return-assign */
+/* eslint-disable no-undef */
 import axios from 'axios';
-import GoogleAuthService from '../services/firebase/firebase';
 
 import './ConfigLoader';
+import GoogleAuthService from '../services/firebase/firebase';
 
 export const DATE_FORMAT = {
   MY_HOURS: 'events',
@@ -33,10 +33,27 @@ export const refreshPage = () => {
   }
 };
 
-// const getCookie = (key) => {
-//   const b = document.cookie.match(`(^|;)\\s*${key}\\s*=\\s*([^;]+)`);
-//   return b ? b.pop() : '';
-// };
+const deleteCookie = (cookieName) => {
+  document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+};
+
+export const logout = async () => {
+  try {
+    await GoogleAuthService.auth.signOut();
+    window.location.href = '/login';
+    // Removing session cookie
+    deleteCookie('accessToken');
+    deleteCookie('userId');
+    deleteCookie('userPermissions');
+
+    if (localStorage.getItem('profilePicture')) {
+      localStorage.removeItem('profilePicture');
+    }
+    // Sign-out successful
+  } catch (err) {
+    console.log('Logout failed', err);
+  }
+};
 
 const setCookie = (key, value, config) => {
   let cookie = `${key}=${value}; max-age=${config.maxAge}; path=${config.path}`;

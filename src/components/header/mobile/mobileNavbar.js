@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { instanceOf } from 'prop-types';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
+
+import { logout } from '../../../common/utils';
 import handleOutsideClick from '../../../common/handleOutsideClick';
-import GoogleAuthService from '../../../services/firebase/firebase';
 import SubmitHoursPopup from '../../volunteer/volHours/unsubmittedHours/SubmitHoursPopup';
 
 import './mobileNavbar.css';
@@ -15,7 +16,6 @@ const MobileNavbar = (props) => {
   const isAdmin = (userPerms === 'Admin');
   const isVolunteer = (userPerms === 'Volunteer');
   const ref = useRef();
-  const history = useHistory();
 
   const [open, setOpen] = useState(false);
   const [submitHoursOpen, setSubmitHoursOpen] = useState(false);
@@ -29,20 +29,13 @@ const MobileNavbar = (props) => {
     setOpen(false);
   });
 
-  // TODO - This is shared between both nav bars,
-  // find a good place for it
-  async function logout() {
+  async function handleLogout() {
     try {
       setOpen(false);
-      await GoogleAuthService.auth.signOut();
-      history.push('/login');
-      // Removing session cookie
-      cookies.remove('accessToken');
-      cookies.remove('userId');
-      cookies.remove('userPermissions');
+      await logout();
       // Sign-out successful
     } catch (err) {
-      console.log('Logout failed');
+      console.log('Logout failed', err);
     }
   }
 
@@ -65,7 +58,7 @@ const MobileNavbar = (props) => {
         type="button"
         label="navbar-logout-button"
         className="navbar-mobile-logout-button"
-        onClick={logout}
+        onClick={handleLogout}
       >
         Log Out
       </button>

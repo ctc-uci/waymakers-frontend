@@ -40,6 +40,7 @@ const RegistrationTextField = (props) => {
 };
 
 RegistrationTextField.defaultProps = {
+  label: '',
   labelClassName: '',
   inputClassName: '',
   placeholder: '',
@@ -49,7 +50,7 @@ RegistrationTextField.defaultProps = {
 
 RegistrationTextField.propTypes = {
   name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   labelClassName: PropTypes.string,
   inputClassName: PropTypes.string,
   placeholder: PropTypes.string,
