@@ -10,8 +10,6 @@ import PendingHoursMobile from './pendingHoursMobile';
 import UseFilteredHours from '../useFilteredHours';
 import DateTimeFilter from '../DateTimeFilter';
 
-import '../hours.css';
-
 const PendingHours = () => {
   const isMobile = useMobileWidth();
   // NOT subject to change based on filtering

@@ -8,8 +8,6 @@ import {
   TitledCard,
 } from '../../../../common/Card';
 import DateTimeFilter from '../DateTimeFilter';
-
-import '../hours.css';
 import UseFilteredHours from '../useFilteredHours';
 
 const ApprovedHoursTable = () => {

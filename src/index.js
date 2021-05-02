@@ -15,6 +15,7 @@ import LoginPage from './pages/login/loginPage';
 import VerificationPage from './pages/login/verificationPage';
 import InventoryPage from './pages/inventory/inventoryPage';
 import VolunteerEvents from './pages/volunteer-events/volunteerEvents';
+import VolunteerHoursPage from './pages/VolunteerHours/VolunteerHoursPage';
 import NotFound404 from './pages/NotFound404/NotFound404';
 import InternalServerError from './pages/InternalServerError/InternalServerError';
 
@@ -23,7 +24,6 @@ import Layout from './components/layout/layout';
 import ManageUsers from './components/admin/manageusers/manageusers';
 import ManageDB from './components/admin/managedb/managedb';
 import Profile from './pages/profile/profile';
-import Hours from './components/volunteer/volHours/hours';
 import Tier from './components/volunteer/tier/tier';
 import Forms from './components/volunteer/forms/forms';
 import Reports from './components/reports/reports';
@@ -64,7 +64,7 @@ ReactDOM.render(
                     <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} admin />
                     <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} admin />
                     <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
-                    <ProtectedRoute path="/volunteer/hours" component={Hours} />
+                    <ProtectedRoute path="/volunteer/hours" component={VolunteerHoursPage} />
                     <ProtectedRoute path="/volunteer/tier" component={Tier} />
                     <ProtectedRoute path="/volunteer/forms" component={Forms} />
                     <ProtectedRoute path="/inventory" component={InventoryPage} admin />

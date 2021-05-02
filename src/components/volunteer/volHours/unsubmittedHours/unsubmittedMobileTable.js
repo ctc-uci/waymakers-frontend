@@ -6,10 +6,9 @@ import {
   MobileTable, MobileTableRowHeader, MobileTableRow, MobileTableContent, Divider,
 } from '../../../../common/MobileTable';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
-import '../hours.css';
-import './unsubmittedMobileTable.css';
-
 import SubmitHoursPopup from './SubmitHoursPopup';
+
+import './unsubmittedMobileTable.css';
 
 const SubmitButton = styled.button`
   border-radius: 25px;
