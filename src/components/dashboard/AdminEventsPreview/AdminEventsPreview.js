@@ -21,7 +21,9 @@ const AdminEventsPreview = () => {
       if (allEvents.status === 200) {
         allEvents = allEvents.data;
       }
-      setEvents(allEvents.sort((a, b) => b.startTime - a.startTime).slice(0, sliceNum));
+      const sortedEvents = allEvents.sort((a, b) => b.startTime - a.startTime);
+      const upcomingEvents = sortedEvents.filter((event) => new Date(event.startTime) > new Date());
+      setEvents(upcomingEvents.slice(0, sliceNum));
     } catch (e) {
       console.log('Error while getting events from the backend!');
     }
