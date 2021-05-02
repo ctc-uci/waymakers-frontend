@@ -8,8 +8,6 @@ rules:
       - "off"
    linebreak-style:
       - "off"
-   react/destructuring-assignment:
-      - "off"
 
 overrides:
    - files: "handleOutsideClick.js"
