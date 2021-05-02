@@ -1,0 +1,9 @@
+.prof-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color:#4242426b;
+    display: block;
+    margin-right: 2%;
+    vertical-align: middle;
+}
