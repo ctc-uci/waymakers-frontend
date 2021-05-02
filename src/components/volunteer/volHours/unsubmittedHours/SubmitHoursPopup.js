@@ -106,6 +106,12 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
     autofillEventInfo(eventTitle, userEvents, formik);
   }, [eventTitle, userEvents]);
 
+  const truncateEventName = (eventName) => {
+    let truncateName = eventName.substring(0, 30);
+    truncateName += (eventName !== truncateName ? '...' : '');
+    return truncateName;
+  };
+
   return (
     <LightModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
       <LightModalHeader title="Submit Hours" onClose={() => setIsModalOpen(false)} />
@@ -135,7 +141,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
                   key={userEvent.title}
                   value={userEvent.title}
                 >
-                  {userEvent.title}
+                  {truncateEventName(userEvent.title)}
                 </option>
               ))}
             </select>
