@@ -16,6 +16,7 @@ import VerificationPage from './pages/login/verificationPage';
 import InventoryPage from './pages/inventory/inventoryPage';
 import VolunteerEvents from './pages/volunteer-events/volunteerEvents';
 import VolunteerHoursPage from './pages/VolunteerHours/VolunteerHoursPage';
+import EventDetailPage from './pages/EventDataPage/EventDataPage';
 import NotFound404 from './pages/NotFound404/NotFound404';
 import InternalServerError from './pages/InternalServerError/InternalServerError';
 
@@ -28,9 +29,9 @@ import Tier from './components/volunteer/tier/tier';
 import Forms from './components/volunteer/forms/forms';
 import Reports from './components/reports/reports';
 import Events from './components/events/events';
-import VolunteerEventAggregatePage from './components/admin/volunteer-event-aggregate-page/volunteerEventAggregatePage';
-import EventDetailPage from './components/admin/volunteer-event-aggregate-page/event-data-page/eventPage';
 import viewHours from './components/events/view-hours/viewHours';
+// DEPRECATED
+// import VolunteerEventAggregatePage from './components/admin/...whatever';
 
 import store from './redux/store';
 
@@ -60,9 +61,7 @@ ReactDOM.render(
                     <ProtectedRoute path="/profile" component={Profile} />
                     <ProtectedRoute path="/admin/users" component={ManageUsers} admin />
                     <ProtectedRoute path="/admin/db" component={ManageDB} admin />
-                    <ProtectedRoute path="/admin/aggregate" component={VolunteerEventAggregatePage} admin />
                     <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} admin />
-                    <ProtectedRoute path="/admin/viewEvent" component={EventDetailPage} admin />
                     <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
                     <ProtectedRoute path="/volunteer/hours" component={VolunteerHoursPage} />
                     <ProtectedRoute path="/volunteer/tier" component={Tier} />

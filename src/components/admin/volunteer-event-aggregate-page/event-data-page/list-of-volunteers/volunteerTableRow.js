@@ -1,52 +1,58 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import ProfilePlaceholder from '../../../../../assets/profileplaceholder.jpg';
+import toggleOpen from '../../../../../assets/datatoggleopen.svg';
+import toggleClose from '../../../../../assets/datatoggleclose.svg';
+
+import './volunteerTableRow.css';
+
 const VolunteerTableRow = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <tr style={{ cursor: 'pointer' }} onClick={() => { setIsOpen((prev) => !prev); }}>
-        <td style={{ display: 'flex' }}>
-          <div className="profile-pic" />
-        </td>
+      <tr className="table-header" onClick={() => { setIsOpen((prev) => !prev); }}>
         <td>
+          <img src={data.profile_picture || ProfilePlaceholder} alt="Profile Pic" className="prof-pic" />
+        </td>
+        <td className="name">
           {data.firstname}
           {' '}
           {data.lastname}
         </td>
-        <td style={{ textAlign: 'end' }}>{data.sum}</td>
+        <td className="header-data">{data.sum}</td>
         <td>
-          {/* TODO: add a better icon lmao */}
-          {isOpen ? '^' : 'v'}
+          <img alt="" src={isOpen ? toggleClose : toggleOpen} />
         </td>
       </tr>
       {isOpen
         ? (
-          <tr>
-            {/* TODO: style when high-fidelity is out */}
-            <td colSpan={4}>
-              Position:
+          <tr className="row">
+            <td className="col-data" colSpan="2">
+              <span className="bold">Position:  </span>
               {' '}
               {data.permissions}
               <br />
-              Volunteer Tier:
+              <span className="bold">Volunteer Tier:  </span>
               {' '}
               {data.tier}
               <br />
-              Birthday:
+              <span className="bold">Birthday:  </span>
               {' '}
               {data.birthdate}
               <br />
-              Gender:
+            </td>
+            <td className="col-data" colSpan="2">
+              <span className="bold">Gender:  </span>
               {' '}
               {data.gender}
               <br />
-              Email:
+              <span className="bold">Email:  </span>
               {' '}
               {data.email}
               <br />
-              Phone:
+              <span className="bold">Phone:  </span>
               {' '}
               {data.phone}
             </td>

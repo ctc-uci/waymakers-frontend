@@ -1,6 +1,6 @@
 .overflow-volunteer-table {
     overflow: auto;
-    height: 500px;  /* TODO: change for the future*/
+    flex-grow: 1;
 }
 
 .volunteer-table {
@@ -10,7 +10,7 @@
 }
 
 /* wow i love math */
-.volunteer-table tr:nth-child(4n), .volunteer-table tr:nth-child(4n+1) {
+.volunteer-table tr:nth-child(4n+1), .volunteer-table tr:nth-child(4n+2) {
     background-color: rgba(51, 100, 115, 0.37);
 }
 
@@ -45,4 +45,8 @@
     width: 25px;
     height: 25px;
     border-radius: 25px;
+}
+
+.volunteer-table .numHours {
+    text-align: end;
 }

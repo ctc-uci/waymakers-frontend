@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import PieChart from './pie-chart/PieChart';
 
+import { TitledCard } from '../../../../../common/Card';
 import { WMKBackend } from '../../../../../common/utils';
+
+import PieChart from './pie-chart/PieChart';
 
 import leftArrow from '../../../../../assets/pieChartLeftArrow.svg';
 import rightArrow from '../../../../../assets/pieChartRightArrow.svg';
 
 import './demographics.css';
 
-const Demographics = ({ event }) => {
+const Demographics = ({ eventId }) => {
   // Get information for all volunteers
   const [allVolunteers, setAllVolunteers] = useState([]);
   // Determines which 3 pie charts we display
@@ -19,10 +21,10 @@ const Demographics = ({ event }) => {
   // Attribute is the name of column stored in the actual database
   // Label is the name of the pie chart
   const pieChartLabels = [
-    { attribute: 'gender', label: 'gender' },
-    { attribute: 'age', label: 'age group' },
-    { attribute: 'tier', label: 'volunteer tier' },
-    { attribute: 'sum', label: 'number of hours' },
+    { attribute: 'gender', label: 'Gender' },
+    { attribute: 'age', label: 'Age Range' },
+    { attribute: 'tier', label: 'Volunteer Tier' },
+    { attribute: 'sum', label: 'Number of Hours' },
   ];
 
   const getDemographicData = (attribute) => {
@@ -44,15 +46,13 @@ const Demographics = ({ event }) => {
     }));
   };
 
-  const paramQuery = {
-    params: {
-      event: event.id,
-    },
-  };
-
   // Get all volunteers
   const getAllVolunteers = async () => {
-    const volunteers = await WMKBackend.get('/volunteerData/all/', paramQuery);
+    const volunteers = await WMKBackend.get('/volunteerData/all/', {
+      params: {
+        event: eventId,
+      },
+    });
     const volunteersWithAge = volunteers.data.map((volunteer) => ({
       ...volunteer,
       age: moment(new Date()).diff(volunteer.birthdate, 'years'), // Get volunteer age from birthdate
@@ -90,30 +90,27 @@ const Demographics = ({ event }) => {
   );
 
   return (
-    <div className="demographics">
-      <h2 className="demographics-title">Demographics</h2>
-      <div className="demographics-charts">
-        <DemoGraphicsLeftArrow />
-        <div className="pie-charts">
-          {pieChartLabels.slice(startDisplayIndex, startDisplayIndex + 3)
-            .map(({ attribute, label }) => (
-              <div className="pie-chart-and-label">
-                <PieChart
-                  demoInfo={getDemographicData(attribute)}
-                  label={label}
-                />
-                <span className="chart-label">{label}</span>
-              </div>
-            ))}
-        </div>
-        <DemographicsRightArrow />
+    <TitledCard title="Demographics" className="demographic-card-container" cardClassName="demographic-card">
+      <DemoGraphicsLeftArrow />
+      <div className="pie-charts">
+        {pieChartLabels.slice(startDisplayIndex, startDisplayIndex + 3)
+          .map(({ attribute, label }) => (
+            <div className="pie-chart-and-label" key={attribute}>
+              <PieChart
+                demoInfo={getDemographicData(attribute)}
+                label={label}
+              />
+              <p className="medium">{label}</p>
+            </div>
+          ))}
       </div>
-    </div>
+      <DemographicsRightArrow />
+    </TitledCard>
   );
 };
 
 Demographics.propTypes = {
-  event: PropTypes.string.isRequired,
+  eventId: PropTypes.string.isRequired,
 };
 
 export default Demographics;

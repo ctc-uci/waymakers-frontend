@@ -1,8 +1,11 @@
+.list-of-volunteer-container {
+    flex-grow: 1;
+}
+
 .list-of-volunteer  {
     display: flex;
     flex-flow: column;
     color: var(--text-color-dark);
-    width: 70%;
     height: 100%;
 }
 
@@ -30,6 +33,7 @@
     padding: 6px 12px 6px 12px;
     margin-left: 12px;
     border-width: 0px;
+    cursor: pointer;
 } 
 
 /* TODO: may want to switch to a react library to have better styling */
@@ -50,9 +54,47 @@
     margin-bottom: 16px;
 }
 
+/* Not a super fan of this name*/
+.list-of-volunteer .pagination-indicator {
+    margin: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.list-of-volunteer .pagination-indicator button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+}
+
+.list-of-volunteer .pagination-indicator div {
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-left: 10px;
+
+    font-size: 18px;
+    letter-spacing: 10px;
+    color: black;
+}
+
 .list-of-volunteer .total-stats {
     display: flex;
     flex: row;
     justify-content: space-between;
-    font-weight: bold;
+}
+
+.list-of-volunteer .total-stats p {
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+}
+
+@media screen and (max-width: 768px) {
+    .list-of-volunteer .total-stats p {
+        margin-block-start: 1em;
+        margin-block-end: 0;
+    }
 }
