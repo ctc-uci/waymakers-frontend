@@ -63,31 +63,29 @@ const DesktopNavbar = (props) => {
   // Note: User Directory page not complete
   return (
     <div className="desktop-navbar" ref={ref}>
-      <Link to="/events" className="desktop-navbar-link">Events</Link>
-      {isVolunteer && <Link to="/volunteer/hours" className="desktop-navbar-link">My Hours</Link>}
-      {isVolunteer
-      && (
-        <div>
-          <button
-            className="desktop-navbar-submit-hours-button"
-            aria-label="Submit Hours"
-            type="button"
-            onClick={() => setSubmitHoursOpen(true)}
-          >
-            Submit Hours
-          </button>
-          {submitHoursOpen
-            && (
-              <SubmitHoursPopup
-                isModalOpen={submitHoursOpen}
-                setIsModalOpen={setSubmitHoursOpen}
-                eventTitle=""
-              />
-            )}
-        </div>
-      )}
       {isAdmin && <Link to="/inventory" className="desktop-navbar-link">Inventory</Link>}
       {isAdmin && <Link to="/users" className="desktop-navbar-link">User Directory</Link>}
+      {isAdmin && <Link to="/events" className="desktop-navbar-link">Events</Link>}
+      {isVolunteer && <Link to="/volunteer/events" className="desktop-navbar-link">Events</Link>}
+      <Link to="/volunteer/hours" className="desktop-navbar-link">My Hours</Link>
+      <div>
+        <button
+          className="desktop-navbar-submit-hours-button"
+          aria-label="Submit Hours"
+          type="button"
+          onClick={() => setSubmitHoursOpen(true)}
+        >
+          Submit Hours
+        </button>
+        {submitHoursOpen
+          && (
+            <SubmitHoursPopup
+              isModalOpen={submitHoursOpen}
+              setIsModalOpen={setSubmitHoursOpen}
+              eventTitle=""
+            />
+          )}
+      </div>
       <div
         className="profile-button"
         role="button"

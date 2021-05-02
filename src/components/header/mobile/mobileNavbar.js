@@ -45,15 +45,34 @@ const MobileNavbar = (props) => {
       <Link to="/profile" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
         Profile
       </Link>
-      <Link to="/events" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
-        Events
-      </Link>
       <Link to="/inventory" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
         Inventory
       </Link>
       <Link to="/users" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
         User Directory
       </Link>
+      <Link to="/volunteer/hours" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+        My Hours
+      </Link>
+      <Link to="/events" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+        Events
+      </Link>
+      <button
+        className="mobile-navbar-submit-hours-button"
+        aria-label="Submit Hours"
+        type="button"
+        onClick={() => setSubmitHoursOpen(true)}
+      >
+        Submit Hours
+      </button>
+      {submitHoursOpen
+        && (
+          <SubmitHoursPopup
+            isModalOpen={submitHoursOpen}
+            setIsModalOpen={setSubmitHoursOpen}
+            eventTitle=""
+          />
+        )}
       <button
         type="button"
         label="navbar-logout-button"
