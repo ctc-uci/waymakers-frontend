@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ApprovedHoursTable from '../../components/volunteer/volHours/ApprovedHoursTable/ApprovedHoursTable';
+import SubmittedHoursTable from '../../components/volunteer/volHours/SubmittedHoursTable/SubmittedHoursTable';
 import UnsubmittedHours from '../../components/volunteer/volHours/unsubmittedHours/unsubmittedHours';
 
 // DEPRECATED
@@ -14,7 +14,7 @@ const Hours = () => (
     <div className="hours">
       <h1 className="title">My Hours</h1>
       <UnsubmittedHours />
-      <ApprovedHoursTable />
+      <SubmittedHoursTable />
     </div>
   </div>
 );

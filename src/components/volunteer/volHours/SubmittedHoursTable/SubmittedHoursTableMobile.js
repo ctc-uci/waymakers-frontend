@@ -6,31 +6,31 @@ import {
 } from '../../../../common/MobileTable';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 
-const ApprovedHoursTableMobile = ({ filteredApprovedHours }) => (
+const SubmittedHoursTableMobile = ({ filteredSubmittedHours }) => (
   <MobileTable>
-    {filteredApprovedHours && filteredApprovedHours.map((approvedHour) => (
-      <MobileTableRow key={approvedHour.eventName}>
-        <MobileTableRowHeader>{approvedHour.eventName}</MobileTableRowHeader>
+    {filteredSubmittedHours && filteredSubmittedHours.map((submittedHour) => (
+      <MobileTableRow key={`${submittedHour.eventName} ${submittedHour.startTime}`}>
+        <MobileTableRowHeader>{submittedHour.eventName}</MobileTableRowHeader>
         <Divider />
         <MobileTableContent>
-          {`Location: ${approvedHour.location}`}
+          {`Location: ${submittedHour.location}`}
         </MobileTableContent>
         <MobileTableContent>
-          {`Start Date/Time: ${formatDate(approvedHour.startTime, DATE_FORMAT.MY_HOURS)}`}
+          {`Start Date/Time: ${formatDate(submittedHour.startTime, DATE_FORMAT.MY_HOURS)}`}
         </MobileTableContent>
         <MobileTableContent>
-          {`End Date/Time: ${formatDate(approvedHour.endTime, DATE_FORMAT.MY_HOURS)}`}
+          {`End Date/Time: ${formatDate(submittedHour.endTime, DATE_FORMAT.MY_HOURS)}`}
         </MobileTableContent>
         <MobileTableContent>
-          {`Hours: ${approvedHour.hours}`}
+          {`Hours: ${submittedHour.hours}`}
         </MobileTableContent>
       </MobileTableRow>
     ))}
   </MobileTable>
 );
 
-ApprovedHoursTableMobile.propTypes = {
-  filteredApprovedHours: PropTypes.arrayOf(
+SubmittedHoursTableMobile.propTypes = {
+  filteredSubmittedHours: PropTypes.arrayOf(
     PropTypes.shape({
       eventName: PropTypes.string,
       location: PropTypes.string,
@@ -41,4 +41,4 @@ ApprovedHoursTableMobile.propTypes = {
   ).isRequired,
 };
 
-export default ApprovedHoursTableMobile;
+export default SubmittedHoursTableMobile;
