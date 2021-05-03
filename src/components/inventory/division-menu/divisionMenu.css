@@ -27,6 +27,7 @@
     align-items: center;
     font-weight: 700;
     font-size: 54px;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
     line-height: 80px;
     color: var(--text-color-dark);
     /* white-space: nowrap; */
@@ -45,7 +46,8 @@
     height: 30px;
     width: 30px;
 
-    margin-left: 10px;
+    margin-top: 10px;
+    margin-left: 15px;
 }
   
 .division-menu--close {
@@ -57,7 +59,8 @@
     transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
 
-    margin-left: 10px;
+    margin-top: 10px;
+    margin-left: 15px;
 }
 
 .division-menu--list {
