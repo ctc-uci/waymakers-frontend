@@ -18,9 +18,12 @@ import {
 import {
   refreshPage, WMKBackend,
 } from '../../../../common/utils';
+import TextArea from '../../../../common/TextArea/TextArea';
 
 import useDivisions from '../useDivisions';
 import useUserEvents from '../useUserEvents';
+
+import './SubmitHoursPopup.css';
 
 // Using Yup to do schema validation
 const Schema = Yup.object().shape({
@@ -123,6 +126,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
               id="type"
               name="type"
               type="text"
+              className="form-input-color"
               onChange={formik.handleChange}
               value={formik.values.type}
             />
@@ -133,6 +137,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
               id="title"
               name="Title of Event"
               value={formik.values.title}
+              className="form-input-color"
               onChange={(e) => autofillEventInfo(e.target.value, userEvents, formik)}
             >
               <option value="">{' '}</option>
@@ -152,6 +157,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
               id="location"
               name="location"
               type="text"
+              className="form-input-color"
               onChange={formik.handleChange}
               value={formik.values.location}
             />
@@ -161,6 +167,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
             <Datetime
               value={formik.values.startTime}
               id="startTime"
+              inputProps={{ className: 'form-input-color' }}
               onChange={(moment) => {
                 formik.setFieldValue('startTime', moment.toDate());
               }}
@@ -172,6 +179,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
             <Datetime
               value={formik.values.endTime}
               id="endTime"
+              inputProps={{ className: 'form-input-color' }}
               onChange={(moment) => {
                 formik.setFieldValue('endTime', moment.toDate());
               }}
@@ -184,6 +192,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
               id="totalHours"
               name="totalHours"
               type="number"
+              className="form-input-color"
               onChange={formik.handleChange}
               value={formik.values.totalHours}
             />
@@ -195,6 +204,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
               name="division"
               value={formik.values.division}
               onChange={formik.handleChange}
+              className="form-input-color"
             >
               {divisions.map((division) => (
                 <option
@@ -208,12 +218,9 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
           </ValidatedField>
 
           <ValidatedField name="additionalNotes" labelText="Additional Notes (Optional)" formik={formik}>
-            <textarea
+            <TextArea
               id="additionalNotes"
               name="additionalNotes"
-              rows="5"
-              cols="25"
-              style={{ resize: 'none' }}
               onChange={formik.handleChange}
               value={formik.values.additionalNotes}
             />
