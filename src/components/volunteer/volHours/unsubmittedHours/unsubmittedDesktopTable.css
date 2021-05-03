@@ -2,3 +2,15 @@
     width: 100%;
     border-collapse: collapse;
 }
+
+.uh-table th {
+    background: #336473;
+}
+
+.uh-table th:first-child {
+    border-top-left-radius: 4px;
+}
+
+.uh-table th:last-child {
+    border-top-right-radius: 4px;
+}

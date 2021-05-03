@@ -1,0 +1,11 @@
+.generic-table th {
+    background: #336473;
+}
+
+.generic-table th:first-child {
+    border-top-left-radius: 4px;
+}
+
+.generic-table th:last-child {
+    border-top-right-radius: 4px;
+}

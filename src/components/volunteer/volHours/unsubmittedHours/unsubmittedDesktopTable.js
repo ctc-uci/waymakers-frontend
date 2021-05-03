@@ -54,16 +54,18 @@ Row.propTypes = {
 const UnsubmittedDesktopTable = ({ filteredUnsubmittedHours }) => (
   <Table className="uh-table">
     <TableHeader>
-      <TableColumnHeader className="uh-table-col-header">Event Name</TableColumnHeader>
-      <TableColumnHeader className="uh-table-col-header">Location</TableColumnHeader>
-      <TableColumnHeader className="uh-table-col-header">Start Date/Time</TableColumnHeader>
-      <TableColumnHeader className="uh-table-col-header">End Date/Time</TableColumnHeader>
-      <TableColumnHeader className="uh-table-col-header">Submit</TableColumnHeader>
+      <TableRow>
+        <TableColumnHeader>Event Name</TableColumnHeader>
+        <TableColumnHeader>Location</TableColumnHeader>
+        <TableColumnHeader>Start Date/Time</TableColumnHeader>
+        <TableColumnHeader>End Date/Time</TableColumnHeader>
+        <TableColumnHeader>Submit</TableColumnHeader>
+      </TableRow>
     </TableHeader>
     <TableBody className="uh-table-body">
       {filteredUnsubmittedHours && filteredUnsubmittedHours.map((e) => (
         <Row
-          key={e.eventName}
+          key={`${e.eventName} ${e.startTime}`}
           eventName={e.eventName}
           location={e.location}
           startTime={e.startTime}
@@ -75,7 +77,14 @@ const UnsubmittedDesktopTable = ({ filteredUnsubmittedHours }) => (
 );
 
 UnsubmittedDesktopTable.propTypes = {
-  filteredUnsubmittedHours: PropTypes.arrayOf(Object).isRequired,
+  filteredUnsubmittedHours: PropTypes.arrayOf(
+    PropTypes.shape({
+      eventName: PropTypes.string,
+      location: PropTypes.string,
+      startTime: PropTypes.string,
+      endTime: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default UnsubmittedDesktopTable;

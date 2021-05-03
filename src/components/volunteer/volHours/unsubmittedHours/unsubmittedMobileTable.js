@@ -56,7 +56,7 @@ const UnsubmittedMobileTable = ({ filteredUnsubmittedHours }) => (
   <MobileTable className="uh-table">
     {filteredUnsubmittedHours && filteredUnsubmittedHours.map((e) => (
       <Row
-        key={e.eventName}
+        key={`${e.eventName} ${e.startTime}`}
         eventName={e.eventName}
         location={e.location}
         startTime={e.startTime}
@@ -67,7 +67,14 @@ const UnsubmittedMobileTable = ({ filteredUnsubmittedHours }) => (
 );
 
 UnsubmittedMobileTable.propTypes = {
-  filteredUnsubmittedHours: PropTypes.arrayOf(Object).isRequired,
+  filteredUnsubmittedHours: PropTypes.arrayOf(
+    PropTypes.shape({
+      eventName: PropTypes.string,
+      location: PropTypes.string,
+      startTime: PropTypes.string,
+      endTime: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default UnsubmittedMobileTable;

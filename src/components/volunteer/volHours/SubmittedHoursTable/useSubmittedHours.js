@@ -3,26 +3,26 @@ import { useCookies } from 'react-cookie';
 
 import { WMKBackend } from '../../../../common/utils';
 
-const useAllApprovedHours = () => {
+const useAllSubmittedHours = () => {
   // NOT subject to change based on filtering
-  const [allApprovedHours, setAllApprovedHours] = useState(null);
+  const [allSubmittedHours, setAllSubmittedHours] = useState(null);
 
   const [cookies] = useCookies(['userId']);
 
-  const fetchAllApprovedHours = () => WMKBackend.get('/logs/approved', {
+  const fetchAllSubmittedHours = () => WMKBackend.get('/logs/submitted', {
     params: { userId: cookies.userId },
     withCredentials: true,
   }).then((res) => {
-    setAllApprovedHours(res.data);
+    setAllSubmittedHours(res.data);
   }).catch((err) => {
     console.error(err);
   });
 
   useEffect(() => {
-    fetchAllApprovedHours();
+    fetchAllSubmittedHours();
   }, []);
 
-  return [allApprovedHours, fetchAllApprovedHours];
+  return [allSubmittedHours, fetchAllSubmittedHours];
 };
 
-export default useAllApprovedHours;
+export default useAllSubmittedHours;
