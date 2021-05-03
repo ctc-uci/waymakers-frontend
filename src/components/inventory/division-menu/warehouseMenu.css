@@ -23,7 +23,8 @@
     align-items: center;
     font-weight: 700;
     font-size: 36px;
-    line-height: 80px;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    line-height: 54px;
     color: var(--text-color-dark);
 
     border: 0;
@@ -38,7 +39,8 @@
     height: 30px;
     width: 30px;
 
-    margin-left: 10px;
+    margin-top: 6px;
+    margin-left: 15px;
 }
 
 .warehouse-menu--close {
@@ -48,7 +50,8 @@
     transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
 
-    margin-left: 10px;
+    margin-top: 6px;
+    margin-left: 15px;
 }
 
 .warehouse-menu--list {

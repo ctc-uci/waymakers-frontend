@@ -433,7 +433,7 @@ const EventForm = () => {
           </ValidatedField>
            */}
 
-          <ValidatedField name="eventLimit" labelText="Limit" isRequired formik={formik}>
+          <ValidatedField name="eventLimit" labelText="Volunteer Limit" isRequired formik={formik}>
             <input
               id="eventLimit"
               name="eventLimit"

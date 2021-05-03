@@ -2,6 +2,7 @@
 
 .edit-button {
     border: none;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
     background: none;
