@@ -1,0 +1,59 @@
+.ut-row-wrapper {
+  padding: 0 1rem;
+}
+
+.ut-row, .expanded-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0;
+
+  color: black;
+}
+
+.ut-row-wrapper .ut-row-control-button, .ut-edit-user-button {
+  background: inherit;
+  border: 0;
+  outline: 0;
+
+  cursor: pointer;
+}
+
+.ut-row-wrapper .expand-row-button {
+  width: 19px;
+  height: 19px;
+}
+
+.ut-row-wrapper .close-expanded-row-button {
+  width: 19px;
+  height: 19px;
+  transform: rotate(180deg);
+}
+
+.ut-row .ut-row-pfp {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+
+  margin-right: 15px;
+}
+
+.ut-row .ut-row-name {
+  flex-grow: 1;
+  width: 33%;
+  margin-left: 1em;
+}
+
+.ut-row .ut-row-name p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.expanded-row-col {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 33%;
+}

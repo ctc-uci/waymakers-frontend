@@ -12,6 +12,7 @@ import Test from './.harrison-sandbox/Test';
 import Dashboard from './pages/dashboard/dashboard';
 import RegisterPage from './pages/login/registerPage';
 import LoginPage from './pages/login/loginPage';
+import UserDirectory from './components/admin/user-directory/userDirectory';
 import VerificationPage from './pages/login/verificationPage';
 import InventoryPage from './pages/inventory/inventoryPage';
 import VolunteerEvents from './pages/volunteer-events/volunteerEvents';
@@ -22,7 +23,6 @@ import InternalServerError from './pages/InternalServerError/InternalServerError
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Layout from './components/layout/layout';
-import ManageUsers from './components/admin/manageusers/manageusers';
 import ManageDB from './components/admin/managedb/managedb';
 import Profile from './pages/profile/profile';
 import Tier from './components/volunteer/tier/tier';
@@ -59,7 +59,7 @@ ReactDOM.render(
                     <Route path="/sandbox" component={Test} />
                     <ProtectedRoute path="/" component={Dashboard} exact />
                     <ProtectedRoute path="/profile" component={Profile} />
-                    <ProtectedRoute path="/admin/users" component={ManageUsers} admin />
+                    <ProtectedRoute path="/admin/users" component={UserDirectory} admin />
                     <ProtectedRoute path="/admin/db" component={ManageDB} admin />
                     <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} admin />
                     <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />

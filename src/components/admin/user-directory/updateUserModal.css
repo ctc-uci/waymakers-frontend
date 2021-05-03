@@ -1,0 +1,24 @@
+/* .update-user-form {
+  margin: 5px 0.5rem;
+} */
+
+.update-user-field {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.update-user-label {
+  flex: 0 0 40%;
+  max-width: 40%;
+  font-size: 16px;
+  font-weight: bold;
+  color: #003E53;
+  margin: 5px 0px 5px 0;
+}
+
+.update-user-input {
+  width: 100%;
+  background-color: #EBEBEB;
+}
