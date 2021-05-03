@@ -14,6 +14,7 @@ import {
 import {
   ValidatedField,
 } from '../../../common/formikExtensions';
+import TextArea from '../../../common/TextArea/TextArea';
 
 import './newEventForm.css';
 
@@ -410,28 +411,15 @@ const EventForm = () => {
           </div>
 
           <ValidatedField name="eventDescription" labelText="Description" formik={formik} isRequired>
-            <textarea
+            <TextArea
               id="eventDescription"
               name="eventDescription"
-              type="text"
-              className={(popupType === 'ViewEventInfoPopup') ? 'form-input-color view-mode-input-color description-input' : 'form-input-color description-input'}
               onChange={formik.handleChange}
               value={formik.values.eventDescription}
               readOnly={popupType === 'ViewEventInfoPopup'}
+              className={popupType === 'ViewEventInfoPopup' ? 'view-mode-input-color' : ''}
             />
           </ValidatedField>
-
-          {/* Maybe add Recurring?!
-          <ValidatedField name="eventEndType" labelText="End Time" formik={formik}>
-            <input
-              id="eventStartType"
-              name="eventStartType"
-              type="dateTime-local"
-              onChange={formik.handleChange}
-              value={formik.values.eventStartType}
-            />
-          </ValidatedField>
-           */}
 
           <ValidatedField name="eventLimit" labelText="Volunteer Limit" isRequired formik={formik}>
             <input

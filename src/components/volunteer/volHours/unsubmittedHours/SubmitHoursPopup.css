@@ -1,0 +1,7 @@
+.form-input-color {
+    color: var(--color-dark-blue);
+    border: solid 0.5px var(--color-dark-blue);
+    border-radius: 3px;
+    padding: 5px;
+    opacity: inherit;
+}

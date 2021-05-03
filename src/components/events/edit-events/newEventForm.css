@@ -20,12 +20,6 @@
     text-decoration: none;
 }
 
-.description-input {
-    height: 200px;
-    font-family: 'Assistant', sans-serif;
-    font-weight: normal;
-}
-
 .form-input-color,
 .datetime-input-container .form-control,
 select[disabled] {
@@ -64,10 +58,4 @@ select[disabled] {
 
 .date-picker-right > label > div > .rdtPicker {
     right: 0;
-}
-
-@media screen and (max-width: 768px) {
-    .description-input {
-        height: 30px;
-    }
 }

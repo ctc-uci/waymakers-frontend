@@ -1,0 +1,17 @@
+.default-text-area {
+  color: var(--color-dark-blue);
+  border: solid 0.5px var(--color-dark-blue);
+  border-radius: 3px;
+  padding: 5px;
+  opacity: inherit;
+  resize: none;
+  font-family: 'Assistant', sans-serif;
+  font-weight: normal;
+}
+
+.char-limit-counter {
+  margin: 0;
+  text-align: right;
+  font-weight: bold;
+  color: #003E53;
+}
