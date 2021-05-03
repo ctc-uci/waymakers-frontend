@@ -1,0 +1,88 @@
+@import '../../../common/vars.css';
+
+.ud-division-menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding-bottom: 5px;
+    width: 400px;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    color: var(--text-color-dark);
+}
+
+.ud-division-menu--top {
+    width: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 30px;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    line-height: 50px;
+    margin-top: 10px;
+
+    color: var(--text-color-dark);
+
+    border: 0;
+    outline: 0;
+    background: inherit;
+    
+    cursor: pointer;
+}
+
+.ud-division-menu--open {
+    border: solid var(--text-color-dark);
+    background-color: transparent;
+    border-width: 0;
+    height: 30px;
+    width: 30px;
+
+    margin-left: 10px;
+}
+  
+.ud-division-menu--close {
+    border: solid var(--text-color-dark);
+    background-color: transparent;
+    border-width: 0;
+    height: 30px;
+    width: 30px;
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+
+    margin-left: 10px;
+}
+
+.ud-division-menu--list {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
+    width: 360px;
+    z-index: 2;
+    border: none;
+    outline: none;
+    box-shadow: 2px 2px 6px;
+    background-color: solid #FFFF;
+}
+
+.ud-division-menu--list-item {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    border: none;
+    background-color: #FFFF;
+    color: var(--text-color-dark);
+    font-weight: 700;
+    font-size: 28px;
+    width: inherit;
+    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+}
+
+.ud-division-menu--list-item:focus {
+    text-decoration: underline;
+}

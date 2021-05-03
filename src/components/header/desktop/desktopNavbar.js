@@ -66,7 +66,7 @@ const DesktopNavbar = (props) => {
   return (
     <div className="desktop-navbar" ref={ref}>
       {isAdmin && <Link to="/inventory" className="desktop-navbar-link">Inventory</Link>}
-      {isAdmin && <Link to="/users" className="desktop-navbar-link">User Directory</Link>}
+      {isAdmin && <Link to="/admin/users" className="desktop-navbar-link">User Directory</Link>}
       {isAdmin && <Link to="/events" className="desktop-navbar-link">Events</Link>}
       {isVolunteer && <Link to="/volunteer/events" className="desktop-navbar-link">Events</Link>}
       <Link to="/volunteer/hours" className="desktop-navbar-link">My Hours</Link>
