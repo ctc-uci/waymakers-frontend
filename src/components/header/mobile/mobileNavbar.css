@@ -4,6 +4,7 @@
   background-size: 100%;
   padding: 0;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 .navbar-mobile-menu-container {
@@ -45,6 +46,7 @@
   font-weight: bold;
   color: #fff;
   background-color: var(--color-dark-orange);
+  cursor: pointer;
 }
 
 .navbar-mobile-logout-button {
@@ -58,4 +60,5 @@
   border: 1px solid var(--text-color-dark);
   width: 100%;
   padding: 10px 0px;
+  cursor: pointer;
 }

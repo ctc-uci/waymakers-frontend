@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
 import useMobileWidth from '../../../common/useMobileWidth';
@@ -16,6 +16,7 @@ const AdminInventoryPreview = ({ division }) => {
 
   const isMobile = useMobileWidth(1100);
   const topAmount = isMobile ? 2 : 3;
+  const history = useHistory();
 
   // Fetching top items from the server
 
@@ -127,10 +128,8 @@ const AdminInventoryPreview = ({ division }) => {
       { warehouseList.length > 0 && Menu() }
       {renderInfo()}
       <div className="view-inventory-section">
-        <button type="button" className="all-items-button">
-          <Link to="/inventory" className="button-anchor">
-            <p className="large">View All</p>
-          </Link>
+        <button type="button" className="all-events-button button-anchor" onClick={() => history.push('/inventory')}>
+          <p className="large">View All</p>
         </button>
       </div>
     </div>
