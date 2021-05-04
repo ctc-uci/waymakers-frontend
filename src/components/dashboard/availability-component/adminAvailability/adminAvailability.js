@@ -47,8 +47,10 @@ const AdminAvailability = () => {
 
       // handling all users' availability
       let { usersAvailability } = allAvailabilityResult.data;
-
       console.log('availability/counts data:', usersAvailability);
+
+      const availabilityNames = availabilityNamesResult.data;
+      console.log('availability/names data:', availabilityNames);
 
       const frequencyMap = new Map();
 
@@ -72,11 +74,9 @@ const AdminAvailability = () => {
 
       const namesMap = new Map();
 
-      console.log('availability/names data:', availabilityNamesResult.data);
-
       availabilityNamesResult.data.availabilityNames.forEach((dateString) => {
         const {
-          dayofweek, starttime, firstname, lastname, locationcity, phone, email,
+          dayofweek, starttime, firstname, lastname, locationcity, phone, email, permissions,
         } = dateString;
 
         const parsedDate = stringToDate({ dayofweek, starttime });
@@ -86,23 +86,21 @@ const AdminAvailability = () => {
         if (dateValue === undefined) {
           namesMap.set(JSON.stringify(parsedDate), [
             {
-              fname: firstname, lname: lastname, city: locationcity, phone, email,
+              fname: firstname, lname: lastname, city: locationcity, phone, email, permissions,
             },
           ]);
         } else {
           dateValue.push({
-            fname: firstname, lname: lastname, city: locationcity, phone, email,
+            fname: firstname, lname: lastname, city: locationcity, phone, email, permissions,
           });
           namesMap.set(JSON.stringify(parsedDate), dateValue);
         }
-
         return null;
       });
 
       setAllAvailability(usersAvailability);
       setNameMap(namesMap);
     } catch (e) {
-      // eslint-disable-next-line
       console.log('Error:', e);
       console.log('Error while getting availability from the backend!');
     }
@@ -178,24 +176,31 @@ const AdminAvailability = () => {
             <table className="names-table">
               <tbody>
                 {
-                nameList.map((person) => (
-                  <tr>
-                    <td>
-                      {person.fname}
-                      {' '}
-                      {person.lname}
-                    </td>
-                    <td>
-                      {person.email}
-                    </td>
-                    <td>
-                      {person.phone}
-                    </td>
-                    <td>
-                      {person.city}
-                    </td>
-                  </tr>
-                ))
+                  // display admins first; admin < staff < volunteer
+                nameList
+                  .sort((a, b) => (
+                    a.permissions.toUpperCase() < b.permissions.toUpperCase() ? -1 : 1))
+                  .map((person) => (
+                    <tr key={person.email}>
+                      <td>
+                        {person.fname}
+                        {' '}
+                        {person.lname}
+                      </td>
+                      <td>
+                        {person.permissions}
+                      </td>
+                      <td>
+                        {person.email}
+                      </td>
+                      <td>
+                        {person.phone}
+                      </td>
+                      <td>
+                        {person.city}
+                      </td>
+                    </tr>
+                  ))
               }
               </tbody>
             </table>
