@@ -52,6 +52,7 @@
     background: inherit;
     outline: none;
     border: none;
+    cursor: pointer;
 }
 
 .form-mobile-table-row .col-3 .delete-button .delete-icon {
@@ -109,6 +110,6 @@
 .form-mobile-table-row .form-mobile-table-col .form-mobile-item-attribute .mobile-category-dropdown {
     height: 32px;
     width: 141.5px;
-
+    cursor: pointer;
     font-size: 16px;
 }

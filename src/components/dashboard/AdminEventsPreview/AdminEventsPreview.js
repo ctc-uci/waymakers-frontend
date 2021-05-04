@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { WMKBackend } from '../../../common/utils';
 
@@ -9,10 +9,9 @@ import './AdminEventsPreview.css';
 
 const AdminEventsPreview = () => {
   const [events, setEvents] = useState([]);
-  // const [editPopup, setEditPopup] = useState(false);
-  // const [selectedEvent, setSelectedEvent] = useState(null);
   const isMobile = useMobileWidth(1100);
   const sliceNum = isMobile ? 2 : 3;
+  const history = useHistory();
 
   async function getEvents() {
     try {
@@ -64,10 +63,8 @@ const AdminEventsPreview = () => {
         ))}
       </div>
       <div className="all-events-section">
-        <button type="button" className="all-events-button">
-          <Link to="/events" className="button-anchor">
-            <p className="large">Edit Events</p>
-          </Link>
+        <button type="button" className="all-events-button button-anchor" onClick={() => history.push('/events')}>
+          <p className="large">Edit Events</p>
         </button>
       </div>
     </div>
