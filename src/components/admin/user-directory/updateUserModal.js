@@ -9,7 +9,6 @@ import {
 import {
   LightModal, LightModalHeader, LightModalBody, LightModalButton,
 } from '../../../common/LightModal';
-// import * as Yup from 'yup';
 import { WMKBackend, refreshPage } from '../../../common/utils';
 
 import {
@@ -49,7 +48,7 @@ const UpdateUserModal = ({
           },
         )
         .then(() => {
-          alert('success');
+          // alert('success');
           setIsModalOpen(false);
           refreshPage();
         })
@@ -177,24 +176,6 @@ const UpdateUserModal = ({
               readOnly
             />
           </ValidatedField>
-          {/* TODO: Add dropdowns */}
-          {/* volunteer tiers are deprecated */}
-          {/* <ValidatedField name="volunteerTier" labelText="Volunteer Tier" formik={formik}>
-            <select
-              id="volunteerTier"
-              name="volunteerTier"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.volunteerTier}
-            >
-              <option
-                key="test1"
-                value="test 1"
-              >
-                Test 1
-              </option>
-            </select>
-          </ValidatedField> */}
           <ValidatedField name="division" labelText="Division" formik={formik}>
             <select
               id="division"
@@ -263,11 +244,5 @@ UpdateUserModal.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   divisionList: PropTypes.object.isRequired,
 };
-
-// // Specifies the default values for props:
-// UpdateUserModal.defaultProps = {
-//   divisionList: {},
-//   userInfo: {},
-// };
 
 export default UpdateUserModal;
