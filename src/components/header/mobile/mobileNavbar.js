@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { instanceOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
@@ -19,6 +19,10 @@ const MobileNavbar = (props) => {
 
   const [open, setOpen] = useState(false);
   const [submitHoursOpen, setSubmitHoursOpen] = useState(false);
+  const [currentPath, setCurrentPath] = useState('/');
+
+  // className for current page's link
+  const active = 'mobile-navbar-link active';
 
   const toggleMenuOpen = () => {
     setOpen(!open);
@@ -39,22 +43,46 @@ const MobileNavbar = (props) => {
     }
   }
 
+  useEffect(() => {
+    setCurrentPath(window.location.pathname);
+  });
+
   // Note: User Directory page not complete
   const adminDropdown = (
     <div className="navbar-mobile-menu-container">
-      <Link to="/profile" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+      <Link
+        to="/profile"
+        className={currentPath === '/profile' ? active : 'mobile-navbar-link'}
+        onClick={() => toggleMenuOpen()}
+      >
         Profile
       </Link>
-      <Link to="/inventory" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+      <Link
+        to="/inventory"
+        className={currentPath === '/inventory' ? active : 'mobile-navbar-link'}
+        onClick={() => toggleMenuOpen()}
+      >
         Inventory
       </Link>
-      <Link to="/admin/users" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+      <Link
+        to="/admin/users"
+        className={currentPath === '/admin/users' ? active : 'mobile-navbar-link'}
+        onClick={() => toggleMenuOpen()}
+      >
         User Directory
       </Link>
-      <Link to="/volunteer/hours" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+      <Link
+        to="/volunteer/hours"
+        className={currentPath === '/volunteer/hours' ? active : 'mobile-navbar-link'}
+        onClick={() => toggleMenuOpen()}
+      >
         My Hours
       </Link>
-      <Link to="/events" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+      <Link
+        to="/events"
+        className={currentPath === '/events' ? active : 'mobile-navbar-link'}
+        onClick={() => toggleMenuOpen()}
+      >
         Events
       </Link>
       <button
@@ -86,13 +114,25 @@ const MobileNavbar = (props) => {
 
   const volunteerDropdown = (
     <div className="navbar-mobile-menu-container">
-      <Link to="/profile" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+      <Link
+        to="/profile"
+        className={currentPath === '/profile' ? active : 'mobile-navbar-link'}
+        onClick={() => toggleMenuOpen()}
+      >
         Profile
       </Link>
-      <Link to="/events" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+      <Link
+        to="/events"
+        className={currentPath === '/events' ? active : 'mobile-navbar-link'}
+        onClick={() => toggleMenuOpen()}
+      >
         Events
       </Link>
-      <Link to="/volunteer/hours" className="mobile-navbar-link" onClick={() => toggleMenuOpen()}>
+      <Link
+        to="/events"
+        className={currentPath === '/volunteer/hours' ? active : 'mobile-navbar-link'}
+        onClick={() => toggleMenuOpen()}
+      >
         My Hours
       </Link>
       <button
