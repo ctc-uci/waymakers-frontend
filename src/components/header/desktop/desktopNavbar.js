@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
@@ -23,11 +23,11 @@ const DesktopNavbar = (props) => {
   const [open, setOpen] = useState(false);
   const [submitHoursOpen, setSubmitHoursOpen] = useState(false);
   // const [profilePicture, setProfiePicture] = useState(null);
+  const [currentPath, setCurrentPath] = useState('/');
   const ref = useRef();
 
-  // useEffect(() => {
-  //   setProfiePicture(localStorage.getItem('profilePicture'));
-  // }, [localStorage.getItem('profilePicture')]);
+  // className for current page's link
+  const active = 'desktop-navbar-link active';
 
   // Close profile menu when user clicks outside of it
   handleOutsideClick(ref, () => {
@@ -50,7 +50,7 @@ const DesktopNavbar = (props) => {
 
   const profileMenu = (
     <div className="navbar-profile-menu-container">
-      <a href="/profile" className="navbar-profile-menu-link">View Profile</a>
+      <a href="/profile" className={currentPath === '/profile' ? 'navbar-profile-menu-link active' : 'navbar-profile-menu-link'}>View Profile</a>
       <button
         type="button"
         label="navbar-logout-button"
@@ -62,32 +62,51 @@ const DesktopNavbar = (props) => {
     </div>
   );
 
-  // Note: User Directory page not complete
+  useEffect(() => {
+    setCurrentPath(window.location.pathname);
+  });
+
   return (
     <div className="desktop-navbar" ref={ref}>
-      {isAdmin && <Link to="/inventory" className="desktop-navbar-link">Inventory</Link>}
-      {isAdmin && <Link to="/admin/users" className="desktop-navbar-link">User Directory</Link>}
-      {isAdmin && <Link to="/events" className="desktop-navbar-link">Events</Link>}
-      {isVolunteer && <Link to="/volunteer/events" className="desktop-navbar-link">Events</Link>}
-      <Link to="/volunteer/hours" className="desktop-navbar-link">My Hours</Link>
-      <div>
-        <button
-          className="desktop-navbar-submit-hours-button"
-          aria-label="Submit Hours"
-          type="button"
-          onClick={() => setSubmitHoursOpen(true)}
-        >
-          Submit Hours
-        </button>
-        {submitHoursOpen
-          && (
-            <SubmitHoursPopup
-              isModalOpen={submitHoursOpen}
-              setIsModalOpen={setSubmitHoursOpen}
-              eventTitle=""
-            />
-          )}
-      </div>
+      {isAdmin && (
+      <Link to="/inventory" className={currentPath === '/inventory' ? active : 'desktop-navbar-link'}>
+        Inventory
+      </Link>
+      )}
+      {isAdmin && (
+      <Link to="/admin/users" className={currentPath === '/admin/users' ? active : 'desktop-navbar-link'}>
+        User Directory
+      </Link>
+      )}
+      {isAdmin && (
+      <Link to="/events" className={currentPath === '/events' ? active : 'desktop-navbar-link'}>
+        Events
+      </Link>
+      )}
+      {isVolunteer && (
+      <Link to="/volunteer/events" className={currentPath === '/volunteer/events' ? active : 'desktop-navbar-link'}>
+        Events
+      </Link>
+      )}
+      <Link to="/volunteer/hours" className={currentPath === '/volunteer/hours' ? active : 'desktop-navbar-link'}>
+        My Hours
+      </Link>
+      <button
+        className="desktop-navbar-submit-hours-button"
+        aria-label="Submit Hours"
+        type="button"
+        onClick={() => setSubmitHoursOpen(true)}
+      >
+        Submit Hours
+      </button>
+      {submitHoursOpen
+        && (
+          <SubmitHoursPopup
+            isModalOpen={submitHoursOpen}
+            setIsModalOpen={setSubmitHoursOpen}
+            eventTitle=""
+          />
+        )}
       <div
         className="profile-button"
         role="button"
