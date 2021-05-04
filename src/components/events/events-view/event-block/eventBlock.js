@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import * as IconAi from 'react-icons/ai';
 import * as IconGo from 'react-icons/go';
 
 import {
@@ -82,11 +81,10 @@ const EventBlock = ({
 
   const renderEventButton = () => {
     if (isUserEvent && !isAllDayEvent) {
-      const checkIcon = <IconAi.AiOutlineCheck size={10} color="black" />;
-      return <button type="button" className="cursor-pointer">{checkIcon}</button>;
+      return <button type="button">✓</button>;
     }
     if (!isAllDayEvent) {
-      return <button type="button" className="cursor-pointer" onClick={(e) => { onAddButtonClick(e); }}>+</button>;
+      return <button type="button" className="plus-button" onClick={(e) => { onAddButtonClick(e); }}>+</button>;
     }
     return null;
   };
@@ -96,25 +94,25 @@ const EventBlock = ({
     switch (page) {
       case 'volunteerDashboard':
         return (
-          <div id="week-event-block" className={eventInfo.event.allDay ? 'cursor-pointer all-day-week-event-content' : 'cursor-pointer'} tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
-            <div id="week-event-content">
-              <p id="week-event-title">{eventInfo.event.title}</p>
-              {eventInfo.event.allDay && <div id="all-day-strip" style={{ backgroundColor: eventTypeColor }} />}
+          <div className={`week-event-block ${eventInfo.event.allDay ? 'all-day-week-event-content' : ''}`} tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
+            <div className="week-event-content">
+              <p className="week-event-title">{eventInfo.event.title}</p>
+              {eventInfo.event.allDay && <div className="all-day-strip" style={{ backgroundColor: eventTypeColor }} />}
               {renderEventButton()}
             </div>
-            {!eventInfo.event.allDay && <div id="strip" style={{ backgroundColor: eventTypeColor }} />}
+            {!eventInfo.event.allDay && <div className="strip" style={{ backgroundColor: eventTypeColor }} />}
           </div>
         );
       case 'addModifyDeleteEventsPage':
         return (
-          <div id="week-edit-event-block" className="cursor-pointer" tabIndex={0} onClick={onViewEventsPageBlockClick} onKeyDown={() => {}} role="button">
-            <p id="week-edit-event-title">{eventInfo.event.title}</p>
+          <div className="week-edit-event-block" tabIndex={0} onClick={onViewEventsPageBlockClick} onKeyDown={() => {}} role="button">
+            <p className="week-edit-event-title">{eventInfo.event.title}</p>
           </div>
         );
       case 'aggregatePage':
         return (
-          <div id="week-event-block" className="cursor-pointer" tabIndex={0} onClick={onAdminEventBlockClick} onKeyDown={() => {}} role="button">
-            <div id="week-event-content">
+          <div className="week-event-block" tabIndex={0} onClick={onAdminEventBlockClick} onKeyDown={() => {}} role="button">
+            <div className="week-event-content">
               <p>{eventInfo.event.title}</p>
             </div>
           </div>
@@ -145,10 +143,10 @@ const EventBlock = ({
   };
 
   return (
-    <div id="month-event-block" className="cursor-pointer" tabIndex={0} onClick={onMonthBlockClick} onKeyDown={() => {}} role="button">
+    <div className="month-event-block" tabIndex={0} onClick={onMonthBlockClick} onKeyDown={() => {}} role="button">
       <IconGo.GoPrimitiveDot color={eventInfo.borderColor} size={14} />
-      <p id="monthViewEventTime">{`${convertedHour === 0 ? 12 : convertedHour}${minute === 0 ? '' : displayMinute}${hour < 13 ? 'a' : 'p'}`}</p>
-      <p id="monthViewEventTitle">{eventInfo.event.title}</p>
+      <p className="month-view-event-time">{`${convertedHour === 0 ? 12 : convertedHour}${minute === 0 ? '' : displayMinute}${hour < 13 ? 'a' : 'p'}`}</p>
+      <p className="month-view-event-title">{eventInfo.event.title}</p>
     </div>
   );
 };

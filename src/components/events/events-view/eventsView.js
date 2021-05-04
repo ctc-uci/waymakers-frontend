@@ -300,7 +300,7 @@ const EventsView = ({
         )}
       <CalendarPopup page={page} />
       <HelpPopup isModalOpen={isHelpModalOpen} setIsModalOpen={setIsHelpModalOpen} isAdmin={page === 'addModifyDeleteEventsPage'} />
-      <div id="calendar">
+      <div className="calendar">
         {view === 'timeGridDay' && renderDayViewHeader()}
         {renderCalendar()}
       </div>
