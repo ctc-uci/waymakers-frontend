@@ -13,16 +13,16 @@ const CalendarDayHeader = ({
   endOfRange,
 }) => {
   const renderDayHeader = () => {
-    const prevButton = () => <button id="prev-button" className="day-button cursor-pointer" type="button" onClick={goToPrev} aria-label="previous"><IconIo.IoIosArrowBack size={20} /></button>;
-    const nextButton = () => <button id="next-button" className="day-button cursor-pointer" type="button" onClick={goToNext} aria-label="next"><IconIo.IoIosArrowForward size={20} /></button>;
+    const prevButton = () => <button className="day-button prev-button" type="button" onClick={goToPrev} aria-label="previous"><IconIo.IoIosArrowBack size={20} /></button>;
+    const nextButton = () => <button className="day-button next-button" type="button" onClick={goToNext} aria-label="next"><IconIo.IoIosArrowForward size={20} /></button>;
     if (dayInfo.view.type === 'timeGridWeek') {
       const currentDay = dayInfo.text.substring(0, 3);
       return (
         <div className="week-header">
           {currentDay === 'Sun' && prevButton()}
           <div className="week-day-header-content">
-            <p id="header-date">{dayInfo.date.getDate()}</p>
-            <p id="header-day">{new Date(dayInfo.date).toLocaleString('en-us', { weekday: 'short' })}</p>
+            <p className="header-date">{dayInfo.date.getDate()}</p>
+            <p className="header-day">{new Date(dayInfo.date).toLocaleString('en-us', { weekday: 'short' })}</p>
           </div>
           {currentDay === 'Sat' && nextButton()}
         </div>
@@ -34,8 +34,8 @@ const CalendarDayHeader = ({
         <div className="week-header">
           {currentDay.isSame(moment(startOfRange)) && prevButton()}
           <div className="week-day-header-content">
-            <p id="header-date">{dayInfo.date.getDate()}</p>
-            <p id="header-day">{new Date(dayInfo.date).toLocaleString('en-us', { weekday: 'short' })}</p>
+            <p className="header-date">{dayInfo.date.getDate()}</p>
+            <p className="header-day">{new Date(dayInfo.date).toLocaleString('en-us', { weekday: 'short' })}</p>
           </div>
           {currentDay.isSame(moment(endOfRange)) && nextButton()}
         </div>
@@ -55,7 +55,7 @@ const CalendarDayHeader = ({
     return (
       <div className="day-header">
         {prevButton()}
-        <p id="day-view-title">{dayInfo.text}</p>
+        <p className="day-view-title">{dayInfo.text}</p>
         {nextButton()}
       </div>
     );

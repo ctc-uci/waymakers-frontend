@@ -2,11 +2,7 @@
     outline: 0;
 }
 
-.cursor-pointer {
-    cursor: pointer;
-}
-
-#week-event-block{
+.week-event-block {
     color: var(--color-dark-light);
     font-weight: bold;
     display: flex;
@@ -14,36 +10,38 @@
     justify-content: space-between;
     height: 100%;
     z-index: 0;
+    cursor: pointer;
 }
 
-#week-event-content{
+.week-event-content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 0.2em;
+    width: 95%;
 }
 
 .all-day-week-event-content {
     flex-direction: row;
 }
 
-#week-edit-event-content{
+.week-edit-event-content {
     display: inline;
 }
 
-#strip{
-    width: 10px;
+.strip {
+    width: 5%;
     height: 100%;
     border-top-right-radius: 1px;
     border-bottom-right-radius: 1px;
 }
 
-#week-event-block p{
+.week-event-block p {
     margin-bottom: 0px;
     overflow-y: hidden;
 }
 
-#week-event-block button{
+.week-event-block button {
     margin-right: auto;
     border-radius: 50%;
     outline: none;
@@ -51,9 +49,16 @@
     font-weight: bold;
     background-color: var(--color-light-blue);
     z-index: 999;
+    height: 20px;
+    min-width: 20px;
+    cursor: pointer;
 }
 
-#monthViewEventTitle {
+.plus-button {
+    padding-top: 2px;
+}
+
+.month-view-event-title {
     display: inline;
     margin-left: 0.2em;
     font-weight: bold;
@@ -61,18 +66,18 @@
     text-overflow: ellipsis;
 }
 
-#monthViewEventTime{
+.month-view-event-time {
     display: inline;
     margin-left: 0.2em;
 }
 
-#dot{
+.dot {
     display: inline;
     font-weight: bold;
     font-size: 1em;
 }
 
-#month-event-block{
+.month-event-block {
     width: 100%;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -80,28 +85,22 @@
     margin-left: 0.2em;
     height: 100%;
     padding: 0px;
+    cursor: pointer;
 }
 
-#trash-can {
-    color: var(--text-color-light);
-    float: right;
-    margin-right: 3%;
-}
-
-#week-edit-event-block {
+.week-edit-event-block {
     padding-top: 1%;
     height: 100%;
+    cursor: pointer;
 }
 
-#week-edit-event-block button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: transparent;
-    border: 0;
+.week-edit-event-title, .week-event-title {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-#week-edit-event-title, #week-event-title {
+.week-event-title {
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -114,7 +113,7 @@
     text-overflow: ellipsis;
 }
 
-#all-day-strip {
+.all-day-strip {
     width: 10px;
     height: 100%;
     border-top-right-radius: 1px;
@@ -126,7 +125,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    #monthViewEventTitle {
+    .month-view-event-title {
         overflow: hidden;
         text-overflow: ellipsis;
     }
