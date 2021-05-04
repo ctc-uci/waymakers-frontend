@@ -12,7 +12,7 @@ import Test from './.harrison-sandbox/Test';
 import Dashboard from './pages/dashboard/dashboard';
 import RegisterPage from './pages/login/registerPage';
 import LoginPage from './pages/login/loginPage';
-import UserDirectory from './components/admin/user-directory/userDirectory';
+import UserDirectory from './pages/UserDirectory/userDirectory';
 import VerificationPage from './pages/login/verificationPage';
 import InventoryPage from './pages/inventory/inventoryPage';
 import VolunteerEvents from './pages/volunteer-events/volunteerEvents';

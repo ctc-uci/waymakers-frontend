@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
-import { WMKBackend } from '../../../common/utils';
+import { WMKBackend } from '../../common/utils';
 
-import UserInformationTable from './userInformationTable';
-import DivisionMenu from './udDivisionMenu';
+import UserInformationTable from '../../components/admin/user-directory/userInformationTable';
+import DivisionMenu from '../../components/admin/user-directory/udDivisionMenu';
 
 import './userDirectory.css';
 
@@ -38,8 +38,6 @@ const UserDirectory = () => {
       setStaffs(accounts.data.filter((user) => user.permissions === 'Staff'));
       setAdmins(accounts.data.filter((user) => user.permissions === 'Admin'));
 
-      console.log(volunteers);
-
       // Converting array of objects into an associative array
       const divList = divisions.data.reduce(
         (obj, item) => Object.assign(obj, { [item.id]: item }), {},
@@ -59,7 +57,7 @@ const UserDirectory = () => {
         setCurrentDivision={setCurrentDivision}
       />
       <UserInformationTable
-        title="Volunteer"
+        title="Volunteers"
         users={filteredVolunteers}
         divisionList={divisionList}
       />

@@ -34,7 +34,6 @@ const UserInformationTable = ({ title, users, divisionList }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalUser, setModalUser] = useState({});
-  // const [currentDivision, setCurrentDivision] = useState(0);
 
   useEffect(() => {
     setTotalNumberOfPages(Math.ceil(users.length / ROWS_PER_PAGINATION));
@@ -63,7 +62,6 @@ const UserInformationTable = ({ title, users, divisionList }) => {
         userInfo={modalUser}
         divisionList={divisionList}
       />
-      {/* <div><pre>{JSON.stringify(users, null, 2) }</pre></div> */}
       <div className="table-topbar">
         <div className="search-section">
           <p className="medium">Search:</p>
@@ -99,7 +97,12 @@ const UserInformationTable = ({ title, users, divisionList }) => {
         <TableBody>
           {Object.values(paginatedVolunteers)
             .map((user) => (
-              <UserDirectoryRow key={user.userid} user={user} openModal={openModal} />
+              <UserDirectoryRow
+                key={user.userid}
+                user={user}
+                openModal={openModal}
+                divisionList={divisionList}
+              />
             ))}
         </TableBody>
       </Table>
