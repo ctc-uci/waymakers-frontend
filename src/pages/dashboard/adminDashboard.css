@@ -10,13 +10,13 @@
     font-weight: bold;
 }
 
-.division-section {
+.admin-dashboard .division-section {
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
 
-.division-dropdown {
+.admin-dashboard .division-dropdown {
     border: none;
     outline: none;
     width: inherit;
@@ -85,7 +85,7 @@
         margin-right: 5%;
     }
 
-    .division-section {
+    .admin-dashboard .division-section {
         margin-left: 10px;
     }
 

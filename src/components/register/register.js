@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
+import isDate from 'validator/lib/isDate';
 
 import GoogleAuthService from '../../services/firebase/firebase';
 import { WMKBackend } from '../../common/utils';
@@ -41,47 +42,49 @@ const Register = () => {
   const register = async ({
     firstName, lastName, email, password,
     phoneNumber, address1, address2, city, state, zipcode,
-    birthDay, birthMonth, birthYear, gender, genderOther,
+    birthDay, birthMonth, birthYear, gender, genderOther, division,
   }) => {
-    try {
-      const user = await GoogleAuthService.auth.createUserWithEmailAndPassword(email, password);
-      console.log(user);
-      const res = await WMKBackend.post('/register/create', {
-        userID: user.user.uid,
-        firstName,
-        lastName,
-        email,
-        phoneNumber,
-        address1,
-        address2,
-        city,
-        state,
-        zipcode,
-        birthDate: `${birthYear}-${birthMonth}-${birthDay}`,
-        gender: gender === 'other' ? genderOther : gender,
-        division: 1,
-        verified: false,
-      });
-      console.log(res);
+    const dateOfBirth = `${birthYear}-${birthMonth}-${birthDay}`;
 
-      const verifyStatus = await WMKBackend.post('/register/sendVerification', {
-        userID: user.user.uid,
-        firstName,
-        email,
-      });
-      console.log(verifyStatus);
-
-      history.push({
-        pathname: '/verification',
-        state: {
-          userID: user.user.uid,
-          firstName,
-          email,
-        },
-      });
-    } catch (err) {
-      alert(err);
+    if (!isDate(dateOfBirth)) {
+      throw new Error('Date of Birth does not exist.');
     }
+
+    const user = await GoogleAuthService.auth.createUserWithEmailAndPassword(email, password);
+    console.log(user);
+    const res = await WMKBackend.post('/register/create', {
+      userID: user.user.uid,
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      address1,
+      address2,
+      city,
+      state,
+      zipcode,
+      birthDate: dateOfBirth,
+      gender: gender === 'other' ? genderOther : gender,
+      division,
+      verified: false,
+    });
+    console.log(res);
+
+    const verifyStatus = await WMKBackend.post('/register/sendVerification', {
+      userID: user.user.uid,
+      firstName,
+      email,
+    });
+    console.log(verifyStatus);
+
+    history.push({
+      pathname: '/verification',
+      state: {
+        userID: user.user.uid,
+        firstName,
+        email,
+      },
+    });
   };
 
   const handleSubmit = async (values, actions) => {

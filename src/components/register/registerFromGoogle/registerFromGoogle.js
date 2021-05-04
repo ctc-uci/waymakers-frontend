@@ -66,6 +66,8 @@ const Register = () => {
       });
       console.log(res);
 
+      alert('Successfully registered! Click to move on to login');
+
       history.push('/login');
     } catch (err) {
       alert(err);

@@ -30,7 +30,7 @@ const StepTwo = (props) => {
     <div className="register-step-two">
       <div className="phone-number-section">
         <p className="medium">Phone Number</p>
-        <RegistrationTextField name={phoneNumber.name} label={null} placeholder="i.e. 1234567890" />
+        <RegistrationTextField name={phoneNumber.name} label={null} placeholder="i.e. (123) 456-7890" />
       </div>
       <div className="address-section">
         <p className="medium">Address</p>

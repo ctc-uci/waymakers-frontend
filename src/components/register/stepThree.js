@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { Field, useFormikContext } from 'formik';
+
+import { WMKBackend } from '../../common/utils';
 
 import RegistrationTextField from './registrationTextField';
 import TermsOfUseModal from './TermsOfUseModal';
@@ -26,12 +28,19 @@ const StepThree = (props) => {
       birthYear,
       gender,
       genderOther,
+      division,
       termsOfUse,
     },
   } = props;
 
   const [isTOUModalOpen, setTOUModalOpen] = useState(false);
+  const [divisions, setDivisions] = useState([]);
   const meta = useFormikContext();
+
+  useEffect(async () => {
+    const { data } = await WMKBackend.get('/register/divisions');
+    setDivisions(data);
+  }, []);
 
   return (
     <div className="register-step-three">
@@ -39,9 +48,24 @@ const StepThree = (props) => {
         <div className="birthday-section">
           <p className="medium">Date of Birth</p>
           <div className="birthday-form-group">
-            <RegistrationTextField labelClassName="birthday-label" name={birthMonth.name} label={birthMonth.label} />
-            <RegistrationTextField labelClassName="birthday-label" name={birthDay.name} label={birthDay.label} />
-            <RegistrationTextField labelClassName="birthday-label" name={birthYear.name} label={birthYear.label} />
+            <RegistrationTextField
+              labelClassName="birthday-label"
+              name={birthMonth.name}
+              label={birthMonth.label}
+              placeholder="MM"
+            />
+            <RegistrationTextField
+              labelClassName="birthday-label"
+              name={birthDay.name}
+              label={birthDay.label}
+              placeholder="DD"
+            />
+            <RegistrationTextField
+              labelClassName="birthday-label"
+              name={birthYear.name}
+              label={birthYear.label}
+              placeholder="YYYY"
+            />
           </div>
         </div>
       </div>
@@ -79,12 +103,28 @@ const StepThree = (props) => {
           />
         </div>
       </div>
-      {/* <div className="division-section">
+      <div className="division-section">
         <p className="medium">Division</p>
         <div className="division-form-group">
-
+          <select
+            className="division-dropdown"
+            name={division.name}
+            onChange={meta.handleChange}
+          >
+            <option value="" disabled selected hidden>Specify Division</option>
+            {divisions.map((_division) => (
+              <option className="division-option" value={_division.id} label={_division.div_name} />
+            ))}
+          </select>
+          {meta.touched.division && meta.errors.division ? (
+            <p className="dropdown-error small">
+              <img src={registrationError} alt=" " />
+              {' '}
+              {meta.errors.division}
+            </p>
+          ) : <br />}
         </div>
-      </div> */}
+      </div>
       <div className="terms-section">
         <TermsOfUseModal isOpen={isTOUModalOpen} setIsOpen={setTOUModalOpen} />
         <div className="view-terms">

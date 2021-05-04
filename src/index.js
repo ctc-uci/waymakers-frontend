@@ -52,7 +52,7 @@ ReactDOM.render(
               <Route path="/register" component={RegisterPage} />
               <Route path="/login" component={LoginPage} />
               <Route path="/verification" component={VerificationPage} />
-              <Route path="/internalservererror" component={InternalServerError} />
+              <Route path="/500" component={InternalServerError} />
               <div className="App">
                 <Layout>
                   <Switch>
