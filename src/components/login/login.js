@@ -113,7 +113,10 @@ const LogIn = (props) => {
 
       // set profile picture
       const { data: { account } } = await WMKBackend.get(`/accounts/${user.uid}`);
-      localStorage.setItem('profilePicture', account.profile_picture);
+
+      if (account.profile_picture) {
+        localStorage.setItem('profilePicture', account.profile_picture);
+      }
 
       return history.push(redirectURL);
     } catch (err) {

@@ -32,6 +32,12 @@
     margin-left: 3%;
 }
 
+.register-step-three .dropdown-error {
+    margin: 0;
+    padding: 0;
+    color: #DA6153;
+}
+
 .register-step-three .gender-section {
     display: flex;
     flex-direction: column;
@@ -56,18 +62,27 @@
     margin-top: 3%;
 }
 
-.register-step-three .gender-section .gender-form-group .dropdown-error {
-    margin: 0;
-    padding: 0;
-    color: #DA6153;
+.register-step-three .division-section {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 50px;
 }
 
-/* .register-step-three .terms-section {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-} */
+.register-step-three .division-section .division-form-group .division-dropdown {
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: none;
+
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.6);
+
+    padding-left: 10px;
+    
+    height: 35px;
+    width: 100%;
+}
 
 .register-step-three .terms-section .view-terms {
     display: flex;

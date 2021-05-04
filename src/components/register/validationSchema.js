@@ -21,6 +21,7 @@ const {
     birthDay,
     birthYear,
     gender,
+    division,
     termsOfUse,
   },
 } = registerFormModel;
@@ -101,6 +102,7 @@ export default [
         /^\d{4}$/,
         `${birthYear.formatErrorMsg}`,
       ),
+    [division.name]: yup.string().required(`${division.requiredErrorMsg}`),
     [gender.name]: yup.string().required(`${gender.requiredErrorMsg}`),
     [termsOfUse.name]: yup.bool().oneOf([true], `${termsOfUse.requiredErrorMsg}`),
   }),

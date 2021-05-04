@@ -177,10 +177,10 @@ WMKBackend.interceptors.response.use(
               });
             } catch (e) {
               console.log(e);
-              return window.location.href = '/internalservererror';
+              return window.location.href = '/500';
             }
           } else {
-            return window.location.href = '/internalservererror';
+            return window.location.href = '/500';
           }
         default:
           return Promise.reject(error);
