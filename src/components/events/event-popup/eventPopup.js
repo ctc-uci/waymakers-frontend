@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { withCookies, Cookies } from 'react-cookie';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
+
 import {
   addUserEvent,
   removeUserEvent,
@@ -10,7 +11,7 @@ import {
   setShowPopup,
   changePopupType,
 } from '../redux/actions';
-import { getPopupType } from '../redux/selectors';
+import { getPopupType, getUnsubmittedEvents } from '../redux/selectors';
 
 import './eventPopup.css';
 
@@ -32,11 +33,24 @@ const monthList = [
 
 // TODO: Scale eventPopup based on viewport height
 const EventPopup = ({
-  event, addEventToUserCalendar, removeEventFromUserCalendar, cookies, popupType, isOpen,
+  event,
+  addEventToUserCalendar,
+  removeEventFromUserCalendar,
+  cookies,
+  popupType,
+  isOpen,
 }) => {
   const dispatch = useDispatch();
   const startDate = new Date(event.startTime);
   const endDate = new Date(event.endTime);
+  const userId = cookies.get('userId');
+  const [canSubmitHours, setCanSubmitHours] = useState([]);
+  const unsubmittedEvents = useSelector(getUnsubmittedEvents);
+
+  useEffect(() => {
+    setCanSubmitHours(unsubmittedEvents
+      .filter((e) => e.id.toString() === event.id.toString()).length > 0);
+  }, [event]);
 
   const cancelButton = (
     <button
@@ -63,7 +77,7 @@ const EventPopup = ({
   };
 
   const addEvent = () => {
-    addEventToUserCalendar(cookies.cookies.userId, event.id)
+    addEventToUserCalendar(userId, event.id)
       .then(() => {
         dispatch(fetchEvents());
       });
@@ -71,7 +85,7 @@ const EventPopup = ({
   };
 
   const removeEvent = () => {
-    removeEventFromUserCalendar(cookies.cookies.userId, event.id)
+    removeEventFromUserCalendar(userId, event.id)
       .then(() => {
         dispatch(fetchEvents());
       });
@@ -82,7 +96,7 @@ const EventPopup = ({
   const renderConfirmCancelButtons = () => (
     <div className="multi-event-option">
       <button
-        className="button confirm-button button"
+        className="button confirm-button"
         type="button"
         aria-label="confirm add event"
         onClick={() => {
@@ -116,9 +130,26 @@ const EventPopup = ({
         className="add-intent-button button"
         type="button"
         aria-label="Add to My Hours"
-        onClick={() => dispatch(changePopupType('LogHoursForm'))}
+        onClick={() => {
+          dispatch(changePopupType('LogHoursForm'));
+        }}
       >
         <p className="large">Add To My Hours</p>
+      </button>
+    </div>
+  );
+
+  const renderAlreadySubmittedHoursButton = () => (
+    <div className="single-event-option">
+      <button
+        className="already-submitted-hours-button button"
+        type="button"
+        aria-label="Already Submitted Hours"
+        onClick={() => {
+          dispatch(setShowPopup(false));
+        }}
+      >
+        <p className="large">Already Submitted Hours</p>
       </button>
     </div>
   );
@@ -141,14 +172,14 @@ const EventPopup = ({
   const renderEventFullButton = () => (
     <div className="single-event-option">
       <button
-        className="event-full-button"
+        className="event-full-button button"
         type="button"
         aria-label="Event is full"
         onClick={() => {
           dispatch(setShowPopup(false));
         }}
       >
-        Event is Full
+        <p className="large">Event is Full</p>
       </button>
     </div>
   );
@@ -166,7 +197,10 @@ const EventPopup = ({
         }
         return renderEventFullButton();
       case 'AddMyHoursPopup':
-        return renderAddMyHoursButton();
+        if (canSubmitHours) {
+          return renderAddMyHoursButton();
+        }
+        return renderAlreadySubmittedHoursButton();
       // case 'ViewEventInfoPopup':
       //   return '';
       case 'RemoveFromMyEventPopup':
@@ -243,7 +277,7 @@ EventPopup.propTypes = {
   addEventToUserCalendar: PropTypes.func.isRequired,
   removeEventFromUserCalendar: PropTypes.func.isRequired,
   popupType: PropTypes.string.isRequired,
-  isOpen: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -27,7 +27,8 @@ const UnsubmittedHours = () => {
       params: { userId: cookies.userId },
       withCredentials: true,
     }).then((res) => {
-      setAllUnsubmittedHours(res.data);
+      // Set unsubmitted hours to events whose end times have passed
+      setAllUnsubmittedHours(res.data.filter((e) => new Date(e.startTime) < new Date()));
     }).catch((err) => {
       console.error(err);
     });

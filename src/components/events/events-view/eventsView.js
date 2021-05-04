@@ -38,6 +38,7 @@ import {
   changeView,
   fetchEvents,
   fetchUserEvents,
+  fetchUnsubmittedEvents,
   changePopupType,
   setShowPopup,
 } from '../redux/actions';
@@ -47,12 +48,13 @@ import '@fullcalendar/daygrid/main.css';
 import '@fullcalendar/timegrid/main.css';
 
 const EventsView = ({
-  loadEvents, loadUserEvents, cookies, day, year, month, view, page,
+  loadEvents, loadUserEvents, loadUnsubmittedEvents, cookies, day, year, month, view, page,
 }) => {
   const dispatch = useDispatch();
   const [showMoreEvents, setShowMoreEvents] = useState(true);
   const [showMyEvents, setShowMyEvents] = useState(true);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+  const userId = cookies.get('userId');
   const calendarEl = useRef(null);
   const moreEventsColor = 'var(--text-color-dark)';
   const myEventsColor = 'var(--color-light-green)';
@@ -62,7 +64,8 @@ const EventsView = ({
   useEffect(() => {
     (async () => {
       await loadEvents();
-      await loadUserEvents(cookies.cookies.userId);
+      await loadUserEvents(userId);
+      await loadUnsubmittedEvents(userId);
     })();
   }, []);
 
@@ -313,6 +316,7 @@ const EventsView = ({
 EventsView.propTypes = {
   loadEvents: PropTypes.func.isRequired,
   loadUserEvents: PropTypes.func.isRequired,
+  loadUnsubmittedEvents: PropTypes.func.isRequired,
   cookies: PropTypes.instanceOf(Cookies).isRequired,
   month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
@@ -331,4 +335,5 @@ const mapStateToProps = (state) => ({
 export default withCookies(connect(mapStateToProps, {
   loadEvents: fetchEvents, // rename fetchEvents action
   loadUserEvents: fetchUserEvents,
+  loadUnsubmittedEvents: fetchUnsubmittedEvents,
 })(EventsView));

@@ -110,6 +110,25 @@ export const removeUserEvent = (userId, eventId) => async (dispatch) => {
   }
 };
 
+// Loads unsubmitted user events
+export const fetchUnsubmittedEvents = (userId) => async (dispatch) => {
+  try {
+    const response = await WMKBackend.get('/logs/unsubmitted', {
+      params: {
+        userId,
+      },
+    });
+    console.log(response.data);
+    if (response.status === 200) {
+      dispatch({ type: 'events/unsubmittedEventsLoaded', payload: response.data });
+    }
+    return null;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+};
+
 // Dispatches actions to change selected division, and load connected warehouses
 export const setShowPopup = (newValue) => async (dispatch) => {
   dispatch({ type: 'events/showPopupModified', payload: newValue });
