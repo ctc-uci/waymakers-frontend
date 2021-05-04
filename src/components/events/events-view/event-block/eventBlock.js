@@ -49,7 +49,7 @@ const EventBlock = ({
   const onEventBlockClick = () => {
     setEvent(eventInfo.event);
     if (isUserEvent) {
-      if (eventInfo.isPast) {
+      if (new Date(eventInfo.event.start) < new Date()) {
         setEventPopupType('AddMyHoursPopup');
       } else {
         setEventPopupType('RemoveFromMyEventPopup');

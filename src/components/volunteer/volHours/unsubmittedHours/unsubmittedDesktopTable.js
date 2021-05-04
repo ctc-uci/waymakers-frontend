@@ -20,12 +20,12 @@ const SubmitButton = styled.button`
 `;
 
 const Row = ({
-  eventName, location, startTime, endTime,
+  title, id, location, startTime, endTime,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <TableRow className="uh-table-row">
-      <TableContent>{eventName}</TableContent>
+      <TableContent>{title}</TableContent>
       <TableContent>{location}</TableContent>
       <TableContent>{formatDate(startTime, DATE_FORMAT.MY_HOURS)}</TableContent>
       <TableContent>{formatDate(endTime, DATE_FORMAT.MY_HOURS)}</TableContent>
@@ -35,7 +35,7 @@ const Row = ({
         <SubmitHoursPopup
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          eventTitle={eventName}
+          eventId={id}
         />
         )}
       </TableContent>
@@ -44,7 +44,8 @@ const Row = ({
 };
 
 Row.propTypes = {
-  eventName: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   location: PropTypes.string.isRequired,
   startTime: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,
@@ -65,8 +66,9 @@ const UnsubmittedDesktopTable = ({ filteredUnsubmittedHours }) => (
     <TableBody className="uh-table-body">
       {filteredUnsubmittedHours && filteredUnsubmittedHours.map((e) => (
         <Row
-          key={`${e.eventName} ${e.startTime}`}
-          eventName={e.eventName}
+          key={e.id}
+          id={e.id}
+          title={e.title}
           location={e.location}
           startTime={e.startTime}
           endTime={e.endTime}

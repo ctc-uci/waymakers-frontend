@@ -242,7 +242,8 @@
     background: var(--color-green);
 }
 
-.popup .event-info .event-full-button {
+.popup .event-info .event-full-button,
+.popup .event-info .already-submitted-hours-button {
     background: rgba(196, 196, 196, 0.75);
     cursor: default;
 }
@@ -278,25 +279,14 @@
     }
     /* Button is longer  */
     .popup .event-info .confirm-button {
-        width: 80%;
         margin-bottom: 3%;
-        font-size: 1.5rem;
     }
-    /* Button is longer  */
-    .popup .event-info .cancel-button {
+    .popup .event-info .confirm-button,
+    .popup .event-info .cancel-button,
+    .popup .event-info .add-intent-button
+    .popup .event-info .remove-intent-button,
+    .popup .event-info .event-full-button,
+    .popup .event-info .already-submitted-hours-button {
         width: 80%;
-        font-size: 1.5rem;
-    }
-    .popup .event-info .add-intent-button {
-        width: 80%;
-        font-size: 1.5rem;
-    }
-    .popup .event-info .remove-intent-button {
-        width: 80%;
-        font-size: 1.3rem;
-    }
-    .popup .event-info .event-full-button {
-        width: 75%;
-        font-size: 1.3rem;
     }
 }

@@ -42,7 +42,7 @@ const CalendarPopup = ({
               <SubmitHoursPopup
                 isModalOpen={popupIsOpen}
                 setIsModalOpen={(open) => dispatch(setShowPopup(open))}
-                eventTitle={selectedEvent.title}
+                eventId={selectedEvent.id}
               />
             );
           }

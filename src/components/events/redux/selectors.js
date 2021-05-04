@@ -65,6 +65,7 @@ export const getUserEventsForFullCalendar = (store) => {
   }));
 };
 
+export const getUnsubmittedEvents = (store) => store.events.unsubmittedUserEventsList;
 export const getShowPopup = (store) => store.events.showPopup;
 export const getMonth = (store) => store.events.month;
 export const getDay = (store) => store.events.day;

@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   useFormik,
@@ -38,20 +38,18 @@ const Schema = Yup.object().shape({
 });
 
 // Fill in form according to the selected event title
-const autofillEventInfo = (title, userEvents, formik) => {
+const autofillEventInfo = (eventId, userEvents, formik) => {
   // No op on default empty option
-  if (title === '') { return; }
+  if (!eventId) { return; }
 
   // No op with no userEvents
   if (!userEvents || userEvents.length === 0) { return; }
-
   // No op with no formik
   if (!formik) { return; }
+  const selectedUserEvent = userEvents
+    .filter((e) => e.id.toString() === eventId.toString())[0];
 
-  const selectedUserEvent = userEvents.filter(
-    (userEvent) => userEvent.title === title,
-  )[0];
-
+  formik.setFieldValue('id', selectedUserEvent.id);
   formik.setFieldValue('type', selectedUserEvent.eventType);
   formik.setFieldValue('title', selectedUserEvent.title);
   formik.setFieldValue('location', selectedUserEvent.location);
@@ -62,13 +60,15 @@ const autofillEventInfo = (title, userEvents, formik) => {
 };
 
 // TODO: Loading state
-const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
+const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
   const [divisions] = useDivisions();
   const [userEvents] = useUserEvents();
+  const [unsubmittedEvents, setUnsubmittedEvents] = useState([]);
   const [cookies] = useCookies(['userId']);
 
   const formik = useFormik({
     initialValues: {
+      id: '',
       type: '',
       title: '',
       location: '',
@@ -80,10 +80,9 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
     },
     validationSchema: Schema,
     onSubmit: (values) => {
-      const selectedUserEvent = userEvents.filter(
-        (userEvent) => userEvent.title === values.title,
+      const selectedUserEvent = unsubmittedEvents.filter(
+        (event) => event.id.toString() === values.id.toString(),
       )[0];
-
       WMKBackend.post('/logs/add', {
         userId: cookies.userId,
         eventId: selectedUserEvent.id,
@@ -93,11 +92,9 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
         additionalNotes: values.additionalNotes,
       }).then(() => {
         // TODO: confirmation of success
-        setIsModalOpen(false);
         refreshPage();
-      }).error((err) => {
-        // eslint-disable-next-line no-undef
-        alert('error', err);
+        setIsModalOpen(false);
+        alert(`You have successfully submitted hours for ${selectedUserEvent.title}`);
       });
     },
     // validate only on submit, change as needed
@@ -105,9 +102,22 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
     validateOnChange: false,
   });
 
+  const loadUnsubmittedEvents = async () => {
+    const unsubmittedHours = await WMKBackend.get('/logs/unsubmitted', {
+      params: {
+        userId: cookies.userId,
+      },
+    });
+    setUnsubmittedEvents(unsubmittedHours.data.filter((e) => new Date(e.startTime) < new Date()));
+  };
+
+  useEffect(async () => {
+    await loadUnsubmittedEvents();
+  }, []);
+
   useEffect(() => {
-    autofillEventInfo(eventTitle, userEvents, formik);
-  }, [eventTitle, userEvents]);
+    autofillEventInfo(eventId, userEvents, formik);
+  }, [eventId, userEvents]);
 
   const truncateEventName = (eventName) => {
     let truncateName = eventName.substring(0, 30);
@@ -137,16 +147,20 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
               id="title"
               name="Title of Event"
               value={formik.values.title}
+              onChange={async (e) => {
+                const { selectedIndex } = e.target.options;
+                autofillEventInfo(e.target.options[selectedIndex].getAttribute('id'), unsubmittedEvents, formik);
+              }}
               className="form-input-color"
-              onChange={(e) => autofillEventInfo(e.target.value, userEvents, formik)}
             >
               <option value="">{' '}</option>
-              {userEvents.map((userEvent) => (
+              {unsubmittedEvents.map((event) => (
                 <option
-                  key={userEvent.title}
-                  value={userEvent.title}
+                  key={event.id}
+                  value={event.title}
+                  id={event.id}
                 >
-                  {truncateEventName(userEvent.title)}
+                  {truncateEventName(event.title)}
                 </option>
               ))}
             </select>
@@ -241,7 +255,10 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventTitle = '' }) => {
 SubmitHoursPopup.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
   setIsModalOpen: PropTypes.func.isRequired,
-  eventTitle: PropTypes.func.isRequired,
+  eventId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 };
 
 export default SubmitHoursPopup;
