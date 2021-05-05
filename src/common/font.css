@@ -12,6 +12,10 @@ body {
   color: var(--text-color-dark);
 }
 
+input, textarea, button {
+    font-family: inherit;
+}
+
 .bold {
     font-weight: bold;
 }
