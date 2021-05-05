@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 import EditButton from '../../components/inventory/edit-button/editButton';
 import DivisionMenu from '../../components/inventory/division-menu/divisionMenu';
@@ -60,6 +61,9 @@ const InventoryPage = () => {
 
   return (
     <div className="inventory-container">
+      <Helmet>
+        <title>Waymakers | Inventory</title>
+      </Helmet>
       <div className="inventory-top">
         <DivisionMenu />
       </div>

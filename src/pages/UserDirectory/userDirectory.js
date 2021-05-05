@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { Helmet } from 'react-helmet';
 
 import { WMKBackend } from '../../common/utils';
 
@@ -50,6 +51,9 @@ const UserDirectory = () => {
 
   return (
     <div className="user-directory-page">
+      <Helmet>
+        <title>Waymakers | User Directory</title>
+      </Helmet>
       <h2 className="user-directory-title">User Directory</h2>
       <DivisionMenu
         divisionList={divisionList}

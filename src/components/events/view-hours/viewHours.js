@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withCookies, Cookies } from 'react-cookie';
+import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
 import { WMKBackend } from '../../../common/utils';
@@ -29,6 +30,9 @@ const ViewHours = ({ cookies }) => {
 
   return (
     <div>
+      <Helmet>
+        <title>Waymakers | View Hours</title>
+      </Helmet>
       <HoursBox logs={logs} />
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { withCookies } from 'react-cookie';
+import { Helmet } from 'react-helmet';
 
 import { WMKBackend } from '../../common/utils';
 
@@ -30,6 +31,9 @@ const EventDetailPage = () => {
 
   return (
     <div className="event-page-info">
+      <Helmet>
+        <title>Waymakers | Event Data Page</title>
+      </Helmet>
       <h1 className="event-title">{eventName}</h1>
       <div className="row1">
         <EventDetails eventId={eventId} />

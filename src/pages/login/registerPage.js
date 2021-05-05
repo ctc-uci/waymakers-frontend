@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import { Helmet } from 'react-helmet';
 import Particles from 'react-particles-js';
 
 import Register from '../../components/register/register';
@@ -24,6 +25,9 @@ const RegisterPage = (props) => {
 
   return (
     <div className="register-page">
+      <Helmet>
+        <title>Waymakers | Register</title>
+      </Helmet>
       <h1 className="title">Waymakers Southern California</h1>
       <h2 className="subtitle">{subtitle}</h2>
       {fromGoogle
