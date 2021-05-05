@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
@@ -8,6 +9,8 @@ import {
 import * as Yup from 'yup';
 import Datetime from 'react-datetime';
 import { useCookies } from 'react-cookie';
+import * as Icon from 'react-icons/im';
+import Checkbox from 'react-custom-checkbox';
 
 import {
   LightModal, LightModalHeader, LightModalBody, LightModalButton,
@@ -27,6 +30,7 @@ import './SubmitHoursPopup.css';
 
 // Using Yup to do schema validation
 const Schema = Yup.object().shape({
+  name: Yup.string().required('Required'),
   type: Yup.string().required('Required'),
   title: Yup.string().required('Required'),
   location: Yup.string().required('Required'),
@@ -35,6 +39,7 @@ const Schema = Yup.object().shape({
   totalHours: Yup.string().required('Required'),
   division: Yup.string().required('Required'),
   additionalNotes: Yup.string(),
+  checked: Yup.mixed().oneOf([true], 'Required').required('Required'),
 });
 
 // Fill in form according to the selected event title
@@ -68,6 +73,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
 
   const formik = useFormik({
     initialValues: {
+      name: localStorage.getItem('userFullName'),
       id: '',
       type: '',
       title: '',
@@ -77,6 +83,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
       totalHours: '',
       division: '',
       additionalNotes: '',
+      checked: false,
     },
     validationSchema: Schema,
     onSubmit: (values) => {
@@ -125,20 +132,33 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
     return truncateName;
   };
 
+  const updateNewDate = (e, startOrEnd, value) => {
+    const newDate = new Date(e);
+    const newValue = new Date(value);
+    newValue.setDate(newDate.getDate());
+    newValue.setMonth(newDate.getMonth());
+    newValue.setFullYear(newDate.getFullYear());
+    formik.setFieldValue(startOrEnd, newValue);
+  };
+
   return (
     <LightModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
-      <LightModalHeader title="Submit Hours" onClose={() => setIsModalOpen(false)} />
+      <LightModalHeader
+        title="Event Information"
+        onClose={() => setIsModalOpen(false)}
+      />
       <form onSubmit={formik.handleSubmit}>
         <LightModalBody>
 
-          <ValidatedField name="type" labelText="Type" formik={formik}>
+          <ValidatedField name="name" labelText="Name" formik={formik}>
             <input
-              id="type"
-              name="type"
+              id="name"
+              name="name"
               type="text"
-              className="form-input-color"
+              className="form-input-color view-mode-input-color"
               onChange={formik.handleChange}
-              value={formik.values.type}
+              value={formik.values.name}
+              readOnly
             />
           </ValidatedField>
 
@@ -153,7 +173,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
               }}
               className="form-input-color"
             >
-              <option value="">{' '}</option>
+              <option value="">{unsubmittedEvents.length !== 0 ? ' ' : 'No hours to log yet.'}</option>
               {unsubmittedEvents.map((event) => (
                 <option
                   key={event.id}
@@ -166,49 +186,15 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
             </select>
           </ValidatedField>
 
-          <ValidatedField name="location" labelText="Location" formik={formik}>
+          <ValidatedField name="type" labelText="Type" formik={formik}>
             <input
-              id="location"
-              name="location"
+              id="type"
+              name="type"
               type="text"
-              className="form-input-color"
+              className="form-input-color view-mode-input-color"
               onChange={formik.handleChange}
-              value={formik.values.location}
-            />
-          </ValidatedField>
-
-          <ValidatedField name="startTime" labelText="Start Time" formik={formik}>
-            <Datetime
-              value={formik.values.startTime}
-              id="startTime"
-              inputProps={{ className: 'form-input-color' }}
-              onChange={(moment) => {
-                formik.setFieldValue('startTime', moment.toDate());
-              }}
-              required
-            />
-          </ValidatedField>
-
-          <ValidatedField name="endTime" labelText="End Time" formik={formik}>
-            <Datetime
-              value={formik.values.endTime}
-              id="endTime"
-              inputProps={{ className: 'form-input-color' }}
-              onChange={(moment) => {
-                formik.setFieldValue('endTime', moment.toDate());
-              }}
-              required
-            />
-          </ValidatedField>
-
-          <ValidatedField name="totalHours" labelText="Total Hours" formik={formik}>
-            <input
-              id="totalHours"
-              name="totalHours"
-              type="number"
-              className="form-input-color"
-              onChange={formik.handleChange}
-              value={formik.values.totalHours}
+              value={formik.values.type}
+              readOnly
             />
           </ValidatedField>
 
@@ -218,8 +204,10 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
               name="division"
               value={formik.values.division}
               onChange={formik.handleChange}
-              className="form-input-color"
+              className="form-input-color view-mode-input-color"
+              disabled
             >
+              <option value="">{' '}</option>
               {divisions.map((division) => (
                 <option
                   key={division.div_name}
@@ -231,6 +219,78 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
             </select>
           </ValidatedField>
 
+          <ValidatedField name="location" labelText="Location" formik={formik}>
+            <input
+              id="location"
+              name="location"
+              type="text"
+              className="form-input-color view-mode-input-color"
+              onChange={formik.handleChange}
+              value={formik.values.location}
+              readOnly
+            />
+          </ValidatedField>
+
+          <div className="datetime-input-container">
+            {/* datetime input type */}
+            <ValidatedField name="startTime" labelText="Start" isRequired formik={formik}>
+              <Datetime
+                id="startTime"
+                name="startTime"
+                initialValue={new Date()}
+                onChange={(e) => updateNewDate(e, 'startTime', formik.values.startTime)}
+                value={formik.values.startTime}
+                inputProps={{ className: 'form-input-color datetime-input' }}
+                timeFormat={false}
+                required
+              />
+              <Datetime
+                id="startTime"
+                name="startTime"
+                initialValue={new Date()}
+                onChange={(e) => formik.setFieldValue('startTime', new Date(e))}
+                value={formik.values.startTime}
+                dateFormat={false}
+                required
+              />
+            </ValidatedField>
+            <p className="datetime-input-separator">to</p>
+            <div className="date-picker-right">
+              <ValidatedField name="endTime" labelText="End" isRequired formik={formik}>
+                <Datetime
+                  id="endTime"
+                  name="endTime"
+                  initialValue={new Date()}
+                  onChange={(e) => updateNewDate(e, 'endTime', formik.values.endTime)}
+                  value={formik.values.endTime}
+                  inputProps={{ className: 'form-input-color datetime-input' }}
+                  timeFormat={false}
+                  required
+                />
+                <Datetime
+                  id="endTime"
+                  name="endTime"
+                  initialValue={new Date()}
+                  onChange={(e) => formik.setFieldValue('endTime', new Date(e))}
+                  value={formik.values.endTime}
+                  dateFormat={false}
+                  required
+                />
+              </ValidatedField>
+            </div>
+          </div>
+
+          <ValidatedField name="totalHours" labelText="Total Hours" isRequired formik={formik}>
+            <input
+              id="totalHours"
+              name="totalHours"
+              type="number"
+              className="form-input-color total-hours-width"
+              onChange={formik.handleChange}
+              value={formik.values.totalHours}
+            />
+          </ValidatedField>
+
           <ValidatedField name="additionalNotes" labelText="Additional Notes (Optional)" formik={formik}>
             <TextArea
               id="additionalNotes"
@@ -240,9 +300,35 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
             />
           </ValidatedField>
 
-          <LightModalButton primary type="submit">
-            Submit
-          </LightModalButton>
+          <div className="checkbox-section">
+            <div className="checkbox-container">
+              <Checkbox
+                checked={formik.values.checked}
+                onChange={(value) => formik.setFieldValue('checked', value)}
+                id="checked"
+                name="checked"
+                icon={<Icon.ImCheckmark color="#003E53" />}
+                borderRadius={3}
+                borderColor="black"
+                style={{
+                  backgroundColor: 'white',
+                  border: 'solid 0.5px var(--color-dark-blue)',
+                }}
+              />
+              <p className="log-attest bold">I attest that the hours I am reporting are accurate and true</p>
+            </div>
+            {formik.errors.checked && formik.touched.checked ? (
+              <div className="formik-field-error-text">{formik.errors.checked}</div>) : null}
+          </div>
+
+          <br />
+
+          {unsubmittedEvents.length !== 0
+            && (
+            <LightModalButton primary type="submit">
+              Submit
+            </LightModalButton>
+            )}
           <LightModalButton type="button" secondaryOutline onClick={() => setIsModalOpen(false)}>
             Cancel
           </LightModalButton>

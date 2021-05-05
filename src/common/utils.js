@@ -49,6 +49,7 @@ export const logout = async () => {
     if (localStorage.getItem('profilePicture')) {
       localStorage.removeItem('profilePicture');
     }
+    localStorage.removeItem('userFullName');
     // Sign-out successful
   } catch (err) {
     console.log('Logout failed', err);
