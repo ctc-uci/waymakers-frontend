@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { withCookies } from 'react-cookie';
 import { Helmet } from 'react-helmet';
 
@@ -15,13 +15,19 @@ import './EventDataPage.css';
 const EventDetailPage = () => {
   const { id: eventId } = useParams();
   const [eventName, setEventName] = useState([]);
+  const history = useHistory();
 
   const getEventInfo = async () => {
     try {
       const currentEvent = await WMKBackend.get(`/events/${eventId}`);
       setEventName(currentEvent.data[0].title);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
+      if (err.response.status === 400) {
+        history.push('/404');
+      } else {
+        history.push('/500');
+      }
     }
   };
 

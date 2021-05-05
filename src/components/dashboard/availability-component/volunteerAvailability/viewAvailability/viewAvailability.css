@@ -32,9 +32,3 @@
         padding: 5px;
     }
 }
-
-@media screen and (max-width: 400px) {
-    .viewAvailCard {
-        width: 600px;
-    }
-}

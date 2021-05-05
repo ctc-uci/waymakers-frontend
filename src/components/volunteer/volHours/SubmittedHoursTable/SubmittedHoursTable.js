@@ -1,14 +1,17 @@
 import React from 'react';
+
 import useMobileWidth from '../../../../common/useMobileWidth';
+import usePaginationController from '../../../../common/usePaginationController';
+import {
+  TitledCard,
+} from '../../../../common/Card';
+import PaginationController from '../../../../common/PaginationController/PaginationController';
 
 import SubmittedHoursTableDesktop from './SubmittedHoursTableDesktop';
 import SubmittedHoursTableMobile from './SubmittedHoursTableMobile';
 import useAllSubmittedHours from './useSubmittedHours';
-import {
-  TitledCard,
-} from '../../../../common/Card';
+import useFilteredHours from '../useFilteredHours';
 import DateTimeFilter from '../DateTimeFilter';
-import UseFilteredHours from '../useFilteredHours';
 
 const SubmittedHoursTable = () => {
   const isMobile = useMobileWidth();
@@ -17,7 +20,11 @@ const SubmittedHoursTable = () => {
   // Filtered submitted hours and filter interface
   const [
     filteredSubmittedHours, filteredDate, setFilteredDate,
-  ] = UseFilteredHours(allSubmittedHours);
+  ] = useFilteredHours(allSubmittedHours);
+  // Paginated Filtered submitted hours and filter interface
+  const [
+    paginatedData, paginatedIndex, setPaginatedIndex, totalNumberOfPages,
+  ] = usePaginationController(filteredSubmittedHours);
 
   if (filteredSubmittedHours === null) {
     return (
@@ -53,14 +60,19 @@ const SubmittedHoursTable = () => {
         {isMobile
           ? (
             <SubmittedHoursTableMobile
-              filteredSubmittedHours={filteredSubmittedHours}
+              filteredSubmittedHours={paginatedData}
             />
           )
           : (
             <SubmittedHoursTableDesktop
-              filteredSubmittedHours={filteredSubmittedHours}
+              filteredSubmittedHours={paginatedData}
             />
           ) }
+        <PaginationController
+          paginatedIndex={paginatedIndex}
+          setPaginatedIndex={setPaginatedIndex}
+          totalNumberOfPages={totalNumberOfPages}
+        />
       </TitledCard>
     </>
   );

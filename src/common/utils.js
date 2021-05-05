@@ -181,7 +181,7 @@ WMKBackend.interceptors.response.use(
               return window.location.href = '/500';
             }
           } else {
-            return window.location.href = '/500';
+            throw error;
           }
         default:
           return Promise.reject(error);

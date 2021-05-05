@@ -44,6 +44,7 @@ const MobileNavbar = (props) => {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     setCurrentPath(window.location.pathname);
   });
 

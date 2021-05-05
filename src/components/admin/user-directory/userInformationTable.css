@@ -72,7 +72,7 @@
 }
 
 .user-table .user-table-header {
-  background: var(--text-color-dark);
+  background: #336473;
 }
 
 .ut-header {
@@ -92,36 +92,6 @@
   text-align: left;
   margin: 10px 0;
   padding: 0;
-}
-
-.user-table-wrapper .pagination-indicator {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-
-  margin: auto;
-
-  left: 0;
-  right: 0;
-}
-
-.user-table-wrapper .pagination-indicator button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  
-  display: flex;
-  align-items: center;
-}
-
-.user-table-wrapper .pagination-indicator div {
-  margin-left: 2px;
-  margin-right: 2px;
-  padding-left: 10px;
-
-  font-size: 18px;
-  letter-spacing: 10px;
-  color: black;
 }
 
 @media screen and (max-width: 768px) {

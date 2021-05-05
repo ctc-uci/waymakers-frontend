@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Table, TableHeader, TableColumnHeader, TableBody, TableContent, TableRow,
+  Table, TableHeader, TableColumnHeader, TableBody, TableRow, TableContent,
 } from '../../../../common/Table';
 import './SubmittedHoursTableDesktop.css';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
@@ -19,8 +19,9 @@ const SubmittedHoursTableDesktop = ({ filteredSubmittedHours }) => (
       </TableRow>
     </TableHeader>
     <TableBody>
-      {filteredSubmittedHours && filteredSubmittedHours.map((submittedHour) => (
-        <TableRow key={`${submittedHour.eventName} ${submittedHour.startTime}`}>
+      {filteredSubmittedHours && filteredSubmittedHours.map((submittedHour, i) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <TableRow key={`${i}`}>
           <TableContent>{submittedHour.eventName}</TableContent>
           <TableContent>{submittedHour.location}</TableContent>
           <TableContent>

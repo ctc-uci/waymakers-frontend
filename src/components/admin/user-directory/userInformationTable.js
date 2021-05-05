@@ -1,19 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
+import usePaginationController from '../../../common/usePaginationController';
+
+import PaginationController from '../../../common/PaginationController/PaginationController';
 import { TitledCard } from '../../../common/Card';
-import UpdateUserModal from './updateUserModal';
-import UserDirectoryRow from './userDirectoryRow';
 import {
   Table, TableHeader, TableColumnHeader, TableBody, TableRow,
 } from '../../../common/Table';
 
-import back from '../../../assets/pageBack.svg';
-import forward from '../../../assets/pageForward.svg';
+import UpdateUserModal from './updateUserModal';
+import UserDirectoryRow from './userDirectoryRow';
 
 import './userInformationTable.css';
-
-const ROWS_PER_PAGINATION = 6;
 
 const SORT_BY_OPTIONS = [
   {
@@ -27,27 +26,23 @@ const SORT_BY_OPTIONS = [
 ];
 
 const UserInformationTable = ({ title, users, divisionList }) => {
-  const [paginatedIndex, setPaginatedIndex] = useState(0);
-  const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
   const [sortByOption, setSortByOption] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalUser, setModalUser] = useState({});
 
-  useEffect(() => {
-    setTotalNumberOfPages(Math.ceil(users.length / ROWS_PER_PAGINATION));
-  }, [users, paginatedIndex, sortByOption, searchTerm]);
-
-  const paginatedVolunteers = useMemo(() => {
+  const filteredData = useMemo(() => {
     if (!users) { return []; }
     return users
       .filter((user) => (
         user.firstname.toLowerCase().includes(searchTerm.toLowerCase()))
         || user.lastname.toLowerCase().includes(searchTerm.toLowerCase()))
-      .sort(SORT_BY_OPTIONS[sortByOption].compareFunc)
-      .slice(paginatedIndex * ROWS_PER_PAGINATION, (paginatedIndex + 1) * ROWS_PER_PAGINATION);
-  }, [users, paginatedIndex, sortByOption, searchTerm]);
+      .sort(SORT_BY_OPTIONS[sortByOption].compareFunc);
+  });
+  const [
+    paginatedData, paginatedIndex, setPaginatedIndex, totalNumberOfPages,
+  ] = usePaginationController(filteredData);
 
   const openModal = (user) => {
     setModalUser(user);
@@ -95,7 +90,7 @@ const UserInformationTable = ({ title, users, divisionList }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Object.values(paginatedVolunteers)
+          {Object.values(paginatedData)
             .map((user) => (
               <UserDirectoryRow
                 key={user.userid}
@@ -111,17 +106,11 @@ const UserInformationTable = ({ title, users, divisionList }) => {
         {' '}
         {users.length}
       </p>
-      <div className="pagination-indicator">
-        <button type="button" onClick={() => { setPaginatedIndex((old) => Math.max(0, old - 1)); }}>
-          <img src={back} alt="back page" />
-        </button>
-        <div>{totalNumberOfPages === 0 ? 0 : paginatedIndex + 1}</div>
-        <div>/</div>
-        <div>{totalNumberOfPages}</div>
-        <button type="button" onClick={() => { setPaginatedIndex((old) => Math.min(totalNumberOfPages - 1, old + 1)); }}>
-          <img src={forward} alt="next page" />
-        </button>
-      </div>
+      <PaginationController
+        paginatedIndex={paginatedIndex}
+        setPaginatedIndex={setPaginatedIndex}
+        totalNumberOfPages={totalNumberOfPages}
+      />
     </TitledCard>
   );
 };

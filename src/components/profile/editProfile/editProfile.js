@@ -45,7 +45,7 @@ const EditProfile = ({
     state,
     zip,
     birthday,
-    tier,
+    division,
     gender,
     currentProfilePicture,
   } = states;
@@ -60,7 +60,7 @@ const EditProfile = ({
     setState,
     setZip,
     setBirthday,
-    setTier,
+    setDivision,
     setGender,
     setCurrentProfilePicture,
   } = setStates;
@@ -117,7 +117,7 @@ const EditProfile = ({
         locationCity: city,
         locationState: state,
         locationZip: zip,
-        tier,
+        division,
         gender,
         profilePicture: currentProfilePicture,
       };
@@ -150,7 +150,7 @@ const EditProfile = ({
     setState(account.locationstate);
     setZip(account.locationzip);
     setBirthday(new Date(account.birthdate));
-    setTier(account.tier);
+    setDivision(account.division);
     setGender(account.gender);
     setCurrentProfilePicture(account.profile_picture);
 
@@ -214,7 +214,7 @@ const EditProfile = ({
                 </div>
                 <div className="tier-input">
                   <img className="about-icons" src={people} alt="" />
-                  <span className="tier-box">{tier}</span>
+                  <span className="tier-box">{division}</span>
                 </div>
                 <div className="about-input gender-input contact-input">
                   <img className="about-icons" src={genderIcon} alt="" />
