@@ -15,6 +15,7 @@ import {
   ValidatedField,
 } from '../../../common/formikExtensions';
 import TextArea from '../../../common/TextArea/TextArea';
+import isDivisions from '../../volunteer/volHours/useDivisions';
 
 import './newEventForm.css';
 
@@ -68,7 +69,6 @@ const popupTypeToTitleMap = {
 };
 
 const createEventObject = (values) => ({
-  // e.toString().substring(0, e.toString().length - 8)
   eventName: values.eventName,
   eventType: values.eventType,
   eventLocation: values.eventLocation,
@@ -86,6 +86,7 @@ const EventForm = () => {
   const event = useSelector(getSelectedEvent);
   const popupType = useSelector(getPopupType);
   const isModalOpen = useSelector(getShowPopup);
+  const [divisions] = isDivisions();
   const handleAddEvent = async (values) => {
     const newEvent = createEventObject(values);
     dispatch(addEvent(newEvent));
@@ -94,8 +95,6 @@ const EventForm = () => {
 
   const handleModifyEvent = async (values) => {
     const editedEvent = { ...createEventObject(values), eventId: event.id };
-    console.log(editedEvent);
-    console.log(values.eventStartTime > values.eventEndTime);
     dispatch(editEvent(event.id, editedEvent));
     dispatch(setShowPopup(false));
   };
@@ -287,8 +286,6 @@ const EventForm = () => {
   );
 
   const updateNewDate = (e, startOrEnd, value) => {
-    console.log(e);
-    console.log(value);
     const newDate = new Date(e);
     const newValue = new Date(value);
     newValue.setDate(newDate.getDate());
@@ -444,9 +441,14 @@ const EventForm = () => {
               disabled={popupType === 'ViewEventInfoPopup'}
               required
             >
-              <option value="Crisis-Response-Team">Crisis Response Team</option>
-              <option value="Gang-Services">Gang Services</option>
-              <option value="Human-Trafficking">Human Trafficking</option>
+              {divisions.map((division) => (
+                <option
+                  key={division.div_name}
+                  value={division.div_name}
+                >
+                  {division.div_name}
+                </option>
+              ))}
             </select>
           </ValidatedField>
           <br />
