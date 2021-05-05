@@ -1,14 +1,11 @@
-@import '../../../common/vars.css';
-
 .ud-division-menu-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    padding-bottom: 5px;
-    width: 400px;
-    font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    justify-content: center;
+    font-family: var(font-family);
     color: var(--text-color-dark);
+    width: fit-content;
+
+    position: relative;
 }
 
 .ud-division-menu--top {
@@ -21,7 +18,7 @@
     font-size: 30px;
     font-family: 'Assistant', Arial, Helvetica, sans-serif;
     line-height: 50px;
-    margin-top: 10px;
+    margin-top: 5px;
 
     color: var(--text-color-dark);
 
@@ -54,35 +51,56 @@
     margin-left: 10px;
 }
 
+.ud-division-menu-list-container {
+    z-index: 2;
+    box-shadow: 2px 2px 6px;
+    position: absolute;
+    margin-top: 57px;
+}
+
 .ud-division-menu--list {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    left: 0; 
-    right: 0; 
-    margin-left: auto; 
-    margin-right: auto;
-    width: 360px;
-    z-index: 2;
-    border: none;
-    outline: none;
-    box-shadow: 2px 2px 6px;
-    background-color: solid #FFFF;
+    width: max-content;
+    padding: 10px 30px 10px 10px;
+    background-color: white;
 }
 
 .ud-division-menu--list-item {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: flex-start;
+    line-height: 40px;
     border: none;
     background-color: #FFFF;
     color: var(--text-color-dark);
-    font-weight: 700;
-    font-size: 28px;
-    width: inherit;
+    font-size: 30px;
     font-family: 'Assistant', Arial, Helvetica, sans-serif;
+    cursor: pointer;
 }
 
-.ud-division-menu--list-item:focus {
+.ud-division-menu--list .static:hover {
     text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 7px;
+}
+
+/* smaller division menu to fit add division button */
+@media screen and (max-width: 425px) {
+    .ud-division-menu--top {
+        font-size: 24px;
+        margin-top: 0;
+    }
+
+    .ud-division-menu--open, .ud-division-menu--close {
+        height: 24px;
+        width: 24px;
+    }
+
+    .ud-division-menu-list-container {
+        margin-top: 47px;
+    }
+
+    .ud-division-menu--list-item {
+        font-size: 24px;
+    }
 }

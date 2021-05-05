@@ -1,6 +1,8 @@
+// import React, { useState, useRef, useEffect } from 'react';
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
+import AddDivisionButton from './addDivision';
 import handleOutsideClick from '../../../common/handleOutsideClick';
 
 import DownwardChevron from '../../../assets/downwardchevron.svg';
@@ -11,6 +13,8 @@ const DivisionMenu = ({ divisionList, currentDivision, setCurrentDivision }) => 
   const [open, setOpen] = useState(false);
   const ref = useRef();
 
+  // -- Closes open modal when anywhere within the modal is clicked.
+  // Modal has no app element to prevent this condition form happening --
   // Close division dropdown when user clicks outside of it
   handleOutsideClick(ref, () => {
     setOpen(false);
@@ -30,7 +34,7 @@ const DivisionMenu = ({ divisionList, currentDivision, setCurrentDivision }) => 
   };
 
   const menu = (list) => (
-    <div>
+    <div className="ud-division-menu-list-container">
       <div
         name="category"
         className="ud-division-menu--list"
@@ -40,7 +44,7 @@ const DivisionMenu = ({ divisionList, currentDivision, setCurrentDivision }) => 
           type="button"
           key={0}
           value={0}
-          className="ud-division-menu--list-item"
+          className="ud-division-menu--list-item static"
           onClick={(e) => handleDivisionClick(e, 'All Divisions')}
         >
           All Divisions
@@ -55,7 +59,7 @@ const DivisionMenu = ({ divisionList, currentDivision, setCurrentDivision }) => 
               type="button"
               key={id}
               value={id}
-              className="ud-division-menu--list-item"
+              className="ud-division-menu--list-item static"
               onClick={(e) => handleDivisionClick(e, division.div_name)}
             >
               {division.div_name}
@@ -66,14 +70,13 @@ const DivisionMenu = ({ divisionList, currentDivision, setCurrentDivision }) => 
   );
 
   return (
-    <div className="menu-container">
-      <div ref={ref} className="ud-division-menu-container">
-        <button type="button" className="ud-division-menu--top" onClick={handleArrowClick}>
-          {currentDivision}
-          <img src={DownwardChevron} className={open ? 'ud-division-menu--close' : 'ud-division-menu--open'} alt="arrow" />
-        </button>
-        {open && menu(divisionList)}
-      </div>
+    <div className="ud-division-menu-container" ref={ref}>
+      <AddDivisionButton divisionList={divisionList} />
+      <button type="button" className="ud-division-menu--top" onClick={handleArrowClick}>
+        {currentDivision}
+        <img src={DownwardChevron} className={open ? 'ud-division-menu--close' : 'ud-division-menu--open'} alt="arrow" />
+      </button>
+      {open && menu(divisionList)}
     </div>
   );
 };
