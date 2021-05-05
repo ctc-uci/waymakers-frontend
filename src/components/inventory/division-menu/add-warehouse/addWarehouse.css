@@ -1,7 +1,5 @@
 @import '../../../../common/vars.css';
 
-/* NOTE: assuming styling is similar to "Add Category" popup for now */
-
 .add-warehouse {
     left: -45px;
     position: absolute;
@@ -16,7 +14,7 @@
     border-radius: 32px;
     height: 32px;
     width: 32px;
-    margin-top: 13px;
+    margin-top: 20px;
     cursor: pointer;
 }
 
@@ -98,9 +96,10 @@
     opacity: .85;
 }
 
-@media screen and (max-width: 375px) {
-    .add-warehouse-button-wrapper {
-        left: -38px;
+@media screen and (max-width: 768px) {
+    .add-warehouse {
+        left: -33px;
+        top: -3px;
     }
 
     .add-warehouse-button {

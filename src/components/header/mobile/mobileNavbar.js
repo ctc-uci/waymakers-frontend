@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { instanceOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withCookies, Cookies } from 'react-cookie';
@@ -31,7 +31,7 @@ const MobileNavbar = (props) => {
   // Close dropdown menu when user clicks outside of it
   handleOutsideClick(ref, () => {
     setOpen(false);
-  });
+  }, submitHoursOpen);
 
   async function handleLogout() {
     try {

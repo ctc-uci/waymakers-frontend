@@ -4,7 +4,9 @@ import { connect, useDispatch } from 'react-redux';
 import WarehouseMenu from './warehouseMenu';
 import handleOutsideClick from '../../../common/handleOutsideClick';
 import { changeSelectedDivision } from '../redux/actions';
-import { getDivisions, getSelectedDivisionID, getWarehouses } from '../redux/selectors';
+import {
+  getDivisions, getSelectedDivisionID, getWarehouses,
+} from '../redux/selectors';
 
 import DownwardChevron from '../../../assets/downwardchevron.svg';
 
