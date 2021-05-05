@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
 import { WMKBackend } from '../../common/utils';
@@ -33,6 +34,9 @@ const VerificationPage = (props) => {
 
   return (
     <div className="verification-container">
+      <Helmet>
+        <title>Waymakers | Verification</title>
+      </Helmet>
       <img src={WMKLogo} className="wmk-verification-logo" alt="Waymakers" />
       <h1>Thank You For Signing Up!</h1>
       <p className="medium">

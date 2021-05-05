@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import Error500Graphic1 from '../../assets/error500graphic1.svg';
 import Error500Graphic2 from '../../assets/error500graphic2.png';
@@ -21,6 +22,9 @@ const InternalServerError = () => {
 
   return (
     <div className="error-500-page">
+      <Helmet>
+        <title>Waymakers | Internal Server Error</title>
+      </Helmet>
       <img src={graphic} className="graphic-500" alt="500 Internal Server Error" />
       <h1>Oops! Something&apos;s wrong.</h1>
       <h3>

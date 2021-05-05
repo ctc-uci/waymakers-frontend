@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { instanceOf } from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { withCookies, Cookies } from 'react-cookie';
 
 import AdminDashboard from './adminDashboard';
@@ -45,6 +46,9 @@ const Dashboard = ({ cookies }) => {
 
   return (
     <div>
+      <Helmet>
+        <title>Waymakers | Dashboard</title>
+      </Helmet>
       {(permissions === 'Admin' || permissions === 'Staff') && renderDropdown()}
       {(currDashboard === 'admin') ? <AdminDashboard /> : <VolunteerDashboard />}
     </div>

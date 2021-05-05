@@ -61,12 +61,10 @@ const EventsView = ({
 
   const isMobile = useMobileWidth();
 
-  useEffect(() => {
-    (async () => {
-      await loadEvents();
-      await loadUserEvents(userId);
-      await loadUnsubmittedEvents(userId);
-    })();
+  useEffect(async () => {
+    await loadEvents();
+    await loadUserEvents(userId);
+    await loadUnsubmittedEvents(userId);
   }, []);
 
   // UPDATE CALENDAR USING REDUX
@@ -266,6 +264,8 @@ const EventsView = ({
           slotDuration="00:60:00"
           dateClick={onDateClick}
           allDayText=""
+          dayMaxEventRows={false}
+          dayMaxEvents={false}
         />
       );
     }

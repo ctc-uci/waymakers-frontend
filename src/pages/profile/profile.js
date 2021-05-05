@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { instanceOf } from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { withCookies, Cookies } from 'react-cookie';
 
 import { WMKBackend } from '../../common/utils';
@@ -86,11 +87,14 @@ const Profile = ({ cookies }) => {
   }
 
   return (
-    <>
+    <div>
+      <Helmet>
+        <title>Waymakers | Profile</title>
+      </Helmet>
       {isViewProfile
         ? <ViewProfile states={states} setIsViewProfile={setIsViewProfile} />
         : <EditProfile states={states} setStates={setStates} setIsViewProfile={setIsViewProfile} />}
-    </>
+    </div>
   );
 };
 
