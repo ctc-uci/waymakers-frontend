@@ -108,12 +108,10 @@ const VolunteerDashboard = (props) => {
           </button>
         </div>
       </TitledCard>
+      <CalendarPopup page="volunteerDashboard" />
       <div className="events-section">
-        <div className="event-lists">
-          <CalendarPopup page="volunteerDashboard" />
-          {renderMoreEventList()}
-          {renderMyEventList()}
-        </div>
+        {renderMoreEventList()}
+        {renderMyEventList()}
       </div>
       <div className="dashboard-event-legend">
         <EventLegend />
