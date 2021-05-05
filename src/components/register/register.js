@@ -17,6 +17,7 @@ import StepTwo from './stepTwo';
 import StepThree from './stepThree';
 
 import horizontalArrow from '../../assets/horizontalArrow.svg';
+
 import './register.css';
 
 const { formId, formField } = registerFormModel;

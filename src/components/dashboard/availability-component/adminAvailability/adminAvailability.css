@@ -137,14 +137,10 @@
 
 @media screen and (max-width: 768px) {
   .admin-availability-container .schedule-table {
-    overflow-x: scroll;
     margin-bottom: 10px;
-    height: 500px;
+    height: 100%;
   }
-  
-  .admin-availability-container .schedule-selector-wrapper {
-    width: 500px;
-  }
+
   
   .admin-availability-container .availability-wrapper {
     width: 100%;

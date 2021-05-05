@@ -54,33 +54,6 @@
     margin-bottom: 16px;
 }
 
-/* Not a super fan of this name*/
-.list-of-volunteer .pagination-indicator {
-    margin: auto;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-}
-
-.list-of-volunteer .pagination-indicator button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    
-    display: flex;
-    align-items: center;
-}
-
-.list-of-volunteer .pagination-indicator div {
-    margin-left: 2px;
-    margin-right: 2px;
-    padding-left: 10px;
-
-    font-size: 18px;
-    letter-spacing: 10px;
-    color: black;
-}
-
 .list-of-volunteer .total-stats {
     display: flex;
     flex: row;

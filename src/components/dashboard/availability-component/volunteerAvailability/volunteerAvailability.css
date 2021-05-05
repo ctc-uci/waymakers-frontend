@@ -78,14 +78,16 @@
   .volunteer-availability .availability-header {
     margin-left: 5px;
   }
+
+  .volunteer-availability .volunteer-avail-card {
+    height: 100%;
+  }
   
   .volunteer-availability .availability-title {
     width: 40%;
   }
 
   .volunteer-availability .volunteer-avail-card {
-    overflow-x: scroll;
-    height: 500px;
     margin-bottom: 10px;
   }
 

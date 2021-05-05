@@ -20,7 +20,7 @@ const Profile = ({ cookies }) => {
   const [state, setState] = useState('');
   const [zip, setZip] = useState(0);
   const [birthday, setBirthday] = useState(new Date());
-  const [tier, setTier] = useState(0);
+  const [division, setDivision] = useState(0);
   const [gender, setGender] = useState('');
   const [currentProfilePicture, setCurrentProfilePicture] = useState(null);
 
@@ -35,7 +35,7 @@ const Profile = ({ cookies }) => {
     state,
     zip,
     birthday,
-    tier,
+    division,
     gender,
     currentProfilePicture,
   };
@@ -50,7 +50,7 @@ const Profile = ({ cookies }) => {
     setState,
     setZip,
     setBirthday,
-    setTier,
+    setDivision,
     setGender,
     setCurrentProfilePicture,
   };
@@ -60,6 +60,7 @@ const Profile = ({ cookies }) => {
     setLoading(true);
     const userID = cookies.get('userId');
     const result = await WMKBackend.get(`/accounts/${userID}`);
+    const { data } = await WMKBackend.get('/divisions');
 
     const { account } = result.data;
     const {
@@ -75,7 +76,7 @@ const Profile = ({ cookies }) => {
     setState(locationstate);
     setZip(locationzip);
     setBirthday(new Date(account.birthdate));
-    setTier(account.tier);
+    setDivision(data.filter((div) => div.id === account.division)[0].div_name);
     setGender(account.gender);
     setCurrentProfilePicture(account.profile_picture);
 

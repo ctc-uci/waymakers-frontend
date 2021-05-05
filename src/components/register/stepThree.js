@@ -78,15 +78,15 @@ const StepThree = (props) => {
             onChange={meta.handleChange}
           >
             <option value="" disabled selected hidden>Specify Gender</option>
-            <option className="gender-option" value="male" label="Male" />
-            <option className="gender-option" value="female" label="Female" />
-            <option className="gender-option" value="nonbinary" label="Nonbinary" />
-            <option className="gender-option" value="genderfluid" label="Genderfluid" />
-            <option className="gender-option" value="genderqueer" label="Genderqueer" />
-            <option className="gender-option" value="agender" label="Agender" />
-            <option className="gender-option" value="gnc" label="Gender Non-Conforming" />
-            <option className="gender-option" value="other" label="Other" />
-            <option className="gender-option" value="pfts" label="Prefer Not To Say" />
+            <option className="gender-option" value="Male" label="Male" />
+            <option className="gender-option" value="Female" label="Female" />
+            <option className="gender-option" value="Nonbinary" label="Nonbinary" />
+            <option className="gender-option" value="Genderfluid" label="Genderfluid" />
+            <option className="gender-option" value="Genderqueer" label="Genderqueer" />
+            <option className="gender-option" value="Agender" label="Agender" />
+            <option className="gender-option" value="Gender Non-Conforming" label="Gender Non-Conforming" />
+            <option className="gender-option" value="Other" label="Other" />
+            <option className="gender-option" value="Prefer Not To Say" label="Prefer Not To Say" />
           </select>
           {meta.touched.gender && meta.errors.gender ? (
             <p className="dropdown-error small">

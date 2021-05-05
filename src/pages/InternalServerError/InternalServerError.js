@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import Error500Graphic1 from '../../assets/error500graphic1.svg';
@@ -9,7 +8,6 @@ import Error500Graphic2 from '../../assets/error500graphic2.png';
 import './InternalServerError.css';
 
 const InternalServerError = () => {
-  const history = useHistory();
   const [graphic, setGraphic] = useState(null);
 
   useEffect(() => {
@@ -34,9 +32,11 @@ const InternalServerError = () => {
       <button
         type="button"
         className="go-home-button"
-        onClick={() => {
-          history.push('/');
-        }}
+        // eslint-disable-next-line no-return-assign
+        onClick={() => (
+          // eslint-disable-next-line no-undef
+          window.location.href = '/'
+        )}
       >
         <p className="large">Go Home</p>
       </button>

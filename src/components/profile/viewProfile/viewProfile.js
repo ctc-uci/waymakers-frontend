@@ -29,7 +29,7 @@ const ViewProfile = ({ states, setIsViewProfile }) => {
     state,
     zip,
     birthday,
-    tier,
+    division,
     gender,
     currentProfilePicture,
   } = states;
@@ -59,7 +59,7 @@ const ViewProfile = ({ states, setIsViewProfile }) => {
               </div>
               <div className="info-section">
                 <img className="about-icons" src={people} alt="" />
-                <p>{tier}</p>
+                <p>{division}</p>
               </div>
               <div className="info-section">
                 <img className="about-icons" src={genderIcon} alt="" />

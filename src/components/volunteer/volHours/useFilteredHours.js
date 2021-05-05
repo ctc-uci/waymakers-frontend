@@ -4,7 +4,7 @@ import moment from 'moment';
 // Provides filtered list of hours and filter interface
 // Filter interface expects a moment object
 // Filters data by month and year
-const UseFilteredHours = (hours) => {
+const useFilteredHours = (hours) => {
   const [filteredHours, setFilteredHours] = useState(null);
   const [filteredDate, setFilteredDate] = useState(null);
 
@@ -29,4 +29,4 @@ const UseFilteredHours = (hours) => {
   return [filteredHours, filteredDate, setFilteredDate];
 };
 
-export default UseFilteredHours;
+export default useFilteredHours;

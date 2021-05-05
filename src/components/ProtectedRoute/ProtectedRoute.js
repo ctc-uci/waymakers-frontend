@@ -91,15 +91,18 @@ const ProtectedRoute = ({
       </h1>
     );
   }
+  if (!isAuthenticated) {
+    // I don't like manually building URIs, seems easily broken
+    history.push(`${signInEndpoint}?redirect=${encodeURIComponent(location.pathname)}`);
+    return false;
+  }
+
   if (admin && permission !== 'Admin') {
     return <Redirect to={{ pathname: '/' }} />;
   }
   if (isAuthenticated) {
     return <Route exact path={path} component={component} />;
   }
-
-  // TODO: I don't like manually building URIs, seems easily broken
-  history.push(`${signInEndpoint}?redirect=${encodeURIComponent(location.pathname)}`);
 
   return false;
 };

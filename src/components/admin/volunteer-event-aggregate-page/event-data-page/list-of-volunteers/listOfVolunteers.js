@@ -3,17 +3,14 @@ import PropTypes from 'prop-types';
 
 import { WMKBackend } from '../../../../../common/utils';
 import useMobileWidth from '../../../../../common/useMobileWidth';
+import usePaginationController from '../../../../../common/usePaginationController';
 
+import PaginationController from '../../../../../common/PaginationController/PaginationController';
 import { TitledCard } from '../../../../../common/Card';
 import VolunteerTable from './volunteerTable';
 import VolunteerTableMobile from './volunteerTableMobile';
 
-import back from '../../../../../assets/pageBack.svg';
-import forward from '../../../../../assets/pageForward.svg';
-
 import './listOfVolunteers.css';
-
-const ROWS_PER_PAGINATION = 6;
 
 const SORT_BY_OPTIONS = [
   {
@@ -38,17 +35,17 @@ const ListOfVolunteers = ({ eventId }) => {
   const [allVolunteers, setAllVolunteers] = useState([]);
   const [totalHours, setTotalHours] = useState(0);
   const [sortByOption, setSortByOption] = useState(0);
-  const [paginatedIndex, setPaginatedIndex] = useState(0);
-  const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
 
   const isMobile = useMobileWidth();
 
-  const paginatedVolunteers = useMemo(() => {
+  const filteredData = useMemo(() => {
     if (!allVolunteers) { return []; }
     return allVolunteers
-      .sort(SORT_BY_OPTIONS[sortByOption].compareFunc)
-      .slice(paginatedIndex * ROWS_PER_PAGINATION, (paginatedIndex + 1) * ROWS_PER_PAGINATION);
-  }, [allVolunteers, paginatedIndex, sortByOption]);
+      .sort(SORT_BY_OPTIONS[sortByOption].compareFunc);
+  });
+  const [
+    paginatedData, paginatedIndex, setPaginatedIndex, totalNumberOfPages,
+  ] = usePaginationController(filteredData);
 
   const getAllVolunteers = async () => {
     // console.log(eventId);
@@ -85,7 +82,6 @@ const ListOfVolunteers = ({ eventId }) => {
       },
     });
     setAllVolunteers(volunteers.data);
-    setTotalNumberOfPages(Math.ceil(volunteers.data.length / ROWS_PER_PAGINATION));
     setTotalHours(volunteers.data
       .map((v) => v.sum)
       .reduce((acc, v) => acc + v, 0));
@@ -113,22 +109,16 @@ const ListOfVolunteers = ({ eventId }) => {
       </div>
       {isMobile
         ? (
-          <VolunteerTableMobile data={paginatedVolunteers} />
+          <VolunteerTableMobile data={paginatedData} />
         ) : (
-          <VolunteerTable data={paginatedVolunteers} />
+          <VolunteerTable data={paginatedData} />
         )}
       <br />
-      <div className="pagination-indicator">
-        <button type="button" onClick={() => { setPaginatedIndex((old) => Math.max(0, old - 1)); }}>
-          <img src={back} alt="back page" />
-        </button>
-        <div>{totalNumberOfPages === 0 ? 0 : paginatedIndex + 1}</div>
-        <div>/</div>
-        <div>{totalNumberOfPages}</div>
-        <button type="button" onClick={() => { setPaginatedIndex((old) => Math.min(totalNumberOfPages - 1, old + 1)); }}>
-          <img src={forward} alt="next page" />
-        </button>
-      </div>
+      <PaginationController
+        paginatedIndex={paginatedIndex}
+        setPaginatedIndex={setPaginatedIndex}
+        totalNumberOfPages={totalNumberOfPages}
+      />
       <div className="total-stats">
         <p className="large bold">
           Total People:
