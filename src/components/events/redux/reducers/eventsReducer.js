@@ -18,6 +18,7 @@ export const initialState = {
   eventsList: [], // List of event objects
   userEventsList: [],
   unsubmittedUserEventsList: [], // List of past user events that the user hasn't submitted hours to
+  submittedUserEventsList: [], // List of past user events that the user has submitted hours to
   showPopup: false,
   month: new Date().getMonth() + 1,
   year: new Date().getFullYear(),
@@ -129,6 +130,16 @@ export default (state = initialState, action) => {
         ...state,
         // We only want events that have already started
         unsubmittedUserEventsList: action.payload.filter((e) => new Date(e.startTime) < new Date()),
+      };
+    }
+
+    case 'events/submittedEventsLoaded': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/submittedEventsLoaded] Submitted events loaded`);
+      return {
+        ...state,
+        // We only want events that have already started
+        submittedUserEventsList: action.payload.filter((e) => new Date(e.startTime) < new Date()),
       };
     }
 

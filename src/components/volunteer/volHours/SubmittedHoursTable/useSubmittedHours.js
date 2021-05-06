@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
 
 import { WMKBackend } from '../../../../common/utils';
+import { getSubmittedEvents } from '../../../events/redux/selectors';
 
 const useAllSubmittedHours = () => {
   // NOT subject to change based on filtering
@@ -20,7 +22,7 @@ const useAllSubmittedHours = () => {
 
   useEffect(() => {
     fetchAllSubmittedHours();
-  }, []);
+  }, [useSelector(getSubmittedEvents)]);
 
   return [allSubmittedHours, fetchAllSubmittedHours];
 };
