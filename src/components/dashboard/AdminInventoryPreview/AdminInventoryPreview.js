@@ -128,7 +128,7 @@ const AdminInventoryPreview = ({ division }) => {
       { warehouseList.length > 0 && Menu() }
       {renderInfo()}
       <div className="view-inventory-section">
-        <button type="button" className="all-events-button button-anchor" onClick={() => history.push('/inventory')}>
+        <button type="button" className="all-events-button button-anchor" onClick={() => history.push('/admin/inventory')}>
           <p className="large">View All</p>
         </button>
       </div>

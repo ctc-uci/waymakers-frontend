@@ -59,8 +59,8 @@ const MobileNavbar = (props) => {
         Profile
       </Link>
       <Link
-        to="/inventory"
-        className={currentPath === '/inventory' ? active : 'mobile-navbar-link'}
+        to="/admin/inventory"
+        className={currentPath === '/admin/inventory' ? active : 'mobile-navbar-link'}
         onClick={() => toggleMenuOpen()}
       >
         Inventory
@@ -80,8 +80,8 @@ const MobileNavbar = (props) => {
         My Hours
       </Link>
       <Link
-        to="/events"
-        className={currentPath === '/events' ? active : 'mobile-navbar-link'}
+        to="admin/events"
+        className={currentPath === 'admin/events' ? active : 'mobile-navbar-link'}
         onClick={() => toggleMenuOpen()}
       >
         Events
@@ -123,14 +123,14 @@ const MobileNavbar = (props) => {
         Profile
       </Link>
       <Link
-        to="/events"
-        className={currentPath === '/events' ? active : 'mobile-navbar-link'}
+        to="/volunteer/events"
+        className={currentPath === '/volunteer/events' ? active : 'mobile-navbar-link'}
         onClick={() => toggleMenuOpen()}
       >
         Events
       </Link>
       <Link
-        to="/events"
+        to="/volunteer/hours"
         className={currentPath === '/volunteer/hours' ? active : 'mobile-navbar-link'}
         onClick={() => toggleMenuOpen()}
       >

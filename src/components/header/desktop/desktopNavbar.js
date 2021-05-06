@@ -69,7 +69,7 @@ const DesktopNavbar = (props) => {
   return (
     <div className="desktop-navbar" ref={ref}>
       {isAdmin && (
-      <Link to="/inventory" className={currentPath === '/inventory' ? active : 'desktop-navbar-link'}>
+      <Link to="/admin/inventory" className={currentPath === '/admin/inventory' ? active : 'desktop-navbar-link'}>
         Inventory
       </Link>
       )}
@@ -79,7 +79,7 @@ const DesktopNavbar = (props) => {
       </Link>
       )}
       {isAdmin && (
-      <Link to="/events" className={currentPath === '/events' ? active : 'desktop-navbar-link'}>
+      <Link to="/admin/events" className={currentPath === '/admin/events' ? active : 'desktop-navbar-link'}>
         Events
       </Link>
       )}

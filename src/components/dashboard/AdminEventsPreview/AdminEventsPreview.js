@@ -63,7 +63,7 @@ const AdminEventsPreview = () => {
         ))}
       </div>
       <div className="all-events-section">
-        <button type="button" className="all-events-button button-anchor" onClick={() => history.push('/events')}>
+        <button type="button" className="all-events-button button-anchor" onClick={() => history.push('/admin/events')}>
           <p className="large">Edit Events</p>
         </button>
       </div>
