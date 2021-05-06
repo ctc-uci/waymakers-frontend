@@ -46,6 +46,7 @@
 
 .admin-availability-container .schedule-table {
   height: 800px;
+  margin-bottom: 5%;
   overflow-y: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -73,6 +74,7 @@
   border-collapse: collapse;
   width: 100%;
   margin: auto;
+  table-layout: fixed;
 }
 
 .names-table tbody {
@@ -82,7 +84,7 @@
 .names-table td {
   height: 60px;
   text-align: center;
-  padding: 2px;
+  padding: 5px;
 }
 
 .names-table tr:first-of-type {
