@@ -80,7 +80,7 @@ const MobileNavbar = (props) => {
         My Hours
       </Link>
       <Link
-        to="admin/events"
+        to="/admin/events"
         className={currentPath === 'admin/events' ? active : 'mobile-navbar-link'}
         onClick={() => toggleMenuOpen()}
       >
