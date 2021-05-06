@@ -27,7 +27,7 @@ import useDivisions from '../useDivisions';
 import useUserEvents from '../useUserEvents';
 
 import './SubmitHoursPopup.css';
-import { fetchUnsubmittedEvents } from '../../../events/redux/actions';
+import { fetchUnsubmittedEvents, fetchSubmittedEvents } from '../../../events/redux/actions';
 
 // Using Yup to do schema validation
 const Schema = Yup.object().shape({
@@ -66,12 +66,27 @@ const autofillEventInfo = (eventId, userEvents, formik) => {
 };
 
 // TODO: Loading state
-const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
+const SubmitHoursPopup = (
+  {
+    isModalOpen,
+    setIsModalOpen,
+    eventId = '',
+    type = 'submit',
+  },
+) => {
   const dispatch = useDispatch();
   const [divisions] = useDivisions();
   const [userEvents] = useUserEvents();
-  const [unsubmittedEvents, setUnsubmittedEvents] = useState([]);
+  const [events, setEvents] = useState([]);
   const [cookies] = useCookies(['userId']);
+
+  const getEventId = (event) => {
+    console.log(event);
+    if (type === 'submit') {
+      return event.id;
+    }
+    return event.eventId;
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -89,24 +104,53 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
     },
     validationSchema: Schema,
     onSubmit: (values) => {
-      const selectedUserEvent = unsubmittedEvents.filter(
-        (event) => event.id.toString() === values.id.toString(),
+      const selectedUserEvent = events.filter(
+        (event) => getEventId(event).toString() === values.id.toString(),
       )[0];
-      WMKBackend.post('/logs/add', {
-        userId: cookies.userId,
-        eventId: selectedUserEvent.id,
-        logStart: values.startTime,
-        logEnd: values.endTime,
-        totalHours: values.totalHours,
-        additionalNotes: values.additionalNotes,
-      }).then(() => {
-        setIsModalOpen(false);
-        dispatch(fetchUnsubmittedEvents());
-        dispatch(createAlert({
-          message: `Successfully submitted hours for ${values.title}`,
-          severity: 'success',
-        }));
-      });
+      if (type === 'submit') {
+        WMKBackend.post('/logs/add', {
+          userId: cookies.userId,
+          eventId: selectedUserEvent.id,
+          logStart: values.startTime,
+          logEnd: values.endTime,
+          totalHours: values.totalHours,
+          additionalNotes: values.additionalNotes,
+        }).then(() => {
+          setIsModalOpen(false);
+          dispatch(fetchUnsubmittedEvents());
+          dispatch(createAlert({
+            message: `Successfully submitted hours for ${values.title}`,
+            severity: 'success',
+          }));
+        })
+          .catch(() => {
+            dispatch(createAlert({
+              message: `Failed to submit hours for ${values.title}`,
+              severity: 'error',
+            }));
+          });
+      } else {
+        WMKBackend.put('/logs/update', {
+          userId: cookies.userId,
+          eventId: getEventId(selectedUserEvent),
+          logStart: values.startTime,
+          logEnd: values.endTime,
+          totalHours: values.totalHours,
+          additionalNotes: values.additionalNotes,
+        }).then(() => {
+          setIsModalOpen(false);
+          dispatch(fetchSubmittedEvents());
+          dispatch(createAlert({
+            message: `Successfully resubmitted hours for ${values.title}`,
+            severity: 'success',
+          }));
+        }).catch(() => {
+          dispatch(createAlert({
+            message: `Failed to resubmit hours for ${values.title}`,
+            severity: 'error',
+          }));
+        });
+      }
     },
     // validate only on submit, change as needed
     validateOnBlur: false,
@@ -119,11 +163,24 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
         userId: cookies.userId,
       },
     });
-    setUnsubmittedEvents(unsubmittedHours.data.filter((e) => new Date(e.startTime) < new Date()));
+    setEvents(unsubmittedHours.data.filter((e) => new Date(e.startTime) < new Date()));
+  };
+
+  const loadSubmittedEvents = async () => {
+    const submittedHours = await WMKBackend.get('/logs/submitted', {
+      params: {
+        userId: cookies.userId,
+      },
+    });
+    setEvents(submittedHours.data);
   };
 
   useEffect(async () => {
-    await loadUnsubmittedEvents();
+    if (type === 'submit') {
+      await loadUnsubmittedEvents();
+    } else {
+      await loadSubmittedEvents();
+    }
   }, []);
 
   useEffect(() => {
@@ -143,8 +200,24 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
     newValue.setMonth(newDate.getMonth());
     newValue.setFullYear(newDate.getFullYear());
     formik.setFieldValue(startOrEnd, newValue);
+    if (startOrEnd === 'startTime') {
+      formik.setFieldValue('totalHours', Math.ceil((new Date(formik.values.endTime) - new Date(newValue)) / (1000 * 60 * 60)));
+    } else {
+      formik.setFieldValue('totalHours', Math.ceil((new Date(newValue) - new Date(formik.values.startTime)) / (1000 * 60 * 60)));
+    }
   };
 
+  const updateNewTime = (e, startOrEnd) => {
+    const newDate = new Date(e);
+    formik.setFieldValue(startOrEnd, newDate);
+    if (startOrEnd === 'startTime') {
+      formik.setFieldValue('totalHours', Math.ceil((new Date(formik.values.endTime) - new Date(newDate)) / (1000 * 60 * 60)));
+    } else {
+      formik.setFieldValue('totalHours', Math.ceil((new Date(newDate) - new Date(formik.values.startTime)) / (1000 * 60 * 60)));
+    }
+  };
+
+  console.log(eventId);
   return (
     <LightModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
       <LightModalHeader
@@ -173,18 +246,18 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
               value={formik.values.title}
               onChange={async (e) => {
                 const { selectedIndex } = e.target.options;
-                autofillEventInfo(e.target.options[selectedIndex].getAttribute('id'), unsubmittedEvents, formik);
+                autofillEventInfo(e.target.options[selectedIndex].getAttribute('id'), events, formik);
               }}
               className="form-input-color"
             >
-              <option value="">{unsubmittedEvents.length !== 0 ? ' ' : 'No hours to log yet.'}</option>
-              {unsubmittedEvents.map((event) => (
+              <option value="">{events.length !== 0 ? ' ' : 'No hours to log yet.'}</option>
+              {events.map((event) => (
                 <option
                   key={event.id}
-                  value={event.title}
+                  value={event.title || event.eventName}
                   id={event.id}
                 >
-                  {truncateEventName(event.title)}
+                  {truncateEventName(event.title || event.eventName)}
                 </option>
               ))}
             </select>
@@ -252,7 +325,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
                 id="startTime"
                 name="startTime"
                 initialValue={new Date()}
-                onChange={(e) => formik.setFieldValue('startTime', new Date(e))}
+                onChange={(e) => updateNewTime(e, 'startTime')}
                 value={formik.values.startTime}
                 dateFormat={false}
                 required
@@ -275,7 +348,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
                   id="endTime"
                   name="endTime"
                   initialValue={new Date()}
-                  onChange={(e) => formik.setFieldValue('endTime', new Date(e))}
+                  onChange={(e) => updateNewTime(e, 'endTime')}
                   value={formik.values.endTime}
                   dateFormat={false}
                   required
@@ -292,6 +365,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
               className="form-input-color total-hours-width"
               onChange={formik.handleChange}
               value={formik.values.totalHours}
+              readOnly
             />
           </ValidatedField>
 
@@ -327,7 +401,7 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
 
           <br />
 
-          {unsubmittedEvents.length !== 0
+          {events.length !== 0
             && (
             <LightModalButton primary type="submit">
               Submit
@@ -349,6 +423,7 @@ SubmitHoursPopup.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default SubmitHoursPopup;

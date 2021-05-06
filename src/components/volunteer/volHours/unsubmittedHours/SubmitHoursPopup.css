@@ -36,6 +36,8 @@ select[disabled] {
 
 .total-hours-width {
     width: 80px;
+    cursor: not-allowed;
+    background-color: var(--color-light-gray);;
 }
 
 .checkbox-section {
@@ -59,4 +61,5 @@ select[disabled] {
 
 .view-mode-input-color {
     background-color: var(--color-light-gray);
+    cursor: not-allowed;
 }

@@ -2,6 +2,7 @@ import {
   React, useState, useEffect,
 } from 'react';
 import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
 
 import { WMKBackend } from '../../../../common/utils';
 import useMobileWidth from '../../../../common/useMobileWidth';
@@ -13,6 +14,7 @@ import UnsubmittedDesktopTable from './unsubmittedDesktopTable';
 import UnsubmittedMobileTable from './unsubmittedMobileTable';
 import useFilteredHours from '../useFilteredHours';
 import DateTimeFilter from '../DateTimeFilter';
+import { getUnsubmittedEvents } from '../../../events/redux/selectors';
 
 const UnsubmittedHours = () => {
   const isMobile = useMobileWidth();
@@ -38,7 +40,7 @@ const UnsubmittedHours = () => {
     }).catch((err) => {
       console.error(err);
     });
-  }, []);
+  }, [useSelector(getUnsubmittedEvents)]);
 
   if (filteredUnsubmittedHours === null) {
     return (
