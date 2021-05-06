@@ -17,6 +17,8 @@ import {
 import TextArea from '../../../common/TextArea/TextArea';
 import isDivisions from '../../volunteer/volHours/useDivisions';
 
+import { createAlert } from '../../../common/AlertBanner/AlertBannerSlice';
+
 import './newEventForm.css';
 
 // import redux selectors
@@ -91,17 +93,29 @@ const EventForm = () => {
     const newEvent = createEventObject(values);
     dispatch(addEvent(newEvent));
     dispatch(setShowPopup(false));
+    dispatch(createAlert({
+      message: `Successfully created event '${newEvent.eventName}'!`,
+      severity: 'success',
+    }));
   };
 
   const handleModifyEvent = async (values) => {
     const editedEvent = { ...createEventObject(values), eventId: event.id };
     dispatch(editEvent(event.id, editedEvent));
     dispatch(setShowPopup(false));
+    dispatch(createAlert({
+      message: `Successfully modified event '${editedEvent.eventName}'!`,
+      severity: 'success',
+    }));
   };
 
-  const handleDeleteEvent = async (eventId) => {
-    dispatch(deleteEvent(eventId));
+  const handleDeleteEvent = async (deletedEvent) => {
+    dispatch(deleteEvent(deletedEvent.id));
     dispatch(setShowPopup(false));
+    dispatch(createAlert({
+      message: `Successfully deleted event '${deletedEvent.title}'!`,
+      severity: 'success',
+    }));
   };
 
   const renderActionButtonSet = (formik) => {
@@ -235,7 +249,7 @@ const EventForm = () => {
           handleAddEvent(values);
           break;
         case 'deleteEvent':
-          handleDeleteEvent(event.id);
+          handleDeleteEvent(event);
           break;
         case 'modifyEvent':
           handleModifyEvent(values);

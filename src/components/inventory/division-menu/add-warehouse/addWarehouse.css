@@ -5,6 +5,10 @@
     position: absolute;
 }
 
+.add-warehouse-form .formik-field-label {
+    margin-top: 5px;
+}
+
 .add-warehouse-button {
     background-color: var(--color-green);
     color: var(--text-color-light);
@@ -47,14 +51,18 @@
 
 .add-warehouse-input {
     margin-top: 10px;
-    margin-bottom: 10px;
     border: 2px solid var(--color-dark-blue);
     padding: 5px;
     color: var(--text-color-dark);
     font-size: 18px;
     font-family: 'Assistant', Arial, Helvetica, sans-serif;
     text-align: center;
-    width: 75%;
+    /* width: 75%; */
+}
+
+.add-warehouse-form #division {
+    margin-top: 10px;
+    margin-bottom: 0px;
 }
 
 .add-warehouse-form select {

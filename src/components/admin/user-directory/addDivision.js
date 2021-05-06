@@ -1,45 +1,62 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { WMKBackend } from '../../../common/utils';
 import { LightModal } from '../../../common/LightModal';
 
+import { createAlert } from '../../../common/AlertBanner/AlertBannerSlice';
+
 import './addDivision.css';
 
-const AddDivisionButton = (divisionList) => {
-  const [popup, setPopup] = useState(false);
+const AddDivisionButton = ({ divisionList, isOpen, setIsOpen }) => {
+  const dispatch = useDispatch();
   const [division, setDivision] = useState('');
-
-  const allDivisions = [];
-
-  const getAllDivisions = () => {
-    Object.entries(divisionList.divisionList)
-      .map(([, div]) => allDivisions.push((div.div_name).toLowerCase()));
-  };
+  const [allDivisionsLower, setAllDivisionsLower] = useState([]);
 
   useEffect(() => {
-    getAllDivisions();
-  });
+    if (Object.entries(divisionList).length > 0) {
+      setAllDivisionsLower(Object.entries(divisionList).map((div) => (
+        div[1].div_name.toLowerCase()
+      )));
+    }
+  }, [divisionList]);
 
-  const handleOnSubmit = async () => {
-    if (allDivisions.includes(division.toLowerCase())) {
-      // Replace window.alert with global responsive banner
-      window.alert('Cannot add duplicate divisions');
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    console.log(allDivisionsLower);
+    console.log(WMKBackend, createAlert, dispatch, division);
+    if (allDivisionsLower.includes(division.toLowerCase())) {
+      // setIsOpen(false);
+      dispatch(createAlert({
+        message: 'Cannot add duplicate divisions!',
+        severity: 'error',
+      }));
     } else if (division === '') {
-      // Replace window.alert with global responsive banner
-      window.alert('Divisions must have a name');
+      // setIsOpen(false);
+      dispatch(createAlert({
+        message: 'Division name can\'t be empty',
+        severity: 'error',
+      }));
     } else {
-      await WMKBackend.post('/divisions', {
+      WMKBackend.post('/divisions', {
         divisionLabel: division,
+      }).then(() => {
+        setIsOpen(false);
+        dispatch(createAlert({
+          message: `Successfully created division '${division}'`,
+          severity: 'success',
+        }));
       });
     }
   };
 
   return (
     <div className="add-division-container">
-      <button type="button" className="add-division" onClick={() => setPopup(true)}>+</button>
+      <button type="button" className="add-division" onClick={() => setIsOpen(true)}>+</button>
       <LightModal
         className="add-division-popup"
-        isOpen={popup}
-        setIsOpen={() => setPopup(false)}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
       >
         <form className="add-division-form" onSubmit={handleOnSubmit}>
           <p className="large bold">Add new division?</p>
@@ -50,13 +67,20 @@ const AddDivisionButton = (divisionList) => {
             onChange={(e) => setDivision(e.target.value)}
           />
           <div className="confirmation">
-            <button type="button" className="division-form-button" onClick={() => setPopup(false)}>Close</button>
+            <button type="button" className="division-form-button" onClick={() => setIsOpen(false)}>Close</button>
             <button type="submit" className="division-form-button submit-division">Yes</button>
           </div>
         </form>
       </LightModal>
     </div>
   );
+};
+
+AddDivisionButton.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  setIsOpen: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  divisionList: PropTypes.object.isRequired,
 };
 
 export default AddDivisionButton;

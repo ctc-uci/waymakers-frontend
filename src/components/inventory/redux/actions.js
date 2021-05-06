@@ -159,6 +159,7 @@ export const addDivision = (newDivision) => async (dispatch) => {
 export const addWarehouse = (newWarehouse) => async (dispatch) => {
   try {
     const response = await WMKBackend.post('/warehouses', newWarehouse);
+    console.log(response.data);
     dispatch({ type: 'divisions/warehouseAdded', payload: response.data });
   } catch (err) {
     // eslint-disable-next-line

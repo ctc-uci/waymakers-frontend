@@ -4,6 +4,7 @@ import {
 } from 'date-fns';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
 import disableScroll from 'disable-scroll';
 
 import { WMKBackend } from '../../../../common/utils';
@@ -12,9 +13,12 @@ import ViewAvailability from './viewAvailability/viewAvailability';
 import EditAvailability from './editAvailability/editAvailability';
 import HelpPopup from '../help-popup/helpPopup';
 
+import { createAlert } from '../../../../common/AlertBanner/AlertBannerSlice';
+
 import './volunteerAvailability.css';
 
 const VolunteerAvailability = (props) => {
+  const dispatch = useDispatch();
   const { cookies } = props;
   const [availability, setAvailability] = useState([]);
   const [availabilityMode, setAvailabilityMode] = useState('view');
@@ -78,6 +82,10 @@ const VolunteerAvailability = (props) => {
     });
 
     setAvailabilityMode('view');
+    dispatch(createAlert({
+      message: 'Successfully updated availability hours!',
+      severity: 'success',
+    }));
   };
 
   const onHelpButtonClick = () => {

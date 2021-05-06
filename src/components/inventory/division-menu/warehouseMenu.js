@@ -17,6 +17,7 @@ const WarehouseMenu = (prop) => {
   const [open, setOpen] = useState(false);
   const ref = useRef();
 
+  console.log(prop.warehouseList);
   // Close warehouse dropdown when user clicks outside of it
   handleOutsideClick(ref, () => {
     setOpen(false);

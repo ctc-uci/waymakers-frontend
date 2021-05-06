@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { startEdits, saveEdits, cancelEdits } from '../redux/actions';
 import { getEditing } from '../redux/selectors';
+
+import { createAlert } from '../../../common/AlertBanner/AlertBannerSlice';
 import './editButton.css';
 
 const EditButton = () => {
@@ -12,6 +14,10 @@ const EditButton = () => {
       dispatch(startEdits());
     } else if (e.target.id === 'save-edit') {
       dispatch(saveEdits());
+      dispatch(createAlert({
+        message: 'Successfully edited items!',
+        severity: 'success',
+      }));
     } else if (e.target.id === 'cancel-edit') {
       dispatch(cancelEdits());
     }

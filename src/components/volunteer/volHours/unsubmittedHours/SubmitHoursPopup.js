@@ -2,6 +2,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   useFormik,
@@ -18,15 +19,15 @@ import {
 import {
   ValidatedField,
 } from '../../../../common/formikExtensions';
-import {
-  refreshPage, WMKBackend,
-} from '../../../../common/utils';
+import { WMKBackend } from '../../../../common/utils';
+import { createAlert } from '../../../../common/AlertBanner/AlertBannerSlice';
 import TextArea from '../../../../common/TextArea/TextArea';
 
 import useDivisions from '../useDivisions';
 import useUserEvents from '../useUserEvents';
 
 import './SubmitHoursPopup.css';
+import { fetchUnsubmittedEvents } from '../../../events/redux/actions';
 
 // Using Yup to do schema validation
 const Schema = Yup.object().shape({
@@ -66,6 +67,7 @@ const autofillEventInfo = (eventId, userEvents, formik) => {
 
 // TODO: Loading state
 const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
+  const dispatch = useDispatch();
   const [divisions] = useDivisions();
   const [userEvents] = useUserEvents();
   const [unsubmittedEvents, setUnsubmittedEvents] = useState([]);
@@ -98,10 +100,12 @@ const SubmitHoursPopup = ({ isModalOpen, setIsModalOpen, eventId = '' }) => {
         totalHours: values.totalHours,
         additionalNotes: values.additionalNotes,
       }).then(() => {
-        // TODO: confirmation of success
-        refreshPage();
         setIsModalOpen(false);
-        alert(`You have successfully submitted hours for ${selectedUserEvent.title}`);
+        dispatch(fetchUnsubmittedEvents());
+        dispatch(createAlert({
+          message: `Successfully submitted hours for ${values.title}`,
+          severity: 'success',
+        }));
       });
     },
     // validate only on submit, change as needed
