@@ -23,13 +23,8 @@ import InternalServerError from './pages/InternalServerError/InternalServerError
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Layout from './components/layout/layout';
-import ManageDB from './components/admin/managedb/managedb';
 import Profile from './pages/profile/profile';
-import Tier from './components/volunteer/tier/tier';
-import Forms from './components/volunteer/forms/forms';
-import Reports from './components/reports/reports';
 import Events from './components/events/events';
-import viewHours from './components/events/view-hours/viewHours';
 // DEPRECATED
 // import VolunteerEventAggregatePage from './components/admin/...whatever';
 
@@ -59,17 +54,13 @@ ReactDOM.render(
                     <Route path="/sandbox" component={Test} />
                     <ProtectedRoute path="/" component={Dashboard} exact />
                     <ProtectedRoute path="/profile" component={Profile} />
-                    <ProtectedRoute path="/admin/users" component={UserDirectory} admin />
-                    <ProtectedRoute path="/admin/db" component={ManageDB} admin />
-                    <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} admin />
                     <ProtectedRoute path="/volunteer/events" component={VolunteerEvents} />
                     <ProtectedRoute path="/volunteer/hours" component={VolunteerHoursPage} />
-                    <ProtectedRoute path="/volunteer/tier" component={Tier} />
-                    <ProtectedRoute path="/volunteer/forms" component={Forms} />
-                    <ProtectedRoute path="/inventory" component={InventoryPage} admin />
-                    <ProtectedRoute path="/reports" component={Reports} admin />
-                    <ProtectedRoute path="/events/viewHours" component={viewHours} />
-                    <ProtectedRoute path="/events" component={Events} admin />
+
+                    <ProtectedRoute path="/admin/events" component={Events} admin />
+                    <ProtectedRoute path="/admin/users" component={UserDirectory} admin />
+                    <ProtectedRoute path="/admin/event/:id" component={EventDetailPage} admin />
+                    <ProtectedRoute path="/admin/inventory" component={InventoryPage} admin />
                     <Route path="*" component={NotFound404} />
                   </Switch>
                 </Layout>
