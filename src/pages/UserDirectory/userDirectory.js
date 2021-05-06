@@ -14,6 +14,9 @@ const UserDirectory = () => {
   const [volunteers, setVolunteers] = useState([]);
   const [staffs, setStaffs] = useState([]);
   const [admins, setAdmins] = useState([]);
+  const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
+  const [isAddDivisionModalOpen, setIsAddDivisionModalOpen] = useState(false);
+  const [modalUser, setModalUser] = useState({});
 
   const filteredVolunteers = useMemo(
     () => volunteers.filter((user) => currentDivision === 'All Divisions' || user.div_name === currentDivision),
@@ -47,7 +50,7 @@ const UserDirectory = () => {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [isEditUserModalOpen, isAddDivisionModalOpen]);
 
   return (
     <div className="user-directory-page">
@@ -59,21 +62,35 @@ const UserDirectory = () => {
         divisionList={divisionList}
         currentDivision={currentDivision}
         setCurrentDivision={setCurrentDivision}
+        isOpen={isAddDivisionModalOpen}
+        setIsOpen={setIsAddDivisionModalOpen}
       />
       <UserInformationTable
         title="Volunteers"
         users={filteredVolunteers}
         divisionList={divisionList}
+        isModalOpen={isEditUserModalOpen}
+        setIsModalOpen={setIsEditUserModalOpen}
+        modalUser={modalUser}
+        setModalUser={setModalUser}
       />
       <UserInformationTable
         title="Admins"
         users={filteredAdmins}
         divisionList={divisionList}
+        isModalOpen={isEditUserModalOpen}
+        setIsModalOpen={setIsEditUserModalOpen}
+        modalUser={modalUser}
+        setModalUser={setModalUser}
       />
       <UserInformationTable
         title="Staff"
         users={filteredStaffs}
         divisionList={divisionList}
+        isModalOpen={isEditUserModalOpen}
+        setIsModalOpen={setIsEditUserModalOpen}
+        modalUser={modalUser}
+        setModalUser={setModalUser}
       />
     </div>
   );

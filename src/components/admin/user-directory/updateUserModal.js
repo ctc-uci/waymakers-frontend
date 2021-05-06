@@ -1,15 +1,19 @@
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import {
   useFormik,
 } from 'formik';
+
+import { createAlert } from '../../../common/AlertBanner/AlertBannerSlice';
+
 import {
   LightModal, LightModalHeader, LightModalBody, LightModalButton,
 } from '../../../common/LightModal';
-import { WMKBackend, refreshPage } from '../../../common/utils';
+import { WMKBackend } from '../../../common/utils';
 
 import {
   ValidatedField,
@@ -19,6 +23,7 @@ import './updateUserModal.css';
 const UpdateUserModal = ({
   isModalOpen, setIsModalOpen, userInfo, divisionList,
 }) => {
+  const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState(
     {
       name: '',
@@ -48,11 +53,18 @@ const UpdateUserModal = ({
           },
         )
         .then(() => {
-          // alert('success');
           setIsModalOpen(false);
-          refreshPage();
+          dispatch(createAlert({
+            message: `Successfully updated ${userInfo.firstname} ${userInfo.lastname}'s information!`,
+            severity: 'success',
+          }));
         })
-        .err((error) => alert(JSON.stringify(error, null, 2)));
+        .err((error) => {
+          dispatch(createAlert({
+            message: JSON.stringify(error, null, 2),
+            severity: 'error',
+          }));
+        });
     },
     // validate only on submit, change as needed
     validateOnBlur: false,

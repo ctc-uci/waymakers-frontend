@@ -1,10 +1,16 @@
 @import '../../../common/vars.css';
 
 .add-category {
-    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     position: relative;
     padding-bottom: 42px;
+}
+
+.add-category .formik-field-label {
+    font-size: 1000px !important;
 }
 
 .add-category-button {
@@ -21,12 +27,12 @@
     cursor: pointer;
 }
 
-.add-category-title {
+/* .add-category-title {
     font-size: 22px;
     font-weight: 800;
     padding-top: 15px;
     padding-bottom: 5px;
-}
+} */
 
 .add-category-popup .light-modal-container {
     border-style: none;
@@ -49,14 +55,13 @@
 
 .add-category-input {
     margin-top: 10px;
-    margin-bottom: 15px;
     border: 2px solid var(--color-dark-blue);
     padding: 5px;
     color: var(--text-color-dark);
     font-size: 18px;
     font-family: 'Assistant', Arial, Helvetica, sans-serif;
     text-align: center;
-    width: 80%;
+    width: 92%;
 }
 
 .add-category-form .confirmation {

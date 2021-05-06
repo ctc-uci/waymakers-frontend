@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
     }
     case 'categories/categoryAdded': {
       // Appending the new item
-      return [...state, action.payload];
+      return [...state].concat(action.payload);
     }
     case 'categories/categoryDeleted': {
       // Overload current state with new items list (without the deleted category)

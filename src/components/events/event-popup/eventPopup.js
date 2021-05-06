@@ -12,6 +12,7 @@ import {
   changePopupType,
 } from '../redux/actions';
 import { getPopupType, getUnsubmittedEvents } from '../redux/selectors';
+import { createAlert } from '../../../common/AlertBanner/AlertBannerSlice';
 
 import './eventPopup.css';
 
@@ -101,6 +102,10 @@ const EventPopup = ({
         aria-label="confirm add event"
         onClick={() => {
           addEvent();
+          dispatch(createAlert({
+            message: `Successfully added '${event.title}' to your events!`,
+            severity: 'success',
+          }));
         }}
       >
         <p className="large">Confirm</p>
@@ -162,6 +167,11 @@ const EventPopup = ({
         aria-label="Remove From My events"
         onClick={() => {
           removeEvent();
+          console.log('hello?');
+          dispatch(createAlert({
+            message: `Successfully removed '${event.title}' from your events!`,
+            severity: 'success',
+          }));
         }}
       >
         <p className="large">Remove From My Events</p>

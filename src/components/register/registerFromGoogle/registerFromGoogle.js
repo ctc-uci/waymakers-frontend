@@ -1,10 +1,12 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 
 import GoogleAuthService from '../../../services/firebase/firebase';
+import { createAlert } from '../../../common/AlertBanner/AlertBannerSlice';
 import { WMKBackend } from '../../../common/utils';
 
 import validationSchema from '../validationSchema';
@@ -35,6 +37,7 @@ function renderStepContent(step) {
 }
 
 const Register = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [registerStage, setRegisterStage] = useState(1);
   const currentValidationSchema = validationSchema[registerStage];
@@ -66,11 +69,17 @@ const Register = () => {
       });
       console.log(res);
 
-      alert('Successfully registered! Click to move on to login');
+      dispatch(createAlert({
+        message: 'Successfully registered! Click to move on to login',
+        severity: 'success',
+      }));
 
       history.push('/login');
     } catch (err) {
-      alert(err);
+      dispatch(createAlert({
+        message: JSON.stringify(err, null, 2),
+        severity: 'error',
+      }));
     }
   };
 
@@ -80,7 +89,10 @@ const Register = () => {
       try {
         await register(values);
       } catch (err) {
-        alert(err);
+        dispatch(createAlert({
+          message: JSON.stringify(err, null, 2),
+          severity: 'error',
+        }));
       }
     } else {
       setRegisterStage(registerStage + 1);

@@ -1,12 +1,14 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import isDate from 'validator/lib/isDate';
 
 import GoogleAuthService from '../../services/firebase/firebase';
 import { WMKBackend } from '../../common/utils';
+import { createAlert } from '../../common/AlertBanner/AlertBannerSlice';
 
 import validationSchema from './validationSchema';
 import formInitialValues from './formInitialValues';
@@ -36,6 +38,7 @@ function renderStepContent(step) {
 }
 
 const Register = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [registerStage, setRegisterStage] = useState(0);
   const currentValidationSchema = validationSchema[registerStage];
@@ -94,7 +97,10 @@ const Register = () => {
       try {
         await register(values);
       } catch (err) {
-        alert(err);
+        dispatch(createAlert({
+          message: JSON.stringify(err, null, 2),
+          severity: 'error',
+        }));
       }
     } else {
       setRegisterStage(registerStage + 1);

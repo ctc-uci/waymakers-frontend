@@ -6,6 +6,7 @@ import axios from 'axios';
 import { withCookies, Cookies } from 'react-cookie';
 import Datetime from 'react-datetime';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
 
 import useMobileWidth from '../../../common/useMobileWidth';
 import { WMKBackend } from '../../../common/utils';
@@ -13,6 +14,8 @@ import { WMKBackend } from '../../../common/utils';
 import DeleteAccountModal from '../deleteAccountModal/deleteAccountModal';
 import ImageCropper from '../profilePictureCropper/imageCropper';
 import VolunteerAvailability from '../../dashboard/availability-component/volunteerAvailability/volunteerAvailability';
+
+import { createAlert } from '../../../common/AlertBanner/AlertBannerSlice';
 
 import Card from '../../../common/Card/Card';
 import profilePlaceholder from '../../../assets/profileplaceholder.jpg';
@@ -65,6 +68,7 @@ const EditProfile = ({
     setCurrentProfilePicture,
   } = setStates;
 
+  const dispatch = useDispatch();
   const reader = new FileReader();
   const [uploadedFile, setUploadedFile] = useState(null); // Base64 string of the file bing uploaded
   const [uploadedFilePreview, setUploadedFilePreview] = useState(null);
@@ -129,8 +133,16 @@ const EditProfile = ({
       await WMKBackend.put(`/accounts/${userID}`, payload);
 
       localStorage.setItem('profilePicture', payload.profilePicture);
+      dispatch(createAlert({
+        message: 'Successfully updated user profile information!',
+        severity: 'success',
+      }));
     } catch (e) {
       console.error(e);
+      dispatch(createAlert({
+        message: 'There was a problem updating user profile information!',
+        severity: 'error',
+      }));
     }
     setIsViewProfile(true);
   };

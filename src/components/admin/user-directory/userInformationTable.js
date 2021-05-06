@@ -25,12 +25,17 @@ const SORT_BY_OPTIONS = [
   },
 ];
 
-const UserInformationTable = ({ title, users, divisionList }) => {
+const UserInformationTable = ({
+  title,
+  users,
+  divisionList,
+  isModalOpen,
+  setIsModalOpen,
+  modalUser,
+  setModalUser,
+}) => {
   const [sortByOption, setSortByOption] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalUser, setModalUser] = useState({});
 
   const filteredData = useMemo(() => {
     if (!users) { return []; }
@@ -116,6 +121,11 @@ const UserInformationTable = ({ title, users, divisionList }) => {
 };
 
 UserInformationTable.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  modalUser: PropTypes.object.isRequired,
+  setModalUser: PropTypes.func.isRequired,
+  isModalOpen: PropTypes.bool.isRequired,
+  setIsModalOpen: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
   // eslint-disable-next-line react/forbid-prop-types

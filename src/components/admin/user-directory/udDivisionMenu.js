@@ -9,31 +9,37 @@ import DownwardChevron from '../../../assets/downwardchevron.svg';
 
 import './udDivisionMenu.css';
 
-const DivisionMenu = ({ divisionList, currentDivision, setCurrentDivision }) => {
-  const [open, setOpen] = useState(false);
+const DivisionMenu = ({
+  divisionList,
+  currentDivision,
+  setCurrentDivision,
+  isOpen,
+  setIsOpen,
+}) => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const ref = useRef();
 
   // -- Closes open modal when anywhere within the modal is clicked.
   // Modal has no app element to prevent this condition form happening --
   // Close division dropdown when user clicks outside of it
   handleOutsideClick(ref, () => {
-    setOpen(false);
+    setDropdownOpen(false);
   });
 
   const handleArrowClick = () => {
-    if (open) {
-      setOpen(false);
+    if (dropdownOpen) {
+      setDropdownOpen(false);
     } else {
-      setOpen(true);
+      setDropdownOpen(true);
     }
   };
 
   const handleDivisionClick = (e, divName) => {
+    setDropdownOpen(false);
     setCurrentDivision(divName);
-    setOpen(false);
   };
 
-  const menu = (list) => (
+  const menu = () => (
     <div className="ud-division-menu-list-container">
       <div
         name="category"
@@ -51,7 +57,7 @@ const DivisionMenu = ({ divisionList, currentDivision, setCurrentDivision }) => 
         </button>
         {/* Creating dropdown menu items from divisions list */}
         {/* division.div_name is displayed, but the value of the option will be the ID */}
-        {Object.entries(list)
+        {Object.entries(divisionList)
           .sort((a, b) => (a.id > b.id ? 1 : -1))
           .filter((div) => div[1].div_name !== 'All Divisions')
           .map(([id, division]) => (
@@ -71,17 +77,23 @@ const DivisionMenu = ({ divisionList, currentDivision, setCurrentDivision }) => 
 
   return (
     <div className="ud-division-menu-container" ref={ref}>
-      <AddDivisionButton divisionList={divisionList} />
+      <AddDivisionButton
+        divisionList={divisionList}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
       <button type="button" className="ud-division-menu--top" onClick={handleArrowClick}>
         {currentDivision}
-        <img src={DownwardChevron} className={open ? 'ud-division-menu--close' : 'ud-division-menu--open'} alt="arrow" />
+        <img src={DownwardChevron} className={dropdownOpen ? 'ud-division-menu--close' : 'ud-division-menu--open'} alt="arrow" />
       </button>
-      {open && menu(divisionList)}
+      {dropdownOpen && menu()}
     </div>
   );
 };
 
 DivisionMenu.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  setIsOpen: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   divisionList: PropTypes.object.isRequired,
   currentDivision: PropTypes.string.isRequired,
