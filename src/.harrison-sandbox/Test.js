@@ -25,7 +25,7 @@ const Test = () => {
       {/* <VerificationPage
         userID="mvLAsKySfcN9aSoQE5MnArYHrJE2"
         firstName="Billy"
-        email="junkoemail248@gmail.com"
+        email="junkoemail248@gmail.com" 
       /> */}
     </>
   );
