@@ -12,11 +12,13 @@
     border: 0;
 }
 
-.csv-link a, a:active, a:visited, a:hover, a:link {
+.csv-link a, .csv-link a:active,
+.csv-link a:visited, .csv-link a:hover,
+.csv-link a:link {
     text-decoration: none;
     color: white;
 }
-    
+
 .csv-link p {
     margin: 0;
     padding: 0;
