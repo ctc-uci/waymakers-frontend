@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import Select from 'react-select';
 import PropTypes from 'prop-types';
 import {
   useFormik,
@@ -12,6 +13,7 @@ import {
 import {
   ValidatedField,
 } from '../formikExtensions';
+import ReactSelectStyles from '../ReactSelect/styles';
 
 // Using Yup to do schema validation
 const ExampleSchema = Yup.object().shape({
@@ -51,6 +53,7 @@ const ExampleLightModalWithFormik = ({ isModalOpen, setIsModalOpen }) => {
       lastName: '',
       email: '',
       dateTime: '',
+      test: '',
     },
     validationSchema: ExampleSchema,
     onSubmit: (values) => {
@@ -80,6 +83,50 @@ const ExampleLightModalWithFormik = ({ isModalOpen, setIsModalOpen }) => {
           {formik.errors.firstName && formik.touched.firstName ? (
             <div>{formik.errors.firstName}</div>
           ) : null}
+
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
+            <select>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </ValidatedField>
+
+          {/* Using LightModalValidatedField */}
+          <ValidatedField name="test" labelText="test" formik={formik}>
+            <Select
+              value={[{
+                value: 1,
+                label: 'hello world',
+              }, {
+                value: 2,
+                label: 'hello worl2',
+              }, {
+                value: 3,
+                label: 'hello worl3',
+              }, {
+                value: 4,
+                label: 'hello world4',
+              }].filter((e) => formik.values.test === e.value)}
+              options={[{
+                value: 1,
+                label: 'hello world',
+              }, {
+                value: 2,
+                label: 'hello worl2',
+              }, {
+                value: 3,
+                label: 'hello worl3',
+              }, {
+                value: 4,
+                label: 'hello world4',
+              }]}
+              styles={ReactSelectStyles.basicDropdownStyles}
+              onChange={(e) => formik.setFieldValue('test', e.value)}
+            />
+          </ValidatedField>
 
           {/* Using LightModalValidatedField */}
           <ValidatedField name="lastName" labelText="Last Name" formik={formik}>
