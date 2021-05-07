@@ -62,27 +62,29 @@ const WarehouseMenu = (prop) => {
 
   // Renders the warehouse menu for a division
   const renderWarehouseList = (list) => (
-    <div
-      name="category"
-      className="warehouse-menu--list"
-    >
-      {/* Creating dropdown menu items from warehouse list */}
-      {Object.keys(list).length > 0
-        ? (Object.entries(list)
-          .sort((a, b) => (a.id > b.id ? 1 : -1))
-          .map(([id, warehouse]) => (
-            // MenuItem(id, warehouse.warehouse_name)));
-            <button
-              className="warehouse-menu--list-item"
-              type="button"
-              key={id}
-              value={id}
-              onClick={(e) => handleWarehouseClick(e, warehouse.warehouse_name)}
-            >
-              {warehouse.warehouse_name}
-            </button>
-          )))
-        : <NoWarehousesOption />}
+    <div className="warehouse-menu--list-container">
+      <div
+        name="category"
+        className="warehouse-menu--list"
+      >
+        {/* Creating dropdown menu items from warehouse list */}
+        {Object.keys(list).length > 0
+          ? (Object.entries(list)
+            .sort((a, b) => (a.id > b.id ? 1 : -1))
+            .map(([id, warehouse]) => (
+              // MenuItem(id, warehouse.warehouse_name)));
+              <button
+                className="warehouse-menu--list-item"
+                type="button"
+                key={id}
+                value={id}
+                onClick={(e) => handleWarehouseClick(e, warehouse.warehouse_name)}
+              >
+                {warehouse.warehouse_name}
+              </button>
+            )))
+          : <NoWarehousesOption />}
+      </div>
     </div>
   );
 

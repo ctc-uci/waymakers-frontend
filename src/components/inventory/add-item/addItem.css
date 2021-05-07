@@ -29,6 +29,8 @@
 }
 
 .add-item-button {
+  display: flex;
+  justify-content: center;
   border: 2px solid;
   border-color: var(--color-green);
   border-radius: 15px;
@@ -39,9 +41,8 @@
   color: var(--text-color-light);
   background-color: var(--color-green);
   width: 156px;
-  height: 40px;
+  height: 38px;
   cursor: pointer;
-  /* margin-left: 70%; */
 }
 
 .add-item-plus {
@@ -103,7 +104,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 768px) {
   .add-item-plus {
     margin-right: 6px;
   }
@@ -119,12 +120,10 @@
   .add-item-button {
     border-radius: 15px;
     box-shadow: none;
-    font-size: 1.1em;
-    font-weight: 500;
-    width: 106px;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100px;
     height: 30px;
     cursor: pointer;
-    margin-left: 22%;
-    margin-right: 5px;
   }
 }

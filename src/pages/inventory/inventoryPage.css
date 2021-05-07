@@ -40,6 +40,7 @@
 .edit-button-wrapper {
     width: 95%;
     margin-bottom: 20px;
+    height: 38px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -74,13 +75,13 @@
         flex-direction: column;
         align-items: flex-end;
         position: static;
-        margin-bottom: 0;
+        margin-bottom: 0.6em;
     }
 
     .current-category-label {
         font-weight: 500;
         font-size: 1.8em;
         margin-left: 0.75em;
+        margin-bottom: 0.25em;
     }
-
 }
