@@ -1,0 +1,4 @@
+.download-step-one {
+    display: flex;
+    flex-direction: column;
+}

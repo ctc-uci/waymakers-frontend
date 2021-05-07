@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import EditButton from '../../components/inventory/edit-button/editButton';
+import DownloadButton from '../../components/inventory/download-info/downloadInfo';
 import DivisionMenu from '../../components/inventory/division-menu/divisionMenu';
 import CategoryMenu from '../../components/inventory/category-menu/categoryMenu';
 import SearchItem from '../../components/inventory/search-item/searchItem';
@@ -78,6 +79,7 @@ const InventoryPage = () => {
       <div className="edit-button-wrapper">
         <EditButton />
         {useSelector(getEditing) && <AddItemModal />}
+        <DownloadButton />
       </div>
       <div className="table-container">
         <Table />

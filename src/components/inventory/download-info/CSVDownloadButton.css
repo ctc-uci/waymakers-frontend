@@ -1,0 +1,23 @@
+.csv-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #5D9A64;
+    border-radius: 11.173px;
+    box-shadow: 2.97959px 2.97959px 3.72449px rgba(0, 0, 0, 0.46);
+    height: 45px;
+    width: 100px;
+    text-decoration: none;
+    color: white;
+    border: 0;
+}
+
+.csv-link a, a:active, a:visited, a:hover, a:link {
+    text-decoration: none;
+    color: white;
+}
+    
+.csv-link p {
+    margin: 0;
+    padding: 0;
+}
