@@ -10,6 +10,9 @@
 }
 
 .add-warehouse-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: var(--color-green);
     color: var(--text-color-light);
     font-size: 125%;
@@ -18,7 +21,7 @@
     border-radius: 32px;
     height: 32px;
     width: 32px;
-    margin-top: 20px;
+    margin-top: 13px;
     cursor: pointer;
 }
 
@@ -37,15 +40,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-self: center;
+    justify-content: center;
     width: 250px;
-    height: 215px;
-    padding: 10px;
+    padding: 20px 10px 20px 10px;
 }
 
 .add-warehouse-form p {
-    margin-block-start: 20px;
-    margin-block-end: 0px;
+    margin-block-end: 0em;
     text-align: center;
 }
 
@@ -57,7 +58,7 @@
     font-size: 18px;
     font-family: 'Assistant', Arial, Helvetica, sans-serif;
     text-align: center;
-    /* width: 75%; */
+    width: 188px;
 }
 
 .add-warehouse-form #division {
@@ -66,7 +67,6 @@
 }
 
 .add-warehouse-form select {
-    margin-bottom: 10px;
     width: 202px;
     border: 2px solid var(--color-dark-blue);
     padding: 5px;
@@ -77,12 +77,11 @@
 }
 
 .add-warehouse-form .confirmation {
-    margin-bottom: 10px;
+    padding-top: 10px;
 }
 
 .warehouse-form-button {
     margin: 5px;
-    margin-bottom: 20px;
     border: 4px solid var(--color-dark-orange);
     border-radius: 15px;
     background-color: var(--color-dark-orange);
@@ -116,6 +115,6 @@
         border-radius: 30px;
         height: 26px;
         width: 26px;
-        margin-top: 9px;
+        margin-top: 12px;
     }
 }

@@ -34,7 +34,7 @@ const DivisionMenu = (prop) => {
   };
 
   const menu = (list) => (
-    <div>
+    <div className="division-menu--list-container">
       <div
         name="category"
         className="division-menu--list"

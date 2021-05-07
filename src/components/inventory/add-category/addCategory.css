@@ -27,13 +27,6 @@
     cursor: pointer;
 }
 
-/* .add-category-title {
-    font-size: 22px;
-    font-weight: 800;
-    padding-top: 15px;
-    padding-bottom: 5px;
-} */
-
 .add-category-popup .light-modal-container {
     border-style: none;
     border-radius: 10px;
@@ -43,8 +36,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 250px;
-    padding: 10px;
+    padding: 20px 5px 20px 5px;
 }
 
 .add-category-form p {
@@ -71,7 +65,6 @@
 
 .category-form-button {
     margin: 5px;
-    margin-bottom: 20px;
     border: 4px solid var(--color-dark-orange);
     border-radius: 15px;
     background-color: var(--color-dark-orange);
