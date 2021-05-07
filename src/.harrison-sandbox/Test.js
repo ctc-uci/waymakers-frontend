@@ -22,11 +22,11 @@ const Test = () => {
       <TitledCard title="This is the title">
         Content inside the card
       </TitledCard>
-      <VerificationPage
+      {/* <VerificationPage
         userID="mvLAsKySfcN9aSoQE5MnArYHrJE2"
         firstName="Billy"
         email="junkoemail248@gmail.com"
-      />
+      /> */}
     </>
   );
 };

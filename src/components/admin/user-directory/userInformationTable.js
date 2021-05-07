@@ -56,12 +56,14 @@ const UserInformationTable = ({
 
   return (
     <TitledCard title={title} className="user-table-wrapper" cardClassName="card-inner">
+      {isModalOpen && (
       <UpdateUserModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         userInfo={modalUser}
         divisionList={divisionList}
       />
+      )}
       <div className="table-topbar">
         <div className="search-section">
           <p className="medium">Search:</p>

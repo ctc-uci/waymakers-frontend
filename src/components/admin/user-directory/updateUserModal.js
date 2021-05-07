@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Select from 'react-select';
 
 import PropTypes from 'prop-types';
 import {
@@ -18,6 +19,7 @@ import { WMKBackend } from '../../../common/utils';
 import {
   ValidatedField,
 } from '../../../common/formikExtensions';
+import ReactSelectStyles from '../../../common/ReactSelect/styles';
 import './updateUserModal.css';
 
 const UpdateUserModal = ({
@@ -189,52 +191,47 @@ const UpdateUserModal = ({
             />
           </ValidatedField>
           <ValidatedField name="division" labelText="Division" formik={formik}>
-            <select
+            <Select
               id="division"
               name="division"
               type="text"
-              onChange={formik.handleChange}
-              value={formik.values.division}
-            >
-              {Object.entries(divisionList)
+              value={{
+                value: formik.values.division,
+                label: divisionList && divisionList[formik.values.division] ? divisionList[formik.values.division].div_name : '',
+              }}
+              options={Object.entries(divisionList)
                 .sort((a, b) => (a.id > b.id ? 1 : -1))
-                .map(([id, division]) => (
-                  <option
-                    key={id}
-                    value={id}
-                  >
-                    {division.div_name}
-                  </option>
+                .map(([id, division]) => ({
+                  value: id,
+                  label: division.div_name,
+                }
                 ))}
-            </select>
+              styles={ReactSelectStyles.basicDropdownStyles}
+              onChange={(e) => { formik.setFieldValue('division', e.value); }}
+            />
           </ValidatedField>
           <ValidatedField name="position" labelText="Position" formik={formik}>
-            <select
+            <Select
               id="position"
               name="position"
               type="text"
-              onChange={formik.handleChange}
-              value={formik.values.position}
-            >
-              <option
-                key="volunteer"
-                value="Volunteer"
-              >
-                Volunteer
-              </option>
-              <option
-                key="admin"
-                value="Admin"
-              >
-                Admin
-              </option>
-              <option
-                key="staff"
-                value="Staff"
-              >
-                Staff
-              </option>
-            </select>
+              value={{
+                value: formik.values.position,
+                label: formik.values.position,
+              }}
+              options={[{
+                value: 'Volunteer',
+                label: 'Volunteer',
+              }, {
+                value: 'Admin',
+                label: 'Admin',
+              }, {
+                value: 'Staff',
+                label: 'Staff',
+              }]}
+              styles={ReactSelectStyles.basicDropdownStyles}
+              onChange={(e) => formik.setFieldValue('position', e.value)}
+            />
           </ValidatedField>
           <LightModalButton primary type="submit">
             Submit
