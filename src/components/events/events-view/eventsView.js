@@ -58,7 +58,6 @@ const EventsView = ({
   const calendarEl = useRef(null);
   const moreEventsColor = 'var(--text-color-dark)';
   const myEventsColor = 'var(--color-light-green)';
-
   const isMobile = useMobileWidth();
 
   useEffect(async () => {
@@ -260,9 +259,9 @@ const EventsView = ({
           }}
           dayHeaderContent={renderWeekMonthHeader}
           eventContent={(eventInfo) => <EventBlock page={page} eventInfo={eventInfo} />}
-          // allDaySlot
           slotDuration="00:60:00"
           dateClick={onDateClick}
+          allDaySlot
           allDayText=""
           dayMaxEventRows={false}
           dayMaxEvents={false}
@@ -301,7 +300,6 @@ const EventsView = ({
             { page === 'volunteerDashboard' && renderCheckboxes()}
           </div>
         )}
-      <CalendarPopup page={page} />
       <HelpPopup isModalOpen={isHelpModalOpen} setIsModalOpen={setIsHelpModalOpen} isAdmin={page === 'addModifyDeleteEventsPage'} />
       <div className="calendar">
         {view === 'timeGridDay' && renderDayViewHeader()}
@@ -309,6 +307,7 @@ const EventsView = ({
       </div>
       { page === 'volunteerDashboard' && view !== 'timeGridDay' && <EventLegend />}
       {renderEventList()}
+      <CalendarPopup page={page} />
     </div>
   );
 };

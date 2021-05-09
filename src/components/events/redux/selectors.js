@@ -1,5 +1,6 @@
 // redux/selectors.js
 import moment from 'moment';
+import { getRegularSelectedEvent } from '../util';
 
 // Get all events from database
 export const getEvents = (store) => {
@@ -9,9 +10,10 @@ export const getEvents = (store) => {
   return [];
 };
 
-const getEndDate = (event) => {
+const getEndDate = (events, event) => {
+  const selectedEvent = getRegularSelectedEvent(events, event);
   if (event.isAllDay === true) {
-    return new Date(moment(event.endTime).add(1, 'day'));
+    return new Date(moment(selectedEvent.endTime).add(1, 'day'));
   }
   return new Date(event.endTime);
 };
@@ -28,7 +30,7 @@ export const getEventsForFullCalendar = (store) => {
     division: event.division,
     eventType: event.eventType,
     start: event.startTime,
-    end: getEndDate(event),
+    end: getEndDate(events, event),
     location: event.location,
     description: event.description,
     id: event.id,
@@ -55,7 +57,7 @@ export const getUserEventsForFullCalendar = (store) => {
     division: event.division,
     eventType: event.eventType,
     start: event.startTime,
-    end: getEndDate(event),
+    end: getEndDate(events, event),
     location: event.location,
     description: event.description,
     id: event.id,

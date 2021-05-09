@@ -18,6 +18,7 @@ import TextArea from '../../../common/TextArea/TextArea';
 import isDivisions from '../../volunteer/volHours/useDivisions';
 
 import { createAlert } from '../../../common/AlertBanner/AlertBannerSlice';
+import { getRegularSelectedEvent } from '../util';
 
 import './newEventForm.css';
 
@@ -26,6 +27,7 @@ import {
   getPopupType,
   getSelectedEvent,
   getShowPopup,
+  getEvents,
 } from '../redux/selectors';
 // import redux actions
 import {
@@ -85,7 +87,11 @@ const createEventObject = (values) => ({
 
 const EventForm = () => {
   const dispatch = useDispatch();
-  const event = useSelector(getSelectedEvent);
+
+  const selectedEvent = useSelector(getSelectedEvent);
+  const allRegularEvents = useSelector(getEvents);
+  const event = getRegularSelectedEvent(allRegularEvents, selectedEvent);
+
   const popupType = useSelector(getPopupType);
   const isModalOpen = useSelector(getShowPopup);
   const [divisions] = isDivisions();

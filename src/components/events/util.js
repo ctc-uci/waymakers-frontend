@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 export const fullCalendarEventToRegularEvent = (event) => {
-  console.log(event);
   const convertedEvent = {
     title: event.title,
     division: event.extendedProps.division,
@@ -16,6 +15,11 @@ export const fullCalendarEventToRegularEvent = (event) => {
   };
   return convertedEvent;
 };
+
+export const getRegularSelectedEvent = (allRegularEvents, selectedEvent) => (
+  allRegularEvents
+    .filter((currentEvent) => parseInt(currentEvent.id, 10) === parseInt(selectedEvent.id, 10))[0]
+);
 
 export const isPast = (firstDate, secondDate) => (
   firstDate.setHours(0, 0, 0, 0) - secondDate.setHours(0, 0, 0, 0) < 0
