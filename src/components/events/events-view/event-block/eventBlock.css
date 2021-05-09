@@ -13,7 +13,8 @@
     cursor: pointer;
 }
 
-.week-event-content {
+.week-event-content,
+.week-edit-event-content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;

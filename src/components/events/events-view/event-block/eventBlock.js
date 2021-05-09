@@ -9,6 +9,8 @@ import {
   changePopupType,
 } from '../../redux/actions';
 
+import { fullCalendarEventToRegularEvent, getRegularSelectedEvent } from '../../util';
+
 import {
   getEvents,
 } from '../../redux/selectors';
@@ -28,8 +30,12 @@ const EventBlock = ({
 
   const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
   const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
-  const allRegularEvents = useSelector(getEvents);
   const isAllDayEvent = eventInfo.event.allDay;
+
+  // Convert current full calendar event to regular event
+  const allRegularEvents = useSelector(getEvents);
+  const currentRegularEvent = getRegularSelectedEvent(allRegularEvents, eventInfo.event);
+  const currentEvent = fullCalendarEventToRegularEvent(eventInfo.event);
 
   const openPopup = () => {
     dispatch(setShowPopup(true));
@@ -39,17 +45,14 @@ const EventBlock = ({
     dispatch(changePopupType(type));
   };
 
-  const setEvent = (selectedEvent) => {
-    const calendarEventId = selectedEvent.id;
-    const regularEvent = allRegularEvents
-      .filter((event) => parseInt(event.id, 10) === parseInt(calendarEventId, 10));
-    dispatch(changeSelectedEvent(regularEvent[0]));
+  const setEvent = () => {
+    dispatch(changeSelectedEvent(currentEvent));
   };
 
   const onEventBlockClick = () => {
-    setEvent(eventInfo.event);
+    setEvent();
     if (isUserEvent) {
-      if (new Date(eventInfo.event.start) < new Date()) {
+      if (new Date(currentEvent.startTime) < new Date()) {
         setEventPopupType('AddMyHoursPopup');
       } else {
         setEventPopupType('RemoveFromMyEventPopup');
@@ -62,19 +65,19 @@ const EventBlock = ({
 
   const onAddButtonClick = (e) => {
     e.stopPropagation();
-    setEvent(eventInfo.event);
+    setEvent();
     setEventPopupType('ConfirmCancelPopup');
     openPopup();
   };
 
   const onAdminEventBlockClick = () => {
-    setEvent(eventInfo.event);
+    setEvent();
     openPopup();
   };
 
   // Admin Event Calendar
   const onViewEventsPageBlockClick = () => {
-    setEvent(eventInfo.event);
+    setEvent();
     setEventPopupType('ViewEventInfoPopup');
     openPopup();
   };
@@ -94,26 +97,28 @@ const EventBlock = ({
     switch (page) {
       case 'volunteerDashboard':
         return (
-          <div className={`week-event-block ${eventInfo.event.allDay ? 'all-day-week-event-content' : ''}`} tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
+          <div className={`week-event-block ${isAllDayEvent ? 'all-day-week-event-content' : ''}`} tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
             <div className="week-event-content">
-              <p className="week-event-title">{eventInfo.event.title}</p>
-              {eventInfo.event.allDay && <div className="all-day-strip" style={{ backgroundColor: eventTypeColor }} />}
+              <p className="week-event-title">{currentEvent.title}</p>
+              {isAllDayEvent && <div className="all-day-strip" style={{ backgroundColor: eventTypeColor }} />}
               {renderEventButton()}
             </div>
-            {!eventInfo.event.allDay && <div className="strip" style={{ backgroundColor: eventTypeColor }} />}
+            {!isAllDayEvent && <div className="strip" style={{ backgroundColor: eventTypeColor }} />}
           </div>
         );
       case 'addModifyDeleteEventsPage':
         return (
           <div className="week-edit-event-block" tabIndex={0} onClick={onViewEventsPageBlockClick} onKeyDown={() => {}} role="button">
-            <p className="week-edit-event-title">{eventInfo.event.title}</p>
+            <div className="week-event-content">
+              <p className="week-edit-event-title">{currentEvent.title}</p>
+            </div>
           </div>
         );
       case 'aggregatePage':
         return (
           <div className="week-event-block" tabIndex={0} onClick={onAdminEventBlockClick} onKeyDown={() => {}} role="button">
             <div className="week-event-content">
-              <p>{eventInfo.event.title}</p>
+              <p>{currentEvent.title}</p>
             </div>
           </div>
         );
@@ -122,9 +127,9 @@ const EventBlock = ({
   }
 
   // Get values to display hour and minute on event block
-  const hour = eventInfo.event.start.getHours();
+  const hour = (new Date(currentRegularEvent.startTime)).getHours();
   const convertedHour = hour < 13 ? hour : hour - 12;
-  const minute = eventInfo.event.start.getMinutes();
+  const minute = (new Date(currentRegularEvent.startTime)).getMinutes();
   const displayMinute = `:${minute < 10 ? '0' : ''}${minute}`;
 
   const onMonthBlockClick = () => {
