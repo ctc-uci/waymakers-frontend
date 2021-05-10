@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { getEditing } from '../redux/selectors';
 import { changeSelectedWarehouse } from '../redux/actions';
+
 import handleOutsideClick from '../../../common/handleOutsideClick';
 import AddWarehouseButton from './add-warehouse/addWarehouse';
+
+import DownwardChevron from '../../../assets/downwardchevron.svg';
+
 import './warehouseMenu.css';
 
 const WarehouseMenu = (prop) => {
@@ -12,6 +17,7 @@ const WarehouseMenu = (prop) => {
   const [open, setOpen] = useState(false);
   const ref = useRef();
 
+  console.log(prop.warehouseList);
   // Close warehouse dropdown when user clicks outside of it
   handleOutsideClick(ref, () => {
     setOpen(false);
@@ -33,11 +39,7 @@ const WarehouseMenu = (prop) => {
 
   // Handles opening and closing the dropdown whenever the button is pressed
   const handleArrowClick = () => {
-    if (open) {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
+    setOpen(!open);
   };
 
   const handleWarehouseClick = (e, warehouseName) => {
@@ -60,48 +62,45 @@ const WarehouseMenu = (prop) => {
 
   // Renders the warehouse menu for a division
   const renderWarehouseList = (list) => (
-    <div
-      name="category"
-      className="warehouse-menu--list"
-    >
-      {/* Creating dropdown menu items from warehouse list */}
-      {Object.keys(list).length > 0
-        ? (Object.entries(list)
-          .sort((a, b) => (a.id > b.id ? 1 : -1))
-          .map(([id, warehouse]) => (
-            // MenuItem(id, warehouse.warehouse_name)));
-            <button
-              className="warehouse-menu--list-item"
-              type="button"
-              key={id}
-              value={id}
-              onClick={(e) => handleWarehouseClick(e, warehouse.warehouse_name)}
-            >
-              {warehouse.warehouse_name}
-            </button>
-          )))
-        : <NoWarehousesOption />}
+    <div className="warehouse-menu--list-container">
+      <div
+        name="category"
+        className="warehouse-menu--list"
+      >
+        {/* Creating dropdown menu items from warehouse list */}
+        {Object.keys(list).length > 0
+          ? (Object.entries(list)
+            .sort((a, b) => (a.id > b.id ? 1 : -1))
+            .map(([id, warehouse]) => (
+              // MenuItem(id, warehouse.warehouse_name)));
+              <button
+                className="warehouse-menu--list-item"
+                type="button"
+                key={id}
+                value={id}
+                onClick={(e) => handleWarehouseClick(e, warehouse.warehouse_name)}
+              >
+                {warehouse.warehouse_name}
+              </button>
+            )))
+          : <NoWarehousesOption />}
+      </div>
     </div>
   );
 
   return (
     <div className="warehouse-container">
       <div ref={ref} className="warehouse-menu-container">
-        {!useSelector(getEditing) ? <div> </div> : (
+        {useSelector(getEditing) && (
           <AddWarehouseButton
             divisionList={prop.divisionList}
             selectedDivision={prop.selectedDivision}
           />
         )}
-        <div className="warehouse-menu--top">
+        <button type="button" className="warehouse-menu--top" onClick={handleArrowClick}>
           {currentWarehouse}
-          <button
-            type="button"
-            aria-label="arrow"
-            onClick={handleArrowClick}
-            className={open ? 'warehouse-menu--close' : 'warehouse-menu--open'}
-          />
-        </div>
+          <img src={DownwardChevron} className={open ? 'warehouse-menu--close' : 'warehouse-menu--open'} alt="arrow" />
+        </button>
         {open && renderWarehouseList(prop.warehouseList)}
       </div>
     </div>

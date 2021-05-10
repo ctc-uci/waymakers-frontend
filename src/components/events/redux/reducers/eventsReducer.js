@@ -17,12 +17,14 @@ LogHoursForm
 export const initialState = {
   eventsList: [], // List of event objects
   userEventsList: [],
+  unsubmittedUserEventsList: [], // List of past user events that the user hasn't submitted hours to
+  submittedUserEventsList: [], // List of past user events that the user has submitted hours to
   showPopup: false,
   month: new Date().getMonth() + 1,
   year: new Date().getFullYear(),
   day: new Date().getDate(),
   selectedEvent: {},
-  view: 'dayGridMonth',
+  view: 'timeGridWeek',
   popupType: '',
 };
 
@@ -54,17 +56,16 @@ export default (state = initialState, action) => {
       // eslint-disable-next-line
       console.log(`[ACTION: events/eventDeleted] Deleting event with content ${action.payload}`);
       // Deleting the given event
-      let updatedList = [...state.eventsList];
-      updatedList = updatedList.filter((event) => event.id !== action.payload.rows[0].event_id);
+      const updatedEventsList = state.eventsList
+        .filter((event) => event.id !== action.payload.rows[0].event_id);
       return {
         ...state,
-        eventsList: updatedList,
+        eventsList: updatedEventsList,
       };
     }
     case 'events/eventEdited': {
       // eslint-disable-next-line
       console.log(`[ACTION: events/eventEdited] Editing event with content ${action.payload}`);
-      console.log(action.payload);
       // Update that event
       let updatedList = [...state.eventsList];
       updatedList = updatedList.filter((event) => event.id !== action.payload[0].id);
@@ -94,9 +95,15 @@ export default (state = initialState, action) => {
       const id = action.payload[0].eventId;
       // TODO: Add error handling in case event not found?
       const addedEvent = state.eventsList.filter((event) => event.id === id)[0];
+      const updatedUnsubmittedEventsList = [...state.unsubmittedUserEventsList];
+      // If the event has already started, add it to our unsubmitted hours list
+      if (new Date(addedEvent.startTime) < new Date()) {
+        updatedUnsubmittedEventsList.push(addedEvent);
+      }
       return {
         ...state,
         userEventsList: [...state.userEventsList, addedEvent],
+        unsubmittedUserEventsList: updatedUnsubmittedEventsList,
       };
     }
 
@@ -107,9 +114,32 @@ export default (state = initialState, action) => {
       const id = action.payload[0].eventId;
       // TODO: Add error handling in case event not found?
       const newUserEvents = state.userEventsList.filter((event) => event.id !== id);
+      const updatedUnsubmittedEventsList = state.unsubmittedUserEventsList
+        .filter((event) => event.id !== id);
       return {
         ...state,
         userEventsList: newUserEvents,
+        unsubmittedUserEventsList: updatedUnsubmittedEventsList,
+      };
+    }
+
+    case 'events/unsubmittedEventsLoaded': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/unsubmittedEventsLoaded] Unsubmitted events loaded`);
+      return {
+        ...state,
+        // We only want events that have already started
+        unsubmittedUserEventsList: action.payload.filter((e) => new Date(e.startTime) < new Date()),
+      };
+    }
+
+    case 'events/submittedEventsLoaded': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/submittedEventsLoaded] Submitted events loaded`);
+      return {
+        ...state,
+        // We only want events that have already started
+        submittedUserEventsList: action.payload.filter((e) => new Date(e.startTime) < new Date()),
       };
     }
 
@@ -146,6 +176,17 @@ export default (state = initialState, action) => {
       return {
         ...state,
         year: action.payload,
+      };
+    }
+
+    case 'events/dateSelected': {
+      // eslint-disable-next-line
+      console.log(`[ACTION: events/dateSelected] Setting date to ${action.payload}`);
+      return {
+        ...state,
+        day: action.payload.day,
+        month: action.payload.month,
+        year: action.payload.year,
       };
     }
 

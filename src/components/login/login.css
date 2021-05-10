@@ -11,9 +11,12 @@
     border-radius: 37px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
 
-    width: 25%;
-    height: 37%;
-    min-width: 650px;
+    /* width: 25%; */
+    /* height: 37%; */
+    height: 450px;
+    /* min-width: 650px; */
+
+    width: 650px;
 }
 
 .login-container p {
@@ -29,7 +32,7 @@
     margin: 0% 12% 1% 12%;
     padding-top: 5%;
 
-    height: 50%;
+    height: 220px;
 }
 
 .login-container .login-forms .login-input-label {
@@ -71,7 +74,7 @@
     background: transparent;
 
     right: 12px;
-    top: 37px;
+    top: 32px;
     margin-right: 0;
 
     cursor: pointer;
@@ -168,4 +171,29 @@
 .login-container .login-buttons .lwg-button .google-logo {
     height: 70%;
     margin-right: 5%;
+}
+
+@media screen and (max-width: 768px) {
+    .login-container {
+        width: 450px;
+    }
+
+    .login-container .login-forms .login-password-input .login-password-showhide-button {
+        top: 28px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .login-container {
+        width: 341px;
+    }
+
+    .login-container .error-message {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .login-container .login-buttons {
+        margin: 2% 20% 2% 20%;
+    }
 }

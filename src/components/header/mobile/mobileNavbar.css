@@ -1,0 +1,75 @@
+.hamburger-menu {
+  background: transparent;
+  border: none;
+  background-size: 100%;
+  padding: 0;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.navbar-mobile-menu-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  right: -1px;
+  margin-top: 15px;
+  width: 100%;
+  background-color: #f2fbfc;
+  color: var(--text-color-dark);
+  border: 1px solid var(--text-color-dark);
+  border-radius: 2px;
+  z-index: 999;
+}
+
+/* Style navigation menu links */
+.navbar-mobile-menu-container .mobile-navbar-link {
+  font-family: 'Assistant', Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text-color-dark);
+  border-bottom: 1px solid var(--text-color-dark);
+  width: 100%;
+  padding: 10px 0px;
+}
+
+.navbar-mobile-menu-container .active {
+  background-color: var(--color-cyan);
+  color: var(--color-light-blue);
+}
+
+.mobile-navbar-submit-hours-button {
+  border-radius: 20px;
+  border: none;
+  width: 165px;
+  height: 30px;
+  padding: 4px;
+  margin: 12px 0px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Assistant', Arial, Helvetica, sans-serif;
+  color: #fff;
+  background-color: var(--color-dark-orange);
+  cursor: pointer;
+}
+
+.navbar-mobile-logout-button {
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+  border-top: 1px solid var(--color-dark-blue);
+
+  width: 100%;
+  height: 54px;
+
+  background: none;
+  color: var(--color-dark-orange);
+  font-family: 'Assistant', Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}

@@ -1,0 +1,76 @@
+@import '../../../../../common/vars.css';
+
+.volunteer-list li {
+    list-style-type: none;
+}
+
+.volunteers-container {
+    background-color: var(--color-light-blue);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.top-volunteers .title {
+    font-weight: bold;
+    font-size: 25px;
+    margin: 0;
+}
+
+.volunteer-list .top-volunteer-item { 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.volunteer-card-container {
+    min-width: 250px;
+}
+
+.volunteer-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-volunteer-item .avatar {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background-color:#4242426b;
+    display: block;
+    margin-right: 5%;
+}
+
+.top-volunteer-item .volunteer-info .volunteer-name {
+    font-weight: bold;
+}
+
+.volunteer-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.volunteer-name {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .volunteer-name {
+        display: flex;
+        flex-direction: row;
+    }
+    .first {
+        padding: 2px;
+    }
+}

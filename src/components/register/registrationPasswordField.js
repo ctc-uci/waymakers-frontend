@@ -32,6 +32,7 @@ const RegistrationPasswordField = (props) => {
           type="button"
           className="password-showhide-button"
           onClick={() => setShowPassword(!showPassword)}
+          tabIndex={-1}
         >
           {showPassword
             ? <img src={registrationHidePassword} alt="Hide" />
@@ -39,7 +40,7 @@ const RegistrationPasswordField = (props) => {
         </button>
         <p className="small">{label}</p>
         {meta.touched && meta.error ? (
-          <p className="registration-error">
+          <p className="registration-error small">
             <img src={registrationError} alt=" " />
             {' '}
             {meta.error}

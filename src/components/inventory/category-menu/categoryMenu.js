@@ -1,15 +1,33 @@
-import { React } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import ScrollMenu from 'react-horizontal-scrolling-menu';
-import CategoryMenuItem from './categoryMenuItem';
 import { getCategories, getEditing } from '../redux/selectors';
+
+import useMobileWidth from '../../../common/useMobileWidth';
+import CategoryMenuItem from './categoryMenuItem';
+
+import prevArrow from '../../../assets/inventoryArrowPrev.png';
+import nextArrow from '../../../assets/inventoryArrowNext.png';
+
 import './categoryMenu.css';
 
 // TO DO: show only 4 categories at a time
 
 const CategoryMenu = (prop) => {
+  const isMobile = useMobileWidth();
+  const [test, setTest] = useState('rerender');
+
+  useEffect(() => {
+    setTest('rerender');
+    console.log(test);
+  }, [useSelector(getEditing)]);
+
   // Arrows for menu navigation
-  const Arrow = (className) => <button type="button" aria-label="arrow" className={className} />;
+  const Arrow = (arrow) => (
+    <button type="button" aria-label="arrow" className="menu-arrow">
+      <img src={arrow === 'arrow-prev' ? prevArrow : nextArrow} alt="" />
+    </button>
+  );
   const ArrowLeft = Arrow('arrow-prev');
   const ArrowRight = Arrow('arrow-next');
 
@@ -25,12 +43,12 @@ const CategoryMenu = (prop) => {
             editing={prop.editing}
           />
         ))}
-        arrowLeft={ArrowLeft}
-        arrowRight={ArrowRight}
+        arrowLeft={!isMobile && ArrowLeft}
+        arrowRight={!isMobile && ArrowRight}
         alignCenter={false}
-        scrollBy={4}
-        dragging={false}
+        dragging={isMobile}
         wheel={false}
+        transition={false}
       />
     </div>
   );

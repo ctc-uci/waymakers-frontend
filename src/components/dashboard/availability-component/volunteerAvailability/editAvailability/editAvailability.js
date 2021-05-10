@@ -19,6 +19,16 @@ const EditAvailability = ({
     setAvailabilityTimes(newSchedule);
   };
 
+  const renderCell = (time, selected, refSetter) => (
+    <div
+      className="grid-cell"
+      style={{ backgroundColor: `${selected ? '#799CA8' : '#F2FBFC'}` }}
+      ref={refSetter}
+    >
+      {' '}
+    </div>
+  );
+
   return (
     <div className="editAvailCard">
       <ScheduleSelector
@@ -26,11 +36,15 @@ const EditAvailability = ({
         selectionScheme="square"
         startDate={startWeek}
         numDays={7}
-        minTime={7}
-        maxTime={19}
+        minTime={0}
+        maxTime={24}
         hourlyChunks={1}
         dateFormat="ddd"
+        selectedColor="rgba(121, 156, 168, 1)"
+        rowGap={1}
+        columnGap={1}
         onChange={handleChange}
+        renderDateCell={renderCell}
       />
     </div>
   );

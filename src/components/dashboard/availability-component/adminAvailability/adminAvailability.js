@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {
   startOfWeek, add,
 } from 'date-fns';
+import disableScroll from 'disable-scroll';
 import ScheduleSelector from 'react-schedule-selector';
+import HelpPopup from '../help-popup/helpPopup';
 
 import { WMKBackend } from '../../../../common/utils';
 
@@ -15,6 +17,7 @@ const AdminAvailability = () => {
   const [freqMap, setfreqMap] = useState(new Map());
   const [nameMap, setNameMap] = useState(new Map());
   const [maxFreq, setMaxFreq] = useState(0);
+  const [helpPopupSeen, setHelpPopupSeen] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   const stringToDate = (dateString) => {
@@ -44,6 +47,10 @@ const AdminAvailability = () => {
 
       // handling all users' availability
       let { usersAvailability } = allAvailabilityResult.data;
+      console.log('availability/counts data:', usersAvailability);
+
+      const availabilityNames = availabilityNamesResult.data;
+      console.log('availability/names data:', availabilityNames);
 
       const frequencyMap = new Map();
 
@@ -69,7 +76,7 @@ const AdminAvailability = () => {
 
       availabilityNamesResult.data.availabilityNames.forEach((dateString) => {
         const {
-          dayofweek, starttime, firstname, lastname, locationcity, phone, email,
+          dayofweek, starttime, firstname, lastname, locationcity, phone, email, permissions,
         } = dateString;
 
         const parsedDate = stringToDate({ dayofweek, starttime });
@@ -79,23 +86,21 @@ const AdminAvailability = () => {
         if (dateValue === undefined) {
           namesMap.set(JSON.stringify(parsedDate), [
             {
-              fname: firstname, lname: lastname, city: locationcity, phone, email,
+              fname: firstname, lname: lastname, city: locationcity, phone, email, permissions,
             },
           ]);
         } else {
           dateValue.push({
-            fname: firstname, lname: lastname, city: locationcity, phone, email,
+            fname: firstname, lname: lastname, city: locationcity, phone, email, permissions,
           });
           namesMap.set(JSON.stringify(parsedDate), dateValue);
         }
-
         return null;
       });
 
       setAllAvailability(usersAvailability);
       setNameMap(namesMap);
     } catch (e) {
-      // eslint-disable-next-line
       console.log('Error:', e);
       console.log('Error while getting availability from the backend!');
     }
@@ -103,13 +108,24 @@ const AdminAvailability = () => {
 
   // lightest shade: rgb(219, 237, 255)
   // darkest shade: rgb(0, 127, 255)
+
+  // lightest shade: rgb(121, 156, 168)
+  // darkest shade: rgb(0, 62, 83)
   // values of r and g change with availability values
+  // eslint-disable-next-line no-unused-vars
   function calculateShade(time) {
     const currFreq = Number(freqMap.get(JSON.stringify(time)));
     const frac = (Number.isNaN(currFreq) ? 0 : currFreq) / Number(maxFreq);
-    const r = 219 - frac * 219;
-    const g = 237 - frac * 110;
-    return `rgb(${r},${g},255)`;
+    const r = 121 - frac * 121;
+    const g = 156 - frac * 94;
+    const b = 168 - frac * 85;
+    const color = frac === 0 ? 'rgb(242, 251, 252)' : `rgb(${r},${g},${b})`;
+    // eslint-disable-next-line max-len
+    // const nameList = nameMap.get(JSON.stringify(time)) === undefined ? 0 : nameMap.get(JSON.stringify(time)).length;
+    // const nameCount = freqMap.get(JSON.stringify(time)) || 0;
+    // const maxCount = maxFreq;
+    // console.log(`${JSON.stringify(time)}: ${nameCount} / ${maxCount}, color: ${color}`);
+    return color;
   }
 
   function renderCell(time, selected, refSetter) {
@@ -160,24 +176,31 @@ const AdminAvailability = () => {
             <table className="names-table">
               <tbody>
                 {
-                nameList.map((person) => (
-                  <tr>
-                    <td>
-                      {person.fname}
-                      {' '}
-                      {person.lname}
-                    </td>
-                    <td>
-                      {person.email}
-                    </td>
-                    <td>
-                      {person.phone}
-                    </td>
-                    <td>
-                      {person.city}
-                    </td>
-                  </tr>
-                ))
+                  // display admins first; admin < staff < volunteer
+                nameList
+                  .sort((a, b) => (
+                    a.permissions.toUpperCase() < b.permissions.toUpperCase() ? -1 : 1))
+                  .map((person) => (
+                    <tr key={person.email}>
+                      <td>
+                        {person.fname}
+                        {' '}
+                        {person.lname}
+                      </td>
+                      <td>
+                        {person.permissions}
+                      </td>
+                      <td>
+                        {person.email}
+                      </td>
+                      <td>
+                        {person.phone}
+                      </td>
+                      <td>
+                        {person.city}
+                      </td>
+                    </tr>
+                  ))
               }
               </tbody>
             </table>
@@ -192,27 +215,55 @@ const AdminAvailability = () => {
     setLoading(false);
   }, []);
 
+  const onHelpButtonClick = () => {
+    if (helpPopupSeen) {
+      disableScroll.off();
+    } else {
+      disableScroll.on();
+    }
+    setHelpPopupSeen(!helpPopupSeen);
+  };
+
   if (isLoading) {
     return (<div>Loading dashboard...</div>);
   }
 
   return (
-    <>
-      <div className="adminAvailCard">
-        <ScheduleSelector
-          selection={allAvailability}
-          selectionScheme="square"
-          startDate={startWeek}
-          numDays={7}
-          minTime={7}
-          maxTime={19}
-          hourlyChunks={1}
-          dateFormat="ddd"
-          renderDateCell={renderCell}
-        />
+    <div className="admin-availability-container">
+      <div className="availability-header">
+        <h4 className="availability-title">
+          Volunteer On-Call Availability
+        </h4>
+        <div
+          className="help-popup-button"
+          onClick={onHelpButtonClick}
+          onKeyDown={onHelpButtonClick}
+          role="button"
+          tabIndex={0}
+        >
+          ?
+        </div>
+      </div>
+      <div className="schedule-table">
+        <div className="schedule-selector-wrapper">
+          <ScheduleSelector
+            selection={allAvailability}
+            selectionScheme="square"
+            startDate={startWeek}
+            numDays={7}
+            minTime={0}
+            maxTime={24}
+            hourlyChunks={1}
+            rowGap={0}
+            columnGap={0}
+            dateFormat="ddd"
+            renderDateCell={renderCell}
+          />
+        </div>
       </div>
       { currentDate && displayNames() }
-    </>
+      {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} type="admin" />}
+    </div>
   );
 };
 

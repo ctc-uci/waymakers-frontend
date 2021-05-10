@@ -1,17 +1,20 @@
-import { React, useState, useEffect } from 'react';
+import {
+  React, useState, useEffect,
+} from 'react';
 import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
 
 import { WMKBackend } from '../../../../common/utils';
-
-import { TitledCard } from '../../../../common/Card';
-
 import useMobileWidth from '../../../../common/useMobileWidth';
+import usePaginationController from '../../../../common/usePaginationController';
+import { TitledCard } from '../../../../common/Card';
+import PaginationController from '../../../../common/PaginationController/PaginationController';
+
 import UnsubmittedDesktopTable from './unsubmittedDesktopTable';
 import UnsubmittedMobileTable from './unsubmittedMobileTable';
-import UseFilteredHours from '../useFilteredHours';
+import useFilteredHours from '../useFilteredHours';
 import DateTimeFilter from '../DateTimeFilter';
-
-import '../hours.css';
+import { getUnsubmittedEvents } from '../../../events/redux/selectors';
 
 const UnsubmittedHours = () => {
   const isMobile = useMobileWidth();
@@ -20,7 +23,10 @@ const UnsubmittedHours = () => {
   // Filtered unsubmitted hours and filter interface
   const [
     filteredUnsubmittedHours, filteredDate, setFilteredDate,
-  ] = UseFilteredHours(allUnsubmittedHours);
+  ] = useFilteredHours(allUnsubmittedHours);
+  const [
+    paginatedData, paginatedIndex, setPaginatedIndex, totalNumberOfPages,
+  ] = usePaginationController(filteredUnsubmittedHours);
 
   const [cookies] = useCookies(['userId']);
 
@@ -29,11 +35,12 @@ const UnsubmittedHours = () => {
       params: { userId: cookies.userId },
       withCredentials: true,
     }).then((res) => {
-      setAllUnsubmittedHours(res.data);
+      // Set unsubmitted hours to events whose end times have passed
+      setAllUnsubmittedHours(res.data.filter((e) => new Date(e.startTime) < new Date()));
     }).catch((err) => {
       console.error(err);
     });
-  }, []);
+  }, [useSelector(getUnsubmittedEvents)]);
 
   if (filteredUnsubmittedHours === null) {
     return (
@@ -69,14 +76,19 @@ const UnsubmittedHours = () => {
         {isMobile
           ? (
             <UnsubmittedMobileTable
-              filteredUnsubmittedHours={filteredUnsubmittedHours}
+              filteredUnsubmittedHours={paginatedData}
             />
           )
           : (
             <UnsubmittedDesktopTable
-              filteredUnsubmittedHours={filteredUnsubmittedHours}
+              filteredUnsubmittedHours={paginatedData}
             />
           )}
+        <PaginationController
+          paginatedIndex={paginatedIndex}
+          setPaginatedIndex={setPaginatedIndex}
+          totalNumberOfPages={totalNumberOfPages}
+        />
       </TitledCard>
     </>
   );

@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
 import React, { useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
 import GoogleAuthService from '../../services/firebase/firebase';
+import { WMKBackend } from '../../common/utils';
 
 import registrationShowPassword from '../../assets/registrationShowPassword.svg';
 import registrationHidePassword from '../../assets/registrationHidePassword.svg';
@@ -11,16 +13,32 @@ import googleLogo from '../../assets/googleLogo.svg';
 
 import './login.css';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+const useQuery = () => (
+  new URLSearchParams(useLocation().search)
+);
 
-function useRedirectURL() {
+const useRedirectURL = () => {
   const query = useQuery();
   const redirectURL = query.get('redirect');
   if (!redirectURL) { return '/'; }
   return redirectURL;
-}
+};
+
+const setAccessToken = (cookies, idToken) => {
+  if (process.env.NODE_ENV === 'production') {
+    cookies.set('accessToken', idToken, {
+      path: '/',
+      maxAge: 3600,
+      domain: `${process.env.REACT_APP_COOKIE_DOMAIN}`,
+      secure: true,
+    });
+  } else {
+    cookies.set('accessToken', idToken, {
+      path: '/',
+      maxAge: 3600,
+    });
+  }
+};
 
 const LogIn = (props) => {
   const { cookies } = props;
@@ -35,16 +53,31 @@ const LogIn = (props) => {
 
   async function login() {
     try {
+      const res = await WMKBackend.get('/register/isVerified', {
+        params: {
+          email,
+        },
+      });
+      console.log('@login:', res);
+      if (!res.data) {
+        throw new Error('User is not verified');
+      }
       await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
 
-      const idToken = await GoogleAuthService.auth.currentUser.getIdToken();
-      // console.log(`idToken: ${idToken}`);
+      const user = await GoogleAuthService.auth.currentUser;
+      const idToken = await user.getIdToken();
 
       // Setting a session cookie
-      cookies.set('accessToken', idToken, {
-        path: '/',
-        maxAge: 3600,
-      });
+      setAccessToken(cookies, idToken);
+
+      // set profile picture
+      const { data: { account } } = await WMKBackend.get(`/accounts/${user.uid}`);
+      if (account.profile_picture) {
+        localStorage.setItem('profilePicture', account.profile_picture);
+      }
+
+      // add full name to local storage
+      localStorage.setItem('userFullName', `${account.firstname} ${account.lastname}`);
 
       // console.log(user.user.uid);
       history.push(redirectURL);
@@ -58,18 +91,40 @@ const LogIn = (props) => {
   async function loginWithGoogle() {
     try {
       const provider = new GoogleAuthService.firebase.auth.GoogleAuthProvider();
-      await GoogleAuthService.auth.signInWithRedirect(provider);
-      const result = await GoogleAuthService.firebase.getRedirectResult();
-      if (result.credential) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        // const token = result.credential.accessToken;
+      await GoogleAuthService.auth.signInWithPopup(provider);
+
+      const user = await GoogleAuthService.auth.currentUser;
+      console.log(user);
+
+      const userID = user.uid;
+      const { data } = await WMKBackend.get(`/register/${userID}`);
+      console.log(data);
+      if (!data) {
+        // first time creating account or not created account on our end yet;
+        return history.push({
+          pathname: '/register',
+          state: {
+            fromGoogle: true,
+          },
+        });
       }
-      // The signed-in user info.
-      // const { user } = result;
-      // console.log(user);
-      history.push(redirectURL);
+
+      const idToken = await user.getIdToken();
+
+      // Setting a session cookie
+      setAccessToken(cookies, idToken);
+
+      // set profile picture
+      const { data: { account } } = await WMKBackend.get(`/accounts/${user.uid}`);
+
+      if (account.profile_picture) {
+        localStorage.setItem('profilePicture', account.profile_picture);
+      }
+
+      return history.push(redirectURL);
     } catch (err) {
       setError(err.message);
+      return null;
     }
   }
 
@@ -118,6 +173,7 @@ const LogIn = (props) => {
             type="button"
             className="login-password-showhide-button"
             onClick={() => setShowPassword(!showPassword)}
+            tabIndex={-1}
           >
             {showPassword
               ? <img src={registrationHidePassword} alt="Hide" />
@@ -136,10 +192,12 @@ const LogIn = (props) => {
         ? <span className="error-message">{error}</span>
         : <br />}
       <div className="login-buttons">
-        <button type="submit" className="login-button" onClick={handleSubmit}>Login</button>
+        <button type="submit" className="login-button" onClick={handleSubmit}>
+          <p className="large">Login</p>
+        </button>
         <button type="button" className="lwg-button" onClick={loginWithGoogle}>
           <img className="google-logo" src={googleLogo} alt=" " />
-          Login with Google
+          <p className="medium">Login with Google</p>
         </button>
       </div>
     </div>

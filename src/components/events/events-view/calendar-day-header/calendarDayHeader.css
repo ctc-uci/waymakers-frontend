@@ -1,27 +1,12 @@
-.week-header{
+.week-header {
     border: none;
     display: flex;
     flex-direction: row;
 }
 
-.cal-btn{
-    background: transparent;
-    box-shadow: 0px 0px 0px transparent;
-    border: 0px solid transparent;
-    text-shadow: 0px 0px 0px transparent;
-    color: var(--text-color-dark);
-    position: absolute;
-    margin-top: 0%;
-}
-
-.day-header .prev-button {
-    margin-top: 1.5%;
-    margin-left: -6%;
-}
-
-.day-header .next-button {
-    margin-top: 1.5%;
-    margin-left: 5%;
+.prev-button,
+.next-button {
+    cursor: pointer;
 }
 
 .cal-btn:hover {
@@ -31,21 +16,21 @@
     text-shadow: 0px 0px 0px transparent;
 }
 
-.week-day-header-content{
+.week-day-header-content {
     display: flex;
     flex-direction: column;
 }
 
-.week-day-header-content p{
+.week-day-header-content p {
     margin-bottom: 0px;
 }
 
-#header-date{
+.header-date {
     font-size: 1.25em;
     padding-bottom: 0px;
 }
 
-#header-day{
+.header-day {
     color: var(--color-dark-blue);
     font-size: 0.75em;
 }
@@ -69,8 +54,25 @@
     color: var(--text-color-dark);
 }
 
-#day-view-title{
+.day-view-title {
     font-size: 1.5em;
     font-weight: bold;
     color: var(--color-dark-blue);
 }
+
+@media screen and (max-width: 768px) {
+    .prev-button {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    .next-button {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+
+    .month-header p {
+        font-size: 0.85em;
+    }
+}
+

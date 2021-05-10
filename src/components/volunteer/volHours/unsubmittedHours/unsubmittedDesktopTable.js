@@ -5,28 +5,28 @@ import {
   Table, TableHeader, TableColumnHeader, TableBody, TableRow, TableContent,
 } from '../../../../common/Table';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
-import '../hours.css';
-import './unsubmittedDesktopTable.css';
-
 import SubmitHoursPopup from './SubmitHoursPopup';
+
+import './unsubmittedDesktopTable.css';
 
 const SubmitButton = styled.button`
   border-radius: 25px;
   background: #5D9A64;
   color: white;
   border: none;
-  text-decoration: none;
-  padding: 4px 24px 4px 24px;
+  font-size: 14px;
+  width: 75%;
   cursor:pointer;
+  padding: 4px 4px;
 `;
 
 const Row = ({
-  eventName, location, startTime, endTime,
+  title, id, location, startTime, endTime,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <TableRow className="uh-table-row">
-      <TableContent>{eventName}</TableContent>
+      <TableContent>{title}</TableContent>
       <TableContent>{location}</TableContent>
       <TableContent>{formatDate(startTime, DATE_FORMAT.MY_HOURS)}</TableContent>
       <TableContent>{formatDate(endTime, DATE_FORMAT.MY_HOURS)}</TableContent>
@@ -36,7 +36,8 @@ const Row = ({
         <SubmitHoursPopup
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          eventTitle={eventName}
+          eventId={id}
+          type="submit"
         />
         )}
       </TableContent>
@@ -45,7 +46,8 @@ const Row = ({
 };
 
 Row.propTypes = {
-  eventName: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   location: PropTypes.string.isRequired,
   startTime: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,
@@ -55,17 +57,20 @@ Row.propTypes = {
 const UnsubmittedDesktopTable = ({ filteredUnsubmittedHours }) => (
   <Table className="uh-table">
     <TableHeader>
-      <TableColumnHeader className="uh-table-col-header">Event Name</TableColumnHeader>
-      <TableColumnHeader className="uh-table-col-header">Location</TableColumnHeader>
-      <TableColumnHeader className="uh-table-col-header">Start Date/Time</TableColumnHeader>
-      <TableColumnHeader className="uh-table-col-header">End Date/Time</TableColumnHeader>
-      <TableColumnHeader className="uh-table-col-header">Submit</TableColumnHeader>
+      <TableRow>
+        <TableColumnHeader>Event Name</TableColumnHeader>
+        <TableColumnHeader>Location</TableColumnHeader>
+        <TableColumnHeader>Start Date/Time</TableColumnHeader>
+        <TableColumnHeader>End Date/Time</TableColumnHeader>
+        <TableColumnHeader>Submit</TableColumnHeader>
+      </TableRow>
     </TableHeader>
     <TableBody className="uh-table-body">
       {filteredUnsubmittedHours && filteredUnsubmittedHours.map((e) => (
         <Row
-          key={e.eventName}
-          eventName={e.eventName}
+          key={e.id}
+          id={e.id}
+          title={e.title}
           location={e.location}
           startTime={e.startTime}
           endTime={e.endTime}
@@ -76,7 +81,14 @@ const UnsubmittedDesktopTable = ({ filteredUnsubmittedHours }) => (
 );
 
 UnsubmittedDesktopTable.propTypes = {
-  filteredUnsubmittedHours: PropTypes.arrayOf(Object).isRequired,
+  filteredUnsubmittedHours: PropTypes.arrayOf(
+    PropTypes.shape({
+      eventName: PropTypes.string,
+      location: PropTypes.string,
+      startTime: PropTypes.string,
+      endTime: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default UnsubmittedDesktopTable;

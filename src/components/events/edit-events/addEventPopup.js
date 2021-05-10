@@ -67,7 +67,7 @@ const AddEventPopup = ({ onClose, addNewEvent }) => {
         <br />
 
         <label htmlFor="event-limit">
-          Limit:
+          Volunteer Limit:
           <br />
           <input id="event-limit" type="number" value={eventLimit} onChange={(e) => setEventLimit(e.target.value)} required />
         </label>

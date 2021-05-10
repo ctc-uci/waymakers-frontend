@@ -95,7 +95,13 @@ const Event = ({
   };
 
   return (
-    <div className="event-list-container" tabIndex={0} onClick={renderEventBlockPopup} onKeyDown={() => {}} role="button">
+    <div
+      className="event-list-container"
+      tabIndex={0}
+      onClick={(e) => { e.preventDefault(); renderEventBlockPopup(); }}
+      onKeyDown={() => {}}
+      role="button"
+    >
       <div className={`event-container ${listType}`}>
         {renderButton()}
         <div className="event-date-section">
@@ -107,7 +113,7 @@ const Event = ({
           <p className="event-time">{`${startTime} - ${endTime}`}</p>
         </div>
       </div>
-      { (listType === 'all' || listType === 'my-events' || listType === 'more-events') && <div className={`${eventType}`} />}
+      { (listType === 'all' || listType === 'my-events' || listType === 'more-events') && <div className={`event-color-label ${eventType}`} />}
     </div>
   );
 };

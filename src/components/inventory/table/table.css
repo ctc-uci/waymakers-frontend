@@ -1,8 +1,17 @@
 @import '../../../common/vars.css';
 
+.inventory-container {
+    min-height: 100vh;
+}
+
 .items-table-wrapper {
     align-self: center;
-    width: 80%;
+
+    margin-left: 2.5%;
+    margin-right: -4%;
+
+    /* max-height: 800px;
+    overflow-y: scroll; */
 }
 
 .items-table {
@@ -15,7 +24,8 @@
     border-bottom: solid 1px var(--color-dark-blue);
 }
 
-.items-table thead tr {
+.items-table thead .items-table--row {
+    position: relative;
     padding: 12px;
     font-size: 20px;
     color: var(--text-color-dark);
@@ -47,4 +57,11 @@
     text-align: center;
     border-bottom: solid 1px var(--color-dark-blue);
     padding-bottom: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .items-table-mobile {
+        align-self: center;
+        width: 100%;
+    }
 }

@@ -1,46 +1,80 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
 import { connect, useDispatch } from 'react-redux';
+
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { ValidatedField } from '../../../common/formikExtensions';
+
 import { addCategory } from '../redux/actions';
 import { getCategories } from '../redux/selectors';
+
+import { createAlert } from '../../../common/AlertBanner/AlertBannerSlice';
+import { LightModal } from '../../../common/LightModal';
 import './addCategory.css';
 
-Modal.setAppElement('#root');
+const AddCategorySchema = Yup.object().shape({
+  label: Yup.string().required('Required'),
+});
+
 const AddCategoryButton = () => {
   const dispatch = useDispatch();
   const [popup, setPopup] = useState(false);
-  const [label, setLabel] = useState('');
+  // const [label, setLabel] = useState('');
 
-  const handleOnSubmit = () => {
+  const onSubmitAddCategory = (values) => {
+    const { label } = values;
     // create an add category action
     dispatch(addCategory({
       label,
-    }));
+    })).then(() => {
+      // dispatch(fetchCategories());
+      setPopup(false);
+      dispatch(createAlert({
+        message: `Successfully created category '${label}'`,
+        severity: 'success',
+      }));
+    });
   };
 
+  const formik = useFormik({
+    initialValues: {
+      label: '',
+    },
+    validationSchema: AddCategorySchema,
+    onSubmit: onSubmitAddCategory,
+    // validate only on submit, change as needed
+    validateOnBlur: false,
+    validateOnChange: false,
+  });
+
   return (
-    <div style={{ paddingRight: '10px' }}>
+    <div className="add-category">
       <button type="button" className="add-category-button" onClick={() => setPopup(true)}>+</button>
-      <>
-        <Modal
-          className="add-category-popup"
-          isOpen={popup}
-          onRequestClose={() => setPopup(false)}
-          style={{ size: '100px' }}
-        >
-          <button type="button" className="close-category" onClick={() => setPopup(false)}>x</button>
-          <form className="add-category-form" onSubmit={handleOnSubmit}>
+      {/* Popup form for when button is clicked */}
+      <LightModal
+        className="add-category-popup"
+        isOpen={popup}
+        onRequestClose={() => setPopup(false)}
+      >
+        <form className="add-category-form" onSubmit={formik.handleSubmit}>
+          {/* <p className="add-category-title">Create new category?</p> */}
+          <ValidatedField name="label" labelText="Create new category?" isRequired formik={formik}>
             <input
+              id="label"
+              name="label"
               type="text"
               className="add-category-input"
-              name="add-category-input"
               placeholder="Category Name"
-              onChange={(e) => setLabel(e.target.value)}
+              value={formik.values.label}
+              onChange={formik.handleChange}
             />
-            <button type="submit" className="submit-button">Add Category</button>
-          </form>
-        </Modal>
-      </>
+          </ValidatedField>
+          <div className="confirmation">
+            <button type="button" className="category-form-button" onClick={() => setPopup(false)}>Cancel</button>
+            <button type="submit" className="category-form-button submit-category">Yes</button>
+          </div>
+        </form>
+      </LightModal>
     </div>
   );
 };

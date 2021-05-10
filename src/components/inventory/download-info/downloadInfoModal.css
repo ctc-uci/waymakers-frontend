@@ -1,0 +1,88 @@
+.download-modal {
+  max-width: 300px;
+  position: relative;
+}
+
+.download-form {
+  min-height: 250px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.download-modal .form-navigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  /* margin: 0% 12% 3% 12%; */
+}
+
+.download-modal .select-divisions-label {
+  position: absolute;
+  width: 90%;
+  bottom: 20%;
+}
+
+.download-modal .select-divisions {
+  z-index: 5000;
+}
+
+/* .download-modal .form-navigation .stage-dots {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  position: absolute;
+
+  margin: auto;
+
+  left: 0;
+  right: 0;
+
+  width: 5rem;
+} */
+
+
+/* .download-modal .form-navigation .stage-dots .stage-dot {
+  border-color: white;
+  border-style: solid;
+  border-width: 2px;
+
+  border-radius: 50%;
+
+  width: 10px;
+  height: 10px;
+} */
+
+/* .download-modal .form-navigation .stage-dots .current-stage {
+  background: white;
+}
+
+.download-modal .form-navigation .next-button {
+  margin-left: auto;
+}
+
+.download-modal .form-navigation .next-button .next-arrow {
+  width: 45px;
+  height: 25px;
+}
+
+.download-modal .form-navigation .back-button {
+  background: none;
+  box-shadow: none;
+}
+
+.download-modal .form-navigation .back-button .back-arrow {
+  width: 45px;
+  height: 25px;
+
+  transform: rotate(180deg);
+} */
+
+.download-modal .form-navigation .download-submit-button {
+  margin-left: auto;
+}

@@ -1,8 +1,9 @@
-#calendar{
+.calendar{
     align-items: center;
     margin: auto;
     padding: 1em;
     background: white;
+    z-index: -1;
 }
 
 /* table {
@@ -13,6 +14,7 @@
 /* Change background color of calendar while keeping vertical lines */
 .fc-view-harness.fc-view-harness-active {
     background-color: var( --color-light-blue);
+    z-index: 0;
 }
 
 .fc-scrollgrid {
@@ -84,12 +86,13 @@ table thead {
 .fc-toolbar-title {
     color: var(--text-color-dark);
     font-weight: bold;
+    text-align: center;
 }
 
 /* To add 'week of' */
-.fc-toolbar-title::before {
+/* .fc-toolbar-title::before {
     content: "Week of ";
-}
+} */
 
 /* Remove today button */
 .fc-today-button {
@@ -145,19 +148,103 @@ table thead {
   background-color:inherit !important;
 }
 
-.button{
-    margin: 1%;
-}
-/* .blur{
-    filter: blur(3px);
-} */
-
-.selected{
-    color: lightblue;
+.events-view .top-of-calendar {
+    margin-bottom: 20px;
 }
 
-.test-headers{
-    /* background: blue; */
+.events-view .top-of-calendar .calendar-add-date-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.events-view .top-of-calendar .calendar-add-date-filters .add-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-green);
+    color: var(--text-color-light);
+    outline: none;
+    border-radius: 10px;
+    padding: 0.5em;
     border: none;
+    cursor: pointer;
+    width: 150px;
+    height: 40px;
+    font-size: 20px;
+}
+
+.events-view .top-of-calendar .calendar-add-date-filters .add-button p {
+    margin: 0;
+    padding: 0;
+}
+
+.filter-help-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.filter-help-header .help-button {
+    background-color: var(--color-light-orange);
+    color: white;
+    border-radius: 50%;
+    border: none;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.fc-timegrid-axis,
+.fc-scrollgrid-shrink {
+    background-color: white;
+}
+
+.fc .fc-scrollgrid-section > * {
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-right: white;
+}
+
+@media screen and (max-width: 768px) {
+    .calendar {
+        max-height: 800px;
+        overflow-x: scroll;
+        overflow-y: scroll;
+        padding: 0px;
+    }
+
+    .events-view {
+        width: 100%;
+    }
+
+    .events-view .top-of-calendar .calendar-add-date-filters {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .events-view .top-of-calendar .calendar-add-date-filters .add-button {
+        border-radius: 15px;
+        height: 30px;
+    }
+
+    .filter-help-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+    }
+
+    .filter-help-header .help-button {
+        margin-left: 3px;
+    }
 }
 

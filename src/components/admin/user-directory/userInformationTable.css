@@ -1,0 +1,109 @@
+@import '../../../common/vars.css';
+
+.user-table-wrapper {
+  width: 90%;
+}
+
+.table-topbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  padding-top: 5px;
+  padding-bottom: 15px;
+}
+
+.table-topbar p {
+  margin: 0;
+  padding: 0;
+}
+
+.table-topbar .search-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  color: black;
+}
+
+.table-topbar .search-section .user-search {
+  border-radius: 5px;
+  background: rgba(0, 171, 198, 0.1);
+  outline: none;
+  border: 0.5px solid black;
+  height: 27px;
+
+  margin-right: 40px;
+}
+
+.table-topbar .sort-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  color: black;
+}
+
+.table-topbar .sort-section .user-sort {
+  border-radius: 5px;
+  background: #5D9A64;
+  outline: none;
+  border: 0;
+
+  border-radius: 15px;
+
+  color: white;
+
+  padding-left: 12px;
+  
+  height: 30px;
+  width: 130px
+}
+
+.user-table-wrapper .card-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table .user-table-header {
+  background: #336473;
+}
+
+.ut-header {
+  border-left:solid black 1px;
+  border-top:solid black 1px;
+  color: white;
+  text-align: left;
+  padding-left: 3em;
+  background-color: #336473;
+}
+
+.user-table :not(th) tr:nth-child(even) {
+  background-color:#3364735E;
+}
+
+.user-table-wrapper .total-people-counter {
+  text-align: left;
+  margin: 10px 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .table-topbar {
+    display: flex;
+    flex-direction: column;
+  
+    padding-top: 5px;
+    padding-bottom: 15px;
+  }
+
+  .table-topbar .search-section {
+    margin-bottom: 20px;
+  }
+}

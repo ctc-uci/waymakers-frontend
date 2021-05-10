@@ -30,7 +30,7 @@ const StepTwo = (props) => {
     <div className="register-step-two">
       <div className="phone-number-section">
         <p className="medium">Phone Number</p>
-        <RegistrationTextField name={phoneNumber.name} label={null} placeholder="i.e. 1234567890" />
+        <RegistrationTextField name={phoneNumber.name} label={null} placeholder="i.e. (123) 456-7890" />
       </div>
       <div className="address-section">
         <p className="medium">Address</p>
@@ -48,8 +48,16 @@ const StepTwo = (props) => {
         </div>
         <div className="zone-form-group">
           <RegistrationTextField labelClassName="city-label label" name={city.name} label={city.label} />
-          <RegistrationTextField labelClassName="state-label label " name={state.name} label={state.label} />
-          <RegistrationTextField labelClassName="zipcode-label label" name={zipcode.name} label={zipcode.label} />
+          <div className="state-zipcode">
+            <RegistrationTextField
+              labelClassName="state-label label"
+              name={state.name}
+              label={state.label}
+              maxLength="2"
+              placeholder="i.e. CA"
+            />
+            <RegistrationTextField labelClassName="zipcode-label label" name={zipcode.name} label={zipcode.label} />
+          </div>
         </div>
       </div>
     </div>

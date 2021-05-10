@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import * as IconAi from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
 import * as IconGo from 'react-icons/go';
-import { fullCalendarEventToRegularEvent } from '../../util';
 
 import {
-  deleteEvent,
   setShowPopup,
   changeSelectedEvent,
   changePopupType,
 } from '../../redux/actions';
-import trashcan from '../../../../assets/trashcan.svg';
+
+import { fullCalendarEventToRegularEvent, getRegularSelectedEvent } from '../../util';
+
+import {
+  getEvents,
+} from '../../redux/selectors';
 
 import './eventBlock.css';
 
@@ -28,6 +30,12 @@ const EventBlock = ({
 
   const eventTypeColor = eventTypeColors[eventInfo.event.extendedProps.eventType];
   const isUserEvent = eventInfo.event.backgroundColor === 'var(--color-light-green)';
+  const isAllDayEvent = eventInfo.event.allDay;
+
+  // Convert current full calendar event to regular event
+  const allRegularEvents = useSelector(getEvents);
+  const currentRegularEvent = getRegularSelectedEvent(allRegularEvents, eventInfo.event);
+  const currentEvent = fullCalendarEventToRegularEvent(eventInfo.event);
 
   const openPopup = () => {
     dispatch(setShowPopup(true));
@@ -37,15 +45,14 @@ const EventBlock = ({
     dispatch(changePopupType(type));
   };
 
-  const setEvent = (selectedEvent) => {
-    const convertedEvent = fullCalendarEventToRegularEvent(selectedEvent);
-    dispatch(changeSelectedEvent(convertedEvent));
+  const setEvent = () => {
+    dispatch(changeSelectedEvent(currentEvent));
   };
 
   const onEventBlockClick = () => {
-    setEvent(eventInfo.event);
+    setEvent();
     if (isUserEvent) {
-      if (eventInfo.isPast) {
+      if (new Date(currentEvent.startTime) < new Date()) {
         setEventPopupType('AddMyHoursPopup');
       } else {
         setEventPopupType('RemoveFromMyEventPopup');
@@ -58,67 +65,60 @@ const EventBlock = ({
 
   const onAddButtonClick = (e) => {
     e.stopPropagation();
-    setEvent(eventInfo.event);
+    setEvent();
     setEventPopupType('ConfirmCancelPopup');
     openPopup();
   };
 
-  const onDeleteClick = (e) => {
-    e.stopPropagation();
-    dispatch(deleteEvent(eventInfo.event.id));
-  };
-
   const onAdminEventBlockClick = () => {
-    setEvent(eventInfo.event);
+    setEvent();
     openPopup();
   };
 
   // Admin Event Calendar
   const onViewEventsPageBlockClick = () => {
-    setEvent(eventInfo.event);
+    setEvent();
     setEventPopupType('ViewEventInfoPopup');
     openPopup();
   };
 
   const renderEventButton = () => {
-    if (isUserEvent) {
-      const checkIcon = <IconAi.AiOutlineCheck size={10} color="black" />;
-      return <button type="button" className="cursor-pointer">{checkIcon}</button>;
+    if (isUserEvent && !isAllDayEvent) {
+      return <button type="button">✓</button>;
     }
-    return <button type="button" className="cursor-pointer" onClick={(e) => { onAddButtonClick(e); }}>+</button>;
-  };
-
-  // TODO: Add delete confirmation before deleting event
-  const renderTrashButton = () => {
-    const trashIcon = <img className="trash-icon" src={trashcan} alt="trashcan" />;
-    return <button type="button" className="cursor-pointer" onClick={(e) => onDeleteClick(e)}>{trashIcon}</button>;
+    if (!isAllDayEvent) {
+      return <button type="button" className="plus-button" onClick={(e) => { onAddButtonClick(e); }}>+</button>;
+    }
+    return null;
   };
 
   // Renders diff blocks based on view and page/pathname
-  if (eventInfo.view.type === 'timeGridWeek') {
+  if (eventInfo.view.type === 'timeGridWeek' || eventInfo.view.type === 'timeGridFourDay') {
     switch (page) {
       case 'volunteerDashboard':
         return (
-          <div id="week-event-block" className="cursor-pointer" tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
-            <div id="week-event-content">
-              <p id="week-event-title">{eventInfo.event.title}</p>
+          <div className={`week-event-block ${isAllDayEvent ? 'all-day-week-event-content' : ''}`} tabIndex={0} onClick={onEventBlockClick} onKeyDown={() => {}} role="button">
+            <div className="week-event-content">
+              <p className="week-event-title">{currentEvent.title}</p>
+              {isAllDayEvent && <div className="all-day-strip" style={{ backgroundColor: eventTypeColor }} />}
               {renderEventButton()}
             </div>
-            <div id="strip" style={{ backgroundColor: eventTypeColor }} />
+            {!isAllDayEvent && <div className="strip" style={{ backgroundColor: eventTypeColor }} />}
           </div>
         );
       case 'addModifyDeleteEventsPage':
         return (
-          <div id="week-edit-event-block" className="cursor-pointer" tabIndex={0} onClick={onViewEventsPageBlockClick} onKeyDown={() => {}} role="button">
-            {renderTrashButton()}
-            <p id="week-edit-event-title">{eventInfo.event.title}</p>
+          <div className="week-edit-event-block" tabIndex={0} onClick={onViewEventsPageBlockClick} onKeyDown={() => {}} role="button">
+            <div className="week-event-content">
+              <p className="week-edit-event-title">{currentEvent.title}</p>
+            </div>
           </div>
         );
       case 'aggregatePage':
         return (
-          <div id="week-event-block" className="cursor-pointer" tabIndex={0} onClick={onAdminEventBlockClick} onKeyDown={() => {}} role="button">
-            <div id="week-event-content">
-              <p>{eventInfo.event.title}</p>
+          <div className="week-event-block" tabIndex={0} onClick={onAdminEventBlockClick} onKeyDown={() => {}} role="button">
+            <div className="week-event-content">
+              <p>{currentEvent.title}</p>
             </div>
           </div>
         );
@@ -127,9 +127,9 @@ const EventBlock = ({
   }
 
   // Get values to display hour and minute on event block
-  const hour = eventInfo.event.start.getHours();
+  const hour = (new Date(currentRegularEvent.startTime)).getHours();
   const convertedHour = hour < 13 ? hour : hour - 12;
-  const minute = eventInfo.event.start.getMinutes();
+  const minute = (new Date(currentRegularEvent.startTime)).getMinutes();
   const displayMinute = `:${minute < 10 ? '0' : ''}${minute}`;
 
   const onMonthBlockClick = () => {
@@ -148,10 +148,10 @@ const EventBlock = ({
   };
 
   return (
-    <div id="month-event-block" className="cursor-pointer" tabIndex={0} onClick={onMonthBlockClick} onKeyDown={() => {}} role="button">
+    <div className="month-event-block" tabIndex={0} onClick={onMonthBlockClick} onKeyDown={() => {}} role="button">
       <IconGo.GoPrimitiveDot color={eventInfo.borderColor} size={14} />
-      <p id="monthViewEventTime">{`${convertedHour === 0 ? 12 : convertedHour}${minute === 0 ? '' : displayMinute}${hour < 13 ? 'a' : 'p'}`}</p>
-      <p id="monthViewEventTitle">{eventInfo.event.title}</p>
+      <p className="month-view-event-time">{`${convertedHour === 0 ? 12 : convertedHour}${minute === 0 ? '' : displayMinute}${hour < 13 ? 'a' : 'p'}`}</p>
+      <p className="month-view-event-title">{eventInfo.event.title}</p>
     </div>
   );
 };
