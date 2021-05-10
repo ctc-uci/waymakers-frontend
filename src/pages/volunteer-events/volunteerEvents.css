@@ -1,11 +1,21 @@
 .volunteer-events-page {
-    margin: 0% 10% 5% 10%;
+    margin: 0% 5% 5% 5%;
     display: flex;
     flex-direction: column;
 }
 
-.volunteer-event .title {
-    font-size: 2em;
+.volunteer-events-page .title {
     font-weight: bold;
     color: var(--color-dark-blue);
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .volunteer-events-page .title {
+        font-weight: bold;
+        color: var(--color-dark-blue);
+        text-align: center;
+    }
+
 }

@@ -110,6 +110,44 @@ export const removeUserEvent = (userId, eventId) => async (dispatch) => {
   }
 };
 
+// Loads unsubmitted user events
+export const fetchUnsubmittedEvents = (userId) => async (dispatch) => {
+  try {
+    const response = await WMKBackend.get('/logs/unsubmitted', {
+      params: {
+        userId,
+      },
+    });
+    console.log(response.data);
+    if (response.status === 200) {
+      dispatch({ type: 'events/unsubmittedEventsLoaded', payload: response.data });
+    }
+    return null;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+};
+
+// Loads unsubmitted user events
+export const fetchSubmittedEvents = (userId) => async (dispatch) => {
+  try {
+    const response = await WMKBackend.get('/logs/submitted', {
+      params: {
+        userId,
+      },
+    });
+    console.log(response.data);
+    if (response.status === 200) {
+      dispatch({ type: 'events/submittedEventsLoaded', payload: response.data });
+    }
+    return null;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+};
+
 // Dispatches actions to change selected division, and load connected warehouses
 export const setShowPopup = (newValue) => async (dispatch) => {
   dispatch({ type: 'events/showPopupModified', payload: newValue });
@@ -125,6 +163,10 @@ export const changeMonth = (newMonth) => async (dispatch) => {
 
 export const changeYear = (newYear) => async (dispatch) => {
   dispatch({ type: 'events/yearSelected', payload: newYear });
+};
+
+export const changeDate = (newDate) => async (dispatch) => {
+  dispatch({ type: 'events/dateSelected', payload: newDate });
 };
 
 export const changeSelectedEvent = (event) => async (dispatch) => {

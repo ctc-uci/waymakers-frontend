@@ -1,0 +1,9 @@
+.inventory-container .download-button {
+  border: none;
+  background: none;
+  text-decoration: underline;
+  font-family: 'Assistant', Arial, Helvetica, sans-serif;
+  font-size: larger;
+  color: var(--text-color-dark);
+  cursor: pointer;
+}

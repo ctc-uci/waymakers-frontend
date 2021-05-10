@@ -1,0 +1,18 @@
+/* .alert-banner {
+    width: 100%;
+    margin: 0px;
+} */
+.alert-banner {
+    border-radius: 0px !important;
+    position: sticky;
+    z-index: 99999999999999999;
+    top: 0;
+}
+
+.alert-banner-visible {
+    visibility: visible;
+}
+
+.alert-banner-invisible {
+    visibility: hidden;
+}

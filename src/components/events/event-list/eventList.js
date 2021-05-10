@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { getUserEvents } from '../redux/selectors';
@@ -26,7 +27,13 @@ const EventList = ({
 
   const onAddButtonClick = (event) => {
     setEvent(event);
-    setEventPopupType('ConfirmCancelPopup');
+    setEventPopupType('AddEventPopup');
+    openPopup();
+  };
+
+  const onCheckMarkClick = (event) => {
+    setEvent(event);
+    setEventPopupType('RemoveFromMyEventPopup');
     openPopup();
   };
 
@@ -39,7 +46,7 @@ const EventList = ({
         onEventButtonClick = (clickedEvent) => onAddButtonClick(clickedEvent);
       } else {
         // TODO: change this when we know what a checkmark is supposed to be
-        onEventButtonClick = () => console.log('oh the check was clicked -kc');
+        onEventButtonClick = (clickedEvent) => onCheckMarkClick(clickedEvent);
       }
       if (page === 'addModifyDeleteEventsPage' || page === 'aggregatePage') {
         finalEventType = page;
@@ -81,16 +88,26 @@ const EventList = ({
 
   const renderSeeMore = () => (
     <div className="events-see-more">
-      <a className="see-more-link" href="/volunteer/events">see more</a>
+      <Link to="/volunteer/events" className="see-more-link">
+        <button
+          type="button"
+          className="see-more-button"
+          href="/volunteer/events"
+        >
+          <p className="large">View Calendar</p>
+        </button>
+      </Link>
     </div>
   );
 
   return (
-    <div className="event-list">
-      {page === 'volunteerDashboard' && view === 'timeGridDay' && <EventLegend />}
-      <h5 className="event-list-title">{ title }</h5>
-      <div className="events-container">
-        {renderEvents()}
+    <div className="event-list-component">
+      <h4 className="event-list-title">{ title }</h4>
+      <div className="event-list">
+        {page === 'volunteerDashboard' && view === 'timeGridDay' && <EventLegend />}
+        <div className="events-container">
+          {renderEvents()}
+        </div>
         {page === 'dashboard' && renderSeeMore()}
       </div>
     </div>

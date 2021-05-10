@@ -5,6 +5,8 @@ import { deleteItem, editItem, undeleteItem } from '../redux/actions';
 import { getEditing, getCategories } from '../redux/selectors';
 
 import './editableItem.css';
+import deleteIcon from '../../../assets/deleteIcon.svg';
+import undoIcon from '../../../assets/undeleteIcon.svg';
 
 const getCategoryLabelFromID = (id) => {
   const category = useSelector(getCategories).find((cat) => cat.id === id);
@@ -122,142 +124,144 @@ const EditableItem = (props) => {
   // column has an input that uses that form
   const formItem = (
     // CSS class to indicate that value has been changed
-    <tr className="edit-table-row">
-      <td className="item-edit-name">
-        {deleted ? <strike className="deleted-item--name">{fieldState.name}</strike> : (
-          <input
-            name="name"
-            type="text"
-            className="table-input-name"
-            value={fieldState.name}
-            form={props.item.id}
-            onChange={handleChange}
-          />
-        )}
-      </td>
-      <td className="item-qty-field">
-        <div className="change-quantity-wrapper">
-          {deleted ? <strike className="deleted-item">{fieldState.quantity}</strike> : (
-            <div className="change-quantity-wrapper">
-              <div className="minus-button-wrapper">
-                <button
-                  type="button"
-                  name="quantity"
-                  aria-label="minus"
-                  className="item-edit-minus-button"
-                  form={props.item.id}
-                  onClick={decrementField}
-                >
-                  -
-                </button>
-              </div>
-              <input
-                name="quantity"
-                type="number"
-                className="table-input"
-                value={fieldState.quantity}
-                form={props.item.id}
-                onChange={handleChange}
-              />
-              <div className="plus-button-wrapper">
-                <button
-                  type="button"
-                  name="quantity"
-                  aria-label="plus"
-                  className="item-edit-plus-button"
-                  form={props.item.id}
-                  onClick={incrementField}
-                >
-                  +
-                </button>
-              </div>
-            </div>
+    <>
+      <tr className="edit-table-row">
+        <td className="item-edit-name">
+          {deleted ? <del className="deleted-item--name">{fieldState.name}</del> : (
+            <input
+              name="name"
+              type="text"
+              className="table-input-name"
+              value={fieldState.name}
+              form={props.item.id}
+              onChange={handleChange}
+            />
           )}
-        </div>
-      </td>
-      <td className="item-needed-field">
-        <div className="change-quantity-wrapper">
-          {deleted ? <strike className="deleted-item">{fieldState.needed}</strike> : (
-            <div className="change-quantity-wrapper">
-              <div className="minus-button-wrapper">
-                <button
-                  type="button"
-                  name="needed"
-                  aria-label="-"
-                  className="item-edit-minus-button"
-                  form={props.item.id}
-                  onClick={decrementField}
-                >
-                  -
-                </button>
-              </div>
-              <input
-                name="needed"
-                type="number"
-                className="table-input"
-                value={fieldState.needed}
-                form={props.item.id}
-                onChange={handleChange}
-              />
-              <div className="plus-button-wrapper">
-                <button
-                  type="button"
-                  name="needed"
-                  aria-label="+"
-                  className="item-edit-plus-button"
-                  form={props.item.id}
-                  onClick={incrementField}
-                >
-                  +
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </td>
-      <td className="item-cat-field">
-        <div className="change-quantity-wrapper">
-          {deleted
-            ? (
-              // Calling getCategory to ensure hook is always called so there is no rendering issue
-              <strike className="deleted-item">
-                {getCategoryLabelFromID(originalCategory)}
-              </strike>
-            )
-            : (
+        </td>
+        <td className="item-qty-field">
+          <div className="change-quantity-wrapper">
+            {deleted ? <del className="deleted-item">{fieldState.quantity}</del> : (
               <div className="change-quantity-wrapper">
-                <select
-                  id="categories"
-                  name="category"
-                  className="category-dropdown"
-                  value={fieldState.category}
+                <div className="minus-button-wrapper">
+                  <button
+                    type="button"
+                    name="quantity"
+                    aria-label="minus"
+                    className="item-edit-minus-button"
+                    form={props.item.id}
+                    onClick={decrementField}
+                  >
+                    -
+                  </button>
+                </div>
+                <input
+                  name="quantity"
+                  type="number"
+                  className="table-input"
+                  value={fieldState.quantity}
                   form={props.item.id}
                   onChange={handleChange}
-                >
-                  <option value="">No category</option>
-                  {/* Creating dropdown menu items from categories list */}
-                  {/* category.label is displayed, but the value of the option will be the ID */}
-                  {useSelector(getCategories)
-                    .filter((cat) => cat.id > 0)
-                    .map((cat) => (
-                      <option key={props.item.id} value={cat.id}>{cat.label}</option>
-                    ))}
-                </select>
+                />
+                <div className="plus-button-wrapper">
+                  <button
+                    type="button"
+                    name="quantity"
+                    aria-label="plus"
+                    className="item-edit-plus-button"
+                    form={props.item.id}
+                    onClick={incrementField}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             )}
-        </div>
-      </td>
-      <td>
-        <div id="delete-wrapper">
+          </div>
+        </td>
+        <td className="item-needed-field">
+          <div className="change-quantity-wrapper">
+            {deleted ? <del className="deleted-item">{fieldState.needed}</del> : (
+              <div className="change-quantity-wrapper">
+                <div className="minus-button-wrapper">
+                  <button
+                    type="button"
+                    name="needed"
+                    aria-label="-"
+                    className="item-edit-minus-button"
+                    form={props.item.id}
+                    onClick={decrementField}
+                  >
+                    -
+                  </button>
+                </div>
+                <input
+                  name="needed"
+                  type="number"
+                  className="table-input"
+                  value={fieldState.needed}
+                  form={props.item.id}
+                  onChange={handleChange}
+                />
+                <div className="plus-button-wrapper">
+                  <button
+                    type="button"
+                    name="needed"
+                    aria-label="+"
+                    className="item-edit-plus-button"
+                    form={props.item.id}
+                    onClick={incrementField}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </td>
+        <td className="item-cat-field">
+          <div className="change-quantity-wrapper">
+            {deleted
+              ? (
+                // getCategory to ensure hook is always called so there is no rendering issue
+                <del className="deleted-item">
+                  {getCategoryLabelFromID(originalCategory)}
+                </del>
+              )
+              : (
+                <div className="change-quantity-wrapper">
+                  <select
+                    id="categories"
+                    name="category"
+                    className="category-dropdown"
+                    value={fieldState.category}
+                    form={props.item.id}
+                    onChange={handleChange}
+                  >
+                    <option value="">No category</option>
+                    {/* Creating dropdown menu items from categories list */}
+                    {/* category.label is displayed, but the value of the option will be the ID */}
+                    {useSelector(getCategories)
+                      .filter((cat) => cat.id > 0)
+                      .map((cat) => (
+                        <option key={props.item.id} value={cat.id}>{cat.label}</option>
+                      ))}
+                  </select>
+                </div>
+              )}
+          </div>
+        </td>
+        <td className="delete-wrapper">
           <button
             type="button"
+            className="table-icon"
             aria-label="delete"
-            className={deleted ? 'table-item-undelete-button' : 'table-item-delete-button'}
             onClick={deleteHandler}
-          />
-        </div>
-      </td>
-    </tr>
+          >
+            <img src={deleted ? undoIcon : deleteIcon} alt="" />
+          </button>
+        </td>
+      </tr>
+    </>
   );
 
   // Decides which table row to show, dependant on edit mode

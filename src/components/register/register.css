@@ -17,6 +17,17 @@
     width: 650px;
 }
 
+.register-container p {
+    margin: 0;
+    padding: 0;
+}
+
+.register-container .error-message {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--color-orange);
+}
+
 .register-container .form-navigation {
     display: flex;
     flex-direction: row;
@@ -28,7 +39,7 @@
 .register-container .form-navigation .stage-dots {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
 
     position: absolute;
 
@@ -153,4 +164,25 @@
 .register-container a:hover {
     text-decoration: underline;
     color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .register-container {
+        width: 450px;
+    }
+
+    .register-container .form-navigation .stage-dots .stage-dot {
+        height: 5px;
+        width: 5px;
+    }
+
+    .register-container .form-navigation .signup-button {
+        width: 90px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .register-container {
+        width: 341px;
+    }
 }

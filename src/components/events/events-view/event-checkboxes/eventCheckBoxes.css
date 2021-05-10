@@ -1,10 +1,19 @@
 #event-checkboxes{
   display: flex;
-  direction: row;
   margin-left: 1em;
+  height: 25px;
 }
 
 .check-box{
   margin-right: 1em;
 }
 
+@media screen and (max-width: 768px) {
+
+  #event-checkboxes {
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 1em;
+    height: auto;
+  }
+}

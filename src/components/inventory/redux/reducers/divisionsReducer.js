@@ -41,9 +41,12 @@ export default (state = initialState, action) => {
       };
     }
     case 'divisions/warehouseAdded': {
-      // Just return state for now
       return {
         ...state,
+        warehouseList: {
+          ...state.warehouseList,
+          ...action.payload,
+        },
       };
     }
     default: {

@@ -1,6 +1,45 @@
-.volunteer-dashboard-page-container .my-stats-section {
-    width: 85%;
+.volunteer-dashboard-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
     margin: 30px auto;
+}
+
+.volunteer-dashboard-page-container .titled-card-container {
+    width: 100%;
+}
+
+.volunteer-dashboard-page-container .my-stats-section {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.volunteer-dashboard-page-container .my-stats-section h1 {
+    font-weight: bold;
+}
+
+.volunteer-dashboard-page-container .my-stats-section .view-hours-button {
+    position: absolute;
+    margin-bottom: 0;
+    margin-right: 0;
+    bottom: 0;
+    right: 0;
+    background: transparent;
+    border-radius: 20px;
+    border: 0.5px solid var(--text-color-dark);
+    color: var(--text-color-dark);
+    cursor: pointer;
+    width: 170px;
+}
+
+.volunteer-dashboard-page-container .my-stats-section .view-hours-button p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
 }
 
 .filler {
@@ -11,26 +50,34 @@
     border-radius: 5px;
 }
 
-.my-stats-title {
-    color: var(--text-color-dark);
-    font-weight: bold;
+.volunteer-dashboard-page-container .event-list-component {
+    width: 48%;
+    height: 100%;
 }
 
-.events-section {
+.volunteer-dashboard-page-container .events-section {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    margin: auto;
-    width: 85%;
+    width: 100%;
+    height: 100%;
 }
 
-.event-list-component {
-    flex: 0 1 48%;
+.events-section .events-container {
+    height: 650px;
+    overflow-y: hidden;
 }
 
-/* .volunteer-dashboard-page-container .availability-third {
-  width: 60vw;
-  background-color: pink;
-} */
+.dashboard-event-legend {
+    align-self: flex-start;
+    margin-left: 0.5em;
+    margin-top: 1em;
+}
+
+.volunteer-dashboard-page-container .availability-section {
+  width: 100%;
+  margin-bottom: 25px;
+}
 
 .help-popup {
     background-color: var(--color-olive);
@@ -43,4 +90,88 @@
     line-height: 1.2rem;
     padding: 10px;
     margin-left: 15px;
+}
+
+@media screen and (max-width: 1000px) {
+    .volunteer-dashboard-page-container .my-stats-section {
+        flex-direction: column;
+    }
+
+    .volunteer-dashboard-page-container .my-stats-section h1 {
+        text-align: center;
+        margin: 0;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+
+    .volunteer-dashboard-page-container .my-stats-section h1 ~ h1 {
+        margin-bottom: 60px;
+    }
+
+    .volunteer-dashboard-page-container .event-list-component {
+        width: 48%;
+        height: 100%;
+        margin-bottom: 30px;
+    }
+
+    .volunteer-dashboard-page-container .my-stats-section .view-hours-button {
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .dashboard-event-legend{
+        margin-top: 0em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .volunteer-dashboard-page-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .volunteer-dashboard-page-container .my-stats-section h1 {
+        font-size: 30px;
+
+        margin: 0;
+        margin-bottom: 10px;
+        padding: 0;
+    }
+
+    .volunteer-dashboard-page-container .my-stats-section h1 ~ h1 {
+        margin-bottom: 50px;
+    }
+
+    .volunteer-dashboard-page-container .event-list-component {
+        width: 100%;
+        height: 100%;
+        margin-bottom: 30px;
+    }
+
+    .volunteer-dashboard-page-container .events-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .volunteer-dashboard-page-container .events-section .events-container {
+        max-height: 360px;
+    }
+
+    .volunteer-dashboard-page-container .events-section .event-lists .event-list {
+        width: 100%;
+    }
+
+    .dashboard-event-legend {
+        align-self: center;
+        margin-left: 0;
+        margin-top: 0em;
+    }
+    .dashboard-event-legend .legend-key-section {
+        justify-content: space-between;
+        padding-left: 0;
+        padding-right: 0;
+    }
 }

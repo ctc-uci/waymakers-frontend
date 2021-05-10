@@ -1,4 +1,4 @@
-.admin-components {
+.admin-dashboard {
     margin: 30px auto;
     width: 85%;
     display: flex;
@@ -10,13 +10,13 @@
     font-weight: bold;
 }
 
-.division-section {
+.admin-dashboard .division-section {
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
 
-.division-dropdown {
+.admin-dashboard .division-dropdown {
     border: none;
     outline: none;
     width: inherit;
@@ -26,39 +26,30 @@
     font-size: 32px;
     cursor: pointer;
     text-align: left;
+    background: white;
 }
 
 .admin-components-container {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    
 }
 
 .inventory-events-section {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
-    width: 48%;
 }
 
-.upcoming-events-container {
-    display: flex;
-    flex-direction: column;
+.admin-dashboard .admin-components-container .inventory-section {
+    width: 50%;
 }
 
-.analytics-section {
-    width: 48%;
+.admin-dashboard .admin-components-container .upcoming-events-container {
+    width: 50%;
 }
 
-.inventory-section, .upcoming-events-section, .analytics-section, .availability-section {
-    margin-top: 30px;
-}
-
-.analytics-component {
-    height: 675px;
-    background-color: var(--color-light-blue);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-}
 
 .availability-component {
     height: 600px;
@@ -66,4 +57,41 @@
     background-color: var(--color-light-blue);
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .admin-dashboard {
+        width: 100%;
+    }
+    
+    .admin-components-container{
+        flex-direction: column;
+        justify-content: center;
+        align-items:center;
+        width: 100%;
+
+    }
+
+    .admin-dashboard .admin-components-container .inventory-section {
+        width: 100%;
+    }
+
+    .admin-dashboard .admin-components-container .upcoming-events-container {
+        width: 100%;
+    }
+
+    .admin-dashboard .availability-section {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .admin-dashboard .division-section {
+        margin-left: 10px;
+    }
+
+    .inventory-section{
+        margin-top: 0%;
+        
+    }
+
 }

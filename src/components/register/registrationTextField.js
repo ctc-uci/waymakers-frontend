@@ -17,6 +17,7 @@ const RegistrationTextField = (props) => {
     <>
       <label className={`registration-text-field-label ${labelClassName}`} htmlFor={name}>
         <input
+          {...props}
           type={type}
           id={name}
           className={`registration-text-field ${meta.error ? `${inputClassName} error` : `${inputClassName}`}`}
@@ -28,7 +29,7 @@ const RegistrationTextField = (props) => {
         />
         <p className="small">{label}</p>
         {meta.touched && meta.error ? (
-          <p className="registration-error">
+          <p className="registration-error small">
             <img src={registrationError} alt=" " />
             {' '}
             {meta.error}
@@ -40,6 +41,7 @@ const RegistrationTextField = (props) => {
 };
 
 RegistrationTextField.defaultProps = {
+  label: '',
   labelClassName: '',
   inputClassName: '',
   placeholder: '',
@@ -49,7 +51,7 @@ RegistrationTextField.defaultProps = {
 
 RegistrationTextField.propTypes = {
   name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   labelClassName: PropTypes.string,
   inputClassName: PropTypes.string,
   placeholder: PropTypes.string,

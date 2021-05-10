@@ -1,0 +1,100 @@
+@import '../../../common/vars.css';
+
+.ut-row-wrapper {
+  padding: 0 1rem;
+}
+
+.ut-row, .expanded-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+
+  color: var(--color-dark-blue);
+}
+
+.ut-row {
+  align-items: center;
+}
+
+.user-table .expanded-row {
+  align-items: flex-start;
+}
+
+.ut-row-wrapper .ut-row-control-button, .ut-row-close-button, .ut-edit-user-button {
+  background: inherit;
+  border: 0;
+  outline: 0;
+
+  cursor: pointer;
+}
+
+.ut-row-wrapper .expand-row-button {
+  width: 19px;
+  height: 19px;
+}
+
+.ut-row-wrapper .close-expanded-row-button {
+  width: 19px;
+  height: 19px;
+  transform: rotate(180deg);
+}
+
+.ut-row-wrapper .ut-row-close-button {
+  align-self: flex-end;
+}
+
+.ut-row .ut-row-pfp {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+
+  margin-right: 15px;
+}
+
+.ut-row .ut-row-name {
+  flex-grow: 1;
+  width: 33%;
+  margin-left: 1em;
+}
+
+.ut-row .ut-row-name p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.expanded-row .expanded-row-col {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 33%;
+  flex-wrap: wrap;
+  word-break: break-all;
+}
+
+.ut-row-wrapper .row-icons {
+  display: inline-block;
+  vertical-align: middle;
+  width: 15px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.ut-row-wrapper .row-iconless-span {
+  margin-left: 24px;
+}
+
+@media screen and (max-width: 768px) {
+  .user-table .expanded-row {
+    flex-direction: column;
+    border-top: 1px solid var(--color-dark-blue);
+    padding-top: 5px;
+  }
+  .user-table .expanded-row-col {
+    width: 100%;
+  }
+  .ut-row-wrapper .row-iconless-span {
+    margin-left: inherit;
+  }
+}

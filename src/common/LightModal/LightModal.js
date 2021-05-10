@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import './LightModal.css';
 
-// TODO: add overflow
+Modal.setAppElement('#root');
 const LightModal = ({
   isOpen, setIsOpen, children, ...prop
 }) => (

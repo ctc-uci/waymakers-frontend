@@ -1,9 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { connect, useDispatch } from 'react-redux';
+
 import WarehouseMenu from './warehouseMenu';
 import handleOutsideClick from '../../../common/handleOutsideClick';
 import { changeSelectedDivision } from '../redux/actions';
-import { getDivisions, getSelectedDivisionID, getWarehouses } from '../redux/selectors';
+import {
+  getDivisions, getSelectedDivisionID, getWarehouses,
+} from '../redux/selectors';
+
+import DownwardChevron from '../../../assets/downwardchevron.svg';
 
 import './divisionMenu.css';
 
@@ -19,11 +24,7 @@ const DivisionMenu = (prop) => {
   });
 
   const handleArrowClick = () => {
-    if (open) {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
+    setOpen(!open);
   };
 
   const handleDivisionClick = (e, divName) => {
@@ -33,7 +34,7 @@ const DivisionMenu = (prop) => {
   };
 
   const menu = (list) => (
-    <div>
+    <div className="division-menu--list-container">
       <div
         name="category"
         className="division-menu--list"
@@ -43,7 +44,7 @@ const DivisionMenu = (prop) => {
         {/* division.div_name is displayed, but the value of the option will be the ID */}
         {Object.entries(list)
           .sort((a, b) => (a.id > b.id ? 1 : -1))
-          .filter((div) => div[1].div_name !== 'All Divisions')
+          // .filter((div) => div[1].div_name !== 'All Divisions')
           .map(([id, division]) => (
             <button
               type="button"
@@ -62,15 +63,10 @@ const DivisionMenu = (prop) => {
   return (
     <div className="menu-container">
       <div ref={ref} className="division-menu-container">
-        <div className="division-menu--top">
+        <button type="button" className="division-menu--top" onClick={handleArrowClick}>
           {currentDivision}
-          <button
-            type="button"
-            aria-label="arrow"
-            onClick={handleArrowClick}
-            className={open ? 'division-menu--close' : 'division-menu--open'}
-          />
-        </div>
+          <img src={DownwardChevron} className={open ? 'division-menu--close' : 'division-menu--open'} alt="arrow" />
+        </button>
         {open && menu(prop.divisionList)}
       </div>
       <WarehouseMenu

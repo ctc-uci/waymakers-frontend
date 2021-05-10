@@ -159,6 +159,7 @@ export const addDivision = (newDivision) => async (dispatch) => {
 export const addWarehouse = (newWarehouse) => async (dispatch) => {
   try {
     const response = await WMKBackend.post('/warehouses', newWarehouse);
+    console.log(response.data);
     dispatch({ type: 'divisions/warehouseAdded', payload: response.data });
   } catch (err) {
     // eslint-disable-next-line
@@ -182,6 +183,8 @@ export const cancelEdits = () => ({
 export const saveEdits = () => async (dispatch, getState) => {
   const editPromises = [];
   const deletePromises = [];
+  const currentCategoryID = getState().items.selectedCategoryID;
+  console.log(currentCategoryID);
 
   // Populating edited list with PUT requests for each edited item
   const editedItems = { ...getState().edits.editedItems };
@@ -206,6 +209,11 @@ export const saveEdits = () => async (dispatch, getState) => {
       WMKBackend.delete(`/category/${id}`),
     );
   });
+  console.log(deletedCategories);
+  if (currentCategoryID in deletedCategories) {
+    console.log('this ran');
+    changeSelectedCategory(null, '');
+  }
 
   // Perform all delete requests concurrently
   await Promise.all(deletePromises)

@@ -93,5 +93,15 @@ export default {
       name: 'genderOther',
       label: 'Other',
     },
+    division: {
+      name: 'division',
+      label: 'Division*',
+      requiredErrorMsg: 'Division is required',
+    },
+    termsOfUse: {
+      name: 'termsOfUse',
+      label: 'Terms Of Use',
+      requiredErrorMsg: 'Please accept the Terms of Use',
+    },
   },
 };

@@ -1,70 +1,115 @@
 import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
 import { connect, useDispatch } from 'react-redux';
-import { addWarehouse } from '../../redux/actions';
+
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { ValidatedField } from '../../../../common/formikExtensions';
+
+import { addWarehouse, fetchWarehouses } from '../../redux/actions';
 import { getWarehouses } from '../../redux/selectors';
+import { LightModal } from '../../../../common/LightModal';
+
+import { createAlert } from '../../../../common/AlertBanner/AlertBannerSlice';
+
 import './addWarehouse.css';
 
-Modal.setAppElement('#root');
+const AddWarehouseSchema = Yup.object().shape({
+  warehouse: Yup.string().required('Required'),
+  division: Yup.string().required('Required'),
+});
+
 const AddWarehouseButton = (prop) => {
   const dispatch = useDispatch();
   const [popup, setPopup] = useState(false);
-  const [warehouse, setWarehouse] = useState('');
+  // const [warehouse, setWarehouse] = useState('');
   const [selectedDivision, setSelectedDivision] = useState(prop.selectedDivision);
 
   // Updates button when selectedDivision changes
   useEffect(() => {
-    setSelectedDivision(prop.selectedDivision);
-  }, [prop.selectedDivision]);
+    setSelectedDivision(selectedDivision);
+  }, [selectedDivision]);
 
-  const handleOnSubmit = () => {
+  const onSubmitAddWarehouse = (values) => {
+    const { warehouse: warehouseLabel } = values;
+    const { division } = values;
     // create an add warehouse action
     dispatch(addWarehouse({
-      warehouseLabel: warehouse,
+      warehouseLabel,
       // get currently selected division and put it here v
       // TO DO: set the division to whatever division is currently selected
-      division: selectedDivision,
-    }));
+      division,
+    })).then(() => {
+      setPopup(false);
+      dispatch(fetchWarehouses());
+      dispatch(createAlert({
+        message: `Successfully created warehouse '${warehouseLabel}'!`,
+        severity: 'success',
+      }));
+    });
   };
 
+  const formik = useFormik({
+    initialValues: {
+      warehouse: '',
+      division: '',
+    },
+    validationSchema: AddWarehouseSchema,
+    onSubmit: onSubmitAddWarehouse,
+    // validate only on submit, change as needed
+    validateOnBlur: false,
+    validateOnChange: false,
+  });
+
   return (
-    <div className="add-warehouse-button-wrapper">
+    <div className="add-warehouse">
       <button type="button" className="add-warehouse-button" onClick={() => setPopup(true)}>+</button>
-      <>
-        <Modal
-          className="add-warehouse-popup"
-          isOpen={popup}
-          onRequestClose={() => setPopup(false)}
-          style={{ size: '100px' }}
-        >
-          <button type="button" className="close-warehouse" onClick={() => setPopup(false)}>x</button>
-          <form className="add-warehouse-form" onSubmit={handleOnSubmit}>
+      {/* Popup form for when button is clicked */}
+      <LightModal
+        className="add-warehouse-popup"
+        isOpen={popup}
+        onRequestClose={() => setPopup(false)}
+      >
+        <form className="add-warehouse-form" onSubmit={formik.handleSubmit}>
+          {/* <p className="add-warehouse-title">Add new warehouse?</p> */}
+          <ValidatedField name="warehouse" labelText="Add new warehouse?" isRequired formik={formik}>
             <input
+              id="warehouse"
+              name="warehouse"
               type="text"
               className="add-warehouse-input"
-              name="add-warehouse-input"
               placeholder="Warehouse Name"
-              onChange={(e) => setWarehouse(e.target.value)}
+              value={formik.values.warehouse}
+              onChange={formik.handleChange}
             />
+          </ValidatedField>
+
+          <ValidatedField name="division" labelText="To which division?" isRequired formik={formik}>
             <select
-              name="category"
-              value={selectedDivision}
+              id="division"
+              name="division"
+              value={formik.values.division}
               onChange={(e) => {
                 setSelectedDivision(e.target.value);
+                formik.handleChange(e);
               }}
             >
+              <option value="" selected disabled>Select division...</option>
               {/* Creating dropdown menu items from divisions list */}
               {/* division.div_name is displayed, but the value of the option will be the ID */}
               {Object.entries(prop.divisionList)
+                .filter((warehouse) => warehouse[0] !== '-1')
                 .sort((a, b) => (a.id > b.id ? 1 : -1))
                 .map(([id, division]) => (
                   id > -1 && <option key={id} value={id}>{division.div_name}</option>
                 ))}
             </select>
-            <button type="submit" className="submit-button">Add Warehouse</button>
-          </form>
-        </Modal>
-      </>
+          </ValidatedField>
+          <div className="confirmation">
+            <button type="button" className="warehouse-form-button" onClick={() => setPopup(false)}>Close</button>
+            <button type="submit" className="warehouse-form-button submit-warehouse">Yes</button>
+          </div>
+        </form>
+      </LightModal>
     </div>
   );
 };

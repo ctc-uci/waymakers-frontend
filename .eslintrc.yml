@@ -4,6 +4,8 @@ extends:
 rules:
    react/jsx-filename-extension:
       - "off"
+   react/destructuring-assignment:
+      - "off"
    linebreak-style:
       - "off"
 

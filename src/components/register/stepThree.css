@@ -32,11 +32,15 @@
     margin-left: 3%;
 }
 
+.register-step-three .dropdown-error {
+    margin: 0;
+    padding: 0;
+    color: #DA6153;
+}
+
 .register-step-three .gender-section {
     display: flex;
     flex-direction: column;
-
-    margin-bottom: 5%;
 }
 
 .register-step-three .gender-section .gender-form-group .gender-dropdown {
@@ -58,7 +62,61 @@
     margin-top: 3%;
 }
 
-.register-step-three .gender-section .gender-form-group .dropdown-error {
+.register-step-three .division-section {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 50px;
+}
+
+.register-step-three .division-section .division-form-group .division-dropdown {
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: none;
+
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.6);
+
+    padding-left: 10px;
+    
+    height: 35px;
+    width: 100%;
+}
+
+.register-step-three .terms-section .view-terms {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-step-three .terms-section .view-terms .terms-button {
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    border: none;
+    background: transparent;
+
+    text-decoration: underline;
+    color: var(--color-orange);
+
+    cursor: pointer;
+}
+
+.register-step-three .terms-section .tou-accept {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.register-step-three .terms-section .tou-accept .tou-checkbox {
+    margin-left: 0;
+}
+
+.register-step-three .terms-section .tou-error {
     margin: 0;
     padding: 0;
     color: #DA6153;

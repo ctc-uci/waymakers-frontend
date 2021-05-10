@@ -1,78 +1,123 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import {
-  Card, Button, Alert,
-} from 'react-bootstrap';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
-import disableScroll from 'disable-scroll';
-import GoogleAuthService from '../../services/firebase/firebase';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
+import {
+  fetchEvents,
+  fetchUserEvents,
+} from '../../components/events/redux/actions';
+import { getEvents, getUserEvents } from '../../components/events/redux/selectors';
+
+import TitledCard from '../../common/Card/TitledCard';
+import { WMKBackend } from '../../common/utils';
 import VolunteerAvailability from '../../components/dashboard/availability-component/volunteerAvailability/volunteerAvailability';
-import HelpPopup from '../../components/dashboard/availability-component/help-popup/helpPopup';
-import DashboardEventSection from '../../components/dashboard/volunteer/dashboardEventSection';
+import CalendarPopup from '../../components/events/events-view/calendar-popup/calendarPopup';
+import EventLegend from '../../components/dashboard/event-legend/eventLegend';
+import EventList from '../../components/events/event-list/eventList';
 
 import './volunteerDashboard.css';
 
 const VolunteerDashboard = (props) => {
   const { cookies } = props;
-  const history = useHistory();
-  const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(false);
-  const [helpPopupSeen, setHelpPopupSeen] = useState(false);
+  const [numVolunteerHours, setNumVolunteerHours] = useState(0);
+  const [numOutreachHours, setNumOutreachHours] = useState(0);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  async function logout() {
+  const getHours = async (type) => {
     try {
-      await GoogleAuthService.auth.signOut();
-      history.push('/login');
-      // Removing session cookie
-      cookies.remove('accessToken');
-      cookies.remove('userId');
-      // Sign-out successful
+      const { data } = await WMKBackend.get('/logs/approved/sum', {
+        params: {
+          userId: cookies.get('userId'),
+          type,
+        },
+      });
+
+      return data;
     } catch (err) {
-      setError(err.message);
+      console.log(err);
+      return null;
     }
-  }
+  };
 
   useEffect(async () => {
     setLoading(true);
-    // await getEvents();
+    (async () => {
+      await dispatch(fetchEvents());
+      await dispatch(fetchUserEvents(cookies.cookies.userId));
+
+      const volunteerHours = await getHours('Volunteer');
+      const outreachHours = await getHours('Outreach');
+
+      await setNumVolunteerHours(volunteerHours);
+      await setNumOutreachHours(outreachHours);
+    })();
     setLoading(false);
   }, []);
-
-  const onHelpButtonClick = () => {
-    if (helpPopupSeen) {
-      disableScroll.off();
-    } else {
-      disableScroll.on();
-    }
-    setHelpPopupSeen(!helpPopupSeen);
-  };
 
   if (isLoading) {
     return (<div>Loading dashboard...</div>);
   }
 
+  const renderMoreEventList = () => {
+    // Filter events
+    const allEvents = useSelector(getEvents);
+    const myEvents = useSelector(getUserEvents);
+    const myEventsIds = myEvents.map((event) => event.id);
+    const moreEvents = allEvents
+      .filter((event) => (!myEventsIds.includes(event.id)))
+      .filter((event) => new Date(event.startTime) >= new Date())
+      .sort((e1, e2) => new Date(e1.startTime) - new Date(e2.startTime))
+      .slice(0, 7);
+
+    return <EventList events={moreEvents} title="More Events" listType="more-events" page="dashboard" />;
+  };
+
+  const renderMyEventList = () => {
+    let myEvents = useSelector(getUserEvents);
+    myEvents = myEvents
+      .filter((event) => new Date(event.startTime) >= new Date())
+      .sort((e1, e2) => new Date(e1.startTime) - new Date(e2.startTime))
+      .slice(0, 7);
+    return <EventList events={myEvents} title="My Events" listType="my-events" page="dashboard" />;
+  };
+
   return (
     <div className="volunteer-dashboard-page-container">
-      <div className="d-flex align-items-center justify-content-center">
-        <div className="w-100 login-container">
-          <Card className="w-100">
-            <Card.Body>
-              <h2 className="text-center mb-4">Volunteer Dashboard</h2>
-              {error && <Alert variant="danger">{error}</Alert>}
-              <Button onClick={logout} to="/login" className="w-100" type="submit" variant="primary">Log Out</Button>
-            </Card.Body>
-          </Card>
+      <TitledCard title="My Stats">
+        <div className="my-stats-section">
+          <h1>
+            {numVolunteerHours || 0}
+            &nbsp;
+            Volunteer Hours
+          </h1>
+          <h1>
+            {numOutreachHours || 0}
+            &nbsp;
+            Outreach Hours
+          </h1>
+          <button
+            type="button"
+            className="view-hours-button"
+            onClick={() => history.push('/volunteer/hours')}
+          >
+            <p className="medium">View My Hours</p>
+          </button>
         </div>
+      </TitledCard>
+      <CalendarPopup page="volunteerDashboard" />
+      <div className="events-section">
+        {renderMoreEventList()}
+        {renderMyEventList()}
       </div>
-      <div className="my-stats-section">
-        <h5 className="my-stats-title">My Stats</h5>
-        <div className="filler" />
+      <div className="dashboard-event-legend">
+        <EventLegend />
       </div>
-      <DashboardEventSection />
-      <div className="availability-third">
+      <div className="availability-section">
         <VolunteerAvailability />
-        {helpPopupSeen && <HelpPopup onHelpButtonClick={onHelpButtonClick} />}
       </div>
     </div>
   );

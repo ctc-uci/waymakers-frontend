@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 // This function detects when the user clicks outside a component and unmounts it.
 // The component's outer <div> should have a ref attribute.
 // This can be used in custom popups, dropdowns, etc.
-const handleOutsideClick = (ref, callback) => {
+const handleOutsideClick = (ref, callback, popup = false) => {
   const handleClick = (e) => {
-    if (ref.current && !ref.current.contains(e.target)) {
+    if ((!popup) && (ref.current && !ref.current.contains(e.target))) {
       callback();
     }
   };

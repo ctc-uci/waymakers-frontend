@@ -1,0 +1,27 @@
+.pagination-indicator {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 16px;
+}
+
+.pagination-indicator button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+}
+
+.pagination-indicator div {
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-left: 10px;
+
+    font-size: 18px;
+    letter-spacing: 10px;
+    color: black;
+}
