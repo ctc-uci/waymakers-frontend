@@ -17,6 +17,7 @@ const RegistrationTextField = (props) => {
     <>
       <label className={`registration-text-field-label ${labelClassName}`} htmlFor={name}>
         <input
+          {...props}
           type={type}
           id={name}
           className={`registration-text-field ${meta.error ? `${inputClassName} error` : `${inputClassName}`}`}

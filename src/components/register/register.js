@@ -1,14 +1,12 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import isDate from 'validator/lib/isDate';
 
 import GoogleAuthService from '../../services/firebase/firebase';
 import { WMKBackend } from '../../common/utils';
-import { createAlert } from '../../common/AlertBanner/AlertBannerSlice';
 
 import validationSchema from './validationSchema';
 import formInitialValues from './formInitialValues';
@@ -22,25 +20,43 @@ import horizontalArrow from '../../assets/horizontalArrow.svg';
 
 import './register.css';
 
+const createUserInDB = async (userObject) => {
+  try {
+    const res = await WMKBackend.post('/register/create', userObject);
+
+    return res;
+  } catch (err) {
+    console.log(err);
+    const { email, password } = userObject;
+
+    // since this route is called after user is created in firebase, if this
+    // route errors out, that means we have to discard the created firebase object
+    await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
+    const userToBeTerminated = await GoogleAuthService.auth.currentUser;
+    userToBeTerminated.delete();
+
+    throw new Error(err);
+  }
+};
+
+const createUserInFirebase = async (email, password) => {
+  try {
+    const user = await GoogleAuthService.auth.createUserWithEmailAndPassword(email, password);
+
+    return user;
+  } catch (err) {
+    console.log(err);
+
+    throw new Error(err);
+  }
+};
+
 const { formId, formField } = registerFormModel;
 
-function renderStepContent(step) {
-  switch (step) {
-    case 0:
-      return <StepOne formField={formField} />;
-    case 1:
-      return <StepTwo formField={formField} />;
-    case 2:
-      return <StepThree formField={formField} />;
-    default:
-      return <div>Not Found</div>;
-  }
-}
-
 const Register = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const [registerStage, setRegisterStage] = useState(0);
+  const [error, setError] = useState('');
   const currentValidationSchema = validationSchema[registerStage];
 
   const register = async ({
@@ -48,19 +64,18 @@ const Register = () => {
     phoneNumber, address1, address2, city, state, zipcode,
     birthDay, birthMonth, birthYear, gender, genderOther, division,
   }) => {
+    console.log('here');
     const dateOfBirth = `${birthYear}-${birthMonth}-${birthDay}`;
 
-    if (!isDate(dateOfBirth)) {
-      throw new Error('Date of Birth does not exist.');
-    }
-
-    const user = await GoogleAuthService.auth.createUserWithEmailAndPassword(email, password);
+    const user = await createUserInFirebase(email, password);
     console.log(user);
-    const res = await WMKBackend.post('/register/create', {
+
+    const res = await createUserInDB({
       userID: user.user.uid,
       firstName,
       lastName,
       email,
+      password,
       phoneNumber,
       address1,
       address2,
@@ -72,6 +87,7 @@ const Register = () => {
       division,
       verified: false,
     });
+
     console.log(res);
 
     const verifyStatus = await WMKBackend.post('/register/sendVerification', {
@@ -92,22 +108,45 @@ const Register = () => {
   };
 
   const handleSubmit = async (values, actions) => {
-    if (registerStage === 2) {
-      // alert(JSON.stringify(values, null, 2));
-      try {
+    document.body.style.cursor = 'wait';
+    try {
+      if (registerStage === 0) {
+        const res = await GoogleAuthService.auth.fetchSignInMethodsForEmail(values.email);
+        if (res.length > 0) {
+          throw new Error('The email address is already in use by another account.');
+        }
+      } else if (registerStage === 2) {
+        const dateOfBirth = `${values.birthYear}-${values.birthMonth}-${values.birthDay}`;
+        if (!isDate(dateOfBirth)) {
+          throw new Error('Date of Birth does not exist.');
+        }
+
         await register(values);
-      } catch (err) {
-        dispatch(createAlert({
-          message: JSON.stringify(err, null, 2),
-          severity: 'error',
-        }));
       }
-    } else {
+
       setRegisterStage(registerStage + 1);
+      setError('');
       actions.setTouched([]);
       actions.setSubmitting(false);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      document.body.style.cursor = '';
     }
   };
+
+  function renderStepContent(step) {
+    switch (step) {
+      case 0:
+        return <StepOne formField={formField} />;
+      case 1:
+        return <StepTwo formField={formField} />;
+      case 2:
+        return <StepThree formField={formField} />;
+      default:
+        return <div>Not Found</div>;
+    }
+  }
 
   return (
     <div className="register-container">
@@ -119,6 +158,7 @@ const Register = () => {
         {() => (
           <Form id={formId} key="register">
             {renderStepContent(registerStage)}
+            <p className="medium error-message">{error}</p>
             <div className="form-navigation">
               {registerStage > 0
                 ? (

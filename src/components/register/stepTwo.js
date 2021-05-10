@@ -49,7 +49,13 @@ const StepTwo = (props) => {
         <div className="zone-form-group">
           <RegistrationTextField labelClassName="city-label label" name={city.name} label={city.label} />
           <div className="state-zipcode">
-            <RegistrationTextField labelClassName="state-label label " name={state.name} label={state.label} />
+            <RegistrationTextField
+              labelClassName="state-label label"
+              name={state.name}
+              label={state.label}
+              maxLength="2"
+              placeholder="i.e. CA"
+            />
             <RegistrationTextField labelClassName="zipcode-label label" name={zipcode.name} label={zipcode.label} />
           </div>
         </div>

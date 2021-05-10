@@ -1,12 +1,11 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
+import isDate from 'validator/lib/isDate';
 
 import GoogleAuthService from '../../../services/firebase/firebase';
-import { createAlert } from '../../../common/AlertBanner/AlertBannerSlice';
 import { WMKBackend } from '../../../common/utils';
 
 import validationSchema from '../validationSchema';
@@ -21,85 +20,99 @@ import horizontalArrow from '../../../assets/horizontalArrow.svg';
 
 // Piggybacking off CSS from register.css;
 
+const createUserInDB = async (userObject) => {
+  try {
+    const res = await WMKBackend.post('/register/create', userObject);
+
+    return res;
+  } catch (err) {
+    console.log(err);
+    const { email, password } = userObject;
+
+    // since this route is called after user is created in firebase, if this
+    // route errors out, that means we have to discard the created firebase object
+    await GoogleAuthService.auth.signInWithEmailAndPassword(email, password);
+    const userToBeTerminated = await GoogleAuthService.auth.currentUser;
+    userToBeTerminated.delete();
+
+    throw new Error(err);
+  }
+};
+
 const { formId, formField } = registerFormModel;
 
-function renderStepContent(step) {
-  switch (step) {
-    case 0:
-      return <StepOne formField={formField} />;
-    case 1:
-      return <StepTwo formField={formField} />;
-    case 2:
-      return <StepThree formField={formField} />;
-    default:
-      return <div>Not Found</div>;
-  }
-}
-
 const Register = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const [registerStage, setRegisterStage] = useState(1);
+  const [error, setError] = useState('');
   const currentValidationSchema = validationSchema[registerStage];
 
   const register = async ({
     phoneNumber, address1, address2, city, state, zipcode,
-    birthDay, birthMonth, birthYear, gender, genderOther,
+    birthDay, birthMonth, birthYear, gender, genderOther, division,
   }) => {
-    try {
-      const user = await GoogleAuthService.auth.currentUser;
-      console.log(user);
-      const [firstName, lastName] = user.displayName.split(' ');
+    const dateOfBirth = `${birthYear}-${birthMonth}-${birthDay}`;
 
-      const res = await WMKBackend.post('/register/create', {
-        userID: user.uid,
-        firstName,
-        lastName,
-        email: user.email,
-        phoneNumber,
-        address1,
-        address2,
-        city,
-        state,
-        zipcode,
-        birthDate: `${birthYear}-${birthMonth}-${birthDay}`,
-        gender: gender === 'other' ? genderOther : gender,
-        division: 1,
-        verified: true,
-      });
-      console.log(res);
+    const user = await GoogleAuthService.auth.currentUser;
+    const userName = user.displayName.split(' ');
 
-      dispatch(createAlert({
-        message: 'Successfully registered! Click to move on to login',
-        severity: 'success',
-      }));
+    const res = await createUserInDB({
+      userID: user.uid,
+      firstName: userName[0],
+      lastName: userName[1] ? userName[1] : '',
+      email: user.email,
+      phoneNumber,
+      address1,
+      address2,
+      city,
+      state,
+      zipcode,
+      birthDate: dateOfBirth,
+      gender: gender === 'other' ? genderOther : gender,
+      division,
+      verified: true,
+    });
 
-      history.push('/login');
-    } catch (err) {
-      dispatch(createAlert({
-        message: JSON.stringify(err, null, 2),
-        severity: 'error',
-      }));
-    }
+    console.log(res);
+
+    history.push('/login');
   };
 
   const handleSubmit = async (values, actions) => {
-    if (registerStage === 2) {
-      // alert(JSON.stringify(values, null, 2));
-      try {
+    document.body.style.cursor = 'wait';
+    try {
+      if (registerStage === 2) {
+        const dateOfBirth = `${values.birthYear}-${values.birthMonth}-${values.birthDay}`;
+        if (!isDate(dateOfBirth)) {
+          throw new Error('Date of Birth does not exist.');
+        }
+
         await register(values);
-      } catch (err) {
-        dispatch(createAlert({
-          message: JSON.stringify(err, null, 2),
-          severity: 'error',
-        }));
       }
-    } else {
+
       setRegisterStage(registerStage + 1);
+      setError('');
       actions.setTouched([]);
       actions.setSubmitting(false);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      document.body.style.cursor = '';
     }
   };
+
+  function renderStepContent(step) {
+    switch (step) {
+      case 0:
+        return <StepOne formField={formField} />;
+      case 1:
+        return <StepTwo formField={formField} />;
+      case 2:
+        return <StepThree formField={formField} />;
+      default:
+        return <div>Not Found</div>;
+    }
+  }
 
   return (
     <div className="register-container">
@@ -111,6 +124,7 @@ const Register = () => {
         {() => (
           <Form id={formId} key="register">
             {renderStepContent(registerStage)}
+            <p className="medium error-message">{error}</p>
             <div className="form-navigation">
               {registerStage > 1
                 ? (
