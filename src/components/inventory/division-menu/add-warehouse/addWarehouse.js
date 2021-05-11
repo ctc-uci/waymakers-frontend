@@ -29,7 +29,7 @@ const AddWarehouseButton = (prop) => {
     setSelectedDivision(selectedDivision);
   }, [selectedDivision]);
 
-  const onSubmitAddWarehouse = (values) => {
+  const onSubmitAddWarehouse = (values, actions) => {
     const { warehouse: warehouseLabel } = values;
     const { division } = values;
     // create an add warehouse action
@@ -45,6 +45,10 @@ const AddWarehouseButton = (prop) => {
         message: `Successfully created warehouse '${warehouseLabel}'!`,
         severity: 'success',
       }));
+      actions.resetForm({
+        warehouse: '',
+        division: '',
+      });
     });
   };
 

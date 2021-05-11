@@ -14,16 +14,16 @@ import UserDirectoryRow from './userDirectoryRow';
 
 import './userInformationTable.css';
 
-const SORT_BY_OPTIONS = [
-  {
-    displayName: 'Division',
-    compareFunc: (a, b) => (a.division > b.division ? 1 : -1),
-  },
-  {
-    displayName: 'Alphabetical',
-    compareFunc: (a, b) => (a.lastname.toUpperCase() > b.lastname.toUpperCase() ? 1 : -1),
-  },
-];
+// const SORT_BY_OPTIONS = [
+//   {
+//     displayName: 'Division',
+//     compareFunc: (a, b) => (a.division > b.division ? 1 : -1),
+//   },
+//   {
+//     displayName: 'Alphabetical',
+//     compareFunc: (a, b) => (a.lastname.toUpperCase() > b.lastname.toUpperCase() ? 1 : -1),
+//   },
+// ];
 
 const UserInformationTable = ({
   title,
@@ -34,7 +34,7 @@ const UserInformationTable = ({
   modalUser,
   setModalUser,
 }) => {
-  const [sortByOption, setSortByOption] = useState(0);
+  // const [sortByOption, setSortByOption] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredData = useMemo(() => {
@@ -42,8 +42,8 @@ const UserInformationTable = ({
     return users
       .filter((user) => (
         user.firstname.toLowerCase().includes(searchTerm.toLowerCase()))
-        || user.lastname.toLowerCase().includes(searchTerm.toLowerCase()))
-      .sort(SORT_BY_OPTIONS[sortByOption].compareFunc);
+        || user.lastname.toLowerCase().includes(searchTerm.toLowerCase()));
+    // .sort(SORT_BY_OPTIONS[sortByOption].compareFunc);
   });
   const [
     paginatedData, paginatedIndex, setPaginatedIndex, totalNumberOfPages,
@@ -72,10 +72,14 @@ const UserInformationTable = ({
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="sort-section">
+        {/* <div className="sort-section">
           <p className="medium">Sort:</p>
           &nbsp;
-          <select className="user-sort" value={sortByOption} onChange={(e) => setSortByOption(e.target.value)}>
+          <select
+            className="user-sort"
+            value={sortByOption}
+            onChange={(e) => setSortByOption(e.target.value)}
+          >
             {SORT_BY_OPTIONS.map((sortOption, i) => (
               <option
                 key={sortOption.displayName}
@@ -86,7 +90,7 @@ const UserInformationTable = ({
               </option>
             ))}
           </select>
-        </div>
+        </div> */}
       </div>
       <Table className="user-table">
         <TableHeader>
