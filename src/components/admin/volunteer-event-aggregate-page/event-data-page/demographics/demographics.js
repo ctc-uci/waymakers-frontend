@@ -7,8 +7,8 @@ import { WMKBackend } from '../../../../../common/utils';
 
 import PieChart from './pie-chart/PieChart';
 
-import leftArrow from '../../../../../assets/pieChartLeftArrow.svg';
-import rightArrow from '../../../../../assets/pieChartRightArrow.svg';
+// import leftArrow from '../../../../../assets/pieChartLeftArrow.svg';
+// import rightArrow from '../../../../../assets/pieChartRightArrow.svg';
 
 import './demographics.css';
 
@@ -16,14 +16,15 @@ const Demographics = ({ eventId }) => {
   // Get information for all volunteers
   const [allVolunteers, setAllVolunteers] = useState([]);
   // Determines which 3 pie charts we display
-  const [startDisplayIndex, setStartDisplayIndex] = useState(0);
+  const startDisplayIndex = 0;
+  // const [startDisplayIndex, setStartDisplayIndex] = useState(0);
   // List of pie chart attributes/labels which helps us map pie charts
   // Attribute is the name of column stored in the actual database
   // Label is the name of the pie chart
   const pieChartLabels = [
     { attribute: 'gender', label: 'Gender' },
     { attribute: 'age', label: 'Age Range' },
-    { attribute: 'tier', label: 'Volunteer Tier' },
+    // { attribute: 'tier', label: 'Volunteer Tier' },
     { attribute: 'sum', label: 'Number of Hours' },
   ];
 
@@ -65,33 +66,42 @@ const Demographics = ({ eventId }) => {
     getAllVolunteers();
   }, []);
 
-  const handleLeftArrowClick = () => {
-    if (startDisplayIndex > 0) {
-      setStartDisplayIndex(startDisplayIndex - 1);
-    }
-  };
+  // const handleLeftArrowClick = () => {
+  //   if (startDisplayIndex > 0) {
+  //     setStartDisplayIndex(startDisplayIndex - 1);
+  //   }
+  // };
 
-  const handleRightArrowClick = () => {
-    if (startDisplayIndex < pieChartLabels.length - 3) {
-      setStartDisplayIndex(startDisplayIndex + 1);
-    }
-  };
+  // const handleRightArrowClick = () => {
+  //   if (startDisplayIndex < pieChartLabels.length - 3) {
+  //     setStartDisplayIndex(startDisplayIndex + 1);
+  //   }
+  // };
 
-  const DemoGraphicsLeftArrow = () => (
-    <button type="button" onClick={handleLeftArrowClick} className={startDisplayIndex > 0 ? 'left-arrow' : 'left-arrow-nonfunctional'}>
-      <img src={leftArrow} alt="left-arrow" className="arrow-img" />
-    </button>
-  );
+  // const DemographicsLeftArrow = () => (
+  //   <button
+  //     type="button"
+  //     onClick={handleLeftArrowClick}
+  //     className={startDisplayIndex > 0 ? 'left-arrow' : 'left-arrow-nonfunctional'}
+  //   >
+  //     <img src={leftArrow} alt="left-arrow" className="arrow-img" />
+  //   </button>
+  // );
 
-  const DemographicsRightArrow = () => (
-    <button type="button" onClick={handleRightArrowClick} className={startDisplayIndex < pieChartLabels.length - 3 ? 'right-arrow' : 'right-arrow-nonfunctional'}>
-      <img src={rightArrow} alt="right-arrow" className="arrow-img" />
-    </button>
-  );
+  // const DemographicsRightArrow = () => (
+  //   <button
+  //     type="button"
+  //     onClick={handleRightArrowClick}
+  //     className={startDisplayIndex < pieChartLabels.length - 3 ?
+  // 'right-arrow' : 'right-arrow-nonfunctional'}
+  //   >
+  //     <img src={rightArrow} alt="right-arrow" className="arrow-img" />
+  //   </button>
+  // );
 
   return (
     <TitledCard title="Demographics" className="demographic-card-container" cardClassName="demographic-card">
-      <DemoGraphicsLeftArrow />
+      {/* <DemoGraphicsLeftArrow /> */}
       <div className="pie-charts">
         {pieChartLabels.slice(startDisplayIndex, startDisplayIndex + 3)
           .map(({ attribute, label }) => (
@@ -104,7 +114,7 @@ const Demographics = ({ eventId }) => {
             </div>
           ))}
       </div>
-      <DemographicsRightArrow />
+      {/* <DemographicsRightArrow /> */}
     </TitledCard>
   );
 };
