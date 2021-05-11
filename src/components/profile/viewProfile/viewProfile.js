@@ -54,7 +54,6 @@ const ViewProfile = ({ states, setIsViewProfile }) => {
             <Card className="about-card">
               <div className="info-section">
                 <img className="about-icons" src={cake} alt="" />
-                {console.log(birthday)}
                 <p>{birthday !== '' && `${birthday.getMonth() + 1}/${birthday.getDate()}/${birthday.getFullYear()}`}</p>
               </div>
               <div className="info-section">
