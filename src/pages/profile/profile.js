@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { instanceOf } from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { withCookies, Cookies } from 'react-cookie';
-import moment from 'moment-timezone';
 
 import { WMKBackend } from '../../common/utils';
 import ViewProfile from '../../components/profile/viewProfile/viewProfile';
@@ -80,8 +79,6 @@ const Profile = ({ cookies }) => {
     setDivision(data.filter((div) => div.id === account.division)[0].div_name);
     setGender(account.gender);
     setCurrentProfilePicture(account.profile_picture);
-
-    console.log(`Guessed timezone: ${moment.tz.guess()}`);
 
     setLoading(false);
   }, []);
