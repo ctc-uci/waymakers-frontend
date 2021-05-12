@@ -54,7 +54,9 @@ const ViewProfile = ({ states, setIsViewProfile }) => {
             <Card className="about-card">
               <div className="info-section">
                 <img className="about-icons" src={cake} alt="" />
-                <p>{birthday !== '' && `${birthday.getMonth() + 1}/${birthday.getDate()}/${birthday.getFullYear()}`}</p>
+                <p>{birthday.tz('UTC').format('MM/DD/YYYY')}</p>
+                {/* <p>{birthday !== '' && `${birthday.getMonth() + 1}/
+                ${birthday.getDate()}/${birthday.getFullYear()}`}</p> */}
               </div>
               <div className="info-section">
                 <img className="about-icons" src={people} alt="" />
@@ -133,7 +135,7 @@ const ViewProfile = ({ states, setIsViewProfile }) => {
 
 ViewProfile.propTypes = {
   states: PropTypes.objectOf(PropTypes.any).isRequired,
-  setIsViewProfile: PropTypes.bool.isRequired,
+  setIsViewProfile: PropTypes.func.isRequired,
 };
 
 export default ViewProfile;

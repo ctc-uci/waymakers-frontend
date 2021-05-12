@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { instanceOf } from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { withCookies, Cookies } from 'react-cookie';
+import moment from 'moment-timezone';
 
 import { WMKBackend } from '../../common/utils';
 import ViewProfile from '../../components/profile/viewProfile/viewProfile';
@@ -19,7 +20,7 @@ const Profile = ({ cookies }) => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zip, setZip] = useState(0);
-  const [birthday, setBirthday] = useState(new Date());
+  const [birthday, setBirthday] = useState(moment());
   const [division, setDivision] = useState(0);
   const [gender, setGender] = useState('');
   const [currentProfilePicture, setCurrentProfilePicture] = useState(null);
@@ -75,10 +76,18 @@ const Profile = ({ cookies }) => {
     setCity(locationcity);
     setState(locationstate);
     setZip(locationzip);
-    setBirthday(new Date(account.birthdate));
+    setBirthday(moment(account.birthdate));
     setDivision(data.filter((div) => div.id === account.division)[0].div_name);
     setGender(account.gender);
     setCurrentProfilePicture(account.profile_picture);
+
+    const guessTZ = moment.tz.guess();
+    console.log(`Guessed timezone: ${guessTZ}`);
+    const m = moment(account.birthdate);
+    console.log('moment object:');
+    console.log(m);
+    console.log(`Local time: ${m.format('MM/DD/YYYY, h:mm:ss a')}`);
+    console.log(`UTC time: ${m.tz('UTC').format('MM/DD/YYYY, h:mm:ss a')}`);
 
     setLoading(false);
   }, []);

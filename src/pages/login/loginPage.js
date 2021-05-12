@@ -3,7 +3,6 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { Helmet } from 'react-helmet';
 import Particles from 'react-particles-js';
-import moment from 'moment-timezone';
 
 import LogIn from '../../components/login/login';
 
@@ -11,7 +10,6 @@ import './loginPage.css';
 
 const LoginPage = (props) => {
   const { cookies } = props;
-  console.log(`Guessed timezone: ${moment.tz.guess()}`);
 
   return (
     <div className="login-page">

@@ -161,7 +161,7 @@ const EditProfile = ({
     setCity(account.locationcity);
     setState(account.locationstate);
     setZip(account.locationzip);
-    setBirthday(new Date(account.birthdate));
+    setBirthday(moment(account.birthdate));
     setDivision(account.division);
     setGender(account.gender);
     setCurrentProfilePicture(account.profile_picture);
@@ -219,8 +219,9 @@ const EditProfile = ({
                   <div className="datetime-input-box">
                     <Datetime
                       initialValue={birthday}
-                      onChange={(e) => setBirthday(new Date(e))}
+                      onChange={(e) => setBirthday(e)}
                       timeFormat={false}
+                      displayTimeZone="utc"
                     />
                   </div>
                 </div>
@@ -306,7 +307,7 @@ const EditProfile = ({
 EditProfile.propTypes = {
   states: PropTypes.objectOf(PropTypes.any).isRequired,
   setStates: PropTypes.objectOf(PropTypes.any).isRequired,
-  setIsViewProfile: PropTypes.bool.isRequired,
+  setIsViewProfile: PropTypes.func.isRequired,
   cookies: instanceOf(Cookies).isRequired,
 };
 
