@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import moment from 'moment';
 
 import PropTypes from 'prop-types';
 import {
@@ -75,7 +76,7 @@ const UpdateUserModal = ({
     setInitialValues(
       {
         name: `${userInfo.firstname} ${userInfo.lastname}`,
-        age: userInfo.age ? userInfo.age : '',
+        age: moment().diff(userInfo.birthdate, 'years'),
         gender: userInfo.gender ? userInfo.gender : '',
         email: userInfo.email ? userInfo.email : '',
         phoneNumber: userInfo.phone ? userInfo.phone : '',
@@ -97,6 +98,7 @@ const UpdateUserModal = ({
             labelText="Name"
             labelClassName="update-user-label"
             fieldClassName="update-user-field"
+            inputHeaderClassName="update-user-label-row"
             formik={formik}
           >
             <input
@@ -113,6 +115,7 @@ const UpdateUserModal = ({
             labelText="Age"
             labelClassName="update-user-label"
             fieldClassName="update-user-field"
+            inputHeaderClassName="update-user-label-row"
             formik={formik}
           >
             <input
@@ -129,6 +132,7 @@ const UpdateUserModal = ({
             labelText="Gender"
             labelClassName="update-user-label"
             fieldClassName="update-user-field"
+            inputHeaderClassName="update-user-label-row"
             formik={formik}
           >
             <input
@@ -145,6 +149,7 @@ const UpdateUserModal = ({
             labelText="Email"
             labelClassName="update-user-label"
             fieldClassName="update-user-field"
+            inputHeaderClassName="update-user-label-row"
             formik={formik}
           >
             <input
@@ -161,12 +166,13 @@ const UpdateUserModal = ({
             labelText="Phone Number"
             labelClassName="update-user-label"
             fieldClassName="update-user-field"
+            inputHeaderClassName="update-user-label-row"
             formik={formik}
           >
             <input
               id="phoneNumber"
               name="phoneNumber"
-              className="update-user-input"
+              className="update-user-input user-input-phone"
               type="tel"
               value={formik.values.phoneNumber}
               readOnly
@@ -177,6 +183,7 @@ const UpdateUserModal = ({
             labelText="Location"
             labelClassName="update-user-label"
             fieldClassName="update-user-field"
+            inputHeaderClassName="update-user-label-row"
             formik={formik}
           >
             <input
@@ -195,6 +202,7 @@ const UpdateUserModal = ({
               type="text"
               onChange={formik.handleChange}
               value={formik.values.division}
+              className="user-input-dropdown"
             >
               {Object.entries(divisionList)
                 .sort((a, b) => (a.id > b.id ? 1 : -1))
@@ -215,6 +223,7 @@ const UpdateUserModal = ({
               type="text"
               onChange={formik.handleChange}
               value={formik.values.position}
+              className="user-input-dropdown user-input-position"
             >
               <option
                 key="volunteer"

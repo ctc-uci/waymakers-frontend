@@ -4,9 +4,16 @@ import './ValidatedField.css';
 
 // Attaches a styled label and error message for an input tag
 const ValidatedField = ({
-  name, labelText, formik, labelClassName, errorMsgClassName, children, isRequired,
+  name,
+  labelText,
+  formik,
+  labelClassName,
+  errorMsgClassName,
+  children,
+  isRequired,
+  inputHeaderClassName,
 }) => (
-  <label htmlFor={name} className="formik-field">
+  <label htmlFor={name} className={`formik-field ${inputHeaderClassName}`}>
     <p className={labelClassName}>
       {labelText}
       {isRequired && <span className="required-label"> *</span>}
@@ -22,6 +29,7 @@ ValidatedField.defaultProps = {
   labelClassName: 'formik-field-label',
   errorMsgClassName: 'formik-field-error-text',
   isRequired: false,
+  inputHeaderClassName: '',
 };
 
 ValidatedField.propTypes = {
@@ -33,6 +41,7 @@ ValidatedField.propTypes = {
   errorMsgClassName: PropTypes.string,
   children: PropTypes.node.isRequired,
   isRequired: PropTypes.bool,
+  inputHeaderClassName: PropTypes.string,
 };
 
 export default ValidatedField;
