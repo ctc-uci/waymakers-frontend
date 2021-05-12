@@ -269,7 +269,7 @@ const EditProfile = ({
                           </div>
                           <div className="contact-input info-section contact-info-section">
                             <img className="contact-icons" src={locationPin} alt="" />
-                            <input className="profile-input-box" type="text" value={zip} name="zip" onChange={(e) => setZip(e.target.value)} maxLength="2" />
+                            <input className="profile-input-box" type="text" value={zip} name="zip" onChange={(e) => setZip(e.target.value)} maxLength="5" />
                           </div>
                         </div>
                       </>
@@ -286,7 +286,7 @@ const EditProfile = ({
                         </div>
                         <div className="info-section location-input location-margin">
                           <img className="contact-icons" src={locationPin} alt="" />
-                          <input className="profile-input-box zip-input" type="text" value={zip} name="zip" onChange={(e) => setZip(e.target.value)} maxLength="2" />
+                          <input className="profile-input-box zip-input" type="text" value={zip} name="zip" onChange={(e) => setZip(e.target.value)} maxLength="5" />
                         </div>
                       </div>
                     )}
