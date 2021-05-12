@@ -81,14 +81,6 @@ const Profile = ({ cookies }) => {
     setGender(account.gender);
     setCurrentProfilePicture(account.profile_picture);
 
-    const guessTZ = moment.tz.guess();
-    console.log(`Guessed timezone: ${guessTZ}`);
-    const m = moment(account.birthdate);
-    console.log('moment object:');
-    console.log(m);
-    console.log(`Local time: ${m.format('MM/DD/YYYY, h:mm:ss a')}`);
-    console.log(`UTC time: ${m.tz('UTC').format('MM/DD/YYYY, h:mm:ss a')}`);
-
     setLoading(false);
   }, []);
 
