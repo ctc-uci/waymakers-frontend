@@ -18,7 +18,31 @@
   margin: 5px 0px 5px 0;
 }
 
+.update-user-label-row {
+  flex-direction: row;
+  margin-top: 5%;
+}
+
 .update-user-input {
   width: 100%;
   background-color: #EBEBEB;
+  resize: none;
+}
+
+.update-user-input,
+.user-input-dropdown {
+  color: var(--color-dark-blue);
+  border: solid 0.5px var(--color-dark-blue);
+  border-radius: 3px;
+  padding: 5px;
+  opacity: inherit;
+}
+
+.user-input-position {
+  margin-bottom: 5%;
+}
+
+.user-input-phone {
+  height: fit-content;
+  margin-top: 5%;
 }
