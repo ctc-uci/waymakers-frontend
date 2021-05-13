@@ -22,20 +22,18 @@ import './volunteerDashboard.css';
 const VolunteerDashboard = (props) => {
   const { cookies } = props;
   const [isLoading, setLoading] = useState(false);
-  const [numVolunteerHours, setNumVolunteerHours] = useState(0);
-  const [numOutreachHours, setNumOutreachHours] = useState(0);
+  const [numHours, setNumHours] = useState([]);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const getHours = async (type) => {
+  const getHours = async () => {
     try {
       const { data } = await WMKBackend.get('/logs/approved/sum', {
         params: {
           userId: cookies.get('userId'),
-          type,
         },
       });
-
       return data;
     } catch (err) {
       console.log(err);
@@ -48,12 +46,8 @@ const VolunteerDashboard = (props) => {
     (async () => {
       await dispatch(fetchEvents());
       await dispatch(fetchUserEvents(cookies.cookies.userId));
-
-      const volunteerHours = await getHours('Volunteer');
-      const outreachHours = await getHours('Outreach');
-
-      await setNumVolunteerHours(volunteerHours);
-      await setNumOutreachHours(outreachHours);
+      const hours = await getHours();
+      await setNumHours(hours);
     })();
     setLoading(false);
   }, []);
@@ -89,16 +83,23 @@ const VolunteerDashboard = (props) => {
     <div className="volunteer-dashboard-page-container">
       <TitledCard title="My Stats">
         <div className="my-stats-section">
-          <h1>
-            {numVolunteerHours || 0}
-            &nbsp;
-            Volunteer Hours
-          </h1>
-          <h1>
-            {numOutreachHours || 0}
-            &nbsp;
-            Outreach Hours
-          </h1>
+          <div id="stats-display">
+            <h3>
+              {numHours.Volunteer || 0}
+              &nbsp;
+              Volunteer Hours
+            </h3>
+            <h3>
+              {numHours.Outreach || 0}
+              &nbsp;
+              Outreach Hours
+            </h3>
+            <h3>
+              {numHours.Other || 0}
+              &nbsp;
+              Other Hours
+            </h3>
+          </div>
           <button
             type="button"
             className="view-hours-button"
