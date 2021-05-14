@@ -3,15 +3,24 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { useField } from 'formik';
 
+import { normalizePhoneInput } from '../../common/utils';
+
 import registrationError from '../../assets/registrationError.svg';
 
 import './registrationTextField.css';
 
 const RegistrationTextField = (props) => {
   const {
-    name, label, labelClassName, inputClassName, placeholder, type, readOnly,
+    name, label, labelClassName, inputClassName, placeholder, type, readOnly, phoneNumber,
   } = props;
   const [field, meta] = useField(props);
+
+  const handleChange = (e) => {
+    if (phoneNumber) {
+      e.target.value = normalizePhoneInput(e.target.value, field.value);
+    }
+    field.onChange(e);
+  };
 
   return (
     <>
@@ -23,9 +32,10 @@ const RegistrationTextField = (props) => {
           className={`registration-text-field ${meta.error ? `${inputClassName} error` : `${inputClassName}`}`}
           name={name}
           placeholder={placeholder}
-          value=""
           readOnly={readOnly}
-          {...field}
+          value={field.value}
+          onChange={handleChange}
+          onBlur={field.onBlur}
         />
         <p className="small">{label}</p>
         {meta.touched && meta.error ? (
@@ -47,6 +57,7 @@ RegistrationTextField.defaultProps = {
   placeholder: '',
   type: 'text',
   readOnly: false,
+  phoneNumber: false,
 };
 
 RegistrationTextField.propTypes = {
@@ -57,6 +68,7 @@ RegistrationTextField.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.string,
   readOnly: PropTypes.bool,
+  phoneNumber: PropTypes.bool,
 };
 
 export default RegistrationTextField;
