@@ -9,7 +9,7 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
 import useMobileWidth from '../../../common/useMobileWidth';
-import { WMKBackend } from '../../../common/utils';
+import { WMKBackend, normalizePhoneInput } from '../../../common/utils';
 
 import DeleteAccountModal from '../deleteAccountModal/deleteAccountModal';
 import ImageCropper from '../profilePictureCropper/imageCropper';
@@ -249,7 +249,7 @@ const EditProfile = ({
                   </div>
                   <div className="contact-input">
                     <img className="contact-icons" src={phone} alt="" />
-                    <input className="profile-input-box" type="tel" value={number} name="number" onChange={(e) => setNumber(e.target.value)} />
+                    <input className="profile-input-box" type="tel" value={number} name="number" onChange={(e) => setNumber(normalizePhoneInput(e.target.value, number))} />
                   </div>
                   <div className="contact-input">
                     <img className="contact-icons" src={house} alt="" />
