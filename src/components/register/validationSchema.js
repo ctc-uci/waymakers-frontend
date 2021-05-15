@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable func-names */
 import * as yup from 'yup';
@@ -28,7 +29,7 @@ const {
 
 const emailRE = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const phoneRE = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im;
-const strongPassRE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+const strongPassRE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\`\~\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\{\}\;\'\:\"\,\.\/\<\>\?\|\\])(?=.{8,})/;
 const zipCodeRE = /^[0-9]{5}(?:-[0-9]{4})?$/;
 
 export default [
