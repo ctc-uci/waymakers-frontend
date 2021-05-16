@@ -39,6 +39,7 @@ const Row = ({
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
             eventId={id}
+            type="submit"
           />
         )}
       </MobileTableContent>
