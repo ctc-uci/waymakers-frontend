@@ -13,7 +13,15 @@ import './adminDashboard.css';
 const AdminDashboard = () => {
   const [isLoading, setLoading] = useState(false);
   const [divisionList, setDivisionList] = useState([]);
-  const [currDivision, setCurrDivision] = useState(1);
+  const [currDivision, setCurrDivision] = useState(0);
+
+  // Get user's most recent division (if any)
+  useEffect(() => {
+    const division = localStorage.getItem('currentDivision');
+    if (division) {
+      setCurrDivision(division);
+    }
+  });
 
   // Fetching warehouse names from the server
   const getDivisionList = async () => {
@@ -37,15 +45,16 @@ const AdminDashboard = () => {
     <select
       name="division"
       className="division-dropdown"
-      value={currDivision - 1}
+      value={currDivision}
       onChange={(e) => {
-        setCurrDivision(parseInt(e.target.value, 10) + 1);
+        setCurrDivision(parseInt(e.target.value, 10));
+        localStorage.setItem('currentDivision', parseInt(e.target.value, 10));
       }}
     >
       {Object.entries(divisionList)
         .sort((a, b) => (a.id > b.id ? 1 : -1))
         .map(([id, division]) => (
-          <option key={id} value={id}>{division.div_name}</option>
+          <option key={id} value={division.id}>{division.div_name}</option>
         ))}
     </select>
   );

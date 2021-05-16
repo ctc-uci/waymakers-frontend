@@ -13,13 +13,13 @@ const AdminInventoryPreview = ({ division }) => {
   const [warehouseIndex, setWarehouseIndex] = useState(0);
   const [warehouseIDMap, setWarehouseIDMap] = useState({});
   const [warehouseName, setWarehouseName] = useState('');
+  const [divisionChanged, setDivisionChanged] = useState(true);
 
   const isMobile = useMobileWidth(1100);
   const topAmount = isMobile ? 2 : 3;
   const history = useHistory();
 
   // Fetching top items from the server
-
   const getTopItems = async () => {
     try {
       const response = await WMKBackend.get(`/inventory/top?warehouse=${warehouseIDMap[warehouseName]}&numItems=${topAmount}`);
@@ -87,20 +87,29 @@ const AdminInventoryPreview = ({ division }) => {
 
   // Get warehouses when division is updated
   useEffect(() => {
+    setDivisionChanged(true);
     getWarehouseList();
   }, [division]);
 
-  // Get default warehouse when warehouse list is loaded
+  // Get saved warehouse when warehouse list is loaded.
+  // If division is updated, get default warehouse.
   useEffect(() => {
-    if (warehouseList[0]) {
+    const name = localStorage.getItem('warehouseName');
+    if (name && !divisionChanged) {
+      setWarehouseName(name);
+      setWarehouseIndex(localStorage.getItem('warehouseIndex'));
+    } else if (warehouseList[0]) {
       setWarehouseName(warehouseList[0].warehouse_name);
       setWarehouseIndex(0);
     }
+    setDivisionChanged(false);
   }, [warehouseList]);
 
   // Get top items when warehouse is selected
   useEffect(() => {
     if (warehouseName) {
+      localStorage.setItem('warehouseName', warehouseName);
+      localStorage.setItem('warehouseIndex', warehouseIndex);
       getTopItems();
     }
   }, [warehouseName, isMobile]);

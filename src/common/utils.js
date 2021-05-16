@@ -50,6 +50,13 @@ export const logout = async () => {
       localStorage.removeItem('profilePicture');
     }
     localStorage.removeItem('userFullName');
+    if (localStorage.getItem('currentDivision')) {
+      localStorage.removeItem('currentDivision');
+    }
+    if (localStorage.getItem('warehouseName')) {
+      localStorage.removeItem('warehouseName');
+      localStorage.removeItem('warehouseIndex');
+    }
     // Sign-out successful
   } catch (err) {
     console.log('Logout failed', err);
