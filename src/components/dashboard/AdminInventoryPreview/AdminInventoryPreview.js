@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
@@ -20,6 +21,7 @@ const AdminInventoryPreview = ({ division }) => {
   const history = useHistory();
 
   // Fetching top items from the server
+
   const getTopItems = async () => {
     try {
       const response = await WMKBackend.get(`/inventory/top?warehouse=${warehouseIDMap[warehouseName]}&numItems=${topAmount}`);
