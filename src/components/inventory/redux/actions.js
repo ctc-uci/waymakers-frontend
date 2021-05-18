@@ -44,6 +44,7 @@ export const fetchDivisions = () => async (dispatch) => {
     const divisions = response.data.reduce(
       (obj, item) => Object.assign(obj, { [item.id]: item }), {},
     );
+    console.log(divisions);
     dispatch({ type: 'divisions/divisionsLoaded', payload: divisions });
   } catch (err) {
     // eslint-disable-next-line
@@ -156,6 +157,22 @@ export const addDivision = (newDivision) => async (dispatch) => {
   }
 };
 
+// Creates a edits/addDivisionDelete action
+export const deleteDivision = (id) => ({
+  type: 'edits/addDivisionDelete',
+  payload: { id },
+});
+
+export const undeleteDivision = (id) => ({
+  type: 'edits/revertDivisionDelete',
+  payload: { id },
+});
+
+export const editDivision = (id, newValues) => ({
+  type: 'edits/addDivisionEdit',
+  payload: { id, newValues },
+});
+
 export const addWarehouse = (newWarehouse) => async (dispatch) => {
   try {
     const response = await WMKBackend.post('/warehouses', newWarehouse);
@@ -166,6 +183,22 @@ export const addWarehouse = (newWarehouse) => async (dispatch) => {
     console.error(err);
   }
 };
+
+// Creates a edits/addWarehouseDelete action
+export const deleteWarehouse = (id) => ({
+  type: 'edits/addWarehouseDelete',
+  payload: { id },
+});
+
+export const undeleteWarehouse = (id) => ({
+  type: 'edits/revertWarehouseDelete',
+  payload: { id },
+});
+
+export const editWarehouse = (id, newValues) => ({
+  type: 'edits/addWarehouseEdit',
+  payload: { id, newValues },
+});
 
 // Creates a edits/startEdits action
 export const startEdits = () => ({
@@ -184,6 +217,8 @@ export const saveEdits = () => async (dispatch, getState) => {
   const editPromises = [];
   const deletePromises = [];
   const currentCategoryID = getState().items.selectedCategoryID;
+  const currentDivisionID = getState().items.selectedDivisionID;
+  const currentWarehouseID = getState().items.selectedWarehouseID;
 
   // Populating edited list with PUT requests for each edited item
   const editedItems = { ...getState().edits.editedItems };
@@ -214,6 +249,49 @@ export const saveEdits = () => async (dispatch, getState) => {
   )) {
     dispatch({ type: 'items/categorySelected', payload: { newCategoryID: -1, newCategoryLabel: 'All Categories' } });
   }
+
+  // Populating list with DELETE requests for each deleted division
+  const deletedDivisions = [...getState().edits.deletedDivisions];
+  deletedDivisions.forEach(async (id) => {
+    deletePromises.push(
+      WMKBackend.delete(`/divisions/${id}`),
+    );
+  });
+  // Switching back to All Divisions / All Warehouses if the current division was deleted
+  if (deletedDivisions
+    .filter((id) => currentDivisionID.toString() === id.toString()).length > 0) {
+    dispatch({ type: 'items/searchDivisionModified', payload: { newDivisionID: -1 } });
+    dispatch({ type: 'items/warehouseSelected', payload: { newWarehouseID: -1 } });
+  }
+
+  const deletedWarehouses = [...getState().edits.deletedWarehouses];
+  deletedWarehouses.forEach(async (id) => {
+    deletePromises.push(
+      WMKBackend.delete(`/warehouses/${id}`),
+    );
+  });
+  // Switching back to All Warehouses if the current warehouse was deleted
+  if (deletedWarehouses
+    .filter((id) => currentWarehouseID.toString() === id.toString()).length > 0) {
+    dispatch({ type: 'items/warehouseSelected', payload: { newWarehouseID: -1 } });
+  }
+
+  // Populating list with PUT requests for each edited division
+  const editedDivisions = { ...getState().edits.editedDivisions };
+  Object.keys(editedDivisions).forEach(async (id) => {
+    editPromises.push(
+      WMKBackend.put(`/divisions/${id}`, editedDivisions[id]),
+    );
+  });
+
+  // Populating list with PUT requests for each edited warehouse
+  const editedWarehouses = { ...getState().edits.editedWarehouses };
+  Object.keys(editedWarehouses).forEach(async (id) => {
+    editPromises.push(
+      WMKBackend.put(`/warehouses/${id}`, editedWarehouses[id]),
+    );
+  });
+
   // Perform all delete requests concurrently
   await Promise.all(deletePromises)
     .catch((error) => {
@@ -228,6 +306,10 @@ export const saveEdits = () => async (dispatch, getState) => {
         dispatch(fetchItems());
         // Fetch category list again
         dispatch(fetchCategories());
+        // Fetch division list again
+        dispatch(fetchDivisions());
+        // Fetch warehouse list again
+        dispatch(fetchWarehouses(currentDivisionID));
       }
     });
 
@@ -244,5 +326,9 @@ export const saveEdits = () => async (dispatch, getState) => {
       dispatch(fetchItems());
       // Fetch category list again
       dispatch(fetchCategories());
+      // Fetch division list again
+      dispatch(fetchDivisions());
+      // Fetch warehouse list again
+      dispatch(fetchWarehouses(currentDivisionID));
     });
 };

@@ -34,8 +34,23 @@ export const getSelectedDivisionLabel = (store) => {
 // Gets current selected warehouse ID
 export const getSelectedWarehouseID = (store) => store.items.selectedWarehouseID;
 
+export const getSelectedWarehouseLabel = (store) => store.divisions
+  .warehouseList[store.items.selectedWarehouseID].warehouse_name;
+
 // Gets if inventory is in edit mode
 export const getEditing = (store) => store.edits.editing;
 
 // Gets items that will be deleted when edits are saved
 export const getDeletedIDs = (store) => store.edits.deletedItems;
+
+// Gets divisions that will be deleted when edits are saved
+export const getDeletedDivisionIDs = (store) => store.edits.deletedDivisions;
+
+// Gets warehouses that will be deleted when edits are saved
+export const getDeletedWarehouseIDs = (store) => store.edits.deletedWarehouses;
+
+// Gets divisions that will be edited when edits are saved
+export const getEditedDivisionIDs = (store) => store.edits.editedDivisions;
+
+// Gets warehouses that will be edited when edits are saved
+export const getEditedWarehouseIDs = (store) => store.edits.editedWarehouses;
