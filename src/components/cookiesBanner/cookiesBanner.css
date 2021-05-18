@@ -1,0 +1,63 @@
+
+.cookies-banner-container {
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #A7C9E1;
+  z-index: 999;
+  padding: 15px 30px;
+  right: 0;
+  left: 0;
+}
+
+.App + .cookies-position {
+  position: sticky;
+}
+.login-page + .cookies-position,
+.register-page + .cookies-position {
+  position: absolute;
+}
+
+.cookies-banner-container .cookies-banner-content {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.cookies-banner-button {
+  background: #5D9A64;
+  color: #FFFFFF;
+  font-size: 24px;
+  border-radius: 10px;
+  padding: 5px 20px 5px 20px;
+  box-shadow: 4px 4px 5px rgb(0 0 0 / 46%);
+  border: none;
+  margin-left: 30px;
+  cursor: pointer;
+}
+
+.cookies-banner-container .cookies-banner-content .cookies-banner-content-size {
+  font-size: 18px;
+}
+
+.cookies-banner-container .cookies-banner-content .cookies-banner-link-word {
+  color: var(--color-dark-blue);
+  font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+
+  .cookies-banner-container {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .cookies-banner-container .cookies-banner-content .cookies-banner-content-size {
+    font-size: 14px;
+  }
+
+  .cookies-banner-button {
+    font-size: 18px;
+    margin: 10px 0px 0px 0px;
+  }
+}
