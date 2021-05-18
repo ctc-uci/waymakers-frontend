@@ -1,8 +1,12 @@
 const initialState = {
   editing: false, // Indicates if the inventory is currently in edit mode
   editedItems: {}, // Object which contains new values for any edited items
+  editedDivisions: {}, // Object which contains new values for any edited divisions
+  editedWarehouses: {}, // Object which contains new values for any edited warehouses
   deletedItems: [], // List of item IDs to delete
   deletedCategories: [], // List of category IDs to delete
+  deletedDivisions: [], // List of division IDs to delete
+  deletedWarehouses: [], // List of warehouse IDs to delete
 };
 
 export default (state = initialState, action) => {
@@ -55,14 +59,75 @@ export default (state = initialState, action) => {
         editing: true,
       };
     }
+    case 'edits/addDivisionEdit': {
+      const { id, newValues } = action.payload;
+      return {
+        ...state,
+        editedDivisions: {
+          ...state.editedDivisions,
+          [id]: { ...newValues },
+        },
+      };
+    }
+    case 'edits/addDivisionDelete': {
+      return {
+        ...state,
+        deletedDivisions: [...state.deletedDivisions, action.payload.id],
+      };
+    }
+    case 'edits/revertDivisionDelete': {
+      const toBeReverted = action.payload.id.toString();
+      const index = state.deletedDivisions.indexOf(toBeReverted);
+      console.log(index, toBeReverted, state.deletedDivisions);
+      if (index > -1) {
+        return {
+          ...state,
+          deletedDivisions: state.deletedDivisions
+            .filter((divId) => divId.toString() !== toBeReverted.toString()),
+        };
+      }
+      return state;
+    }
+    case 'edits/addWarehouseEdit': {
+      const { id, newValues } = action.payload;
+      return {
+        ...state,
+        editedWarehouses: {
+          ...state.editedWarehouses,
+          [id]: { ...newValues },
+        },
+      };
+    }
+    case 'edits/addWarehouseDelete': {
+      return {
+        ...state,
+        deletedWarehouses: [...state.deletedWarehouses, action.payload.id],
+      };
+    }
+    case 'edits/revertWarehouseDelete': {
+      const toBeDeleted = action.payload.id;
+      const index = state.deletedWarehouses.indexOf(action.payload.id);
+      if (index > -1) {
+        return {
+          ...state,
+          deletedWarehouses: state.deletedWarehouses
+            .filter((wareId) => wareId.toString() !== toBeDeleted.toString()),
+        };
+      }
+      return state;
+    }
     // Edits have been saved
     case 'edits/editsSaved': {
       return {
         ...state,
         editing: false,
         editedItems: {},
+        editedDivisions: {},
+        editedWarehouses: {},
         deletedItems: [],
         deletedCategories: [],
+        deletedDivisions: [],
+        deletedWarehouses: [],
       };
     }
     // Canceling all edits
@@ -71,8 +136,12 @@ export default (state = initialState, action) => {
       return {
         editing: false,
         editedItems: {},
+        editedDivisions: {},
+        editedWarehouses: {},
         deletedItems: [],
         deletedCategories: [],
+        deletedDivisions: [],
+        deletedWarehouses: [],
       };
     }
     default: {

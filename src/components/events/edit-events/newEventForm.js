@@ -317,7 +317,7 @@ const EventForm = () => {
   };
 
   return (
-    <LightModal isOpen={isModalOpen} setIsOpen={setShowPopup}>
+    <LightModal isOpen={isModalOpen} setIsOpen={(isOpen) => dispatch(setShowPopup(isOpen))}>
       <LightModalHeader
         title={popupTypeToTitleMap[popupType]}
         onClose={() => dispatch(setShowPopup(false))}

@@ -7,6 +7,7 @@ import {
 } from '../../../../common/MobileTable';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 import SubmitHoursPopup from '../unsubmittedHours/SubmitHoursPopup';
+import ViewHoursPopup from './viewHoursPopup';
 
 const SubmitButton = styled.button`
   border-radius: 25px;
@@ -20,9 +21,10 @@ const SubmitButton = styled.button`
 `;
 
 const Row = ({
-  eventName, id, location, startTime, endTime, hours,
+  eventName, id, location, startTime, endTime, hours, notes,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isResubmitModalOpen, setIsResubmitModalOpen] = useState(false);
   return (
     <MobileTableRow className="uh-table-row">
       <MobileTableRowHeader>{eventName}</MobileTableRowHeader>
@@ -32,13 +34,27 @@ const Row = ({
       <MobileTableContent>{`Log End Date/Time: ${formatDate(endTime, DATE_FORMAT.MY_HOURS)}`}</MobileTableContent>
       <MobileTableContent>{`Hours: ${hours}`}</MobileTableContent>
       <MobileTableContent>
-        <SubmitButton type="button" onClick={() => setIsModalOpen(true)}>Resubmit</SubmitButton>
+        <SubmitButton type="button" onClick={() => setIsModalOpen(true)}>View Info</SubmitButton>
         {isModalOpen && (
-          <SubmitHoursPopup
+          <ViewHoursPopup
             isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
+            setIsViewModalOpen={setIsModalOpen}
+            setIsResubmitModalOpen={setIsResubmitModalOpen}
+            eventId={id}
+            additionalNotes={notes || ''}
+            logStart={startTime}
+            logEnd={endTime}
+          />
+        )}
+        {isResubmitModalOpen && (
+          <SubmitHoursPopup
+            isModalOpen={isResubmitModalOpen}
+            setIsModalOpen={setIsResubmitModalOpen}
             eventId={id}
             type="resubmit"
+            additionalNotes={notes || ''}
+            logStart={startTime}
+            logEnd={endTime}
           />
         )}
       </MobileTableContent>
@@ -53,6 +69,7 @@ Row.propTypes = {
   endTime: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   hours: PropTypes.string.isRequired,
+  notes: PropTypes.string.isRequired,
 };
 
 const SubmittedHoursTableMobile = ({ filteredSubmittedHours }) => (
@@ -66,6 +83,7 @@ const SubmittedHoursTableMobile = ({ filteredSubmittedHours }) => (
         startTime={submittedHour.startTime}
         endTime={submittedHour.endTime}
         hours={submittedHour.hours}
+        notes={submittedHour.additionalNotes}
       />
     ))}
   </MobileTable>

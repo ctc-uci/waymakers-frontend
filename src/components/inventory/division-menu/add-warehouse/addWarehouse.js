@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import { ValidatedField } from '../../../../common/formikExtensions';
 
 import { addWarehouse, fetchWarehouses } from '../../redux/actions';
-import { getWarehouses } from '../../redux/selectors';
+import { getWarehouses, getSelectedDivisionID } from '../../redux/selectors';
 import { LightModal } from '../../../../common/LightModal';
 
 import { createAlert } from '../../../../common/AlertBanner/AlertBannerSlice';
@@ -29,7 +29,7 @@ const AddWarehouseButton = (prop) => {
     setSelectedDivision(selectedDivision);
   }, [selectedDivision]);
 
-  const onSubmitAddWarehouse = (values) => {
+  const onSubmitAddWarehouse = (values, actions) => {
     const { warehouse: warehouseLabel } = values;
     const { division } = values;
     // create an add warehouse action
@@ -40,11 +40,15 @@ const AddWarehouseButton = (prop) => {
       division,
     })).then(() => {
       setPopup(false);
-      dispatch(fetchWarehouses());
+      dispatch(fetchWarehouses(prop.currentDivisionID));
       dispatch(createAlert({
         message: `Successfully created warehouse '${warehouseLabel}'!`,
         severity: 'success',
       }));
+      actions.resetForm({
+        warehouse: '',
+        division: '',
+      });
     });
   };
 
@@ -117,6 +121,7 @@ const AddWarehouseButton = (prop) => {
 // Connecting component props to redux state
 const mapStateToProps = (state) => ({
   categories: getWarehouses(state),
+  currentDivisionID: getSelectedDivisionID(state),
 });
 
 export default connect(mapStateToProps, null)(AddWarehouseButton);
