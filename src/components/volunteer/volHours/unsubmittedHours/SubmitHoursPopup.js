@@ -44,7 +44,15 @@ const Schema = Yup.object().shape({
 });
 
 // Fill in form according to the selected event title
-const autofillEventInfo = (eventId, userEvents, formik) => {
+const autofillEventInfo = (
+  eventId,
+  userEvents,
+  formik,
+  additionalNotes,
+  logStart,
+  logEnd,
+  type,
+) => {
   // No op on default empty option
   if (!eventId) { return; }
 
@@ -55,14 +63,18 @@ const autofillEventInfo = (eventId, userEvents, formik) => {
   const selectedUserEvent = userEvents
     .filter((e) => e.id.toString() === eventId.toString())[0];
 
+  const start = (type === 'resubmit') ? logStart : selectedUserEvent.startTime;
+  const end = (type === 'resubmit') ? logEnd : selectedUserEvent.endTime;
+
   formik.setFieldValue('id', selectedUserEvent.id);
   formik.setFieldValue('type', selectedUserEvent.eventType);
   formik.setFieldValue('title', selectedUserEvent.title);
   formik.setFieldValue('location', selectedUserEvent.location);
-  formik.setFieldValue('startTime', new Date(selectedUserEvent.startTime));
-  formik.setFieldValue('endTime', new Date(selectedUserEvent.endTime));
+  formik.setFieldValue('startTime', new Date(start));
+  formik.setFieldValue('endTime', new Date(end));
   formik.setFieldValue('division', selectedUserEvent.division);
-  formik.setFieldValue('totalHours', Math.ceil((new Date(selectedUserEvent.endTime) - new Date(selectedUserEvent.startTime)) / (1000 * 60 * 60)));
+  formik.setFieldValue('totalHours', Math.ceil((new Date(end) - new Date(start)) / (1000 * 60 * 60)));
+  formik.setFieldValue('additionalNotes', additionalNotes);
 };
 
 // TODO: Loading state
@@ -71,7 +83,10 @@ const SubmitHoursPopup = (
     isModalOpen,
     setIsModalOpen,
     eventId = '',
-    type = 'submit',
+    type,
+    additionalNotes,
+    logStart,
+    logEnd,
   },
 ) => {
   const dispatch = useDispatch();
@@ -184,7 +199,13 @@ const SubmitHoursPopup = (
   }, []);
 
   useEffect(() => {
-    autofillEventInfo(eventId, userEvents, formik);
+    autofillEventInfo(eventId,
+      userEvents,
+      formik,
+      additionalNotes,
+      logStart,
+      logEnd,
+      type);
   }, [eventId, userEvents]);
 
   const truncateEventName = (eventName) => {
@@ -248,7 +269,8 @@ const SubmitHoursPopup = (
                 const { selectedIndex } = e.target.options;
                 autofillEventInfo(e.target.options[selectedIndex].getAttribute('id'), events, formik);
               }}
-              className="form-input-color"
+              className={`form-input-color ${(eventId !== '') ? 'view-mode-input-color' : ''}`}
+              disabled={eventId !== ''}
             >
               <option value="">{events.length !== 0 ? ' ' : 'No hours to log yet.'}</option>
               {events.map((event) => (
@@ -317,7 +339,7 @@ const SubmitHoursPopup = (
                 initialValue={new Date()}
                 onChange={(e) => updateNewDate(e, 'startTime', formik.values.startTime)}
                 value={formik.values.startTime}
-                inputProps={{ className: 'form-input-color datetime-input' }}
+                inputProps={{ className: 'datetime-input form-input-color' }}
                 timeFormat={false}
                 required
               />
@@ -329,6 +351,7 @@ const SubmitHoursPopup = (
                 value={formik.values.startTime}
                 dateFormat={false}
                 required
+                inputProps={{ className: 'datetime-input form-input-color' }}
               />
             </ValidatedField>
             <p className="datetime-input-separator">to</p>
@@ -340,7 +363,7 @@ const SubmitHoursPopup = (
                   initialValue={new Date()}
                   onChange={(e) => updateNewDate(e, 'endTime', formik.values.endTime)}
                   value={formik.values.endTime}
-                  inputProps={{ className: 'form-input-color datetime-input' }}
+                  inputProps={{ className: 'datetime-input form-input-color' }}
                   timeFormat={false}
                   required
                 />
@@ -351,6 +374,7 @@ const SubmitHoursPopup = (
                   onChange={(e) => updateNewTime(e, 'endTime')}
                   value={formik.values.endTime}
                   dateFormat={false}
+                  inputProps={{ className: 'datetime-input form-input-color' }}
                   required
                 />
               </ValidatedField>
@@ -374,10 +398,10 @@ const SubmitHoursPopup = (
               id="additionalNotes"
               name="additionalNotes"
               onChange={formik.handleChange}
-              value={formik.values.additionalNotes}
+              value={formik.values.additionalNotes || ''}
+              className="form-input-color"
             />
           </ValidatedField>
-
           <div className="checkbox-section">
             <div className="checkbox-container">
               <Checkbox
@@ -400,13 +424,11 @@ const SubmitHoursPopup = (
           </div>
 
           <br />
-
-          {events.length !== 0
-            && (
+          {events.length !== 0 && (
             <LightModalButton primary type="submit">
               Submit
             </LightModalButton>
-            )}
+          )}
           <LightModalButton type="button" secondaryOutline onClick={() => setIsModalOpen(false)}>
             Cancel
           </LightModalButton>
@@ -414,6 +436,12 @@ const SubmitHoursPopup = (
       </form>
     </LightModal>
   );
+};
+
+SubmitHoursPopup.defaultProps = {
+  additionalNotes: '',
+  logStart: new Date(),
+  logEnd: new Date(),
 };
 
 SubmitHoursPopup.propTypes = {
@@ -424,6 +452,9 @@ SubmitHoursPopup.propTypes = {
     PropTypes.number,
   ]).isRequired,
   type: PropTypes.string.isRequired,
+  additionalNotes: PropTypes.string,
+  logStart: PropTypes.string,
+  logEnd: PropTypes.string,
 };
 
 export default SubmitHoursPopup;

@@ -104,7 +104,8 @@ const DesktopNavbar = (props) => {
           <SubmitHoursPopup
             isModalOpen={submitHoursOpen}
             setIsModalOpen={setSubmitHoursOpen}
-            eventTitle=""
+            eventId=""
+            type="submit"
           />
         )}
       <div

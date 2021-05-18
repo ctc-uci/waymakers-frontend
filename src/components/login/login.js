@@ -121,6 +121,9 @@ const LogIn = (props) => {
         localStorage.setItem('profilePicture', account.profile_picture);
       }
 
+      // add full name to local storage
+      localStorage.setItem('userFullName', `${account.firstname} ${account.lastname}`);
+
       return history.push(redirectURL);
     } catch (err) {
       setError(err.message);

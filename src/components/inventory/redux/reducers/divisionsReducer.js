@@ -6,7 +6,12 @@ const initialState = {
     },
   },
   // Object with all warehouses connected to the current division
-  warehouseList: {},
+  warehouseList: {
+    '-1': {
+      id: -1,
+      warehouse_name: 'All Warehouses',
+    },
+  },
 };
 
 // Handles the logic of updating the state
@@ -17,7 +22,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         divisionsList: {
-          ...state.divisionsList,
+          '-1': {
+            id: -1,
+            div_name: 'All Divisions',
+          },
           ...action.payload,
         },
       };
@@ -26,6 +34,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         warehouseList: {
+          '-1': {
+            id: -1,
+            warehouse_name: 'All Warehouses',
+          },
           ...action.payload,
         },
       };

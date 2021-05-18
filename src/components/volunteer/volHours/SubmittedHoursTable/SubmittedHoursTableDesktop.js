@@ -8,6 +8,7 @@ import {
 import './SubmittedHoursTableDesktop.css';
 import { formatDate, DATE_FORMAT } from '../../../../common/utils';
 import SubmitHoursPopup from '../unsubmittedHours/SubmitHoursPopup';
+import ViewHoursPopup from './viewHoursPopup';
 
 const SubmitButton = styled.button`
   border-radius: 25px;
@@ -21,9 +22,10 @@ const SubmitButton = styled.button`
 `;
 
 const Row = ({
-  title, id, location, hours, startTime, endTime, key,
+  title, id, location, hours, startTime, endTime, key, notes,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isResubmitModalOpen, setIsResubmitModalOpen] = useState(false);
   return (
     <TableRow className="uh-table-row" key={`${key}`}>
       <TableContent>{title}</TableContent>
@@ -32,14 +34,28 @@ const Row = ({
       <TableContent>{formatDate(endTime, DATE_FORMAT.MY_HOURS)}</TableContent>
       <TableContent>{hours}</TableContent>
       <TableContent>
-        <SubmitButton type="button" onClick={() => setIsModalOpen(true)}>Resubmit</SubmitButton>
+        <SubmitButton type="button" onClick={() => setIsModalOpen(true)}>View Info</SubmitButton>
         {isModalOpen && (
-        <SubmitHoursPopup
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          eventId={id}
-          type="resubmit"
-        />
+          <ViewHoursPopup
+            isModalOpen={isModalOpen}
+            setIsViewModalOpen={setIsModalOpen}
+            setIsResubmitModalOpen={setIsResubmitModalOpen}
+            eventId={id}
+            additionalNotes={notes || ''}
+            logStart={startTime}
+            logEnd={endTime}
+          />
+        )}
+        {isResubmitModalOpen && (
+          <SubmitHoursPopup
+            isModalOpen={isResubmitModalOpen}
+            setIsModalOpen={setIsResubmitModalOpen}
+            eventId={id}
+            type="resubmit"
+            additionalNotes={notes || ''}
+            logStart={startTime}
+            logEnd={endTime}
+          />
         )}
       </TableContent>
     </TableRow>
@@ -54,6 +70,7 @@ Row.propTypes = {
   startTime: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,
   key: PropTypes.number.isRequired,
+  notes: PropTypes.string.isRequired,
 };
 
 const SubmittedHoursTableDesktop = ({ filteredSubmittedHours }) => {
@@ -67,7 +84,7 @@ const SubmittedHoursTableDesktop = ({ filteredSubmittedHours }) => {
           <TableColumnHeader>Log Start Date/Time</TableColumnHeader>
           <TableColumnHeader>Log End Date/Time</TableColumnHeader>
           <TableColumnHeader>Hours</TableColumnHeader>
-          <TableColumnHeader>Resubmit</TableColumnHeader>
+          <TableColumnHeader>View Info</TableColumnHeader>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -79,6 +96,7 @@ const SubmittedHoursTableDesktop = ({ filteredSubmittedHours }) => {
             hours={submittedHour.hours}
             startTime={submittedHour.startTime}
             endTime={submittedHour.endTime}
+            notes={submittedHour.additionalNotes}
             // eslint-disable-next-line react/no-array-index-key
             key={i}
           />

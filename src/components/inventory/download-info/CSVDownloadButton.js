@@ -20,7 +20,7 @@ const CSVDownloadLink = ({ divisions }) => {
   async function getData() {
     try {
       const promises = await Promise.all(divisions.map(async (division) => {
-        const { data } = await WMKBackend.get('/inventory', {
+        const { data } = await WMKBackend.get('/inventory/download', {
           params: {
             division: division.value,
           },

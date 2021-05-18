@@ -9,7 +9,7 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
 import useMobileWidth from '../../../common/useMobileWidth';
-import { WMKBackend } from '../../../common/utils';
+import { WMKBackend, normalizePhoneInput } from '../../../common/utils';
 
 import DeleteAccountModal from '../deleteAccountModal/deleteAccountModal';
 import ImageCropper from '../profilePictureCropper/imageCropper';
@@ -161,7 +161,7 @@ const EditProfile = ({
     setCity(account.locationcity);
     setState(account.locationstate);
     setZip(account.locationzip);
-    setBirthday(new Date(account.birthdate));
+    setBirthday(moment(account.birthdate));
     setDivision(account.division);
     setGender(account.gender);
     setCurrentProfilePicture(account.profile_picture);
@@ -219,8 +219,9 @@ const EditProfile = ({
                   <div className="datetime-input-box">
                     <Datetime
                       initialValue={birthday}
-                      onChange={(e) => setBirthday(new Date(e))}
+                      onChange={(e) => setBirthday(e)}
                       timeFormat={false}
+                      displayTimeZone="utc"
                     />
                   </div>
                 </div>
@@ -248,7 +249,7 @@ const EditProfile = ({
                   </div>
                   <div className="contact-input">
                     <img className="contact-icons" src={phone} alt="" />
-                    <input className="profile-input-box" type="tel" value={number} name="number" onChange={(e) => setNumber(e.target.value)} />
+                    <input className="profile-input-box" type="tel" value={number} name="number" onChange={(e) => setNumber(normalizePhoneInput(e.target.value, number))} />
                   </div>
                   <div className="contact-input">
                     <img className="contact-icons" src={house} alt="" />
@@ -268,7 +269,7 @@ const EditProfile = ({
                           </div>
                           <div className="contact-input info-section contact-info-section">
                             <img className="contact-icons" src={locationPin} alt="" />
-                            <input className="profile-input-box" type="text" value={zip} name="zip" onChange={(e) => setZip(e.target.value)} maxLength="2" />
+                            <input className="profile-input-box" type="text" value={zip} name="zip" onChange={(e) => setZip(e.target.value)} maxLength="5" />
                           </div>
                         </div>
                       </>
@@ -285,7 +286,7 @@ const EditProfile = ({
                         </div>
                         <div className="info-section location-input location-margin">
                           <img className="contact-icons" src={locationPin} alt="" />
-                          <input className="profile-input-box zip-input" type="text" value={zip} name="zip" onChange={(e) => setZip(e.target.value)} maxLength="2" />
+                          <input className="profile-input-box zip-input" type="text" value={zip} name="zip" onChange={(e) => setZip(e.target.value)} maxLength="5" />
                         </div>
                       </div>
                     )}
@@ -306,7 +307,7 @@ const EditProfile = ({
 EditProfile.propTypes = {
   states: PropTypes.objectOf(PropTypes.any).isRequired,
   setStates: PropTypes.objectOf(PropTypes.any).isRequired,
-  setIsViewProfile: PropTypes.bool.isRequired,
+  setIsViewProfile: PropTypes.func.isRequired,
   cookies: instanceOf(Cookies).isRequired,
 };
 

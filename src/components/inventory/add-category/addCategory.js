@@ -21,7 +21,7 @@ const AddCategoryButton = () => {
   const [popup, setPopup] = useState(false);
   // const [label, setLabel] = useState('');
 
-  const onSubmitAddCategory = (values) => {
+  const onSubmitAddCategory = (values, actions) => {
     const { label } = values;
     // create an add category action
     dispatch(addCategory({
@@ -33,6 +33,7 @@ const AddCategoryButton = () => {
         message: `Successfully created category '${label}'`,
         severity: 'success',
       }));
+      actions.resetForm({ label: '' });
     });
   };
 
