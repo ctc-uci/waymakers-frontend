@@ -20,6 +20,7 @@ import VolunteerHoursPage from './pages/VolunteerHours/VolunteerHoursPage';
 import EventDetailPage from './pages/EventDataPage/EventDataPage';
 import NotFound404 from './pages/NotFound404/NotFound404';
 import InternalServerError from './pages/InternalServerError/InternalServerError';
+import CookiesBanner from './components/cookiesBanner/cookiesBanner';
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Layout from './components/layout/layout';
@@ -67,6 +68,7 @@ ReactDOM.render(
               </div>
             </Switch>
           </Router>
+          <CookiesBanner />
         </ErrorBoundary>
       </Provider>
     </CookiesProvider>

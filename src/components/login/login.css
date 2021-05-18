@@ -177,6 +177,11 @@
 @media screen and (max-width: 768px) {
     .login-container {
         width: 450px;
+        height: 350px;
+    }
+
+    .login-container .login-forms {
+        height: 150px;
     }
 
     .login-container .login-forms .login-password-input .login-password-showhide-button {

@@ -69,6 +69,7 @@
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-cookie": "^4.0.3",
+    "react-cookie-consent": "^6.2.3",
     "react-csv": "^2.0.3",
     "react-custom-checkbox": "^1.0.1",
     "react-datetime": "^3.0.4",
