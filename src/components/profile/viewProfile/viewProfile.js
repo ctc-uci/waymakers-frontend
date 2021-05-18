@@ -55,6 +55,8 @@ const ViewProfile = ({ states, setIsViewProfile }) => {
               <div className="info-section">
                 <img className="about-icons" src={cake} alt="" />
                 <p>{birthday.tz('UTC').format('MM/DD/YYYY')}</p>
+                {/* <p>{birthday !== '' && `${birthday.getMonth() + 1}/
+                ${birthday.getDate()}/${birthday.getFullYear()}`}</p> */}
               </div>
               <div className="info-section">
                 <img className="about-icons" src={people} alt="" />
