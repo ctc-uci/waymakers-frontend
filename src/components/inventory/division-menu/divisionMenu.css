@@ -85,38 +85,3 @@
         padding: 5px;
     }
 }
-
-@media screen and (max-width: 768px) {
-    .division-menu--top {
-        height: 20px;
-        font-weight: 600;
-        font-size: 25px;
-        white-space: nowrap;
-    }
-
-    .division-menu--open {
-        background-color: transparent;
-        height: 20px;
-        width: 20px;
-    }
-      
-    .division-menu--close {
-        background-color: transparent;
-        height: 20px;
-        width: 20px;
-    }
-    
-    .division-menu--list-container {
-        top: 1.75em;
-        padding: 5px;
-    }
-    
-    .division-menu--list-item {
-        border: none;
-        background-color: #FFFF;
-        color: var(--text-color-dark);
-        font-weight: 600;
-        font-size: 1.4em;
-        font-family: 'Assistant', Arial, Helvetica, sans-serif;
-    }
-}
