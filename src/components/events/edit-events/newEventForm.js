@@ -151,7 +151,11 @@ const EventForm = () => {
         return (
           <>
             <Link to={`/admin/event/${event.id}`} className="view-data-container">
-              <button type="submit" className="view-data-button">
+              <button
+                type="submit"
+                className="view-data-button"
+                onClick={() => dispatch(setShowPopup(false))}
+              >
                 View Event Analytics
               </button>
             </Link>
