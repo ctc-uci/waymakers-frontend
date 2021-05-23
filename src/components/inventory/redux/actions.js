@@ -309,7 +309,7 @@ export const saveEdits = () => async (dispatch, getState) => {
         // Fetch division list again
         dispatch(fetchDivisions());
         // Fetch warehouse list again
-        dispatch(fetchWarehouses(currentDivisionID));
+        dispatch(fetchWarehouses(getState().items.selectedDivisionID));
       }
     });
 
@@ -329,6 +329,6 @@ export const saveEdits = () => async (dispatch, getState) => {
       // Fetch division list again
       dispatch(fetchDivisions());
       // Fetch warehouse list again
-      dispatch(fetchWarehouses(currentDivisionID));
+      dispatch(fetchWarehouses(getState().items.selectedDivisionID));
     });
 };
