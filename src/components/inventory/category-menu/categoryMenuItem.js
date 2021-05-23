@@ -53,7 +53,9 @@ const CategoryMenuItem = (props) => {
     const label = deleted ? <strike>{props.category.label}</strike> : props.category.label;
     return (
       <button key={props.category.id} type="button" className="category-button--edit" onClick={selCategory}>
-        {label}
+        <span className="category-button--edit-text">
+          {label}
+        </span>
         <button
           className="category-icon"
           type="button"
