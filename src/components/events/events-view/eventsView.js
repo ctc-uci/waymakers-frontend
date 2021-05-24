@@ -259,6 +259,7 @@ const EventsView = ({
           }}
           dayHeaderContent={renderWeekMonthHeader}
           eventContent={(eventInfo) => <EventBlock page={page} eventInfo={eventInfo} />}
+          eventMinHeight={25}
           slotDuration="00:60:00"
           dateClick={onDateClick}
           allDaySlot
