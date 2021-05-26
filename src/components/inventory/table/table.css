@@ -1,7 +1,7 @@
 @import '../../../common/vars.css';
 
 .inventory-container {
-    min-height: 100vh;
+    /* min-height: 100vh; */
 }
 
 .items-table-wrapper {
