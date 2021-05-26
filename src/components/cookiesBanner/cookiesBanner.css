@@ -9,6 +9,8 @@
   padding: 15px 30px;
   right: 0;
   left: 0;
+  height: 78px;
+  box-sizing: border-box;
 }
 
 .App + .cookies-position {
@@ -50,6 +52,7 @@
   .cookies-banner-container {
     flex-direction: column;
     padding: 15px;
+    height: auto;
   }
 
   .cookies-banner-container .cookies-banner-content .cookies-banner-content-size {

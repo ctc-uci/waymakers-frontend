@@ -1,0 +1,28 @@
+.App {
+    min-height: calc(100vh - 78px);
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 190px; /* height of your footer */
+    box-sizing: border-box;
+}
+
+.App:only-child {
+    min-height: 100vh;
+}
+
+.App:before,
+.App:after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    position: relative;
+}
+
+@media screen and (max-width: 768px) {
+    .App {
+        padding-bottom: 220px; /* height of your footer */
+    }
+}

@@ -136,7 +136,7 @@
 
     .navbar-profile-menu-container {
         width: 170px;
-        margin-top: 180px;
+        top: 73px;
     }
 
     .navbar-logout-button, .navbar-profile-menu-link {
