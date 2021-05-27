@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import useMobileWidth from '../../../common/useMobileWidth';
@@ -15,7 +15,9 @@ import house from '../../../assets/house.svg';
 import genderIcon from '../../../assets/gender.svg';
 import stateIcon from '../../../assets/stateIcon.svg';
 import locationPin from '../../../assets/blueLocationPin.svg';
-
+import lock from '../../../assets/lock.svg';
+import GoogleAuthService from '../../../services/firebase/firebase';
+import { getCurrentUser } from '../../../common/utils';
 import './viewProfile.css';
 
 const ViewProfile = ({ states, setIsViewProfile }) => {
@@ -35,6 +37,14 @@ const ViewProfile = ({ states, setIsViewProfile }) => {
   } = states;
 
   const isMobile = useMobileWidth();
+  const [isGoogleLogIn, setIsGoogleLogIn] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const user = await getCurrentUser(GoogleAuthService.auth);
+      setIsGoogleLogIn(user.providerData[0].providerId === 'google.com');
+    })();
+  }, []);
 
   return (
     <div className="profile-page-container">
@@ -53,17 +63,23 @@ const ViewProfile = ({ states, setIsViewProfile }) => {
           <div className="card-body">
             <Card className="about-card">
               <div className="info-section">
-                <img className="about-icons" src={cake} alt="" />
+                <img className="about-icons" src={cake} alt="Birthday cake icon" />
                 <p>{birthday.tz('UTC').format('MM/DD/YYYY')}</p>
               </div>
               <div className="info-section">
-                <img className="about-icons" src={people} alt="" />
+                <img className="about-icons" src={people} alt="People icon" />
                 <p>{division}</p>
               </div>
               <div className="info-section">
-                <img className="about-icons" src={genderIcon} alt="" />
+                <img className="about-icons" src={genderIcon} alt="Gender icon" />
                 <p>{gender}</p>
               </div>
+              {!isGoogleLogIn && (
+                <div className="info-section">
+                  <img className="about-icons" src={lock} alt="Lock icon" />
+                  <p>****************</p>
+                </div>
+              )}
             </Card>
           </div>
         </div>
