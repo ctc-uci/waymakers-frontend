@@ -76,7 +76,7 @@ const setCookie = (key, value, config) => {
 };
 
 // Returns the current user synchronously
-const getCurrentUser = (auth) => (
+export const getCurrentUser = (auth) => (
   new Promise((resolve, reject) => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       unsubscribe();

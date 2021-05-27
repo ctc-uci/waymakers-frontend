@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-env browser */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
 import axios from 'axios';
 import { withCookies, Cookies } from 'react-cookie';
@@ -9,7 +9,8 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
 import useMobileWidth from '../../../common/useMobileWidth';
-import { WMKBackend, normalizePhoneInput } from '../../../common/utils';
+import { WMKBackend, normalizePhoneInput, getCurrentUser } from '../../../common/utils';
+import GoogleAuthService from '../../../services/firebase/firebase';
 
 import DeleteAccountModal from '../deleteAccountModal/deleteAccountModal';
 import ImageCropper from '../profilePictureCropper/imageCropper';
@@ -29,6 +30,9 @@ import genderIcon from '../../../assets/gender.svg';
 import stateIcon from '../../../assets/stateIcon.svg';
 import locationPin from '../../../assets/blueLocationPin.svg';
 import cameraIcon from '../../../assets/cameraIcon.svg';
+import lock from '../../../assets/lock.svg';
+import CurrentPasswordPopup from '../changePasswordPopup/currentPasswordPopup';
+import NewPasswordPopup from '../changePasswordPopup/newPasswordPopup';
 
 import './editProfile.css';
 
@@ -73,9 +77,19 @@ const EditProfile = ({
   const [uploadedFile, setUploadedFile] = useState(null); // Base64 string of the file bing uploaded
   const [uploadedFilePreview, setUploadedFilePreview] = useState(null);
   const [isCropperOpen, setIsCropperOpen] = useState(false);
+  const [isGoogleLogIn, setIsGoogleLogIn] = useState(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCurrentPasswordModalOpen, setIsCurrentPasswordModalOpen] = useState(false);
+  const [isNewPasswordModalOpen, setIsNewPasswordModalOpen] = useState(false);
   const isMobile = useMobileWidth();
+
+  useEffect(() => {
+    (async () => {
+      const user = await getCurrentUser(GoogleAuthService.auth);
+      setIsGoogleLogIn(user.providerData[0].providerId === 'google.com');
+    })();
+  }, []);
 
   // Uploads a user's profile picture and returns url
   const uploadPicture = async () => {
@@ -233,6 +247,13 @@ const EditProfile = ({
                   <img className="about-icons" src={genderIcon} alt="" />
                   <input className="profile-input-box" value={gender} name="gender" onChange={(e) => setGender(e.target.value)} />
                 </div>
+                {!isGoogleLogIn && (
+                  <div className="info-section">
+                    <img className="about-icons" src={lock} alt="Lock icon" />
+                    <p>****************</p>
+                    <button type="button" className="change-password-button" onClick={() => setIsCurrentPasswordModalOpen(true)}>Change Password</button>
+                  </div>
+                )}
               </form>
             </Card>
           </div>
@@ -300,6 +321,15 @@ const EditProfile = ({
         <VolunteerAvailability />
       </div>
       <button type="button" className="profile-delete-button" onClick={() => setIsModalOpen(true)}>Delete Account</button>
+      <CurrentPasswordPopup
+        isModalOpen={isCurrentPasswordModalOpen}
+        setIsModalOpen={setIsCurrentPasswordModalOpen}
+        setIsNewPasswordModalOpen={setIsNewPasswordModalOpen}
+      />
+      <NewPasswordPopup
+        isModalOpen={isNewPasswordModalOpen}
+        setIsModalOpen={setIsNewPasswordModalOpen}
+      />
     </div>
   );
 };
